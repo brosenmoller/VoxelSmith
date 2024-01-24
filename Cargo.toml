@@ -1,0 +1,13 @@
+[package]
+name = "voxel_smith_rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+fastnbt = "2"
+fastanvil = "0.30"
+serde = "1.0.195"
+flate2 = "1.0.28"
+obj-rs = "0.7.1"
