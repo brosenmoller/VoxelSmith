@@ -1,77 +1,128 @@
 mod schematic;
+mod mesh_generation;
 
-use schematic::load_schematic;
+use std::{fs::File, io::{self, Write}};
+
 use obj::Obj;
-use obj::Vertex;
-use schematic::Schematic;
+use schematic::load_schematic;
+use mesh_generation::generate_mesh;
 
 const PATH: &str = "resources/StoneRock1.schem";
 
 fn main() {
-    let schematic = load_schematic(PATH);
+    let _ = test_export_to_obj_cube("cube.obj");
 
-    match schematic {
-        Ok(schematic) => {
-            println!("{}", schematic.block_data[0]);
-            println!("{}", schematic.block_data[5]);
-            println!("{:?}", schematic);
+    // let schematic = load_schematic(PATH);
 
-            let obj = generate_mesh("TestMesh", &schematic);
-        }
-        Err(err) => {
-            eprintln!("Error decoding schematic: {:?}", err);
-        }
-    }
+    // match schematic {
+    //     Ok(schematic) => {
+    //         // println!("{}", schematic.block_data[0]);
+    //         // println!("{}", schematic.block_data[5]);
+    //         // println!("{:?}", schematic);
+
+    //         let obj = generate_mesh("TestMesh", &schematic);
+    //         let _ = export_to_obj_file(&obj, "out.obj");
+    //     }
+    //     Err(err) => {
+    //         eprintln!("Error decoding schematic: {:?}", err);
+    //     }
+    // }
 
     // EVERYTHING
     //let schematic: Result<Value> = from_bytes(data.as_slice());
 }
 
-fn generate_mesh(name: &str, schematic: &Schematic) -> Obj {
-    let mut vertices: Vec<Vertex> = Vec::new();
-    let mut indices: Vec<u16> = Vec::new();
+fn test_export_to_obj_cube(filename: &str) -> io::Result<()> {
+    let mut file = File::create(filename)?;
 
-    for y in 0..schematic.height {
-        for z in 0..schematic.length {
-            for x in 0..schematic.width {
-                let index: usize = ((y * schematic.length + z) * schematic.width + x) as usize;
-                let value: i8 = schematic.block_data[index];
+    write!(
+        &mut file,
+        "# Cube.obj\n
 
-                if value != 0 {
-                    let x = x as f32;
-                    let y = y as f32;
-                    let z = z as f32;
+        # Vertices\n
+        v -1.0 -1.0 -1.0\n
+        v -1.0 -1.0  1.0\n
+        v -1.0  1.0 -1.0\n
+        v -1.0  1.0  1.0\n
+        v  1.0 -1.0 -1.0\n
+        v  1.0 -1.0  1.0\n
+        v  1.0  1.0 -1.0\n
+        v  1.0  1.0  1.0\n
+        
+        # Faces\n
+        f 1 2 4 3\n
+        f 5 6 8 7\n
+        f 1 2 6 5\n
+        f 3 4 8 7\n
+        f 1 3 7 5\n
+        f 2 4 8 6\n",
+    )?;
 
-                    let cube_vertices: Vec<Vertex> = vec![
-                        Vertex { position: [x, y, z], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x + 1.0, y, z], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x + 1.0, y + 1.0, z], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x, y + 1.0, z], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x, y, z + 1.0], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x + 1.0, y, z + 1.0], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x + 1.0, y + 1.0, z + 1.0], normal: [0.0, 0.0, 0.0] },
-                        Vertex { position: [x, y + 1.0, z + 1.0], normal: [0.0, 0.0, 0.0] },
-                    ];
-
-                    vertices.extend(cube_vertices.iter().map(|v| Vertex::from(v.clone())));
-
-                    let cube_indices: Vec<u32> = vec![
-                        0, 1, 2, 2, 3, 0, 4, 5, 6, 6, 7, 4, 0, 4, 7, 7, 3, 0, 1, 5, 6, 6, 2, 1,
-                    ];
-
-                    indices.extend(
-                        cube_indices.iter().map(|&i| i + (vertices.len() as u32 - cube_vertices.len() as u32)),
-                    );
-                }
-            }
-        }
-    }
-
-    Obj { 
-        name: Some(String::from(name)), 
-        vertices, 
-        indices,
-    }
+    Ok(())
 }
 
+fn export_to_obj_file(obj: &Obj, filename: &str) -> io::Result<()> {
+    let mut file = File::create(filename)?;
+
+    write!(
+        &mut file,
+        "o Object\n",
+    )?;
+
+    for vertex in &obj.vertices {
+        write!(
+            &mut file,
+            "v {} {} {} vn {} {} {}\n",
+            vertex.position[0], vertex.position[1], vertex.position[2],
+            vertex.normal[0], vertex.normal[1], vertex.normal[2]
+        )?;
+    }
+
+    for i in (0..obj.indices.len()).step_by(3) {
+        write!(
+            &mut file,
+            "f {}//{} {}//{} {}//{} \n",
+            obj.indices[i],
+            obj.indices[i],
+            obj.indices[i + 1],
+            obj.indices[i + 1],
+            obj.indices[i + 2],
+            obj.indices[i + 2],
+        )?;
+    }
+
+    Ok(())
+}
+
+// fn export_to_obj_file(obj: &Obj, filename: &str) -> io::Result<()> {
+//     let mut file = File::create(filename)?;
+
+//     for vertex in &obj.vertices {
+//         write!(
+//             &mut file,
+//             "v {} {} {}\n",
+//             vertex.position[0], vertex.position[1], vertex.position[2]
+//         )?;
+//     }
+
+//     for vertex in &obj.vertices {
+//         write!(
+//             &mut file,
+//             "vn {} {} {}\n",
+//             vertex.normal[0], vertex.normal[1], vertex.normal[2]
+//         )?;
+//     }
+
+//     for i in (0..obj.indices.len()).step_by(3) {
+//         write!(
+//             &mut file,
+//             "f {} {} {} \n",
+//             obj.indices[i],
+//             obj.indices[i + 1],
+//             obj.indices[i + 2],
+//         )?;
+//     }
+
+//     Ok(())
+// }
 

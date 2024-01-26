@@ -1,4 +1,4 @@
-use fastnbt::{from_bytes, ByteArray, error::{Result, Error}};
+use fastnbt::{from_bytes, ByteArray, error::Result};
 use serde::Deserialize;
 use flate2::read::GzDecoder;
 use std::io::Read;
@@ -21,4 +21,4 @@ pub fn load_schematic(path: &str) -> Result<Schematic>
     decoder.read_to_end(&mut data).unwrap();
 
     return from_bytes(data.as_slice());
-} 
+}
