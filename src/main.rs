@@ -1,36 +1,41 @@
 mod schematic;
 mod mesh_generation;
+mod obj_generation;
 
 use std::{fs::File, io::{self, Write}};
 
 use obj::Obj;
 use schematic::load_schematic;
 use mesh_generation::generate_mesh;
+use obj_generation::generate_obj;
 
-const PATH: &str = "resources/StoneRock1.schem";
+const PATH: &str = "resources/DarkOakTree1.schem";
+const FILE_NAME: &str = "tree";
 
 fn main() {
-    let _ = test_export_to_obj_cube("cube.obj");
+    let schematic = load_schematic(PATH);
 
-    // let schematic = load_schematic(PATH);
+    match schematic {
+        Ok(schematic) => {
+            // println!("{}", schematic.block_data[0]);
+            // println!("{}", schematic.block_data[5]);
+            // println!("{:?}", schematic);
 
-    // match schematic {
-    //     Ok(schematic) => {
-    //         // println!("{}", schematic.block_data[0]);
-    //         // println!("{}", schematic.block_data[5]);
-    //         // println!("{:?}", schematic);
+            let obj = generate_obj(&schematic);
+            let mut file = File::create(FILE_NAME.to_owned() +".obj").unwrap();
+            write!(&mut file, "{}", obj).unwrap();
 
-    //         let obj = generate_mesh("TestMesh", &schematic);
-    //         let _ = export_to_obj_file(&obj, "out.obj");
-    //     }
-    //     Err(err) => {
-    //         eprintln!("Error decoding schematic: {:?}", err);
-    //     }
-    // }
+            //let _ = export_to_obj_file(&obj, "out.obj");
+        }
+        Err(err) => {
+            eprintln!("Error decoding schematic: {:?}", err);
+        }
+    }
 
     // EVERYTHING
     //let schematic: Result<Value> = from_bytes(data.as_slice());
 }
+
 
 fn test_export_to_obj_cube(filename: &str) -> io::Result<()> {
     let mut file = File::create(filename)?;
@@ -57,39 +62,6 @@ fn test_export_to_obj_cube(filename: &str) -> io::Result<()> {
         f 1 3 7 5\n
         f 2 4 8 6\n",
     )?;
-
-    Ok(())
-}
-
-fn export_to_obj_file(obj: &Obj, filename: &str) -> io::Result<()> {
-    let mut file = File::create(filename)?;
-
-    write!(
-        &mut file,
-        "o Object\n",
-    )?;
-
-    for vertex in &obj.vertices {
-        write!(
-            &mut file,
-            "v {} {} {} vn {} {} {}\n",
-            vertex.position[0], vertex.position[1], vertex.position[2],
-            vertex.normal[0], vertex.normal[1], vertex.normal[2]
-        )?;
-    }
-
-    for i in (0..obj.indices.len()).step_by(3) {
-        write!(
-            &mut file,
-            "f {}//{} {}//{} {}//{} \n",
-            obj.indices[i],
-            obj.indices[i],
-            obj.indices[i + 1],
-            obj.indices[i + 1],
-            obj.indices[i + 2],
-            obj.indices[i + 2],
-        )?;
-    }
 
     Ok(())
 }

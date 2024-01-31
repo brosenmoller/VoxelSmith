@@ -29,7 +29,7 @@ pub fn generate_mesh(name: &str, schematic: &Schematic) -> Obj {
                                 position: [xf + 1.0, yf, zf], 
                                 normal: [1.0, 0.0, 0.0] 
                             },
-                            Vertex { 
+                            Vertex {
                                 position: [xf + 1.0, yf, zf + 1.0], 
                                 normal: [1.0, 0.0, 0.0] 
                             },
