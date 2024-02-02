@@ -11,8 +11,15 @@ pub fn generate_obj_string(schematic: &Schematic) -> String {
     obj_string.push_str(&format!("vn {} {} {}\n", 1, 0, 0));     // 2
     obj_string.push_str(&format!("vn {} {} {}\n", 0, 0, -1));    // 3
     obj_string.push_str(&format!("vn {} {} {}\n", 0, 0, 1));     // 4
-    obj_string.push_str(&format!("vn {} {} {}\n", 0, -1, 0));    // 5
+    obj_string.push_str(&format!("vn {} {} {}\n", 0, -1, 0));     // 5
     obj_string.push_str(&format!("vn {} {} {}\n", 0, 1, 0));     // 6
+
+    // obj_string.push_str("vn -1.000000 -0.000000 -0.000000\n");     // 1
+    // obj_string.push_str("vn 1.000000 0.000000 0.000000\n");     // 2
+    // obj_string.push_str("vn 0.000000 0.000000 -1.000000\n");     // 3
+    // obj_string.push_str("vn -0.000000 0.000000 1.000000\n");     // 4
+    // obj_string.push_str("vn 0.000000 -1.000000 0.000000\n");     // 5
+    // obj_string.push_str("vn 0.000000 1.000000 0.000000\n");     // 6
 
     for y in 0..schematic.height {
         for z in 0..schematic.width {
