@@ -1,16 +1,26 @@
 // hide console window on Windows in release
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] use std::{fs::File, io::Write};
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] 
 
+use std::{collections::HashMap, fs::File, io::Write};
 use eframe::egui;
+use egui::Color32;
 
-use crate::{obj_generation, schematic::{self, _dump_json}};
+use crate::{obj_generation, schematic::{self, Schematic, _dump_json}};
 use schematic::load_schematic;
 use obj_generation::generate_obj_string;
+
+#[derive(Debug, PartialEq, Eq, Hash)]
+enum AppError {
+    SchematicLoad,
+}
 
 pub struct App {
     schematic_path: String,
     file_path: String,
     file_name: String,
+    errors: Vec<AppError>,
+    error_map: HashMap<AppError, String>,
+    schematic: Option<Schematic>,
 }
 
 impl Default for App {
@@ -19,6 +29,11 @@ impl Default for App {
             schematic_path: String::from("resources/test_schematics/"),
             file_path: String::from("resources/test_obj/"),
             file_name: String::from("test"),
+            errors: Vec::new(),
+            error_map: HashMap::from([
+                (AppError::SchematicLoad, String::from("Error loading Schematic"))
+            ]),
+            schematic: None,
         }
     }
 }
@@ -27,11 +42,21 @@ impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("Voxel Smith");
-
+            
+            ui.label("Schematic: ");
             ui.horizontal(|ui| {
-                let schem_path_label = ui.label("Schematic filepath: ");
-                ui.text_edit_singleline(&mut self.schematic_path)
-                    .labelled_by(schem_path_label.id);
+                if ui.button("Open file…").clicked() {
+                    if let Some(path) = rfd::FileDialog::new().pick_file() {
+                        self.try_load_schematic(path.display().to_string());
+                    }
+                }
+    
+                if self.schematic_path.len() > 0 {
+                    ui.horizontal(|ui| {
+                        ui.label("Picked file:");
+                        ui.monospace(&self.schematic_path);
+                    });
+                }
             });
 
             ui.horizontal(|ui| {
@@ -46,28 +71,53 @@ impl eframe::App for App {
                     .labelled_by(file_name_label.id);
             });
 
-            if ui.button("Generate").clicked() {
-                generate(&self.schematic_path, &self.file_path, &self.file_name)
+            ui.horizontal(|ui| {
+                if ui.button("Generate").clicked() {
+                    self.generate();
+                }
+    
+                if ui.button("Dump JSON").clicked() {
+    
+                    let _ = _dump_json(&self.schematic_path, &self.file_name);
+                }
+            });
+
+            for error in &self.errors {
+                ui.colored_label(Color32::from_rgb(255, 0, 0), &self.error_map[&error]);
             }
 
-            if ui.button("Dump JSON").clicked() {
-                _dump_json(&self.schematic_path, &self.file_name);
-            }
         });
     }
 }
 
-fn generate(schem_path: &str, file_path: &str, file_name: &str) {
-    let schematic = load_schematic(schem_path);
+impl App {
+    fn try_load_schematic(&mut self, file_path: String){
+        let schematic = load_schematic(&file_path);
 
-    match schematic {
-        Ok(schematic) => {
-            let obj = generate_obj_string(&schematic, file_name);
-            let mut file = File::create(file_path.to_owned() + file_name + ".obj").unwrap();
-            write!(&mut file, "{}\n", obj).unwrap();
+        match schematic {
+            Ok(schematic) => {
+                self.schematic = Some(schematic);
+                self.schematic_path = file_path;
+
+                self.errors.retain(|x| x != &AppError::SchematicLoad)
+            }
+            Err(_err) => {
+
+                self.schematic_path = "".to_owned();
+                self.schematic = None;
+
+                if !self.errors.contains(&AppError::SchematicLoad) {
+                    self.errors.push(AppError::SchematicLoad);
+                }
+            }
         }
-        Err(err) => {
-            eprintln!("Error decoding schematic: {:?}", err);
+    }
+
+    fn generate(&self) {
+        if let Some(schematic) = &self.schematic {
+            let obj = generate_obj_string(&schematic, &self.file_name);
+            let mut file = File::create("".to_owned() + &self.file_path + &self.file_name + ".obj").unwrap();
+            write!(&mut file, "{}\n", obj).unwrap();
         }
     }
 }

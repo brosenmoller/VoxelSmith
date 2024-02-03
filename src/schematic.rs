@@ -15,23 +15,25 @@ pub struct Schematic {
 
 pub fn load_schematic(path: &str) -> Result<Schematic>
 {
-    let file = File::open(path).unwrap();
+    let file = File::open(path)?;
 
     let mut decoder = GzDecoder::new(file);
     let mut data = vec![];
-    decoder.read_to_end(&mut data).unwrap();
+    decoder.read_to_end(&mut data)?;
 
     return from_bytes(data.as_slice());
 }
 
-pub fn _dump_json(path: &str, file_name: &str) {
-    let file = File::open(path).unwrap();
+pub fn _dump_json(path: &str, file_name: &str) -> Result<()> {
+    let file = File::open(path)?;
 
     let mut decoder = GzDecoder::new(file);
     let mut data = vec![];
-    decoder.read_to_end(&mut data).unwrap();
+    decoder.read_to_end(&mut data)?;
 
     let schematic: Result<Value> = from_bytes(data.as_slice());
-    let mut file = File::create("resources/schematic_json/".to_owned() + file_name + ".json").unwrap();
-    write!(&mut file, "{:?}", schematic).unwrap();
+    let mut file = File::create("resources/schematic_json/".to_owned() + file_name + ".json")?;
+    write!(&mut file, "{:?}", schematic)?;
+
+    Ok(())
 }

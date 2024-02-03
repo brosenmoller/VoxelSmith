@@ -46,30 +46,27 @@ pub fn generate_obj_string(schematic: &Schematic, name: &str) -> String {
 
                 if block_value == air_value { continue; }
 
-                fn check_index(index: i32, block_data: &Vec<i8>, air_value: i32) -> bool {
+                fn is_block_obstructed(index: i32, block_data: &Vec<i8>, air_value: i32) -> bool {
                     if index >= 0 && index < block_data.len() as i32 {
-                        if block_data[index as usize] as i32 != air_value { 
-                            return true; 
-                        } 
+                        return block_data[index as usize] as i32 != air_value;
                     }
-
-                    return false;
+                    false
                 }
 
                 let index_i32: i32 = index as i32;
 
                 // Check if adjacent cubes obstruct the face
-                let left_obstructed = x > 0 && check_index(index_i32 - 1, 
+                let left_obstructed = x > 0 && is_block_obstructed(index_i32 - 1, 
                     &block_data, air_value);
-                let right_obstructed = x < schematic.length - 1 && check_index(index_i32 + 1, 
+                let right_obstructed = x < schematic.length - 1 && is_block_obstructed(index_i32 + 1, 
                     &block_data, air_value);
-                let front_obstructed = z > 0 && check_index(index_i32 - schematic.width, 
+                let front_obstructed = z > 0 && is_block_obstructed(index_i32 - schematic.width, 
                     &block_data, air_value);
-                let back_obstructed = z < schematic.width - 1 && check_index(index_i32 + schematic.width, 
+                let back_obstructed = z < schematic.width - 1 && is_block_obstructed(index_i32 + schematic.width, 
                     &block_data, air_value);
-                let bottom_obstructed = y > 0 && check_index(index_i32 - schematic.length * schematic.width, 
+                let bottom_obstructed = y > 0 && is_block_obstructed(index_i32 - schematic.length * schematic.width, 
                     &block_data, air_value);
-                let top_obstructed = y < schematic.length - 1 && check_index(index_i32 + schematic.length * schematic.width, 
+                let top_obstructed = y < schematic.length - 1 && is_block_obstructed(index_i32 + schematic.length * schematic.width, 
                     &block_data, air_value);
 
                 //obj_string.push_str(&format!("o cube_{}_{}_{}\n", x, y, z));
