@@ -1,4 +1,4 @@
-use fastnbt::{error::Result, from_bytes, ByteArray, IntArray, Value};
+use fastnbt::{error::Result, from_bytes, ByteArray, Value};
 use serde::Deserialize;
 use flate2::read::GzDecoder;
 use std::{collections::HashMap, fs::File, io::{Read, Write}};
