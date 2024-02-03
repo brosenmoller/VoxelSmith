@@ -7,6 +7,13 @@ pub fn generate_obj_string(schematic: &Schematic) -> String {
     let mut v_count: usize = 1;
     let mut f_string: String = String::new();
 
+    let air_value = if schematic.palette.contains_key("minecraft:air") {
+        schematic.palette.get("minecraft:air").unwrap().clone()
+    }
+    else {
+        100000
+    };
+
     // normals
     obj_string.push_str(&format!("vn {} {} {}\n", -1, 0, 0));    // 1
     obj_string.push_str(&format!("vn {} {} {}\n", 1, 0, 0));     // 2
@@ -22,20 +29,27 @@ pub fn generate_obj_string(schematic: &Schematic) -> String {
 
                 if index >= schematic.block_data.len() { continue; }
 
-                let cube_value = schematic.block_data[index];
+                let cube_value = schematic.block_data[index] as i32;
 
                 let width = schematic.width as usize;
                 let length = schematic.length as usize;
 
-                if cube_value == 0 { continue; }
+                if cube_value == air_value { continue; }
+
+                fn check_index(index: usize, schematic: &Schematic, air_value: i32) -> bool {
+                    if index >= schematic.block_data.len() { return true; }
+                    if schematic.block_data[index] as i32 != air_value { return true; } 
+
+                    return false;
+                }
 
                 // Check if adjacent cubes obstruct the face
-                let left_obstructed = x > 0 && schematic.block_data[index - 1] > 0;
-                let right_obstructed = x < schematic.length - 1 && schematic.block_data[index + 1] > 0;
-                let front_obstructed = z > 0 && schematic.block_data[index - width] > 0;
-                let back_obstructed = z < schematic.width - 1 && schematic.block_data[index + width] > 0;
-                let bottom_obstructed = y > 0 && schematic.block_data[index - length * width] > 0;
-                let top_obstructed = y < schematic.length - 1 && schematic.block_data[index + length * width] > 0;
+                let left_obstructed = x > 0 && check_index(index - 1, schematic, air_value);
+                let right_obstructed = x < schematic.length - 1 && check_index(index + 1, schematic, air_value);
+                let front_obstructed = z > 0 && check_index(index - width, schematic, air_value);
+                let back_obstructed = z < schematic.width - 1 && check_index(index + width, schematic, air_value);
+                let bottom_obstructed = y > 0 && check_index(index - length * width, schematic, air_value);
+                let top_obstructed = y < schematic.length - 1 && check_index(index + length * width, schematic, air_value);
 
                 //obj_string.push_str(&format!("o cube_{}_{}_{}\n", x, y, z));
 
