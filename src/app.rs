@@ -1,6 +1,3 @@
-// hide console window on Windows in release
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] 
-
 use std::{collections::HashMap, fs::File, io::Write};
 use eframe::egui;
 use egui::Color32;
@@ -16,7 +13,7 @@ enum AppError {
 
 pub struct App {
     schematic_path: String,
-    file_path: String,
+    save_path: String,
     file_name: String,
     errors: Vec<AppError>,
     error_map: HashMap<AppError, String>,
@@ -27,7 +24,7 @@ impl Default for App {
     fn default() -> Self {
         Self {
             schematic_path: String::from("resources/test_schematics/"),
-            file_path: String::from("resources/test_obj/"),
+            save_path: String::from("resources/test_obj"),
             file_name: String::from("test"),
             errors: Vec::new(),
             error_map: HashMap::from([
@@ -54,15 +51,25 @@ impl eframe::App for App {
                 if self.schematic_path.len() > 0 {
                     ui.horizontal(|ui| {
                         ui.label("Picked file:");
-                        ui.monospace(&self.schematic_path);
+                        ui.text_edit_singleline(&mut self.schematic_path);
                     });
                 }
             });
 
+            ui.label("Save to: ");
             ui.horizontal(|ui| {
-                let file_path_label = ui.label("Save to: ");
-                ui.text_edit_singleline(&mut self.file_path)
-                    .labelled_by(file_path_label.id);
+                if ui.button("Open folder…").clicked() {
+                    if let Some(path) = rfd::FileDialog::new().pick_folder() {
+                        self.save_path = path.display().to_string();
+                    }
+                }
+    
+                if self.save_path.len() > 0 {
+                    ui.horizontal(|ui| {
+                        ui.label("Picked folder:");
+                        ui.text_edit_singleline(&mut self.save_path);
+                    });
+                }
             });
 
             ui.horizontal(|ui| {
@@ -116,7 +123,7 @@ impl App {
     fn generate(&self) {
         if let Some(schematic) = &self.schematic {
             let obj = generate_obj_string(&schematic, &self.file_name);
-            let mut file = File::create("".to_owned() + &self.file_path + &self.file_name + ".obj").unwrap();
+            let mut file = File::create("".to_owned() + &self.save_path + "/" + &self.file_name + ".obj").unwrap();
             write!(&mut file, "{}\n", obj).unwrap();
         }
     }

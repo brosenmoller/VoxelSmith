@@ -1,3 +1,6 @@
+// hide console window on Windows in release
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] 
+
 mod schematic;
 mod obj_generation;
 mod app;
@@ -11,7 +14,7 @@ fn main() -> Result<(), eframe::Error> {
         "Voxel Smith",
         eframe::NativeOptions {
             viewport: egui::ViewportBuilder::default()
-                .with_inner_size([320.0, 240.0])
+                .with_inner_size([480.0, 240.0])
                 .with_drag_and_drop(true),
             ..Default::default()
         },
