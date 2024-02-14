@@ -1,6 +1,6 @@
 # Voxel Smith
 
-Voxel Smith is an open-source Rust program designed to convert Minecraft schematic files into OBJ files.
+Voxel Smith is an Rust program designed to convert Minecraft schematic files into OBJ files.
 
 ## Disclaimer
 
