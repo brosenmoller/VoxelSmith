@@ -14,8 +14,7 @@ fn main() -> Result<(), eframe::Error> {
         "Voxel Smith",
         eframe::NativeOptions {
             viewport: egui::ViewportBuilder::default()
-                .with_inner_size([480.0, 240.0])
-                .with_drag_and_drop(true),
+                .with_inner_size([480.0, 240.0]),
             ..Default::default()
         },
         Box::new(|cc| {
@@ -24,4 +23,5 @@ fn main() -> Result<(), eframe::Error> {
             Box::<App>::default()
         }),
     )
+    
 }

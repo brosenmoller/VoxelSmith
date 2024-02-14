@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://bspgru1mi8pjj"]
+
+[ext_resource type="PackedScene" uid="uid://d3tjds7nsctmo" path="res://Scenes/World.tscn" id="1_3n8tb"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 392.0
+offset_top = 160.0
+offset_right = 1152.0
+offset_bottom = 654.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(760, 494)
+size_2d_override = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="World" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_3n8tb")]
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 192.0
+text = "Click Me"
