@@ -3,8 +3,8 @@ using Godot;
 public partial class Main : Control
 {
     [ExportGroup("Buttons")]
-    [Export] private Button exportButton;
     [Export] private Button saveButton;
+    [Export] private Button exportButton;
 
     [ExportGroup("File Dialogs")]
     [Export] private FileDialog openDialog;
@@ -16,8 +16,8 @@ public partial class Main : Control
     {
         worldController = this.GetChildByType<WorldController>();
 
-        exportButton.Pressed += OnExportButtonPressed;
         saveButton.Pressed += OnSaveButtonPressed;
+        exportButton.Pressed += OnExportButtonPressed;
     }
 
     private void OnSaveButtonPressed()

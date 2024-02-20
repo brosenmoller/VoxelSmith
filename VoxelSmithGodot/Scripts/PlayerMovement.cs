@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PlayerController : CharacterBody3D
+public partial class PlayerMovement : CharacterBody3D
 {
     [ExportGroup("Settings")]
     [Export] private float walkSpeed = 5.0f;
@@ -34,7 +34,7 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion eventMouseButton && active)
+        if (@event is InputEventMouseMotion eventMouseButton)
         {
             cameraPivot.RotateY(-eventMouseButton.Relative.X * sensitivity);
             camera.RotateX(-eventMouseButton.Relative.Y * sensitivity);
@@ -44,7 +44,7 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!active) { return; }
+        //if (!active) { return; }
 
         Vector3 tempVelocity = Velocity;
 

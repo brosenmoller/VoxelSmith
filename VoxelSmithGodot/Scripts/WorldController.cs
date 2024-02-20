@@ -2,16 +2,17 @@
 
 public partial class WorldController : Node3D
 {
-    private PlayerController player;
+    private PlayerMovement player;
 
     private bool worldInFocus = false;
+
     private bool windowInFocus = true;
 
     public bool canGoInFocus = true;
 
     public override void _Ready()
     {
-        player = this.GetChildByType<PlayerController>();
+        player = this.GetChildByType<PlayerMovement>();
     }
 
     public override void _Notification(int notification)
@@ -51,6 +52,13 @@ public partial class WorldController : Node3D
             }
         }
 
-        player.active = worldInFocus;
+        if (worldInFocus)
+        {
+            player.ProcessMode = ProcessModeEnum.Inherit;
+        }
+        else
+        {
+            player.ProcessMode = ProcessModeEnum.Disabled;
+        }
     }
 }
