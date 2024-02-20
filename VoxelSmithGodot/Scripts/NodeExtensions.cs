@@ -19,7 +19,9 @@ public static class NodeExtensions
             {
                 T recursiveResult = child.GetChildByType<T>(true);
                 if (recursiveResult != null)
+                {
                     return recursiveResult;
+                }
             }
         }
 

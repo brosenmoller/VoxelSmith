@@ -4,37 +4,29 @@ public partial class WorldController : Node3D
 {
     private PlayerMovement player;
 
-    private bool worldInFocus = false;
-
-    private bool windowInFocus = true;
+    private bool worldInFocus;
+    private bool WorldInFocus { 
+        get { return worldInFocus; } 
+        set 
+        {
+            worldInFocus = value;
+            UpdatePlayerProcess();
+        }
+    }
 
     public bool canGoInFocus = true;
 
     public override void _Ready()
     {
         player = this.GetChildByType<PlayerMovement>();
-    }
-
-    public override void _Notification(int notification)
-    {
-        switch (notification)
-        {
-            case (int)MainLoop.NotificationApplicationFocusIn:
-                windowInFocus = true;
-                break;
-
-            case (int)MainLoop.NotificationApplicationFocusOut:
-                windowInFocus = false;
-                worldInFocus = false;
-                break;
-        }
+        WorldInFocus = false;
     }
 
     public override void _Process(double delta)
     {
         if (Input.IsActionPressed("unlock_mouse"))
         {
-            worldInFocus = false;
+            WorldInFocus = false;
             Input.MouseMode = Input.MouseModeEnum.Visible;
         }
 
@@ -45,14 +37,17 @@ public partial class WorldController : Node3D
 
             if (mousePos.X > 0 && mousePos.X < size.X &&
                 mousePos.Y > 0 && mousePos.Y < size.Y &&
-                canGoInFocus && windowInFocus)
+                canGoInFocus)
             {
                 Input.MouseMode = Input.MouseModeEnum.Captured;
-                worldInFocus = true;
+                WorldInFocus = true;
             }
         }
+    }
 
-        if (worldInFocus)
+    private void UpdatePlayerProcess()
+    {
+        if (WorldInFocus)
         {
             player.ProcessMode = ProcessModeEnum.Inherit;
         }

@@ -16,7 +16,7 @@ public partial class FirstPersonCamera : Node3D
     [Export] private float tBob = 0;
 
     [ExportGroup("References")]
-    [Export] private PlayerMovement playerMovement;
+    [Export] private CharacterBody3D playerMovement;
 
     private Camera3D camera;
 
@@ -39,7 +39,6 @@ public partial class FirstPersonCamera : Node3D
     {
         tBob += (float)delta * playerMovement.Velocity.Length() * Convert.ToSingle(playerMovement.IsOnFloor());
         camera.Transform = camera.Transform with { Origin = Headbob(tBob) };
-
 
         // FOV
         float velocityClamped = Mathf.Clamp(playerMovement.Velocity.Length(), minFOVMultiplier, maxFOVMultiplier);

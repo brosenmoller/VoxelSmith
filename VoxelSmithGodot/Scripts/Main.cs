@@ -18,17 +18,23 @@ public partial class Main : Control
 
         saveButton.Pressed += OnSaveButtonPressed;
         exportButton.Pressed += OnExportButtonPressed;
+
+        openDialog.VisibilityChanged += UpdateFocus;
+        saveDialog.VisibilityChanged += UpdateFocus;
     }
 
     private void OnSaveButtonPressed()
     {
         openDialog.Visible = true;
-        worldController.canGoInFocus = false;
     }
 
     private void OnExportButtonPressed()
     {
         saveDialog.Visible = true;
-        worldController.canGoInFocus = false;
+    }
+
+    private void UpdateFocus()
+    {
+        worldController.canGoInFocus = !(openDialog.Visible || saveDialog.Visible);
     }
 }
