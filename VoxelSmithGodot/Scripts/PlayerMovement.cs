@@ -17,8 +17,6 @@ public partial class PlayerMovement : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        //if (!active) { return; }
-
         Vector3 tempVelocity = Velocity;
 
         // Add the gravity.

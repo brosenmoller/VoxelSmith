@@ -27,10 +27,10 @@ public partial class FirstPersonCamera : Node3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion eventMouseButton)
+        if (@event is InputEventMouseMotion mouseDelta)
         {
-            RotateY(-eventMouseButton.Relative.X * sensitivity);
-            camera.RotateX(-eventMouseButton.Relative.Y * sensitivity);
+            RotateY(-mouseDelta.Relative.X * sensitivity);
+            camera.RotateX(-mouseDelta.Relative.Y * sensitivity);
             camera.Rotation = camera.Rotation with { X = Mathf.Clamp(camera.Rotation.X, Mathf.DegToRad(-40), Mathf.DegToRad(60)) };
         }
     }

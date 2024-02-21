@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3tjds7nsctmo"]
+[gd_scene load_steps=8 format=3 uid="uid://d3tjds7nsctmo"]
 
 [ext_resource type="PackedScene" uid="uid://d3k3wqgisj63v" path="res://Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Scripts/WorldController.cs" id="1_jc1bk"]
+[ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Art/Ground.tres" id="2_jyeup"]
+[ext_resource type="PackedScene" uid="uid://dsx0dh38va5o2" path="res://Scenes/WorldUI.tscn" id="4_3hew2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -27,6 +29,10 @@ transform = Transform3D(-0.958323, 0.261993, -0.113918, 0, 0.398749, 0.91706, 0.
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(22.725, 0, 0, 0, 0.1, 0, 0, 0, 26.25, 0, 0, 0)
+material_override = ExtResource("2_jyeup")
 use_collision = true
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
+
+[node name="WorldUI" parent="." instance=ExtResource("4_3hew2")]
+metadata/_edit_use_anchors_ = true

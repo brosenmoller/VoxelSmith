@@ -43,6 +43,7 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 160.0
 offset_bottom = 72.0
+focus_mode = 0
 text = "Load Schematic"
 
 [node name="ExportButton" type="Button" parent="."]
@@ -51,6 +52,7 @@ offset_left = 168.0
 offset_top = 16.0
 offset_right = 312.0
 offset_bottom = 72.0
+focus_mode = 0
 text = "Export"
 
 [node name="OpenFileDialog" type="FileDialog" parent="."]

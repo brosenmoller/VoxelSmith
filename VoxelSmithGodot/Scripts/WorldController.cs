@@ -2,6 +2,9 @@
 
 public partial class WorldController : Node3D
 {
+    public static WorldController Instance { get; private set; }
+
+
     private PlayerMovement player;
 
     private bool worldInFocus;
@@ -18,6 +21,8 @@ public partial class WorldController : Node3D
 
     public override void _Ready()
     {
+        Instance = this;
+
         player = this.GetChildByType<PlayerMovement>();
         WorldInFocus = false;
     }
