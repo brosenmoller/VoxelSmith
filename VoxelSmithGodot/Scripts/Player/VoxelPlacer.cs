@@ -11,7 +11,13 @@ public partial class VoxelPlacer : RayCast3D
         {
             Voxel voxel = voxelScene.Instantiate<Voxel>();
             WorldController.Instance.AddChild(voxel);
-            voxel.Transform = voxel.Transform with { Origin = GetCollisionPoint() };
+
+            Vector3 location = GetCollisionPoint();
+            location.X = Mathf.RoundToInt(location.X);
+            location.Y = Mathf.RoundToInt(location.Y);
+            location.Z = Mathf.RoundToInt(location.Z);
+
+            voxel.Transform = voxel.Transform with { Origin = location };
         }
     }
 }

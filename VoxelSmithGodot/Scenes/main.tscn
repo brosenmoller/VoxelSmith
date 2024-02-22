@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bspgru1mi8pjj"]
 
-[ext_resource type="PackedScene" uid="uid://d3tjds7nsctmo" path="res://Scenes/World.tscn" id="1_3n8tb"]
-[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_vep2f"]
+[ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Scenes/World.tscn" id="1_3n8tb"]
+[ext_resource type="Script" path="res://Scripts/UI/Main.cs" id="1_76p31"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("saveButton", "exportButton", "openDialog", "saveDialog")]
 layout_mode = 3
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_vep2f")
+script = ExtResource("1_76p31")
 saveButton = NodePath("SchematicButton")
 exportButton = NodePath("ExportButton")
 openDialog = NodePath("OpenFileDialog")

@@ -3,8 +3,12 @@ using System;
 
 public partial class FirstPersonCamera : Node3D
 {
-    [ExportGroup("Camera")]
+    [ExportGroup("Base Settings")]
     [Export] private float sensitivity = 0.004f;
+    [Export] private float minXRotation = -89;
+    [Export] private float maxXRotation = 89;
+
+    [ExportGroup("FOV")]
     [Export] private float baseFOV = 75.0f;
     [Export] private float FOVChange = 1.5f;
     [Export] private float maxFOVMultiplier = 16.0f;
@@ -13,12 +17,12 @@ public partial class FirstPersonCamera : Node3D
     [ExportGroup("View Bobbing")]
     [Export] private float bobFrequency = 2;
     [Export] private float bobAmplitude = 0.06f;
-    [Export] private float tBob = 0;
 
     [ExportGroup("References")]
     [Export] private CharacterBody3D playerMovement;
 
     private Camera3D camera;
+    private float bobTime = 0;
 
     public override void _Ready()
     {
@@ -31,14 +35,15 @@ public partial class FirstPersonCamera : Node3D
         {
             RotateY(-mouseDelta.Relative.X * sensitivity);
             camera.RotateX(-mouseDelta.Relative.Y * sensitivity);
-            camera.Rotation = camera.Rotation with { X = Mathf.Clamp(camera.Rotation.X, Mathf.DegToRad(-40), Mathf.DegToRad(60)) };
+            camera.Rotation = camera.Rotation with { X = Mathf.Clamp(camera.Rotation.X, Mathf.DegToRad(minXRotation), Mathf.DegToRad(maxXRotation)) };
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        tBob += (float)delta * playerMovement.Velocity.Length() * Convert.ToSingle(playerMovement.IsOnFloor());
-        camera.Transform = camera.Transform with { Origin = Headbob(tBob) };
+        // View Bobbing
+        bobTime += (float)delta * playerMovement.Velocity.Length() * Convert.ToSingle(playerMovement.IsOnFloor());
+        camera.Transform = camera.Transform with { Origin = Headbob(bobTime) };
 
         // FOV
         float velocityClamped = Mathf.Clamp(playerMovement.Velocity.Length(), minFOVMultiplier, maxFOVMultiplier);

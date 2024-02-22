@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3tjds7nsctmo"]
+[gd_scene load_steps=7 format=3 uid="uid://cat4pi5xpdjow"]
 
-[ext_resource type="PackedScene" uid="uid://d3k3wqgisj63v" path="res://Scenes/player.tscn" id="1_4yetj"]
-[ext_resource type="Script" path="res://Scripts/WorldController.cs" id="1_jc1bk"]
+[ext_resource type="Script" path="res://Scripts/UI/WorldController.cs" id="1_3phex"]
+[ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Art/Ground.tres" id="2_jyeup"]
-[ext_resource type="PackedScene" uid="uid://dsx0dh38va5o2" path="res://Scenes/WorldUI.tscn" id="4_3hew2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -19,7 +18,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="World" type="Node3D"]
-script = ExtResource("1_jc1bk")
+script = ExtResource("1_3phex")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_td26l")
@@ -33,6 +32,3 @@ material_override = ExtResource("2_jyeup")
 use_collision = true
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
-
-[node name="WorldUI" parent="." instance=ExtResource("4_3hew2")]
-metadata/_edit_use_anchors_ = true

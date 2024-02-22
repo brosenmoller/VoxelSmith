@@ -24,14 +24,13 @@ public partial class PlayerMovement : CharacterBody3D
         {
             tempVelocity.Y -= gravity * (float)delta;
         }
-            
-
+        
         // Handle Jump.
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
             tempVelocity.Y = jumpVelocity;
         }
-            
+        
         // Handle Sprint.
         if (Input.IsActionPressed("sprint"))
         {
@@ -41,7 +40,7 @@ public partial class PlayerMovement : CharacterBody3D
         {
             speed = walkSpeed;
         }
-            
+        
         // Get the input direction and handle the movement/deceleration.
         Vector2 inputDir = Input.GetVector("left", "right", "up", "down");
         Vector3 direction = (pivot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
