@@ -13,9 +13,12 @@ config_version=5
 config/name="VoxelSmith"
 config/description="Voxel Smith is a Game Development tool created in Godot. It is a voxel based level editor which allows you to export to OBJ and UnityPrefab."
 run/main_scene="res://Scenes/main.tscn"
-config/use_custom_user_dir=true
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://Scripts/Management/GameManager.cs"
 
 [display]
 

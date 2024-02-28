@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class State
+public class ProjectData
 {
     public Guid id;
     public string name;
     public HashSet<Vector3I> voxels;
 
-    public State(string name)
+    public ProjectData(string name)
     {
         id = Guid.NewGuid();
         this.name = name;
