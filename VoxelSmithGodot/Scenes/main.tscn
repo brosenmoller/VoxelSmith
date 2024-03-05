@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://byepkejc3664l"]
+[gd_scene load_steps=18 format=3 uid="uid://byepkejc3664l"]
 
 [ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Scenes/World.tscn" id="1_3n8tb"]
 [ext_resource type="Script" path="res://Scripts/UI/Main.cs" id="1_76p31"]
@@ -14,6 +14,7 @@
 [ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://MenuResources/EditMenu/RedoShortcut.tres" id="11_ri3kq"]
 [ext_resource type="ButtonGroup" uid="uid://bhxyko6wf343y" path="res://MenuResources/PlayerMode/PlayerModeButtonGroup.tres" id="12_my0mf"]
 [ext_resource type="Shortcut" uid="uid://bcvlfg5g041ka" path="res://MenuResources/PlayerMode/WalkModeShorcut.tres" id="13_762q0"]
+[ext_resource type="Texture2D" uid="uid://ctw1v2tw0kxqr" path="res://Art/Icons/person-walking-solid.svg" id="14_x2p2j"]
 [ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://MenuResources/PlayerMode/FlyModeShorcut.tres" id="14_yty5m"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://MenuResources/PlayerMode/OrbitModeShorcut.tres" id="15_35ftc"]
 
@@ -29,6 +30,7 @@ saveButton = NodePath("SchematicButton")
 exportButton = NodePath("ExportButton")
 openDialog = NodePath("OpenFileDialog")
 saveDialog = NodePath("SaveFileDialog")
+metadata/_edit_vertical_guides_ = [-58.0]
 
 [node name="SchematicButton" type="Button" parent="."]
 visible = false
@@ -80,6 +82,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 20
+flat = true
 
 [node name="Project" type="PopupMenu" parent="Main/TopBar/MenuBar"]
 size = Vector2i(171, 224)
@@ -107,6 +110,8 @@ layout_mode = 2
 tooltip_text = "Walk Mode"
 button_group = ExtResource("12_my0mf")
 shortcut = ExtResource("13_762q0")
+icon = ExtResource("14_x2p2j")
+expand_icon = true
 
 [node name="FlyMode" type="CheckButton" parent="Main/TopBar/PlayerMode"]
 layout_mode = 2
@@ -130,32 +135,32 @@ theme_override_constants/separation = 0
 theme_override_constants/minimum_grab_thickness = 110
 split_offset = 200
 
-[node name="Inspector" type="VSplitContainer" parent="Main/MainWindow"]
+[node name="Options" type="VSplitContainer" parent="Main/MainWindow"]
 layout_mode = 2
 
-[node name="ToolOptions" type="VBoxContainer" parent="Main/MainWindow/Inspector"]
+[node name="ToolOptions" type="VBoxContainer" parent="Main/MainWindow/Options"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Main/MainWindow/Inspector/ToolOptions"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Main/MainWindow/Options/ToolOptions"]
 custom_minimum_size = Vector2(0, 24.685)
 layout_mode = 2
 text = "Tool Options
 "
 
-[node name="Panel" type="ColorRect" parent="Main/MainWindow/Inspector/ToolOptions"]
+[node name="Panel" type="ColorRect" parent="Main/MainWindow/Options/ToolOptions"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 
-[node name="Pallete" type="VBoxContainer" parent="Main/MainWindow/Inspector"]
+[node name="Pallete" type="VBoxContainer" parent="Main/MainWindow/Options"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Main/MainWindow/Inspector/Pallete"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Main/MainWindow/Options/Pallete"]
 custom_minimum_size = Vector2(0, 24.685)
 layout_mode = 2
 text = "Pallete
 "
 
-[node name="Panel" type="ColorRect" parent="Main/MainWindow/Inspector/Pallete"]
+[node name="Panel" type="ColorRect" parent="Main/MainWindow/Options/Pallete"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 

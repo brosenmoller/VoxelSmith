@@ -3,6 +3,8 @@
 [sub_resource type="InputEventKey" id="InputEventKey_ibgwj"]
 device = -1
 keycode = 49
+physical_keycode = 49
+key_label = 49
 unicode = 49
 
 [resource]

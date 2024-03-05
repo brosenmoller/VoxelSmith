@@ -2,7 +2,7 @@
 
 public static class NodeExtensions
 {
-    //acts like Unity's GetComponent<T> / GetComponentInChildren<T>
+    // Acts like Unity's GetComponent<T> / GetComponentInChildren<T>
     public static T GetChildByType<T>(this Node node, bool recursive = true) where T : Node
     {
         int childCount = node.GetChildCount();
@@ -28,7 +28,7 @@ public static class NodeExtensions
         return null;
     }
 
-    //acts like Unity's GetComponentInParent<T>
+    // Acts like Unity's GetComponentInParent<T>
     public static T GetParentByType<T>(this Node node) where T : Node
     {
         Node parent = node.GetParent();

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/UI/WorldController.cs" id="1_3phex"]
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Scenes/player.tscn" id="1_4yetj"]
-[ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Art/Ground.tres" id="2_jyeup"]
+[ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Art/Materials/Ground.tres" id="2_0y4jl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -28,7 +28,7 @@ transform = Transform3D(-0.958323, 0.261993, -0.113918, 0, 0.398749, 0.91706, 0.
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(22.725, 0, 0, 0, 0.1, 0, 0, 0, 26.25, 0, 0, 0)
-material_override = ExtResource("2_jyeup")
+material_override = ExtResource("2_0y4jl")
 use_collision = true
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
