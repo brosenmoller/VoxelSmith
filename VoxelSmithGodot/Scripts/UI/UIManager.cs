@@ -1,11 +1,7 @@
 using Godot;
 
-public partial class Main : Control
+public partial class UIManager : Control
 {
-    [ExportGroup("Buttons")]
-    [Export] private Button saveButton;
-    [Export] private Button exportButton;
-
     [ExportGroup("File Dialogs")]
     [Export] private FileDialog openDialog;
     [Export] private FileDialog saveDialog;
@@ -15,9 +11,6 @@ public partial class Main : Control
     public override void _Ready()
     {
         worldController = this.GetChildByType<WorldController>();
-
-        saveButton.Pressed += OnSaveButtonPressed;
-        exportButton.Pressed += OnExportButtonPressed;
 
         openDialog.VisibilityChanged += UpdateFocus;
         saveDialog.VisibilityChanged += UpdateFocus;
