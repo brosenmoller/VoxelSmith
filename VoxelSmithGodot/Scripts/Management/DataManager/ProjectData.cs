@@ -12,9 +12,9 @@ public class ProjectData
 
     public ProjectData(string name, Guid palleteID)
     {
-        projectID = Guid.NewGuid();
         this.name = name;
-        voxels = new HashSet<Vector3I>();
+        projectID = Guid.NewGuid();
         this.palleteID = palleteID;
+        voxels = new HashSet<Vector3I>();
     }
 }

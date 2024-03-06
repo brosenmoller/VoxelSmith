@@ -6,23 +6,7 @@ public class DataHolder<T>
 {
     public T Data { get; set; }
 
-    private string path;
-
-    public DataHolder(string path, T defaultData)
-    {
-        this.path = path;
-
-        try
-        {
-            Load();
-        }
-        catch 
-        {
-            Data = defaultData;
-        }
-    }
-
-    public void Load()
+    public void Load(string path)
     {
         try
         {
@@ -36,9 +20,9 @@ public class DataHolder<T>
         }
     }
 
-    public void Save()
+    public void Save(string path)
     {
-        JsonSerializerOptions serializerOptions = new() { IncludeFields = true };
+        JsonSerializerOptions serializerOptions = new() { IncludeFields = true,  };
 
         string jsonString = JsonSerializer.Serialize(Data, serializerOptions);
 

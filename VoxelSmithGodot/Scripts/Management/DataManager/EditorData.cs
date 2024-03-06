@@ -4,19 +4,18 @@ using System.Collections.Generic;
 [Serializable]
 public class EditorData
 {
-    public string Version;
-    public Dictionary<Guid, string> SavePaths;
+    public string version;
+    public Guid? lastProject;
+    public Dictionary<Guid, string> palettePaths;
+    public Dictionary<Guid, string> savePaths;
     public Dictionary<Guid, string> exportPaths;
     public EditorData() 
     {
-        Version = "0.1";
-        SavePaths = new Dictionary<Guid, string>();
+        version = "0.1";
+        lastProject = null;
+        palettePaths = new Dictionary<Guid, string>();
+        savePaths = new Dictionary<Guid, string>();
         exportPaths = new Dictionary<Guid, string>();
-    }
-
-    public static EditorData Default()
-    {
-        return new EditorData();
     }
 }
 

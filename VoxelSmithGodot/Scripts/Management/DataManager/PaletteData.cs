@@ -14,11 +14,6 @@ public class PaletteData
         palleteColors = new List<PalleteColor>();
     }
 
-    public static PaletteData Default()
-    {
-        return new PaletteData();
-    }
-
     [Serializable]
     public class PalleteColor
     {
