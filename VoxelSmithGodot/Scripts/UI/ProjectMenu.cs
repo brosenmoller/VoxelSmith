@@ -13,6 +13,16 @@ public partial class ProjectMenu : PopupMenu
     public override void _Ready()
     {
         SetupMenu();
+        IdPressed += OnMenuItemSelected;
+    }
+
+    private void OnMenuItemSelected(long id)
+    {
+        switch (id)
+        {
+            case (long)ProjectOptions.NEW:
+                break;
+        }
     }
 
     private void SetupMenu()

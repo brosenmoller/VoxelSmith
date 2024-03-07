@@ -9,6 +9,16 @@ public partial class EditMenu : PopupMenu
     public override void _Ready()
     {
         SetupMenu();
+        IdPressed += OnMenuItemSelected;
+    }
+
+    private void OnMenuItemSelected(long id)
+    {
+        switch (id)
+        {
+            case (long)EditOptions.UNDO:
+                break;
+        }
     }
 
     private void SetupMenu()

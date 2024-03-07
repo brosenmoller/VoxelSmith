@@ -3,8 +3,9 @@ using Godot;
 public partial class UIManager : Control
 {
     [ExportGroup("File Dialogs")]
-    [Export] private FileDialog openDialog;
-    [Export] private FileDialog saveDialog;
+    [Export] private ConfirmationDialog newProjectDialog;
+    [Export] private FileDialog openProjectDialog;
+    [Export] private FileDialog saveAsDialog;
 
     private WorldController worldController;
 
@@ -12,22 +13,23 @@ public partial class UIManager : Control
     {
         worldController = this.GetChildByType<WorldController>();
 
-        openDialog.VisibilityChanged += UpdateFocus;
-        saveDialog.VisibilityChanged += UpdateFocus;
+        newProjectDialog.VisibilityChanged += UpdateFocus;
+        openProjectDialog.VisibilityChanged += UpdateFocus;
+        saveAsDialog.VisibilityChanged += UpdateFocus;
     }
 
     private void OnSaveButtonPressed()
     {
-        openDialog.Visible = true;
+        //openDialog.Visible = true;
     }
 
     private void OnExportButtonPressed()
     {
-        saveDialog.Visible = true;
+        //saveDialog.Visible = true;
     }
 
     private void UpdateFocus()
     {
-        worldController.canGoInFocus = !(openDialog.Visible || saveDialog.Visible);
+        //worldController.canGoInFocus = !(openDialog.Visible || saveDialog.Visible);
     }
 }
