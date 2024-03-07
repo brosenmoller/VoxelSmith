@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=8 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="Script" path="res://Scripts/UI/WorldController.cs" id="1_3phex"]
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Art/Materials/Ground.tres" id="2_0y4jl"]
+[ext_resource type="Script" path="res://Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,3 +33,6 @@ material_override = ExtResource("2_0y4jl")
 use_collision = true
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
+
+[node name="SurfaceMesh" type="MeshInstance3D" parent="."]
+script = ExtResource("4_48p0j")
