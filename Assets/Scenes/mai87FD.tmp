@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://bspgru1mi8pjj"]
+
+[ext_resource type="PackedScene" uid="uid://d3tjds7nsctmo" path="res://Scenes/World.tscn" id="1_3n8tb"]
+[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_vep2f"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vep2f")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333
+anchor_top = 0.296
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.384003
+offset_top = 0.192001
+grow_horizontal = 0
+grow_vertical = 0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(768, 456)
+size_2d_override = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="World" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_3n8tb")]
+
+[node name="SchematicButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 160.0
+offset_bottom = 72.0
+text = "Load Schematic"
+
+[node name="ExportButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 16.0
+offset_right = 312.0
+offset_bottom = 72.0
+text = "Export"
+
+[node name="OpenFileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Save"
+access = 2
+
+[connection signal="pressed" from="SchematicButton" to="." method="_on_schematic_button_pressed"]
+[connection signal="pressed" from="ExportButton" to="." method="_on_export_pressed"]
+[connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
+[connection signal="close_requested" from="SaveFileDialog" to="." method="_on_save_file_dialog_close_requested"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
+[connection signal="tree_exited" from="SaveFileDialog" to="." method="_on_save_file_dialog_tree_exited"]

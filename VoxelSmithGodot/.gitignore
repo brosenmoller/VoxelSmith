@@ -1,5 +1,0 @@
-# Godot 4+ specific ignores
-.godot/
-.vs/
-VoxelSmithGodot.csproj
-VoxelSmithGodot.sln
