@@ -44,23 +44,12 @@ public partial class VoxelPlacer : RayCast3D
             if (Input.IsActionJustPressed("place"))
             {
                 Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
-                //if (!Voxels.ContainsKey(nextVoxel))
-                //{
-                //    Voxels.Add(nextVoxel, new VoxelData());
-                //}
 
-                //levelMesh.UpdateMesh();
                 GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, new VoxelData(), levelMesh));
             }
             else if (Input.IsActionJustPressed("break"))
             {
-                //if (Voxels.ContainsKey(voxelPosition))
-                //{
-                //    Voxels.Remove(voxelPosition);
-                //}
-
-                //levelMesh.UpdateMesh();
-                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(voxelPosition, new VoxelData(), levelMesh));
+                GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition, new VoxelData(), levelMesh));
             }
         }
     }

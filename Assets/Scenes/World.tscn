@@ -1,14 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=14 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/WorldController.cs" id="1_3phex"]
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
-[ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Assets/Art/Materials/Ground.tres" id="2_0y4jl"]
+[ext_resource type="Shader" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/VoxelHighlight.tscn" id="5_y16gt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sky_top_color = Color(0.2, 0.482353, 0.611765, 1)
+sky_horizon_color = Color(0.588235, 0.682353, 0.639216, 1)
+sky_cover_modulate = Color(1, 0.490196, 0.490196, 1)
+ground_bottom_color = Color(0.588235, 0.682353, 0.639216, 1)
+ground_horizon_color = Color(0.588235, 0.682353, 0.639216, 1)
+sun_angle_max = 38.18
 
 [sub_resource type="Sky" id="Sky_ei7t6"]
 sky_material = SubResource("ProceduralSkyMaterial_lr1w3")
@@ -16,8 +20,20 @@ sky_material = SubResource("ProceduralSkyMaterial_lr1w3")
 [sub_resource type="Environment" id="Environment_td26l"]
 background_mode = 2
 sky = SubResource("Sky_ei7t6")
+sky_custom_fov = 70.0
 tonemap_mode = 2
 glow_enabled = true
+adjustment_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpmsq"]
+render_priority = 0
+shader = ExtResource("2_mrtu5")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s1d43"]
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qgt8u"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
 albedo_color = Color(1, 0.270588, 0.270588, 1)
@@ -36,28 +52,35 @@ environment = SubResource("Environment_td26l")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.958323, 0.261993, -0.113918, 0, 0.398749, 0.91706, 0.285688, 0.878839, -0.38213, 0, 0, 0)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(22.725, 0, 0, 0, 0.1, 0, 0, 0, 26.25, 0, 0, 0)
-material_override = ExtResource("2_0y4jl")
-use_collision = true
-collision_layer = 3
+shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.501172, 0.899977, 0.260335)
 
 [node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "collisionHighlight")]
 enableVoxelHighlight = true
 voxelHiglight = NodePath("../../../../Voxel")
 collisionHighlight = NodePath("../../../../HitPointHighlight")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="."]
 collision_layer = 3
 
-[node name="SurfaceMesh" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+material_override = SubResource("ShaderMaterial_bpmsq")
+mesh = SubResource("PlaneMesh_s1d43")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("ConcavePolygonShape3D_qgt8u")
+
+[node name="SurfaceCollider" type="StaticBody3D" parent="."]
+collision_layer = 3
+
+[node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceCollider"]
 skeleton = NodePath("../..")
 script = ExtResource("4_48p0j")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceCollider"]
 
 [node name="HitPointHighlight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980523, 0.622928, -0.945743)

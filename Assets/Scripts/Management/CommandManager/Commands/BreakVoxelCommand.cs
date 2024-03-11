@@ -1,12 +1,12 @@
 ﻿using Godot;
 
-public class BreakCommand
+public class BreakVoxelCommand : ICommand
 {
     public Vector3I voxelPosition;
     public VoxelData voxelData;
     public SurfaceMesh surfaceMesh;
 
-    public BreakCommand(Vector3I voxelPosition, VoxelData voxelData, SurfaceMesh surfaceMesh)
+    public BreakVoxelCommand(Vector3I voxelPosition, VoxelData voxelData, SurfaceMesh surfaceMesh)
     {
         this.voxelPosition = voxelPosition;
         this.voxelData = voxelData;
