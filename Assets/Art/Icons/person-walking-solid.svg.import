@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctw1v2tw0kxqr"
-path="res://.godot/imported/person-walking-solid.svg-5dac248006194572848f8406d8efe7a0.ctex"
+path="res://.godot/imported/person-walking-solid.svg-d585314ff4274833c37744f4ae367c7a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Icons/person-walking-solid.svg"
-dest_files=["res://.godot/imported/person-walking-solid.svg-5dac248006194572848f8406d8efe7a0.ctex"]
+source_file="res://Assets/Art/Icons/person-walking-solid.svg"
+dest_files=["res://.godot/imported/person-walking-solid.svg-d585314ff4274833c37744f4ae367c7a.ctex"]
 
 [params]
 

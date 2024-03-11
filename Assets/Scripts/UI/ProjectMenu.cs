@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class ProjectMenu : PopupMenu
 {
@@ -10,6 +11,13 @@ public partial class ProjectMenu : PopupMenu
     [Export] private Shortcut importSchematicShortcut;
     [Export] private Shortcut refreshSchematicShortcut;
 
+    public static event Action OnNewPressed;
+    public static event Action OnSavePressed;
+    public static event Action OnSaveAsPressed;
+    public static event Action OnOpenPressed;
+    public static event Action OnImportSchematicPressed;
+    public static event Action OnRefreshSchematicPressed;
+
     public override void _Ready()
     {
         SetupMenu();
@@ -20,8 +28,12 @@ public partial class ProjectMenu : PopupMenu
     {
         switch (id)
         {
-            case (long)ProjectOptions.NEW:
-                break;
+            case (long)ProjectOptions.NEW: OnNewPressed?.Invoke(); break;
+            case (long)ProjectOptions.SAVE: OnSavePressed?.Invoke(); break;
+            case (long)ProjectOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
+            case (long)ProjectOptions.OPEN: OnOpenPressed?.Invoke(); break;
+            case (long)ProjectOptions.IMPORT_SCHEMATIC: OnImportSchematicPressed?.Invoke(); break;
+            case (long)ProjectOptions.REFRESH_SCHEMATIC: OnRefreshSchematicPressed?.Invoke(); break;
         }
     }
 

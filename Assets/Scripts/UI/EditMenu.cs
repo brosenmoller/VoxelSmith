@@ -1,10 +1,14 @@
 using Godot;
+using System;
 
 public partial class EditMenu : PopupMenu
 {
     [ExportGroup("Shortcuts")]
     [Export] private Shortcut undoShortcut;
     [Export] private Shortcut redoShortcut;
+
+    public static event Action OnUndoPressed;
+    public static event Action OnRedoPressed;
 
     public override void _Ready()
     {
@@ -16,8 +20,8 @@ public partial class EditMenu : PopupMenu
     {
         switch (id)
         {
-            case (long)EditOptions.UNDO:
-                break;
+            case (long)EditOptions.UNDO: OnUndoPressed?.Invoke(); break;
+            case (long)EditOptions.REDO: OnRedoPressed?.Invoke(); break;
         }
     }
 

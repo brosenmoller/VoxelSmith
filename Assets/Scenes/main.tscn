@@ -1,24 +1,24 @@
 [gd_scene load_steps=18 format=3 uid="uid://byepkejc3664l"]
 
-[ext_resource type="Script" path="res://Scripts/UI/UIManager.cs" id="1_0q5bx"]
-[ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Scenes/World.tscn" id="1_3n8tb"]
-[ext_resource type="Script" path="res://Scripts/UI/ProjectMenu.cs" id="2_51ipb"]
-[ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://MenuResources/ProjectMenu/NewProjectShortcut.tres" id="3_g8yib"]
-[ext_resource type="Script" path="res://Scripts/UI/EditMenu.cs" id="3_w8nqj"]
-[ext_resource type="Shortcut" uid="uid://c1ora4olvy0r4" path="res://MenuResources/ProjectMenu/SaveProjectShortcut.tres" id="4_10ryw"]
-[ext_resource type="Shortcut" uid="uid://bq41hvwupxt7j" path="res://MenuResources/ProjectMenu/SaveAsProjectShortcut.tres" id="5_ch0iq"]
-[ext_resource type="Shortcut" uid="uid://shd825lrd3we" path="res://MenuResources/ProjectMenu/OpenProjectShortcut.tres" id="6_aljpn"]
-[ext_resource type="Shortcut" uid="uid://bqajjcmabxkcd" path="res://MenuResources/ProjectMenu/ImportSchematicShortcut.tres" id="7_dmmop"]
-[ext_resource type="Shortcut" uid="uid://db4ls4pp6ps3j" path="res://MenuResources/ProjectMenu/RefreshSchematicShortcut.tres" id="8_stwcs"]
-[ext_resource type="Shortcut" uid="uid://cat3smbjtttve" path="res://MenuResources/EditMenu/UndoShortcut.tres" id="10_jt5ma"]
-[ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://MenuResources/EditMenu/RedoShortcut.tres" id="11_ri3kq"]
-[ext_resource type="ButtonGroup" uid="uid://bhxyko6wf343y" path="res://MenuResources/PlayerMode/PlayerModeButtonGroup.tres" id="12_my0mf"]
-[ext_resource type="Shortcut" uid="uid://bcvlfg5g041ka" path="res://MenuResources/PlayerMode/WalkModeShorcut.tres" id="13_762q0"]
-[ext_resource type="Texture2D" uid="uid://ctw1v2tw0kxqr" path="res://Art/Icons/person-walking-solid.svg" id="14_x2p2j"]
-[ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://MenuResources/PlayerMode/FlyModeShorcut.tres" id="14_yty5m"]
-[ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://MenuResources/PlayerMode/OrbitModeShorcut.tres" id="15_35ftc"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/UIManager.cs" id="1_0q5bx"]
+[ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Assets/Scenes/World.tscn" id="1_3n8tb"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/ProjectMenu.cs" id="2_51ipb"]
+[ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="3_g8yib"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/EditMenu.cs" id="3_w8nqj"]
+[ext_resource type="Shortcut" uid="uid://c1ora4olvy0r4" path="res://Assets/MenuResources/ProjectMenu/SaveProjectShortcut.tres" id="4_10ryw"]
+[ext_resource type="Shortcut" uid="uid://bq41hvwupxt7j" path="res://Assets/MenuResources/ProjectMenu/SaveAsProjectShortcut.tres" id="5_ch0iq"]
+[ext_resource type="Shortcut" uid="uid://shd825lrd3we" path="res://Assets/MenuResources/ProjectMenu/OpenProjectShortcut.tres" id="6_aljpn"]
+[ext_resource type="Shortcut" uid="uid://bqajjcmabxkcd" path="res://Assets/MenuResources/ProjectMenu/ImportSchematicShortcut.tres" id="7_dmmop"]
+[ext_resource type="Shortcut" uid="uid://db4ls4pp6ps3j" path="res://Assets/MenuResources/ProjectMenu/RefreshSchematicShortcut.tres" id="8_stwcs"]
+[ext_resource type="Shortcut" uid="uid://cat3smbjtttve" path="res://Assets/MenuResources/EditMenu/UndoShortcut.tres" id="10_jt5ma"]
+[ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://Assets/MenuResources/EditMenu/RedoShortcut.tres" id="11_ri3kq"]
+[ext_resource type="ButtonGroup" uid="uid://bhxyko6wf343y" path="res://Assets/MenuResources/PlayerMode/PlayerModeButtonGroup.tres" id="12_my0mf"]
+[ext_resource type="Shortcut" uid="uid://bcvlfg5g041ka" path="res://Assets/MenuResources/PlayerMode/WalkModeShorcut.tres" id="13_762q0"]
+[ext_resource type="Texture2D" uid="uid://ctw1v2tw0kxqr" path="res://Assets/Art/Icons/person-walking-solid.svg" id="14_x2p2j"]
+[ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://Assets/MenuResources/PlayerMode/FlyModeShorcut.tres" id="14_yty5m"]
+[ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="15_35ftc"]
 
-[node name="UIManager" type="Control"]
+[node name="UIManager" type="Control" node_paths=PackedStringArray("newProjectDialog", "openProjectDialog", "saveAsDialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +26,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0q5bx")
+newProjectDialog = NodePath("NewProjectWindow")
+openProjectDialog = NodePath("OpenFileDialog")
+saveAsDialog = NodePath("SaveFileDialog")
 metadata/_edit_vertical_guides_ = [-58.0]
 
 [node name="OpenFileDialog" type="FileDialog" parent="."]

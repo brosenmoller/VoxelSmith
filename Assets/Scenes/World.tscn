@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=11 format=3 uid="uid://cat4pi5xpdjow"]
 
-[ext_resource type="Script" path="res://Scripts/UI/WorldController.cs" id="1_3phex"]
-[ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Scenes/player.tscn" id="1_4yetj"]
-[ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Art/Materials/Ground.tres" id="2_0y4jl"]
-[ext_resource type="Script" path="res://Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/WorldController.cs" id="1_3phex"]
+[ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
+[ext_resource type="Material" uid="uid://dufo0chna0bpw" path="res://Assets/Art/Materials/Ground.tres" id="2_0y4jl"]
+[ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
+[ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/VoxelHighlight.tscn" id="5_y16gt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,6 +19,15 @@ sky = SubResource("Sky_ei7t6")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
+albedo_color = Color(1, 0.270588, 0.270588, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_g7we1"]
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 3
+
 [node name="World" type="Node3D"]
 script = ExtResource("1_3phex")
 
@@ -31,8 +41,31 @@ transform = Transform3D(-0.958323, 0.261993, -0.113918, 0, 0.398749, 0.91706, 0.
 transform = Transform3D(22.725, 0, 0, 0, 0.1, 0, 0, 0, 26.25, 0, 0, 0)
 material_override = ExtResource("2_0y4jl")
 use_collision = true
+collision_layer = 3
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
 
-[node name="SurfaceMesh" type="MeshInstance3D" parent="."]
+[node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "collisionHighlight")]
+enableVoxelHighlight = true
+voxelHiglight = NodePath("../../../../Voxel")
+collisionHighlight = NodePath("../../../../HitPointHighlight")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 3
+
+[node name="SurfaceMesh" type="MeshInstance3D" parent="StaticBody3D"]
+skeleton = NodePath("../..")
 script = ExtResource("4_48p0j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+
+[node name="HitPointHighlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980523, 0.622928, -0.945743)
+visible = false
+material_override = SubResource("StandardMaterial3D_85b2v")
+mesh = SubResource("SphereMesh_g7we1")
+
+[node name="Voxel" parent="." instance=ExtResource("5_y16gt")]
+visible = false
+
+[editable path="Player"]

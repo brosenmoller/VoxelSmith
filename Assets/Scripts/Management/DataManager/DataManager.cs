@@ -2,9 +2,9 @@
 
 public class DataManager : Manager
 {
-    public ProjectData CurrentProjectData => projectDataHolder.Data;
-    public EditorData CurrentEditorData => editorDataHolder.Data;
-    public PaletteData CurrentPalleteData => paletteDataHolder.Data;
+    public ProjectData ProjectData => projectDataHolder.Data;
+    public EditorData EditorData => editorDataHolder.Data;
+    public PaletteData PalleteData => paletteDataHolder.Data;
 
     private DataHolder<ProjectData> projectDataHolder;
     private DataHolder<EditorData> editorDataHolder;
@@ -32,18 +32,17 @@ public class DataManager : Manager
         try 
         {
             projectDataHolder.Load(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
-
-
         }
         catch
         {
             // TODO: New Project Popup
+            projectDataHolder.Data = new ProjectData("Name", System.Guid.NewGuid());
         }
     }
 
     public void CreateNewProject(string name)
     {
-        if (CurrentProjectData != null)
+        if (ProjectData != null)
         {
             // TODO: Warn User about unsaved data
         }

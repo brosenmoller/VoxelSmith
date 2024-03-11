@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dis4t8ymxfkcq"
+path="res://.godot/imported/MeshGeneration.glsl-eb8caf4c4032ee0608878941a7b6aed8.res"
+
+[deps]
+
+source_file="res://Assets/Scripts/Generation/MeshGeneration.glsl"
+dest_files=["res://.godot/imported/MeshGeneration.glsl-eb8caf4c4032ee0608878941a7b6aed8.res"]
+
+[params]
+

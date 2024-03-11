@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cy136utjjwqdu"]
+[gd_scene load_steps=6 format=3 uid="uid://cy136utjjwqdu"]
 
-[ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="1_30cdg"]
-[ext_resource type="Script" path="res://Scripts/Player/FirstPersonCamera.cs" id="2_t6388"]
-[ext_resource type="Script" path="res://Scripts/Player/VoxelPlacer.cs" id="3_50l5n"]
-[ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Scenes/Voxel.tscn" id="4_ir5gn"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/PlayerMovement.cs" id="1_30cdg"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/FirstPersonCamera.cs" id="2_t6388"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/VoxelPlacer.cs" id="3_50l5n"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uefvg"]
 
@@ -29,5 +28,6 @@ playerMovement = NodePath("..")
 
 [node name="RayCastVoxelPlacer" type="RayCast3D" parent="HeadPivot/Camera3D"]
 target_position = Vector3(0, 0, -6.23)
+collision_mask = 2
+hit_from_inside = true
 script = ExtResource("3_50l5n")
-voxelScene = ExtResource("4_ir5gn")

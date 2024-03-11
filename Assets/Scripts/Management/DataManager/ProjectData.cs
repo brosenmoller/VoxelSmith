@@ -8,13 +8,19 @@ public class ProjectData
     public string name;
     public Guid projectID;
     public Guid palleteID;
-    public HashSet<Vector3I> voxels;
+    public Dictionary<Vector3I, VoxelData> voxels;
 
     public ProjectData(string name, Guid palleteID)
     {
         this.name = name;
         projectID = Guid.NewGuid();
         this.palleteID = palleteID;
-        voxels = new HashSet<Vector3I>();
+        voxels = new Dictionary<Vector3I, VoxelData>();
     }
+}
+
+[Serializable]
+public class VoxelData
+{
+
 }

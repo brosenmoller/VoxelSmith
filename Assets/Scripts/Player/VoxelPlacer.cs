@@ -1,23 +1,67 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class VoxelPlacer : RayCast3D
 {
+    [Export] private bool enableCollisionHighlight;
+    [Export] private bool enableVoxelHighlight;
+
     [ExportSubgroup("References")]
-    [Export] private PackedScene voxelScene;
+    [Export] private Node3D voxelHiglight;
+    [Export] private Node3D collisionHighlight;
+
+    private SurfaceMesh levelMesh;
+
+    private Dictionary<Vector3I, VoxelData> Voxels => GameManager.DataManager.ProjectData.voxels;
+
+    public override void _Ready()
+    {
+        levelMesh = this.GetNodeByType<SurfaceMesh>();
+
+        if (enableCollisionHighlight) { collisionHighlight.Visible = true; }
+        if (enableVoxelHighlight) { voxelHiglight.Visible = true; }
+    }
 
     public override void _Process(double delta)
     {
-        if (IsColliding() && Input.IsActionJustPressed("place"))
+        if (IsColliding())
         {
-            Voxel voxel = voxelScene.Instantiate<Voxel>();
-            WorldController.Instance.AddChild(voxel);
+            Vector3 point = GetCollisionPoint();
+            Vector3 normal = GetCollisionNormal();
 
-            Vector3 location = GetCollisionPoint();
-            location.X = Mathf.RoundToInt(location.X);
-            location.Y = Mathf.RoundToInt(location.Y);
-            location.Z = Mathf.RoundToInt(location.Z);
+            if (enableCollisionHighlight) { collisionHighlight.GlobalPosition = point; }
 
-            voxel.Transform = voxel.Transform with { Origin = location };
+            point -= normal * 0.1f;
+
+            Vector3I voxelPosition = new(
+                Mathf.FloorToInt(point.X),
+                Mathf.FloorToInt(point.Y),
+                Mathf.FloorToInt(point.Z)
+            );
+
+            if (enableVoxelHighlight) { voxelHiglight.GlobalPosition = voxelPosition; }
+
+            if (Input.IsActionJustPressed("place"))
+            {
+                Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
+                //if (!Voxels.ContainsKey(nextVoxel))
+                //{
+                //    Voxels.Add(nextVoxel, new VoxelData());
+                //}
+
+                //levelMesh.UpdateMesh();
+                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, new VoxelData(), levelMesh));
+            }
+            else if (Input.IsActionJustPressed("break"))
+            {
+                //if (Voxels.ContainsKey(voxelPosition))
+                //{
+                //    Voxels.Remove(voxelPosition);
+                //}
+
+                //levelMesh.UpdateMesh();
+                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(voxelPosition, new VoxelData(), levelMesh));
+            }
         }
     }
 }
