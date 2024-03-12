@@ -9,6 +9,7 @@ public class EditorData
     public Dictionary<Guid, string> palettePaths;
     public Dictionary<Guid, string> savePaths;
     public Dictionary<Guid, string> exportPaths;
+
     public EditorData() 
     {
         version = "0.1";

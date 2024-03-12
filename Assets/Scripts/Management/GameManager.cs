@@ -5,7 +5,6 @@ public partial class GameManager : Node
     public static DataManager DataManager { get; private set; }
     public static CommandManager CommandManager { get; private set; }
     
-
     private Manager[] activeManagers;
 
     public override void _Ready()
@@ -34,6 +33,8 @@ public partial class GameManager : Node
     {
         EditMenu.OnUndoPressed += CommandManager.StepBack;
         EditMenu.OnRedoPressed += CommandManager.StepForward;
+
+        ProjectMenu.OnSavePressed += DataManager.SaveProject;
     }
 
     public override void _PhysicsProcess(double delta)

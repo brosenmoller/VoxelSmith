@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://byepkejc3664l"]
+[gd_scene load_steps=17 format=3 uid="uid://byepkejc3664l"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/UIManager.cs" id="1_0q5bx"]
 [ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Assets/Scenes/World.tscn" id="1_3n8tb"]
@@ -14,7 +14,6 @@
 [ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://Assets/MenuResources/EditMenu/RedoShortcut.tres" id="11_ri3kq"]
 [ext_resource type="ButtonGroup" uid="uid://bhxyko6wf343y" path="res://Assets/MenuResources/PlayerMode/PlayerModeButtonGroup.tres" id="12_my0mf"]
 [ext_resource type="Shortcut" uid="uid://bcvlfg5g041ka" path="res://Assets/MenuResources/PlayerMode/WalkModeShorcut.tres" id="13_762q0"]
-[ext_resource type="Texture2D" uid="uid://ctw1v2tw0kxqr" path="res://Assets/Art/Icons/person-walking-solid.svg" id="14_x2p2j"]
 [ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://Assets/MenuResources/PlayerMode/FlyModeShorcut.tres" id="14_yty5m"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="15_35ftc"]
 
@@ -166,7 +165,6 @@ layout_mode = 2
 tooltip_text = "Walk Mode"
 button_group = ExtResource("12_my0mf")
 shortcut = ExtResource("13_762q0")
-icon = ExtResource("14_x2p2j")
 expand_icon = true
 
 [node name="FlyMode" type="CheckButton" parent="MainView/TopBar/PlayerMode"]

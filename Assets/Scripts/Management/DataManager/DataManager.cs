@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System;
 
 public class DataManager : Manager
 {
@@ -27,14 +28,18 @@ public class DataManager : Manager
     private void LoadUpApplication()
     {
         try { editorDataHolder.Load(GLOBAL_EDITOR_SAVE_PATH); }
-        catch { editorDataHolder.Data = new EditorData(); }
+        catch { editorDataHolder.Data = new EditorData(); GD.Print("Couldn't load editor data"); }
 
-        try 
+        projectDataHolder.Data = new ProjectData("Name", System.Guid.NewGuid());
+
+        try
         {
-            projectDataHolder.Load(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
+            //projectDataHolder.Load(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
+            projectDataHolder.Load("C:\\Users\\Ben\\AppData\\LocalLow\\Nebaj\\test.json");
         }
-        catch
+        catch (Exception e)
         {
+            GD.Print("Failed to load project data: " + e.ToString());
             // TODO: New Project Popup
             projectDataHolder.Data = new ProjectData("Name", System.Guid.NewGuid());
         }
@@ -50,9 +55,9 @@ public class DataManager : Manager
         //projectDataHolder.Data = new ProjectData(name);
     }
 
-    public void SaveProject(string path)
+    public void SaveProject()
     {
-        projectDataHolder.Save(path);
+        projectDataHolder.Save("C:\\Users\\Ben\\AppData\\LocalLow\\Nebaj\\test.json");
     }
 
     public void LoadProject(string path)
