@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Text;
 using Newtonsoft.Json;
-using Godot;
 
 public class DataHolder<T>
 {
@@ -12,9 +11,7 @@ public class DataHolder<T>
         try
         {
             string jsonString = File.ReadAllText(path);
-
-            GD.Print("Serialized JSON: " + JsonConvert.DeserializeObject<T>(jsonString, new Vector3IConverter()).ToString());
-            //Data = JsonConvert.DeserializeObject<T>(jsonString);
+            Data = JsonConvert.DeserializeObject<T>(jsonString, new Vector3IConverter(), new ProjectDataConverter(), new VoxelDataConverter());
         }
         catch
         {
@@ -24,7 +21,9 @@ public class DataHolder<T>
 
     public void Save(string path)
     {
-        string jsonString = JsonConvert.SerializeObject(Data, new Vector3IConverter());
+        string jsonString = JsonConvert.SerializeObject(Data, new Vector3IConverter(), new ProjectDataConverter(), new VoxelDataConverter());
+
+        File.WriteAllText(path, string.Empty);
 
         using (FileStream fileStream = File.Open(path, FileMode.OpenOrCreate))
         {

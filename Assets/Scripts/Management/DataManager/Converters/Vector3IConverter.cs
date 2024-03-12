@@ -14,6 +14,15 @@ public class Vector3IConverter : JsonConverter<Vector3I>
     {
         GD.Print("Write JSON");
         writer.WriteValue(GD.VarToStr(value));
+
+        //writer.WriteStartObject();
+        //writer.WritePropertyName("x");
+        //writer.WriteValue(value.X);
+        //writer.WritePropertyName("y");
+        //writer.WriteValue(value.Y);
+        //writer.WritePropertyName("z");
+        //writer.WriteValue(value.Z);
+        //writer.WriteEndObject();
     }
 }
 

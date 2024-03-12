@@ -30,7 +30,7 @@ public class DataManager : Manager
         try { editorDataHolder.Load(GLOBAL_EDITOR_SAVE_PATH); }
         catch { editorDataHolder.Data = new EditorData(); GD.Print("Couldn't load editor data"); }
 
-        projectDataHolder.Data = new ProjectData("Name", System.Guid.NewGuid());
+        projectDataHolder.Data = new ProjectData("Name", Guid.NewGuid());
 
         try
         {
@@ -41,7 +41,7 @@ public class DataManager : Manager
         {
             GD.Print("Failed to load project data: " + e.ToString());
             // TODO: New Project Popup
-            projectDataHolder.Data = new ProjectData("Name", System.Guid.NewGuid());
+            projectDataHolder.Data = new ProjectData("Name", Guid.NewGuid());
         }
     }
 
