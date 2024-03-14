@@ -10,8 +10,8 @@ public class ProjectData
     public Guid projectID;
     public Guid palleteID;
     public Vector3 playerPosition;
-    public Vector3 cameraPivotRotation;
     public Vector3 cameraRotation;
+    public Vector3 cameraPivotRotation;
     public Dictionary<Vector3I, VoxelData> voxels;
 
     public ProjectData() { }

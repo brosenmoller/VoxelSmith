@@ -12,7 +12,10 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
         {
             { "name", value.name },
             { "projectID", value.projectID.ToString() },
-            { "palleteID", value.palleteID.ToString() }
+            { "palleteID", value.palleteID.ToString() },
+            { "player_position", JToken.FromObject(value.playerPosition, serializer) },
+            { "camera_rotation", JToken.FromObject(value.cameraRotation, serializer) },
+            { "camera_pivot_rotation", JToken.FromObject(value.cameraPivotRotation, serializer) }
         };
 
         JArray voxelsArray = new();
@@ -38,9 +41,13 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             name = obj["name"].ToObject<string>(),
             projectID = Guid.Parse(obj["projectID"].ToObject<string>()),
             palleteID = Guid.Parse(obj["palleteID"].ToObject<string>()),
+            playerPosition = obj["player_position"].ToObject<Vector3>(serializer),
+            cameraRotation = obj["camera_rotation"].ToObject<Vector3>(serializer),
+            cameraPivotRotation = obj["camera_pivot_rotation"].ToObject<Vector3>(serializer),
 
             voxels = new Dictionary<Vector3I, VoxelData>()
         };
+
         JArray voxelsArray = (JArray)obj["voxels"];
         foreach (JObject voxelObj in voxelsArray)
         {

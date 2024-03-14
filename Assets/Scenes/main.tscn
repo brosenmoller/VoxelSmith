@@ -26,11 +26,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0q5bx")
 newProjectDialog = NodePath("NewProjectWindow")
-openProjectDialog = NodePath("OpenFileDialog")
-saveAsDialog = NodePath("SaveFileDialog")
+openProjectDialog = NodePath("LoadProjectFileDialog")
+saveAsDialog = NodePath("SaveProjectAsFileDialog")
 metadata/_edit_vertical_guides_ = [-58.0]
 
-[node name="OpenFileDialog" type="FileDialog" parent="."]
+[node name="LoadProjectFileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(800, 600)
@@ -38,17 +38,41 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 
-[node name="SaveFileDialog" type="FileDialog" parent="."]
+[node name="SaveProjectAsFileDialog" type="FileDialog" parent="."]
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Save"
 access = 2
 
+[node name="StartWindow" type="Window" parent="."]
+title = "Open Project"
+initial_position = 2
+size = Vector2i(175, 70)
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartWindow"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadProjectButton" type="Button" parent="StartWindow/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(57.855, 0)
+layout_mode = 2
+text = "Load"
+
+[node name="CreateNewProjectButton" type="Button" parent="StartWindow/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(58, 0)
+layout_mode = 2
+text = "New"
+
 [node name="NewProjectWindow" type="ConfirmationDialog" parent="."]
 title = "Create New Project"
 initial_position = 2
 size = Vector2i(540, 200)
-visible = true
 ok_button_text = "Create"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NewProjectWindow"]

@@ -19,14 +19,10 @@ public partial class SurfaceMesh : MeshInstance3D
 
     private CollisionShape3D collisionShape;
 
-    public override void _Ready()
-    {
-        collisionShape = GetParent().GetChildByType<CollisionShape3D>();
-    }
-
     public void UpdateMesh()
     {
         Mesh = CreateMesh();
+        collisionShape ??= GetParent().GetChildByType<CollisionShape3D>();
         collisionShape.Shape = Mesh.CreateTrimeshShape();
     }
 

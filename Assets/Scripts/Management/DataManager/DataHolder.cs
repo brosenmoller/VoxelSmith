@@ -11,7 +11,7 @@ public class DataHolder<T>
         try
         {
             string jsonString = File.ReadAllText(path);
-            Data = JsonConvert.DeserializeObject<T>(jsonString, new Vector3IConverter(), new ProjectDataConverter(), new ColorConverter());
+            Data = JsonConvert.DeserializeObject<T>(jsonString, new Vector3IConverter(), new Vector3Converter(), new ProjectDataConverter(), new ColorConverter());
         }
         catch
         {
@@ -21,7 +21,7 @@ public class DataHolder<T>
 
     public void Save(string path)
     {
-        string jsonString = JsonConvert.SerializeObject(Data, new Vector3IConverter(), new ProjectDataConverter(), new ColorConverter());
+        string jsonString = JsonConvert.SerializeObject(Data, new Vector3IConverter(), new Vector3Converter(), new ProjectDataConverter(), new ColorConverter());
 
         File.WriteAllText(path, string.Empty);
 

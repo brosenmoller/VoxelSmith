@@ -6,15 +6,17 @@ public partial class GameManager : Node
     public static CommandManager CommandManager { get; private set; }
 
     public static SurfaceMesh SurfaceMesh { get; private set; }
+    public static PlayerMovement Player { get; private set; }
     
     private Manager[] activeManagers;
 
     public override void _Ready()
     {
+        SurfaceMesh = this.GetNodeByType<SurfaceMesh>();
+        Player = this.GetNodeByType<PlayerMovement>();
+
         SetupManagers();
         SetupInputContext();
-
-        SurfaceMesh = this.GetChildByType<SurfaceMesh>();
     }
 
     private void SetupManagers()

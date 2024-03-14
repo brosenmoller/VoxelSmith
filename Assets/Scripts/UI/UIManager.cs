@@ -1,35 +1,48 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class UIManager : Control
 {
-    [ExportGroup("File Dialogs")]
+    [ExportGroup("Window References")]
     [Export] private ConfirmationDialog newProjectDialog;
-    [Export] private FileDialog openProjectDialog;
-    [Export] private FileDialog saveAsDialog;
+    [Export] private FileDialog loadProjectDialog;
+    [Export] private FileDialog saveProjectAsDialog;
+    [Export] private Window startWindow;
 
     private WorldController worldController;
+
+    private List<Window> windows;
 
     public override void _Ready()
     {
         worldController = this.GetChildByType<WorldController>();
 
-        newProjectDialog.VisibilityChanged += UpdateFocus;
-        openProjectDialog.VisibilityChanged += UpdateFocus;
-        saveAsDialog.VisibilityChanged += UpdateFocus;
-    }
+        windows = new List<Window>
+        {
+            newProjectDialog,
+            loadProjectDialog,
+            saveProjectAsDialog,
+            startWindow
+        };
 
-    private void OnSaveButtonPressed()
-    {
-        //openDialog.Visible = true;
-    }
-
-    private void OnExportButtonPressed()
-    {
-        //saveDialog.Visible = true;
+        for (int i = 0; i < windows.Count; i++)
+        {
+            windows[i].VisibilityChanged += UpdateFocus;
+        }
     }
 
     private void UpdateFocus()
     {
-        //worldController.canGoInFocus = !(openDialog.Visible || saveDialog.Visible);
+        bool aWindowIsVisible = false;
+        for (int i = 0; i < windows.Count; i++)
+        {
+            if (windows[i].Visible) 
+            {
+                aWindowIsVisible = true;
+                break;
+            }
+        }
+
+        worldController.canGoInFocus = !aWindowIsVisible;
     }
 }
