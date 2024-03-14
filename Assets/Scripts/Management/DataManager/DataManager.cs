@@ -43,6 +43,8 @@ public class DataManager : Manager
             // TODO: New Project Popup
             projectDataHolder.Data = new ProjectData("Name", Guid.NewGuid());
         }
+
+        GameManager.SurfaceMesh.UpdateMesh();
     }
 
     public void CreateNewProject(string name)

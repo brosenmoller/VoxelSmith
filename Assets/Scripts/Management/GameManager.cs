@@ -4,6 +4,8 @@ public partial class GameManager : Node
 {
     public static DataManager DataManager { get; private set; }
     public static CommandManager CommandManager { get; private set; }
+
+    public static SurfaceMesh SurfaceMesh { get; private set; }
     
     private Manager[] activeManagers;
 
@@ -11,6 +13,8 @@ public partial class GameManager : Node
     {
         SetupManagers();
         SetupInputContext();
+
+        SurfaceMesh = this.GetChildByType<SurfaceMesh>();
     }
 
     private void SetupManagers()

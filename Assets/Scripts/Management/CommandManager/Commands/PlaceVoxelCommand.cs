@@ -4,13 +4,11 @@ public class PlaceVoxelCommand : ICommand
 {
     public Vector3I voxelPosition;
     public VoxelData voxelData;
-    public SurfaceMesh surfaceMesh;
 
-    public PlaceVoxelCommand(Vector3I voxelPosition, VoxelData voxelData, SurfaceMesh surfaceMesh)
+    public PlaceVoxelCommand(Vector3I voxelPosition, VoxelData voxelData)
     {
         this.voxelPosition = voxelPosition;
         this.voxelData = voxelData;
-        this.surfaceMesh = surfaceMesh;
     }
 
     public void Execute()
@@ -20,7 +18,7 @@ public class PlaceVoxelCommand : ICommand
             GameManager.DataManager.ProjectData.voxels.Add(voxelPosition, voxelData);
         }
 
-        surfaceMesh.UpdateMesh();
+        GameManager.SurfaceMesh.UpdateMesh();
     }
 
     public void Undo()
@@ -30,7 +28,7 @@ public class PlaceVoxelCommand : ICommand
             GameManager.DataManager.ProjectData.voxels.Remove(voxelPosition);
         }
 
-        surfaceMesh.UpdateMesh();
+        GameManager.SurfaceMesh.UpdateMesh();
     }
 }
 

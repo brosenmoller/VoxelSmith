@@ -1,5 +1,4 @@
 using Godot;
-using System.Collections.Generic;
 
 public partial class VoxelPlacer : RayCast3D
 {
@@ -10,14 +9,8 @@ public partial class VoxelPlacer : RayCast3D
     [Export] private Node3D voxelHiglight;
     [Export] private Node3D collisionHighlight;
 
-    private SurfaceMesh levelMesh;
-
-    private Dictionary<Vector3I, VoxelData> Voxels => GameManager.DataManager.ProjectData.voxels;
-
     public override void _Ready()
     {
-        levelMesh = this.GetNodeByType<SurfaceMesh>();
-
         if (enableCollisionHighlight) { collisionHighlight.Visible = true; }
         if (enableVoxelHighlight) { voxelHiglight.Visible = true; }
     }
@@ -45,11 +38,11 @@ public partial class VoxelPlacer : RayCast3D
             {
                 Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
 
-                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, new VoxelData(), levelMesh));
+                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, new VoxelData()));
             }
             else if (Input.IsActionJustPressed("break"))
             {
-                GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition, new VoxelData(), levelMesh));
+                GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition, new VoxelData()));
             }
         }
     }

@@ -48,6 +48,7 @@ access = 2
 title = "Create New Project"
 initial_position = 2
 size = Vector2i(540, 200)
+visible = true
 ok_button_text = "Create"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NewProjectWindow"]
@@ -59,7 +60,7 @@ offset_bottom = 151.0
 [node name="ProjectNameEdit" type="TextEdit" parent="NewProjectWindow/VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-placeholder_text = "Project Name ...."
+placeholder_text = "Project Name ..."
 
 [node name="SaveDirectoryGroup" type="HBoxContainer" parent="NewProjectWindow/VBoxContainer"]
 layout_mode = 2
@@ -163,6 +164,7 @@ layout_mode = 2
 [node name="WalkMode" type="CheckButton" parent="MainView/TopBar/PlayerMode"]
 layout_mode = 2
 tooltip_text = "Walk Mode"
+button_pressed = true
 button_group = ExtResource("12_my0mf")
 shortcut = ExtResource("13_762q0")
 expand_icon = true
