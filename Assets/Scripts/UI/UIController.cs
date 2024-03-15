@@ -51,6 +51,11 @@ public partial class UIController : Control
             aWindowIsVisible = true;
         }
 
+        if (aWindowIsVisible)
+        {
+            worldController.WorldInFocus = false;
+        }
+
         worldController.canGoInFocus = !aWindowIsVisible;
     }
 }

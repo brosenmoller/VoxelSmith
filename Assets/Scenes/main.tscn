@@ -40,9 +40,10 @@ title = "Open a File"
 initial_position = 2
 size = Vector2i(400, 300)
 ok_button_text = "Open"
+dialog_close_on_escape = false
 file_mode = 0
 access = 2
-filters = PackedStringArray(".vxsProject")
+filters = PackedStringArray("*.vxsProject")
 script = ExtResource("2_1ik7u")
 
 [node name="SaveProjectAsFileDialog" type="FileDialog" parent="."]
@@ -50,8 +51,9 @@ title = "Save Project As"
 initial_position = 2
 size = Vector2i(450, 300)
 ok_button_text = "Save"
+dialog_close_on_escape = false
 access = 2
-filters = PackedStringArray(".vxsProject")
+filters = PackedStringArray("*.vxsProject")
 script = ExtResource("3_un5ti")
 
 [node name="StartWindow" parent="." instance=ExtResource("4_k5wr7")]

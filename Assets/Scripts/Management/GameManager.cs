@@ -44,6 +44,9 @@ public partial class GameManager : Node
         EditMenu.OnRedoPressed += CommandManager.StepForward;
 
         ProjectMenu.OnSavePressed += DataManager.SaveProject;
+        ProjectMenu.OnSaveAsPressed += UIController.saveProjectAsDialog.Show;
+        ProjectMenu.OnNewPressed += UIController.newProjectDialog.Show;
+        ProjectMenu.OnOpenPressed += UIController.loadProjectDialog.Show;
     }
 
     public override void _PhysicsProcess(double delta)

@@ -11,7 +11,6 @@ public class DataManager : Manager
     private DataHolder<EditorData> editorDataHolder;
     private DataHolder<PaletteData> paletteDataHolder;
 
-
     private const string PROJECT_FILE_EXTENSION = ".vxsProject";
     private const string PALETTE_FILE_EXTENSION = ".vxsPalette";
     private const string LOCAL_EDITOR_SAVE_PATH = "user://editor.vxsConfig";
@@ -40,31 +39,24 @@ public class DataManager : Manager
         catch 
         { 
             editorDataHolder.Data = new EditorData(); 
-            GD.Print("Couldn't load editor data");
+            GD.PrintErr("Couldn't load editor data");
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
         }
 
         try
         {
-            string path = editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value];
-            GD.Print(path);
             LoadProject(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
-            //LoadProject("C:\\Users\\Ben\\AppData\\LocalLow\\Nebaj\\test.json");
-            GameManager.SurfaceMesh.UpdateMesh();
         }
         catch (Exception e)
         {
-            GD.Print("Failed to load project data: \n" + e.ToString());
+            GD.PrintErr("Failed to load project data: \n" + e.ToString());
             GameManager.UIController.startWindow.Show();
         }
     }
 
     public void CreateNewProject(string name, string dirPath, Guid paletteGUID)
     {
-        if (ProjectData != null)
-        {
-            // TODO: Warn User about unsaved data
-        }
+        // TODO: Warn User if there is unsaved data
 
         string path = dirPath + name + PROJECT_FILE_EXTENSION;
         projectDataHolder.Data = new ProjectData(name, paletteGUID);
@@ -99,14 +91,30 @@ public class DataManager : Manager
 
     public void LoadProject(string path)
     {
-        projectDataHolder.Load(path);
+        // TODO: Warn User if there is unsaved data
 
-        GameManager.Player.GlobalPosition = projectDataHolder.Data.playerPosition;
-        camera.Rotation = projectDataHolder.Data.cameraRotation;
-        cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
+        try
+        {
+            projectDataHolder.Load(path);
 
-        editorDataHolder.Data.lastProject = projectDataHolder.Data.projectID;
-        editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+            GameManager.Player.GlobalPosition = projectDataHolder.Data.playerPosition;
+            camera.Rotation = projectDataHolder.Data.cameraRotation;
+            cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
+
+            GameManager.SurfaceMesh.UpdateMesh();
+
+            editorDataHolder.Data.lastProject = projectDataHolder.Data.projectID;
+            editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("Failed to load project data: \n" + e.ToString());
+
+            if (projectDataHolder.Data == null)
+            {
+                GameManager.UIController.startWindow.Show();
+            }
+        }
     }
 }
 

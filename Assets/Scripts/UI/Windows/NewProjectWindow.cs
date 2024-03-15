@@ -21,8 +21,10 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     private void OnNewProjectConfirmed()
     {
-        if (projectName.Text.Length < 0 || saveDirectoryPath.Text.Length < 0)
+        if (projectName.Text.Length <= 0 || saveDirectoryPath.Text.Length <= 0)
         {
+            // TODO: Show Error
+
             return;
         }
 

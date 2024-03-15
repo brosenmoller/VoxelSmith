@@ -8,7 +8,7 @@ public partial class WorldController : Node3D
     private PlayerMovement player;
 
     private bool worldInFocus;
-    private bool WorldInFocus { 
+    public bool WorldInFocus { 
         get { return worldInFocus; } 
         set 
         {
@@ -32,7 +32,6 @@ public partial class WorldController : Node3D
         if (Input.IsActionPressed("unlock_mouse"))
         {
             WorldInFocus = false;
-            Input.MouseMode = Input.MouseModeEnum.Visible;
         }
 
         if (Input.IsActionJustPressed("lock_mouse"))
@@ -44,7 +43,6 @@ public partial class WorldController : Node3D
                 mousePos.Y > 0 && mousePos.Y < size.Y &&
                 canGoInFocus)
             {
-                Input.MouseMode = Input.MouseModeEnum.Captured;
                 WorldInFocus = true;
             }
         }
@@ -54,10 +52,12 @@ public partial class WorldController : Node3D
     {
         if (WorldInFocus)
         {
+            Input.MouseMode = Input.MouseModeEnum.Captured;
             player.ProcessMode = ProcessModeEnum.Inherit;
         }
         else
         {
+            Input.MouseMode = Input.MouseModeEnum.Visible;
             player.ProcessMode = ProcessModeEnum.Disabled;
         }
     }
