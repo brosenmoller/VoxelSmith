@@ -73,10 +73,12 @@ public partial class ProjectMenu : PopupMenu
     {
         PopupMenu recentsNestedMenu = new();
         recentsNestedMenu.Name = "RecentsNestedMenu";
-        recentsNestedMenu.AddItem("1: aslkdjf", 0);
-        recentsNestedMenu.AddItem("2: aslkdjf", 1);
-        recentsNestedMenu.AddItem("3: aslkdjf", 2);
-        recentsNestedMenu.AddItem("4: aslkdjf", 3);
+
+        foreach (var recentProject in GameManager.DataManager.EditorData.savePaths)
+        {
+            recentsNestedMenu.AddItem(recentProject.Value, 0);
+        }
+
         AddChild(recentsNestedMenu);
         AddSubmenuItem("Open Recent", recentsNestedMenu.Name);
     }

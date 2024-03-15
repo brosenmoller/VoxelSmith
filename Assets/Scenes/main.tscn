@@ -1,15 +1,19 @@
-[gd_scene load_steps=17 format=3 uid="uid://byepkejc3664l"]
+[gd_scene load_steps=21 format=3 uid="uid://byepkejc3664l"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/UI/UIManager.cs" id="1_0q5bx"]
 [ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Assets/Scenes/World.tscn" id="1_3n8tb"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/ProjectMenu.cs" id="2_51ipb"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/UIController.cs" id="1_bu3rv"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/LoadProjectWindow.cs" id="2_1ik7u"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="2_u31le"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="3_g8yib"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/EditMenu.cs" id="3_w8nqj"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/SaveProjectAsWindow.cs" id="3_un5ti"]
 [ext_resource type="Shortcut" uid="uid://c1ora4olvy0r4" path="res://Assets/MenuResources/ProjectMenu/SaveProjectShortcut.tres" id="4_10ryw"]
+[ext_resource type="PackedScene" uid="uid://clobdvq2u8iod" path="res://Assets/Scenes/UIScenes/StartWindow.tscn" id="4_k5wr7"]
 [ext_resource type="Shortcut" uid="uid://bq41hvwupxt7j" path="res://Assets/MenuResources/ProjectMenu/SaveAsProjectShortcut.tres" id="5_ch0iq"]
+[ext_resource type="PackedScene" uid="uid://bbcks7dv8i8mv" path="res://Assets/Scenes/UIScenes/NewProjectWindow.tscn" id="5_tvmpl"]
 [ext_resource type="Shortcut" uid="uid://shd825lrd3we" path="res://Assets/MenuResources/ProjectMenu/OpenProjectShortcut.tres" id="6_aljpn"]
 [ext_resource type="Shortcut" uid="uid://bqajjcmabxkcd" path="res://Assets/MenuResources/ProjectMenu/ImportSchematicShortcut.tres" id="7_dmmop"]
 [ext_resource type="Shortcut" uid="uid://db4ls4pp6ps3j" path="res://Assets/MenuResources/ProjectMenu/RefreshSchematicShortcut.tres" id="8_stwcs"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/EditMenu.cs" id="9_ddfev"]
 [ext_resource type="Shortcut" uid="uid://cat3smbjtttve" path="res://Assets/MenuResources/EditMenu/UndoShortcut.tres" id="10_jt5ma"]
 [ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://Assets/MenuResources/EditMenu/RedoShortcut.tres" id="11_ri3kq"]
 [ext_resource type="ButtonGroup" uid="uid://bhxyko6wf343y" path="res://Assets/MenuResources/PlayerMode/PlayerModeButtonGroup.tres" id="12_my0mf"]
@@ -17,132 +21,44 @@
 [ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://Assets/MenuResources/PlayerMode/FlyModeShorcut.tres" id="14_yty5m"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="15_35ftc"]
 
-[node name="UIManager" type="Control" node_paths=PackedStringArray("newProjectDialog", "openProjectDialog", "saveAsDialog")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "startWindow")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_0q5bx")
+script = ExtResource("1_bu3rv")
 newProjectDialog = NodePath("NewProjectWindow")
-openProjectDialog = NodePath("LoadProjectFileDialog")
-saveAsDialog = NodePath("SaveProjectAsFileDialog")
+loadProjectDialog = NodePath("LoadProjectFileDialog")
+saveProjectAsDialog = NodePath("SaveProjectAsFileDialog")
+startWindow = NodePath("StartWindow")
 metadata/_edit_vertical_guides_ = [-58.0]
 
 [node name="LoadProjectFileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 2
-size = Vector2i(800, 600)
+size = Vector2i(400, 300)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+filters = PackedStringArray(".vxsProject")
+script = ExtResource("2_1ik7u")
 
 [node name="SaveProjectAsFileDialog" type="FileDialog" parent="."]
+title = "Save Project As"
 initial_position = 2
-size = Vector2i(800, 600)
+size = Vector2i(450, 300)
 ok_button_text = "Save"
 access = 2
+filters = PackedStringArray(".vxsProject")
+script = ExtResource("3_un5ti")
 
-[node name="StartWindow" type="Window" parent="."]
-title = "Open Project"
-initial_position = 2
-size = Vector2i(175, 70)
+[node name="StartWindow" parent="." instance=ExtResource("4_k5wr7")]
 visible = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="StartWindow"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LoadProjectButton" type="Button" parent="StartWindow/VBoxContainer"]
-clip_contents = true
-custom_minimum_size = Vector2(57.855, 0)
-layout_mode = 2
-text = "Load"
-
-[node name="CreateNewProjectButton" type="Button" parent="StartWindow/VBoxContainer"]
-clip_contents = true
-custom_minimum_size = Vector2(58, 0)
-layout_mode = 2
-text = "New"
-
-[node name="NewProjectWindow" type="ConfirmationDialog" parent="."]
-title = "Create New Project"
-initial_position = 2
-size = Vector2i(540, 200)
-ok_button_text = "Create"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="NewProjectWindow"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 532.0
-offset_bottom = 151.0
-
-[node name="ProjectNameEdit" type="TextEdit" parent="NewProjectWindow/VBoxContainer"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-placeholder_text = "Project Name ..."
-
-[node name="SaveDirectoryGroup" type="HBoxContainer" parent="NewProjectWindow/VBoxContainer"]
-layout_mode = 2
-
-[node name="LabelAlign" type="MarginContainer" parent="NewProjectWindow/VBoxContainer/SaveDirectoryGroup"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-theme_override_constants/margin_top = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="NewProjectWindow/VBoxContainer/SaveDirectoryGroup/LabelAlign"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Save Directory
-"
-
-[node name="SaveDirectoryPathEdit" type="TextEdit" parent="NewProjectWindow/VBoxContainer/SaveDirectoryGroup"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "//"
-
-[node name="FileDialogButton" type="Button" parent="NewProjectWindow/VBoxContainer/SaveDirectoryGroup"]
-clip_contents = true
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-text = "Open"
-
-[node name="PalletePath" type="HBoxContainer" parent="NewProjectWindow/VBoxContainer"]
-layout_mode = 2
-
-[node name="LabelAlign" type="MarginContainer" parent="NewProjectWindow/VBoxContainer/PalletePath"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-theme_override_constants/margin_top = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="NewProjectWindow/VBoxContainer/PalletePath/LabelAlign"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Palette
-"
-
-[node name="PalletePathEdit" type="TextEdit" parent="NewProjectWindow/VBoxContainer/PalletePath"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "//"
-
-[node name="FileDialogButton" type="Button" parent="NewProjectWindow/VBoxContainer/PalletePath"]
-clip_contents = true
-custom_minimum_size = Vector2(58, 0)
-layout_mode = 2
-text = "Open"
-
-[node name="CreateNewPalleteButton" type="Button" parent="NewProjectWindow/VBoxContainer/PalletePath"]
-clip_contents = true
-custom_minimum_size = Vector2(58, 0)
-layout_mode = 2
-text = "New"
+[node name="NewProjectWindow" parent="." instance=ExtResource("5_tvmpl")]
+visible = false
 
 [node name="MainView" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -166,7 +82,7 @@ flat = true
 
 [node name="Project" type="PopupMenu" parent="MainView/TopBar/MenuBar"]
 size = Vector2i(171, 224)
-script = ExtResource("2_51ipb")
+script = ExtResource("2_u31le")
 newShortcut = ExtResource("3_g8yib")
 saveShortcut = ExtResource("4_10ryw")
 saveAsShortcut = ExtResource("5_ch0iq")
@@ -175,7 +91,7 @@ importSchematicShortcut = ExtResource("7_dmmop")
 refreshSchematicShortcut = ExtResource("8_stwcs")
 
 [node name="Edit" type="PopupMenu" parent="MainView/TopBar/MenuBar"]
-script = ExtResource("3_w8nqj")
+script = ExtResource("9_ddfev")
 undoShortcut = ExtResource("10_jt5ma")
 redoShortcut = ExtResource("11_ri3kq")
 

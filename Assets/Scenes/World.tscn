@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://cat4pi5xpdjow"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/UI/WorldController.cs" id="1_3phex"]
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
+[ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
 [ext_resource type="Shader" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/VoxelHighlight.tscn" id="5_y16gt"]
@@ -45,7 +45,7 @@ radial_segments = 8
 rings = 3
 
 [node name="World" type="Node3D"]
-script = ExtResource("1_3phex")
+script = ExtResource("1_6ekco")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_td26l")
@@ -59,7 +59,7 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.501172, 0.899977, 0.
 
 [node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "collisionHighlight")]
 enableVoxelHighlight = true
-voxelHiglight = NodePath("../../../../Voxel")
+voxelHiglight = NodePath("../../../../VoxelHighight")
 collisionHighlight = NodePath("../../../../HitPointHighlight")
 
 [node name="Ground" type="StaticBody3D" parent="."]
@@ -88,7 +88,7 @@ visible = false
 material_override = SubResource("StandardMaterial3D_85b2v")
 mesh = SubResource("SphereMesh_g7we1")
 
-[node name="Voxel" parent="." instance=ExtResource("5_y16gt")]
+[node name="VoxelHighight" parent="." instance=ExtResource("5_y16gt")]
 visible = false
 
 [editable path="Player"]

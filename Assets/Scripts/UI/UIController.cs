@@ -1,13 +1,13 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class UIManager : Control
+public partial class UIController : Control
 {
     [ExportGroup("Window References")]
-    [Export] private ConfirmationDialog newProjectDialog;
-    [Export] private FileDialog loadProjectDialog;
-    [Export] private FileDialog saveProjectAsDialog;
-    [Export] private Window startWindow;
+    [Export] public ConfirmationDialog newProjectDialog;
+    [Export] public FileDialog loadProjectDialog;
+    [Export] public FileDialog saveProjectAsDialog;
+    [Export] public StartWindow startWindow;
 
     private WorldController worldController;
 
@@ -29,6 +29,8 @@ public partial class UIManager : Control
         {
             windows[i].VisibilityChanged += UpdateFocus;
         }
+
+        UpdateFocus();
     }
 
     private void UpdateFocus()
@@ -41,6 +43,12 @@ public partial class UIManager : Control
                 aWindowIsVisible = true;
                 break;
             }
+        }
+
+        if (!aWindowIsVisible && GameManager.DataManager.ProjectData == null)
+        {
+            startWindow.Show();
+            aWindowIsVisible = true;
         }
 
         worldController.canGoInFocus = !aWindowIsVisible;
