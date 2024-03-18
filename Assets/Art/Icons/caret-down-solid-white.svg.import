@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctw1v2tw0kxqr"
-path="res://.godot/imported/person-walking-solid.svg-d585314ff4274833c37744f4ae367c7a.ctex"
+uid="uid://b2rlkh10wy1sm"
+path="res://.godot/imported/caret-down-solid-white.svg-59d651f1bdc333ec14aa6085eba942a7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Icons/person-walking-solid.svg"
-dest_files=["res://.godot/imported/person-walking-solid.svg-d585314ff4274833c37744f4ae367c7a.ctex"]
+source_file="res://Assets/Art/Icons/caret-down-solid-white.svg"
+dest_files=["res://.godot/imported/caret-down-solid-white.svg-59d651f1bdc333ec14aa6085eba942a7.ctex"]
 
 [params]
 

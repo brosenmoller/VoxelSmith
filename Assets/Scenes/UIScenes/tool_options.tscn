@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c22rhhgvp0lvf"]
+
+[node name="ToolOptions" type="VBoxContainer"]
+anchors_preset = -1
+anchor_right = 0.087
+anchor_bottom = 0.287
+offset_right = -100.224
+offset_bottom = -185.976
+
+[node name="Header" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+color = Color(0.133333, 0.141176, 0.152941, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Header"]
+custom_minimum_size = Vector2(0, 20.53)
+layout_mode = 2
+anchor_right = 0.995
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.5
+offset_bottom = -9.0
+theme_override_font_sizes/normal_font_size = 14
+text = "Tool Options
+"
+
+[node name="Panel" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2

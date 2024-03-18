@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class ProjectMenu : PopupMenu
 {
@@ -17,6 +19,11 @@ public partial class ProjectMenu : PopupMenu
     public static event Action OnOpenPressed;
     public static event Action OnImportSchematicPressed;
     public static event Action OnRefreshSchematicPressed;
+
+    private PopupMenu recentsNestedMenu;
+    private List<string> recentPaths;
+
+    private PopupMenu exportNestedMenu;
 
     public override void _Ready()
     {
@@ -57,6 +64,7 @@ public partial class ProjectMenu : PopupMenu
 
         // 4
         SetupRecentsSubMenu();
+
         // 5
         SetupExportSubMenu();
 
@@ -71,24 +79,37 @@ public partial class ProjectMenu : PopupMenu
 
     private void SetupRecentsSubMenu()
     {
-        PopupMenu recentsNestedMenu = new();
+        recentsNestedMenu?.QueueFree();
+
+        recentsNestedMenu = new();
+        recentsNestedMenu.IdPressed += OnRecentsMenuItemSelected;
         recentsNestedMenu.Name = "RecentsNestedMenu";
 
-        foreach (var recentProject in GameManager.DataManager.EditorData.savePaths)
+        recentPaths = GameManager.DataManager.EditorData.savePaths.Values.ToList();
+
+        for (int i = 0; i < recentPaths.Count; i++)
         {
-            recentsNestedMenu.AddItem(recentProject.Value, 0);
+            recentsNestedMenu.AddItem(recentPaths[i], i);
         }
 
         AddChild(recentsNestedMenu);
         AddSubmenuItem("Open Recent", recentsNestedMenu.Name);
     }
 
+    private void OnRecentsMenuItemSelected(long id)
+    {
+        GameManager.DataManager.LoadProject(recentPaths[(int)id]);
+    }
+
     private void SetupExportSubMenu()
     {
-        PopupMenu exportNestedMenu = new();
+        exportNestedMenu = new();
         exportNestedMenu.Name = "ExportNestedMenu";
-        exportNestedMenu.AddItem("Unity", 0);
-        exportNestedMenu.AddItem("Godot", 1);
+
+        exportNestedMenu.AddItem("Unity", (int)ExportOptions.UNITY);
+        exportNestedMenu.AddItem("Mesh", (int)ExportOptions.MESH);
+        exportNestedMenu.AddItem("Godot", (int)ExportOptions.GODOT);
+
         AddChild(exportNestedMenu);
         AddSubmenuItem("Export", exportNestedMenu.Name);
     }
@@ -102,5 +123,12 @@ public partial class ProjectMenu : PopupMenu
         EXPORT,
         IMPORT_SCHEMATIC,
         REFRESH_SCHEMATIC,
+    }
+
+    private enum ExportOptions
+    {
+        UNITY,
+        MESH,
+        GODOT
     }
 }

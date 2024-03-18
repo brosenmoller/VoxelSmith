@@ -17,13 +17,7 @@ public partial class UIController : Control
     {
         worldController = this.GetChildByType<WorldController>();
 
-        windows = new List<Window>
-        {
-            newProjectDialog,
-            loadProjectDialog,
-            saveProjectAsDialog,
-            startWindow
-        };
+        windows = this.GetAllChildrenByType<Window>();
 
         for (int i = 0; i < windows.Count; i++)
         {

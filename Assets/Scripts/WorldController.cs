@@ -4,7 +4,6 @@ public partial class WorldController : Node3D
 {
     public static WorldController Instance { get; private set; }
 
-
     private PlayerMovement player;
 
     private bool worldInFocus;

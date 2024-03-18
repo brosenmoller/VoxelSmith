@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://bboqmejcdfufk"]
+
+[ext_resource type="Texture2D" uid="uid://b2rlkh10wy1sm" path="res://Assets/Art/Icons/caret-down-solid-white.svg" id="1_if0vr"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/PalleteMenu.cs" id="2_0n444"]
+
+[node name="Pallete" type="VBoxContainer"]
+anchors_preset = -1
+anchor_right = 0.087
+anchor_bottom = 0.287
+offset_right = -100.224
+offset_bottom = -185.976
+
+[node name="Header" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+color = Color(0.133333, 0.141176, 0.152941, 1)
+
+[node name="HeaderContainer" type="HBoxContainer" parent="Header"]
+layout_mode = 2
+anchor_left = 0.02
+anchor_top = 0.062
+anchor_right = 0.971
+anchor_bottom = 0.875
+offset_top = 0.0159999
+offset_right = -0.100006
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Header/HeaderContainer"]
+custom_minimum_size = Vector2(54.66, 25.34)
+layout_mode = 2
+text = "Pallete
+"
+
+[node name="Spacer" type="Control" parent="Header/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Header/HeaderContainer"]
+custom_minimum_size = Vector2(18.08, 0)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("1_if0vr")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PalleteMenu" type="PopupMenu" parent="Header/HeaderContainer" node_paths=PackedStringArray("button")]
+size = Vector2i(100, 116)
+script = ExtResource("2_0n444")
+button = NodePath("../Button")
+
+[node name="Panel" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2

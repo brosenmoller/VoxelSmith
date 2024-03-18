@@ -17,6 +17,9 @@ void fragment() {
     vec2 grid = grid(UV, size.x, size.y);
 	
 	if (grid.x < borderWidth || grid.x > 1.0 - borderWidth || grid.y < borderWidth || grid.y > 1.0 - borderWidth){
-    	ALBEDO = vec3(0, 0, 0.0);
+    	ALBEDO = vec3(0.1, 0.1, 0.1);
+	}
+	else {
+		ALBEDO = vec3(0.05, 0.05, 0.05);
 	}
 }

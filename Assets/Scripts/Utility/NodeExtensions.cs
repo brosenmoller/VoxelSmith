@@ -1,5 +1,6 @@
 ﻿using Godot;
 using Godot.Collections;
+using System.Collections.Generic;
 
 public static class NodeExtensions
 {
@@ -54,6 +55,29 @@ public static class NodeExtensions
         Node rootNode = node.GetTree().Root;
 
         return rootNode.GetChildByType<T>();
+    }
+
+    public static List<T> GetAllChildrenByType<T>(this Node node, bool recursive = true) where T : Node
+    {
+        List<T> values = new();
+
+        int childCount = node.GetChildCount();
+
+        for (int i = 0; i < childCount; i++)
+        {
+            Node child = node.GetChild(i);
+            if (child is T childT)
+            {
+                values.Add(childT);
+            }
+
+            if (recursive && child.GetChildCount() > 0)
+            {
+                values.AddRange(child.GetAllChildrenByType<T>());
+            }
+        }
+
+        return values;
     }
 
     public static bool RayCast2D(this CanvasItem node, Vector2 startPosition, Vector2 endPosition, out RayCastHitInfo2D hitInfo, uint layermask = 0xffffffff, bool collideWithAreas = true, bool collideWithBodies = true)
