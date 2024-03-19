@@ -6,6 +6,7 @@ anchor_right = 0.087
 anchor_bottom = 0.287
 offset_right = -100.224
 offset_bottom = -185.976
+theme_override_constants/separation = 0
 
 [node name="Header" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(0, 26)
