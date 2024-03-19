@@ -9,6 +9,7 @@ public partial class GameManager : Node
     public static SurfaceMesh SurfaceMesh { get; private set; }
     public static PlayerMovement Player { get; private set; }
     public static UIController UIController { get; private set; }
+    public static PaletteUI PaletteUI { get; private set; }
 
 
     private Manager[] activeManagers;
@@ -18,6 +19,7 @@ public partial class GameManager : Node
         SurfaceMesh = this.GetNodeByType<SurfaceMesh>();
         Player = this.GetNodeByType<PlayerMovement>();
         UIController = this.GetNodeByType<UIController>();
+        PaletteUI = this.GetNodeByType<PaletteUI>();
 
         SetupManagers();
         SetupInputContext();

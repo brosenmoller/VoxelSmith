@@ -22,7 +22,11 @@ public partial class VoxelPlacer : RayCast3D
             Vector3 point = GetCollisionPoint();
             Vector3 normal = GetCollisionNormal();
 
-            if (enableCollisionHighlight) { collisionHighlight.GlobalPosition = point; }
+            if (enableCollisionHighlight) 
+            {
+                collisionHighlight.Visible = true;
+                collisionHighlight.GlobalPosition = point; 
+            }
 
             point -= normal * 0.1f;
 
@@ -32,18 +36,27 @@ public partial class VoxelPlacer : RayCast3D
                 Mathf.FloorToInt(point.Z)
             );
 
-            if (enableVoxelHighlight) { voxelHiglight.GlobalPosition = voxelPosition; }
+            if (enableVoxelHighlight) 
+            {
+                voxelHiglight.Visible = true;
+                voxelHiglight.GlobalPosition = voxelPosition; 
+            }
 
             if (Input.IsActionJustPressed("place"))
             {
                 Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
 
-                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, new VoxelData()));
+                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, GameManager.DataManager.ProjectData.SelectedVoxelData));
             }
             else if (Input.IsActionJustPressed("break"))
             {
-                GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition, new VoxelData()));
+                GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition));
             }
+        }
+        else
+        {
+            collisionHighlight.Visible = false;
+            voxelHiglight.Visible = false;
         }
     }
 }

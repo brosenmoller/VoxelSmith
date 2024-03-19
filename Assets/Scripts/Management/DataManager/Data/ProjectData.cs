@@ -1,4 +1,5 @@
 using Godot;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,34 @@ public class ProjectData
     public Vector3 playerPosition;
     public Vector3 cameraRotation;
     public Vector3 cameraPivotRotation;
-    public Dictionary<Vector3I, VoxelData> voxels;
+    public Dictionary<Vector3I, VoxelColor> voxelColors;
+    public Dictionary<Vector3I, VoxelPrefab> voxelPrefabs;
+    public int selectedPaletteIndex;
+    public int selectedPaletteSwatchIndex;
+
+    [JsonIgnore] 
+    public VoxelData SelectedVoxelData
+    {
+        get
+        {
+            if (selectedPaletteIndex == 0)
+            {
+                if (selectedPaletteSwatchIndex >= GameManager.DataManager.PaletteData.palleteColors.Count)
+                {
+                    selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.Count - 1;
+                }
+                return GameManager.DataManager.PaletteData.palleteColors[selectedPaletteSwatchIndex];
+            }
+            else
+            {
+                if (selectedPaletteSwatchIndex >= GameManager.DataManager.PaletteData.palletePrefabs.Count)
+                {
+                    selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.Count - 1;
+                }
+                return GameManager.DataManager.PaletteData.palletePrefabs[selectedPaletteSwatchIndex];
+            }
+        }
+    }
 
     public ProjectData() { }
 
@@ -21,17 +49,7 @@ public class ProjectData
         this.name = name;
         projectID = Guid.NewGuid();
         this.palleteID = palleteID;
-        voxels = new Dictionary<Vector3I, VoxelData>();
-    }
-}
-
-[Serializable]
-public class VoxelData
-{
-    public Color color;
-
-    public VoxelData() 
-    {
-        color = Color.Color8(255, 0, 0, 255);
+        voxelColors = new Dictionary<Vector3I, VoxelColor>();
+        voxelPrefabs = new Dictionary<Vector3I, VoxelPrefab>();
     }
 }

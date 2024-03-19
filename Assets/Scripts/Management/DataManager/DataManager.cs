@@ -1,11 +1,12 @@
 ﻿using Godot;
 using System;
+using System.Linq;
 
 public class DataManager : Manager
 {
     public ProjectData ProjectData => projectDataHolder.Data;
     public EditorData EditorData => editorDataHolder.Data;
-    public PaletteData PalleteData => paletteDataHolder.Data;
+    public PaletteData PaletteData => paletteDataHolder.Data;
 
     private DataHolder<ProjectData> projectDataHolder;
     private DataHolder<EditorData> editorDataHolder;
@@ -38,8 +39,8 @@ public class DataManager : Manager
         try { editorDataHolder.Load(GLOBAL_EDITOR_SAVE_PATH); }
         catch 
         { 
-            editorDataHolder.Data = new EditorData(); 
             GD.PrintErr("Couldn't load editor data");
+            editorDataHolder.Data = new EditorData(); 
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
         }
 
@@ -52,6 +53,20 @@ public class DataManager : Manager
             GD.PrintErr("Failed to load project data: \n" + e.ToString());
             GameManager.UIController.startWindow.Show();
         }
+
+        paletteDataHolder.Data = new PaletteData();
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 0, 0) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 0, 0) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 255, 0) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 0, 255) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 255, 0) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 0, 255) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 255, 255) });
+        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 255, 255) });
+
+        projectDataHolder.Data.selectedPaletteIndex = 0;
+        projectDataHolder.Data.selectedPaletteSwatchIndex = 3;
+        GameManager.PaletteUI.Update();
     }
 
     public void CreateNewProject(string name, string dirPath, Guid paletteGUID)
@@ -103,12 +118,34 @@ public class DataManager : Manager
 
             GameManager.SurfaceMesh.UpdateMesh();
 
+            if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.projectID))
+            {
+                editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.projectID, path);
+            }
             editorDataHolder.Data.lastProject = projectDataHolder.Data.projectID;
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+
+            GameManager.UIController.startWindow.Hide();
         }
         catch (Exception e)
         {
             GD.PrintErr("Failed to load project data: \n" + e.ToString());
+
+            if (editorDataHolder.Data.savePaths.ContainsValue(path))
+            {
+                Guid projectKey = editorDataHolder.Data.savePaths.FirstOrDefault(x => x.Value == path).Key;
+                if (projectKey != default)
+                {
+                    editorDataHolder.Data.savePaths.Remove(projectKey);
+                }
+
+                if (editorDataHolder.Data.lastProject == projectKey)
+                {
+                    editorDataHolder.Data.lastProject = null;
+                }
+
+                editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+            }
 
             if (projectDataHolder.Data == null)
             {

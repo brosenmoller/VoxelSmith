@@ -13,22 +13,42 @@ public class PlaceVoxelCommand : ICommand
 
     public void Execute()
     {
-        if (!GameManager.DataManager.ProjectData.voxels.ContainsKey(voxelPosition))
+        if (voxelData is VoxelColor color)
         {
-            GameManager.DataManager.ProjectData.voxels.Add(voxelPosition, voxelData);
-        }
+            if (!GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
+            {
+                GameManager.DataManager.ProjectData.voxelColors.Add(voxelPosition, color);
+            }
 
-        GameManager.SurfaceMesh.UpdateMesh();
+            GameManager.SurfaceMesh.UpdateMesh();
+        }
+        else if (voxelData is VoxelPrefab prefab)
+        {
+            if (!GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+            {
+                GameManager.DataManager.ProjectData.voxelPrefabs.Add(voxelPosition, prefab);
+            }
+        }
     }
 
     public void Undo()
     {
-        if (GameManager.DataManager.ProjectData.voxels.ContainsKey(voxelPosition))
+        if (voxelData is VoxelColor)
         {
-            GameManager.DataManager.ProjectData.voxels.Remove(voxelPosition);
-        }
+            if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
+            {
+                GameManager.DataManager.ProjectData.voxelColors.Remove(voxelPosition);
+            }
 
-        GameManager.SurfaceMesh.UpdateMesh();
+            GameManager.SurfaceMesh.UpdateMesh();
+        }
+        else if (voxelData is VoxelPrefab)
+        {
+            if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+            {
+                GameManager.DataManager.ProjectData.voxelPrefabs.Remove(voxelPosition);
+            }
+        }
     }
 }
 

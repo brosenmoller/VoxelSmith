@@ -15,8 +15,16 @@ public partial class PlayerMovement : CharacterBody3D
 
     public bool active = false;
 
+    public override void _Process(double delta)
+    {
+        if (Input.IsKeyPressed(Key.Ctrl)) { active = false; }
+        else { active = true; }
+    }
+
     public override void _PhysicsProcess(double delta)
     {
+        if (!active) { return; }
+
         Vector3 tempVelocity = Velocity;
 
         // Add the gravity.

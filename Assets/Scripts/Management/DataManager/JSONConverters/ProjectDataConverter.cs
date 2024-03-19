@@ -15,20 +15,34 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             { "palleteID", value.palleteID.ToString() },
             { "player_position", JToken.FromObject(value.playerPosition, serializer) },
             { "camera_rotation", JToken.FromObject(value.cameraRotation, serializer) },
-            { "camera_pivot_rotation", JToken.FromObject(value.cameraPivotRotation, serializer) }
+            { "camera_pivot_rotation", JToken.FromObject(value.cameraPivotRotation, serializer) },
+            { "selected_palette_index", JToken.FromObject(value.selectedPaletteIndex, serializer) },
+            { "selected_palette_swatch_index", JToken.FromObject(value.selectedPaletteSwatchIndex, serializer) },
         };
 
-        JArray voxelsArray = new();
-        foreach (var kvp in value.voxels)
+        JArray voxelColorArray = new();
+        foreach (var kvp in value.voxelColors)
         {
             JObject voxelObj = new()
             {
                 { "position", JToken.FromObject(kvp.Key, serializer) },
-                { "voxelData", JToken.FromObject(kvp.Value, serializer) }
+                { "voxelColor", JToken.FromObject(kvp.Value, serializer) }
             };
-            voxelsArray.Add(voxelObj);
+            voxelColorArray.Add(voxelObj);
         }
-        obj.Add("voxels", voxelsArray);
+        obj.Add("voxelColors", voxelColorArray);
+
+        JArray voxelPrefabArray = new();
+        foreach (var kvp in value.voxelPrefabs)
+        {
+            JObject voxelObj = new()
+            {
+                { "position", JToken.FromObject(kvp.Key, serializer) },
+                { "voxelPrefab", JToken.FromObject(kvp.Value, serializer) }
+            };
+            voxelPrefabArray.Add(voxelObj);
+        }
+        obj.Add("voxelPrefabs", voxelPrefabArray);
 
         obj.WriteTo(writer);
     }
@@ -44,16 +58,27 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             playerPosition = obj["player_position"].ToObject<Vector3>(serializer),
             cameraRotation = obj["camera_rotation"].ToObject<Vector3>(serializer),
             cameraPivotRotation = obj["camera_pivot_rotation"].ToObject<Vector3>(serializer),
+            selectedPaletteIndex = obj["selected_palette_index"].ToObject<int>(),
+            selectedPaletteSwatchIndex= obj["selected_palette_swatch_index"].ToObject<int>(),
 
-            voxels = new Dictionary<Vector3I, VoxelData>()
+            voxelColors = new Dictionary<Vector3I, VoxelColor>(),
+            voxelPrefabs = new Dictionary<Vector3I, VoxelPrefab>()
         };
 
-        JArray voxelsArray = (JArray)obj["voxels"];
-        foreach (JObject voxelObj in voxelsArray)
+        JArray voxelColorArray = (JArray)obj["voxelColors"];
+        foreach (JObject voxelObj in voxelColorArray)
         {
             Vector3I position = voxelObj["position"].ToObject<Vector3I>(serializer);
-            VoxelData voxelData = voxelObj["voxelData"].ToObject<VoxelData>(serializer);
-            projectData.voxels.Add(position, voxelData);
+            VoxelColor voxelColor = voxelObj["voxelColor"].ToObject<VoxelColor>(serializer);
+            projectData.voxelColors.Add(position, voxelColor);
+        }
+
+        JArray voxelPrefabArray = (JArray)obj["voxelPrefabs"];
+        foreach (JObject voxelObj in voxelPrefabArray)
+        {
+            Vector3I position = voxelObj["position"].ToObject<Vector3I>(serializer);
+            VoxelPrefab voxelPrefab = voxelObj["voxelPrefab"].ToObject<VoxelPrefab>(serializer);
+            projectData.voxelPrefabs.Add(position, voxelPrefab);
         }
 
         return projectData;

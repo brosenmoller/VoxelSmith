@@ -5,30 +5,46 @@ public class BreakVoxelCommand : ICommand
     public Vector3I voxelPosition;
     public VoxelData voxelData;
 
-    public BreakVoxelCommand(Vector3I voxelPosition, VoxelData voxelData)
+    public BreakVoxelCommand(Vector3I voxelPosition)
     {
         this.voxelPosition = voxelPosition;
-        this.voxelData = voxelData;
     }
 
     public void Execute()
     {
-        if (GameManager.DataManager.ProjectData.voxels.ContainsKey(voxelPosition))
+        if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
         {
-            GameManager.DataManager.ProjectData.voxels.Remove(voxelPosition);
+            voxelData = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
+            GameManager.DataManager.ProjectData.voxelColors.Remove(voxelPosition);
+
+            GameManager.SurfaceMesh.UpdateMesh();
         }
 
-        GameManager.SurfaceMesh.UpdateMesh();
+        if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+        {
+            voxelData = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
+            GameManager.DataManager.ProjectData.voxelPrefabs.Remove(voxelPosition);
+        }
     }
 
     public void Undo()
     {
-        if (!GameManager.DataManager.ProjectData.voxels.ContainsKey(voxelPosition))
+        if (voxelData is VoxelColor color)
         {
-            GameManager.DataManager.ProjectData.voxels.Add(voxelPosition, voxelData);
-        }
+            if (!GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
+            {
+                GameManager.DataManager.ProjectData.voxelColors.Add(voxelPosition, color);
+            }
 
-        GameManager.SurfaceMesh.UpdateMesh();
+            GameManager.SurfaceMesh.UpdateMesh();
+        }
+        else if (voxelData is VoxelPrefab prefab)
+        {
+            if (!GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+            {
+                GameManager.DataManager.ProjectData.voxelPrefabs.Add(voxelPosition, prefab);
+            }
+        }
     }
 }
 

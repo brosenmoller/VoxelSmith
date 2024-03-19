@@ -1,16 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://bboqmejcdfufk"]
+[gd_scene load_steps=23 format=3 uid="uid://bboqmejcdfufk"]
 
+[ext_resource type="Script" path="res://Assets/Scripts/UI/PaletteUI.cs" id="1_0qjwh"]
 [ext_resource type="Texture2D" uid="uid://b2rlkh10wy1sm" path="res://Assets/Art/Icons/caret-down-solid-white.svg" id="1_if0vr"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/PalleteMenu.cs" id="2_0n444"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/PaletteMenu.cs" id="2_ioqpb"]
+[ext_resource type="PackedScene" uid="uid://27dpm3c3wrc8" path="res://Assets/Scenes/UIScenes/color_swatch.tscn" id="3_a736u"]
 
-[node name="Pallete" type="VBoxContainer"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_gok4p"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_phudj"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_rdfy4"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_jmksr"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_cu0ar"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7pr6f"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_pfa8u"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ekpqg"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_4hbhy"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_lhugu"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_whgop"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_mylad"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ms5kc"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ishq5"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_qe8te"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_c7cw0"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_608f3"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_juu4u"]
+allow_unpress = true
+
+[node name="Pallete" type="VBoxContainer" node_paths=PackedStringArray("paletteColorsContainer", "palettePrefabsContainer")]
 anchors_preset = -1
-anchor_right = 0.087
-anchor_bottom = 0.287
-offset_right = -100.224
-offset_bottom = -185.976
+anchor_right = 0.101
+anchor_bottom = 0.281
+offset_right = -0.352005
+offset_bottom = -0.0880127
 size_flags_vertical = 3
 theme_override_constants/separation = 0
+script = ExtResource("1_0qjwh")
+colorSwatch = ExtResource("3_a736u")
+paletteColorsContainer = NodePath("ColorArea/PaletteColorContainer")
+palettePrefabsContainer = NodePath("PrefabArea/PalettePrefabContainer")
 
 [node name="Header" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(0, 32)
@@ -36,7 +96,7 @@ text = "Pallete
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="Header/HeaderContainer"]
+[node name="PaletteMenuOpenButton" type="Button" parent="Header/HeaderContainer"]
 custom_minimum_size = Vector2(18.08, 0)
 layout_mode = 2
 focus_mode = 0
@@ -45,11 +105,117 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PalleteMenu" type="PopupMenu" parent="Header/HeaderContainer" node_paths=PackedStringArray("button")]
+[node name="PaletteMenu" type="PopupMenu" parent="Header/HeaderContainer" node_paths=PackedStringArray("button")]
 size = Vector2i(100, 116)
-script = ExtResource("2_0n444")
-button = NodePath("../Button")
+script = ExtResource("2_ioqpb")
+button = NodePath("../PaletteMenuOpenButton")
 
-[node name="Panel" type="ColorRect" parent="."]
+[node name="ColorHeader" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 27.835)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 0
+text = "Colors"
+
+[node name="ColorArea" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PaletteColorContainer" type="HFlowContainer" parent="ColorArea"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+
+[node name="ColorSwatch" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_gok4p")
+
+[node name="ColorSwatch2" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_phudj")
+
+[node name="ColorSwatch3" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_rdfy4")
+
+[node name="ColorSwatch4" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_jmksr")
+
+[node name="ColorSwatch5" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_cu0ar")
+
+[node name="ColorSwatch7" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_7pr6f")
+
+[node name="ColorSwatch8" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_pfa8u")
+
+[node name="ColorSwatch9" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_ekpqg")
+
+[node name="ColorSwatch10" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_4hbhy")
+
+[node name="ColorSwatch11" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_lhugu")
+
+[node name="ColorSwatch12" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_whgop")
+
+[node name="ColorSwatch13" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_mylad")
+
+[node name="ColorSwatch14" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_ms5kc")
+
+[node name="ColorSwatch15" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_ishq5")
+
+[node name="ColorSwatch16" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_qe8te")
+
+[node name="ColorSwatch17" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_c7cw0")
+
+[node name="ColorSwatch18" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_608f3")
+
+[node name="ColorSwatch6" parent="ColorArea/PaletteColorContainer" instance=ExtResource("3_a736u")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_juu4u")
+
+[node name="PrefabHeader" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 27.835)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 0
+text = "Prefabs"
+
+[node name="PrefabArea" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PalettePrefabContainer" type="HFlowContainer" parent="PrefabArea"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5

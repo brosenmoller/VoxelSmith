@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
 [ext_resource type="Shader" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
-[ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/VoxelHighlight.tscn" id="5_y16gt"]
+[ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/voxel_highlight.tscn" id="5_y16gt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_top_color = Color(0.2, 0.482353, 0.611765, 1)
@@ -22,8 +22,13 @@ background_mode = 2
 sky = SubResource("Sky_ei7t6")
 sky_custom_fov = 70.0
 tonemap_mode = 2
-glow_enabled = true
-adjustment_enabled = true
+ssao_intensity = 12.44
+ssao_power = 7.64736
+ssao_detail = 0.45
+ssao_sharpness = 0.18
+fog_density = 0.0001
+fog_sky_affect = 0.237
+volumetric_fog_density = 0.0004
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bpmsq"]
 render_priority = 0

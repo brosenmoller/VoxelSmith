@@ -1,30 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Godot;
 
 [Serializable]
 public class PaletteData
 {
     public Guid id;
-    public List<PalleteColor> palleteColors;
-
+    public List<VoxelColor> palleteColors;
+    public List<VoxelPrefab> palletePrefabs;
     public PaletteData()
     {
         id = Guid.NewGuid();
-        palleteColors = new List<PalleteColor>();
+        palleteColors = new List<VoxelColor>();
+        palletePrefabs = new List<VoxelPrefab>();
     }
-
-    [Serializable]
-    public class PalleteColor
-    {
-        public Color Color;
-        public string[] minecraftIDlist;
-    }
-
-    //[Serializable]
-    //public class PalletePrefab
-    //{
-    //    public 
-    //}
-
 }

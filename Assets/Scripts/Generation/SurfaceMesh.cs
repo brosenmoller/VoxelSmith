@@ -6,7 +6,7 @@ public partial class SurfaceMesh : MeshInstance3D
     public float VoxelSize = 1f;
     public Material DefaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true };
 
-    private Dictionary<Vector3I, VoxelData> Voxels => GameManager.DataManager.ProjectData.voxels;
+    private Dictionary<Vector3I, VoxelColor> Voxels => GameManager.DataManager.ProjectData.voxelColors;
 
     private SurfaceTool SurfaceTool = new();
 
@@ -31,14 +31,17 @@ public partial class SurfaceMesh : MeshInstance3D
         SurfaceTool.Begin(Mesh.PrimitiveType.Triangles);
         SurfaceTool.SetMaterial(DefaultMaterial);
 
-        foreach (var voxel in Voxels.Keys)
-            CreateVoxel(Color.Color8(200, 100, 0, 255), voxel);
+        foreach (Vector3I voxel in Voxels.Keys)
+        {
+            CreateVoxel(voxel, Voxels[voxel].color);
+        }
+            
 
         SurfaceTool.Index();
         return SurfaceTool.Commit();
     }
 
-    private void CreateVoxel(Color color, Vector3I position)
+    private void CreateVoxel(Vector3I position, Color color)
     {
         bool left = !Voxels.ContainsKey(position +      new Vector3I(-1, 0, 0));
         bool right = !Voxels.ContainsKey(position +     new Vector3I(1, 0, 0));

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PalleteMenu : PopupMenu
+public partial class PaletteMenu : PopupMenu
 {
     [Export] private Button button;
 
