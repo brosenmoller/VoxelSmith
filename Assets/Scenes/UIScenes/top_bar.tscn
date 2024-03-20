@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=22 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/Resources/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="2_q2gw8"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://d1csa0n0egfeg" path="res://Assets/Art/Icons/satellite-accent.png" id="18_aay2d"]
 [ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
+[ext_resource type="Script" path="res://Assets/Scripts/Utility/FPSCounter.cs" id="21_v70tf"]
 
 [node name="TopBar" type="ColorRect"]
 custom_minimum_size = Vector2(0, 50)
@@ -101,3 +102,14 @@ shortcut = ExtResource("20_xf0qk")
 [node name="VSeparator2" type="VSeparator" parent="TopBarContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TopBarContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+text = "Fps: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("21_v70tf")

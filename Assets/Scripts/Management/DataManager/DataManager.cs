@@ -76,6 +76,7 @@ public class DataManager : Manager
         string path = dirPath + name + PROJECT_FILE_EXTENSION;
         projectDataHolder.Data = new ProjectData(name, paletteGUID);
         SaveProjectAs(path);
+        GameManager.SurfaceMesh.UpdateMesh();
     }
 
     public void SaveProject()
