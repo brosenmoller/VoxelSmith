@@ -7,6 +7,7 @@ public partial class UIController : Control
     [Export] public ConfirmationDialog newProjectDialog;
     [Export] public FileDialog loadProjectDialog;
     [Export] public FileDialog saveProjectAsDialog;
+    [Export] public FileDialog exportPrefabDialog;
     [Export] public StartWindow startWindow;
 
     private WorldController worldController;

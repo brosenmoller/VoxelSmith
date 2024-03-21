@@ -64,6 +64,8 @@ public class DataManager : Manager
         paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 255, 255) });
         paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 255, 255) });
 
+        paletteDataHolder.Data.palletePrefabs.Add(new VoxelPrefab() { color = Color.Color8(0, 0, 0), unityPrefabID = "67ce479430c155e4cbcd3bb0ef4f4954", prefabName = "TestSpehere" });
+
         projectDataHolder.Data.selectedPaletteIndex = 0;
         projectDataHolder.Data.selectedPaletteSwatchIndex = 3;
         GameManager.PaletteUI.Update();

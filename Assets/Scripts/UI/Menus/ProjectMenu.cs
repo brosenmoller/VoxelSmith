@@ -20,6 +20,8 @@ public partial class ProjectMenu : PopupMenu
     public static event Action OnImportSchematicPressed;
     public static event Action OnRefreshSchematicPressed;
 
+    public static event Action OnExportUnityPrefabPressed;
+
     private PopupMenu recentsNestedMenu;
     private List<string> recentPaths;
 
@@ -104,14 +106,26 @@ public partial class ProjectMenu : PopupMenu
     private void SetupExportSubMenu()
     {
         exportNestedMenu = new();
+        exportNestedMenu.IdPressed += OnExportMenuItemSelected;
         exportNestedMenu.Name = "ExportNestedMenu";
 
         exportNestedMenu.AddItem("Unity", (int)ExportOptions.UNITY);
         exportNestedMenu.AddItem("Mesh", (int)ExportOptions.MESH);
         exportNestedMenu.AddItem("Godot", (int)ExportOptions.GODOT);
 
+
         AddChild(exportNestedMenu);
         AddSubmenuItem("Export", exportNestedMenu.Name);
+    }
+
+    private void OnExportMenuItemSelected(long id)
+    {
+        switch (id)
+        {
+            case (long)ExportOptions.UNITY: OnExportUnityPrefabPressed?.Invoke(); break;
+            //case (long)ExportOptions.GODOT: OnSavePressed?.Invoke(); break;
+            //case (long)ExportOptions.MESH: OnSaveAsPressed?.Invoke(); break;
+        }
     }
 
     private enum ProjectOptions

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://ybpqluwl33ne"]
+
+[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_ypvy8"]
+
+[node name="PrefabSwatch" type="Button"]
+custom_minimum_size = Vector2(88, 88)
+anchors_preset = -1
+anchor_right = 0.036
+anchor_bottom = 0.065
+offset_right = -69.12
+offset_bottom = -70.2
+tooltip_text = "Right click to edit"
+toggle_mode = true
+button_mask = 3
+button_group = ExtResource("1_ypvy8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.329
+offset_bottom = -7.03
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Enemy"
+fit_content = true

@@ -52,6 +52,8 @@ public partial class GameManager : Node
         ProjectMenu.OnSaveAsPressed += UIController.saveProjectAsDialog.Show;
         ProjectMenu.OnNewPressed += UIController.newProjectDialog.Show;
         ProjectMenu.OnOpenPressed += UIController.loadProjectDialog.Show;
+
+        ProjectMenu.OnExportUnityPrefabPressed += UIController.exportPrefabDialog.Show;
     }
 
     public override void _PhysicsProcess(double delta)

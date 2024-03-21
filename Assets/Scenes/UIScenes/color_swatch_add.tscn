@@ -1,17 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://creli6fjj0ry7"]
+[gd_scene load_steps=5 format=3 uid="uid://creli6fjj0ry7"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijvjs"]
-bg_color = Color(0.72549, 0.533333, 0.65098, 1)
+[ext_resource type="Texture2D" uid="uid://bx0ocyu68yd8g" path="res://Assets/Art/Icons/plus-solid-white.svg" id="2_fsbge"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_uagrl"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hvso"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_51fl7"]
+bg_color = Color(1, 1, 1, 0.619608)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6tmpq"]
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
 
 [node name="ColorSwatchAdd" type="Button"]
 custom_minimum_size = Vector2(30, 30)
 anchors_preset = -1
 anchor_right = 0.016
 anchor_bottom = 0.028
-offset_right = -30.72
-offset_bottom = -30.24
-theme_override_styles/normal = SubResource("StyleBoxFlat_ijvjs")
+offset_right = -0.720001
+offset_bottom = -0.240002
+theme_override_styles/normal = SubResource("StyleBoxFlat_8hvso")
+theme_override_styles/hover = SubResource("StyleBoxFlat_51fl7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6tmpq")
 button_mask = 3
-icon = SubResource("ViewportTexture_uagrl")
+icon = ExtResource("2_fsbge")
+icon_alignment = 1
+expand_icon = true

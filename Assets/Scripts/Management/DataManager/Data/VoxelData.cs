@@ -21,6 +21,7 @@ public class VoxelColor : VoxelData
 [Serializable]
 public class VoxelPrefab : VoxelData
 {
+    public string prefabName;
     public string unityPrefabID;
     public string godotSceneID;
 }

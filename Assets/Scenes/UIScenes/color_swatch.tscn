@@ -1,23 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://27dpm3c3wrc8"]
+[gd_scene load_steps=2 format=3 uid="uid://27dpm3c3wrc8"]
 
-[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/PaletteButtonGroup.tres" id="1_rg1tx"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fsurr"]
-bg_color = Color(0.968627, 0.32549, 0.596078, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_rg1tx"]
 
 [node name="ColorSwatch" type="Button"]
-custom_minimum_size = Vector2(30, 30)
+custom_minimum_size = Vector2(32, 32)
 anchors_preset = -1
 anchor_right = 0.016
 anchor_bottom = 0.028
 offset_right = -30.72
 offset_bottom = -30.24
 tooltip_text = "Right click to edit"
-theme_override_styles/normal = SubResource("StyleBoxFlat_fsurr")
 toggle_mode = true
 button_mask = 3
 button_group = ExtResource("1_rg1tx")
