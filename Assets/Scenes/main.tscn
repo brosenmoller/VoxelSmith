@@ -74,6 +74,7 @@ theme_override_constants/separation = 0
 
 [node name="TopBar" parent="MainView" instance=ExtResource("6_v81rl")]
 layout_mode = 2
+color = Color(0.12727, 0.143383, 0.152753, 1)
 
 [node name="MainWindow" type="HSplitContainer" parent="MainView"]
 layout_mode = 2

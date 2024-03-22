@@ -74,11 +74,15 @@ public class DataManager : Manager
     public void CreateNewProject(string name, string dirPath, Guid paletteGUID)
     {
         // TODO: Warn User if there is unsaved data
+        if (projectDataHolder.Data != null)SaveProject();
 
         string path = dirPath + name + PROJECT_FILE_EXTENSION;
         projectDataHolder.Data = new ProjectData(name, paletteGUID);
+
         SaveProjectAs(path);
+
         GameManager.SurfaceMesh.UpdateMesh();
+        GameManager.PrefabMesh.UpdateMesh();
     }
 
     public void SaveProject()
@@ -120,6 +124,7 @@ public class DataManager : Manager
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
 
             GameManager.SurfaceMesh.UpdateMesh();
+            GameManager.PrefabMesh.UpdateMesh();
 
             if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.projectID))
             {

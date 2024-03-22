@@ -28,6 +28,8 @@ public class PlaceVoxelCommand : ICommand
             {
                 GameManager.DataManager.ProjectData.voxelPrefabs.Add(voxelPosition, prefab);
             }
+
+            GameManager.PrefabMesh.UpdateMesh();
         }
     }
 
@@ -48,6 +50,8 @@ public class PlaceVoxelCommand : ICommand
             {
                 GameManager.DataManager.ProjectData.voxelPrefabs.Remove(voxelPosition);
             }
+
+            GameManager.PrefabMesh.UpdateMesh();
         }
     }
 }

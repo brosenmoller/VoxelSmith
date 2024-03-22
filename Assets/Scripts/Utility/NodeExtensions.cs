@@ -30,6 +30,29 @@ public static class NodeExtensions
         return null;
     }
 
+    public static T[] GetAllChildrenByType<T>(this Node node, bool recursive = true) where T : Node
+    {
+        List<T> values = new();
+
+        int childCount = node.GetChildCount();
+
+        for (int i = 0; i < childCount; i++)
+        {
+            Node child = node.GetChild(i);
+            if (child is T childT)
+            {
+                values.Add(childT);
+            }
+
+            if (recursive && child.GetChildCount() > 0)
+            {
+                values.AddRange(child.GetAllChildrenByType<T>());
+            }
+        }
+
+        return values.ToArray();
+    }
+
     //acts like Unity's GetComponentInParent<T>
     public static T GetParentByType<T>(this Node node) where T : Node
     {
@@ -53,31 +76,14 @@ public static class NodeExtensions
     public static T GetNodeByType<T>(this Node node) where T : Node
     {
         Node rootNode = node.GetTree().Root;
-
         return rootNode.GetChildByType<T>();
     }
 
-    public static List<T> GetAllChildrenByType<T>(this Node node, bool recursive = true) where T : Node
+    //acts like Unity's FindObjectsOfType<T>
+    public static T[] GetAllNodesByType<T>(this Node node) where T : Node
     {
-        List<T> values = new();
-
-        int childCount = node.GetChildCount();
-
-        for (int i = 0; i < childCount; i++)
-        {
-            Node child = node.GetChild(i);
-            if (child is T childT)
-            {
-                values.Add(childT);
-            }
-
-            if (recursive && child.GetChildCount() > 0)
-            {
-                values.AddRange(child.GetAllChildrenByType<T>());
-            }
-        }
-
-        return values;
+        Node rootNode = node.GetTree().Root;
+        return rootNode.GetAllNodesByType<T>();
     }
 
     public static bool RayCast2D(this CanvasItem node, Vector2 startPosition, Vector2 endPosition, out RayCastHitInfo2D hitInfo, uint layermask = 0xffffffff, bool collideWithAreas = true, bool collideWithBodies = true)

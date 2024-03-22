@@ -24,6 +24,8 @@ public class BreakVoxelCommand : ICommand
         {
             voxelData = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
             GameManager.DataManager.ProjectData.voxelPrefabs.Remove(voxelPosition);
+
+            GameManager.PrefabMesh.UpdateMesh();
         }
     }
 
@@ -44,6 +46,8 @@ public class BreakVoxelCommand : ICommand
             {
                 GameManager.DataManager.ProjectData.voxelPrefabs.Add(voxelPosition, prefab);
             }
+
+            GameManager.PrefabMesh.UpdateMesh();
         }
     }
 }

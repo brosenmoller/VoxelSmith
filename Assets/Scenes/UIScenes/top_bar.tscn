@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=23 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/Resources/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="2_q2gw8"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
 [ext_resource type="Script" path="res://Assets/Scripts/Utility/FPSCounter.cs" id="21_v70tf"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/QuickExport.cs" id="22_e5q42"]
 
 [node name="TopBar" type="ColorRect"]
 custom_minimum_size = Vector2(0, 50)
@@ -113,3 +114,28 @@ scroll_active = false
 autowrap_mode = 0
 shortcut_keys_enabled = false
 script = ExtResource("21_v70tf")
+
+[node name="Control" type="Control" parent="TopBarContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuickExportContainer" type="MarginContainer" parent="TopBarContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+script = ExtResource("22_e5q42")
+
+[node name="QuickExportButton" type="Button" parent="TopBarContainer/QuickExportContainer"]
+layout_mode = 2
+text = "Quick Export"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="TopBarContainer/QuickExportContainer"]
+title = "Warning"
+initial_position = 2
+size = Vector2i(612, 110)
+always_on_top = true
+dialog_text = "This action will override the previous files,
+ are you sure you want to proceed?"
+dialog_close_on_escape = false

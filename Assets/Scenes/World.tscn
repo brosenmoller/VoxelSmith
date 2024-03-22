@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=15 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
 [ext_resource type="Shader" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
+[ext_resource type="Script" path="res://Assets/Scripts/Generation/PrefabMesh.cs" id="5_8q8hp"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/voxel_highlight.tscn" id="5_y16gt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
@@ -78,14 +79,23 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("ConcavePolygonShape3D_qgt8u")
 
-[node name="SurfaceCollider" type="StaticBody3D" parent="."]
+[node name="SurfaceMeshBody" type="StaticBody3D" parent="."]
 collision_layer = 3
 
-[node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceCollider"]
+[node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceMeshBody"]
 skeleton = NodePath("../..")
 script = ExtResource("4_48p0j")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceCollider"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceMeshBody"]
+
+[node name="PrefabMeshBody" type="StaticBody3D" parent="."]
+collision_layer = 3
+
+[node name="PrefabMesh" type="MeshInstance3D" parent="PrefabMeshBody"]
+skeleton = NodePath("../..")
+script = ExtResource("5_8q8hp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PrefabMeshBody"]
 
 [node name="HitPointHighlight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980523, 0.622928, -0.945743)

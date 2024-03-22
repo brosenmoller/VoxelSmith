@@ -1,5 +1,4 @@
 using Godot;
-using System.Collections.Generic;
 
 public partial class UIController : Control
 {
@@ -12,7 +11,7 @@ public partial class UIController : Control
 
     private WorldController worldController;
 
-    private List<Window> windows;
+    private Window[] windows;
 
     public override void _Ready()
     {
@@ -20,7 +19,7 @@ public partial class UIController : Control
 
         windows = this.GetAllChildrenByType<Window>();
 
-        for (int i = 0; i < windows.Count; i++)
+        for (int i = 0; i < windows.Length; i++)
         {
             windows[i].VisibilityChanged += UpdateFocus;
         }
@@ -31,7 +30,7 @@ public partial class UIController : Control
     private void UpdateFocus()
     {
         bool aWindowIsVisible = false;
-        for (int i = 0; i < windows.Count; i++)
+        for (int i = 0; i < windows.Length; i++)
         {
             if (windows[i].Visible) 
             {
