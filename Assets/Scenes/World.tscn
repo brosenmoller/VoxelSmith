@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=16 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
@@ -40,6 +40,13 @@ size = Vector2(100, 100)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qgt8u"]
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cd2e8"]
+vertex_color_use_as_albedo = true
+metallic = 1.0
+emission_enabled = true
+emission = Color(0.756863, 0, 0, 1)
+emission_energy_multiplier = 3.55
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
 albedo_color = Color(1, 0.270588, 0.270588, 1)
@@ -94,6 +101,7 @@ collision_layer = 3
 [node name="PrefabMesh" type="MeshInstance3D" parent="PrefabMeshBody"]
 skeleton = NodePath("../..")
 script = ExtResource("5_8q8hp")
+material = SubResource("StandardMaterial3D_cd2e8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PrefabMeshBody"]
 

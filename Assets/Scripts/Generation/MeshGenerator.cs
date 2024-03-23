@@ -1,27 +1,42 @@
 ﻿using Godot;
 using System.Collections.Generic;
 
-public class MeshGenerator<T> where T : VoxelData
+public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
 {
     private const float voxelSize = 1f;
 
     private readonly Material defaultMaterial;
     private readonly SurfaceTool surfaceTool;
 
-    private static readonly Vector3[] Vertices = {
+    private static readonly Vector3[] cubeVertices = 
+    {
         new(0, 0, 0), new(1, 0, 0),
         new(1, 0, 1), new(0, 0, 1),
         new(0, 1, 0), new(1, 1, 0),
         new(1, 1, 1), new(0, 1, 1)
     };
 
-    public MeshGenerator()
+    private static readonly Vector3I[] offsets =
+    {
+        new(-1, 0, 0), // left
+        new(1, 0, 0), // right
+        new(0, -1, 0), // bottom
+        new(0, 1, 0), // top
+        new(0, 0, -1),  // back
+        new(0, 0, 1) // front
+    };
+
+    private readonly bool[] faces = new bool[6];
+
+    public MeshGenerator(Material material)
     {
         surfaceTool = new SurfaceTool();
-        defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true };
+
+        if (material != null) { defaultMaterial = material; }
+        else { defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true }; }
     }
 
-    public Mesh CreateMesh(Dictionary<Vector3I, T> voxels)
+    public Mesh CreateMesh(Dictionary<Vector3I, TVoxelData> voxels)
     {
         surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
         surfaceTool.SetMaterial(defaultMaterial);
@@ -35,80 +50,78 @@ public class MeshGenerator<T> where T : VoxelData
         return surfaceTool.Commit();
     }
 
-    private void CreateVoxel(Vector3I position, Color color, Dictionary<Vector3I, T> voxels)
+    private void CreateVoxel(Vector3I position, Color color, Dictionary<Vector3I, TVoxelData> voxels)
     {
-        bool left = !voxels.ContainsKey(position + new Vector3I(-1, 0, 0));
-        bool right = !voxels.ContainsKey(position + new Vector3I(1, 0, 0));
-        bool back = !voxels.ContainsKey(position + new Vector3I(0, 0, -1));
-        bool front = !voxels.ContainsKey(position + new Vector3I(0, 0, 1));
-        bool top = !voxels.ContainsKey(position + new Vector3I(0, 1, 0));
-        bool bottom = !voxels.ContainsKey(position + new Vector3I(0, -1, 0));
+        for (int i = 0; i < 6; i++)
+        {
+            faces[i] = !voxels.ContainsKey(position + offsets[i]);
+        }
 
         surfaceTool.SetColor(color);
 
         void addVertex(Vector3 pos) => surfaceTool.AddVertex(pos * voxelSize);
 
         Vector3 vertexOffset = position;
-        if (top)
-        {
-            surfaceTool.SetNormal(new Vector3(0, -1, 0));
-            addVertex(Vertices[4] + vertexOffset);
-            addVertex(Vertices[5] + vertexOffset);
-            addVertex(Vertices[7] + vertexOffset);
-            addVertex(Vertices[5] + vertexOffset);
-            addVertex(Vertices[6] + vertexOffset);
-            addVertex(Vertices[7] + vertexOffset);
-        }
-        if (right)
-        {
-            surfaceTool.SetNormal(new Vector3(1, 0, 0));
-            addVertex(Vertices[2] + vertexOffset);
-            addVertex(Vertices[5] + vertexOffset);
-            addVertex(Vertices[1] + vertexOffset);
-            addVertex(Vertices[2] + vertexOffset);
-            addVertex(Vertices[6] + vertexOffset);
-            addVertex(Vertices[5] + vertexOffset);
-
-        }
-        if (left)
+        if (faces[0])
         {
             surfaceTool.SetNormal(new Vector3(-1, 0, 0));
-            addVertex(Vertices[0] + vertexOffset);
-            addVertex(Vertices[7] + vertexOffset);
-            addVertex(Vertices[3] + vertexOffset);
-            addVertex(Vertices[0] + vertexOffset);
-            addVertex(Vertices[4] + vertexOffset);
-            addVertex(Vertices[7] + vertexOffset);
+            addVertex(cubeVertices[0] + vertexOffset);
+            addVertex(cubeVertices[7] + vertexOffset);
+            addVertex(cubeVertices[3] + vertexOffset);
+            addVertex(cubeVertices[0] + vertexOffset);
+            addVertex(cubeVertices[4] + vertexOffset);
+            addVertex(cubeVertices[7] + vertexOffset);
         }
-        if (front)
+        if (faces[1])
         {
-            surfaceTool.SetNormal(new Vector3(0, 0, 1));
-            addVertex(Vertices[3] + vertexOffset);
-            addVertex(Vertices[6] + vertexOffset);
-            addVertex(Vertices[2] + vertexOffset);
-            addVertex(Vertices[3] + vertexOffset);
-            addVertex(Vertices[7] + vertexOffset);
-            addVertex(Vertices[6] + vertexOffset);
+            surfaceTool.SetNormal(new Vector3(1, 0, 0));
+            addVertex(cubeVertices[2] + vertexOffset);
+            addVertex(cubeVertices[5] + vertexOffset);
+            addVertex(cubeVertices[1] + vertexOffset);
+            addVertex(cubeVertices[2] + vertexOffset);
+            addVertex(cubeVertices[6] + vertexOffset);
+            addVertex(cubeVertices[5] + vertexOffset);
+
         }
-        if (back)
-        {
-            surfaceTool.SetNormal(new Vector3(0, 0, -1));
-            addVertex(Vertices[0] + vertexOffset);
-            addVertex(Vertices[1] + vertexOffset);
-            addVertex(Vertices[5] + vertexOffset);
-            addVertex(Vertices[5] + vertexOffset);
-            addVertex(Vertices[4] + vertexOffset);
-            addVertex(Vertices[0] + vertexOffset);
-        }
-        if (bottom)
+        if (faces[2])
         {
             surfaceTool.SetNormal(new Vector3(0, 1, 0));
-            addVertex(Vertices[1] + vertexOffset);
-            addVertex(Vertices[3] + vertexOffset);
-            addVertex(Vertices[2] + vertexOffset);
-            addVertex(Vertices[1] + vertexOffset);
-            addVertex(Vertices[0] + vertexOffset);
-            addVertex(Vertices[3] + vertexOffset);
+            addVertex(cubeVertices[1] + vertexOffset);
+            addVertex(cubeVertices[3] + vertexOffset);
+            addVertex(cubeVertices[2] + vertexOffset);
+            addVertex(cubeVertices[1] + vertexOffset);
+            addVertex(cubeVertices[0] + vertexOffset);
+            addVertex(cubeVertices[3] + vertexOffset);
+        }
+        if (faces[3])
+        {
+            surfaceTool.SetNormal(new Vector3(0, -1, 0));
+            addVertex(cubeVertices[4] + vertexOffset);
+            addVertex(cubeVertices[5] + vertexOffset);
+            addVertex(cubeVertices[7] + vertexOffset);
+            addVertex(cubeVertices[5] + vertexOffset);
+            addVertex(cubeVertices[6] + vertexOffset);
+            addVertex(cubeVertices[7] + vertexOffset);
+        }
+        if (faces[4])
+        {
+            surfaceTool.SetNormal(new Vector3(0, 0, -1));
+            addVertex(cubeVertices[0] + vertexOffset);
+            addVertex(cubeVertices[1] + vertexOffset);
+            addVertex(cubeVertices[5] + vertexOffset);
+            addVertex(cubeVertices[5] + vertexOffset);
+            addVertex(cubeVertices[4] + vertexOffset);
+            addVertex(cubeVertices[0] + vertexOffset);
+        }
+        if (faces[5])
+        {
+            surfaceTool.SetNormal(new Vector3(0, 0, 1));
+            addVertex(cubeVertices[3] + vertexOffset);
+            addVertex(cubeVertices[6] + vertexOffset);
+            addVertex(cubeVertices[2] + vertexOffset);
+            addVertex(cubeVertices[3] + vertexOffset);
+            addVertex(cubeVertices[7] + vertexOffset);
+            addVertex(cubeVertices[6] + vertexOffset);
         }
     }
 }
