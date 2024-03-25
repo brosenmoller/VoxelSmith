@@ -6,11 +6,11 @@ using System.Text;
 
 public class ExportManager : Manager
 {
-    private RandomNumberGenerator random;
+    private Random random;
 
     public override void Setup()
     {
-        random = new RandomNumberGenerator();
+        random = new Random();
     }
 
     public override void OnFixedUpdate()
@@ -109,22 +109,29 @@ public class ExportManager : Manager
         // Craete New Guid in Untiy style without hyphens
         string meshGuid = Guid.NewGuid().ToString("N");
 
+        string gameObjectComponentFileId = GenerateFileId();
+        string transformComponentFileId = GenerateFileId();
+        string meshFilterComponentFileId = GenerateFileId();
+        string meshRendererComponentFileId = GenerateFileId();
+        string meshColliderComponentFileId = GenerateFileId();
+
         // This is the fileID for a mesh with a "default" group name, I couldn't reverse engineer the hashing function so I will just use an existing hash of that mesh name
         string meshFileId = "-2432090755550338912";
         // This is the fileID for a material named "defaultMat" (same reasons)
         string materialFileId = "-3033667219593020291";
 
-        string prefabFileTemplateBeforeChildren = $"%YAML 1.1\r\n%TAG !u! tag:unity3d.com,2011:\r\n--- !u!1 &5521469611313932757\r\nGameObject:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  serializedVersion: 6\r\n  m_Component:\r\n  - component: {{fileID: 442841242954812055}}\r\n  - component: {{fileID: 8052734518851385037}}\r\n  - component: {{fileID: 2192841846447180066}}\r\n  - component: {{fileID: 7909769035001493932}}\r\n  m_Layer: 0\r\n  m_Name: {name}\r\n  m_TagString: Untagged\r\n  m_Icon: {{fileID: 0}}\r\n  m_NavMeshLayer: 0\r\n  m_StaticEditorFlags: 0\r\n  m_IsActive: 1\r\n--- !u!4 &442841242954812055\r\nTransform:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: 5521469611313932757}}\r\n  serializedVersion: 2\r\n  m_LocalRotation: {{x: 0, y: 0, z: 0, w: 1}}\r\n  m_LocalPosition: {{x: 4.57, y: 2.1, z: -6.3}}\r\n  m_LocalScale: {{x: 1, y: 1, z: 1}}\r\n  m_ConstrainProportionsScale: 0\r\n  m_Children:\r\n ";
-        string prefabFileTemplateAfterChildren = $" m_Father: {{fileID: 0}}\r\n  m_LocalEulerAnglesHint: {{x: 0, y: 0, z: 0}}\r\n--- !u!33 &8052734518851385037\r\nMeshFilter:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: 5521469611313932757}}\r\n  m_Mesh: {{fileID: {meshFileId}, guid: {meshGuid}, type: 3}}\r\n--- !u!23 &2192841846447180066\r\nMeshRenderer:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: 5521469611313932757}}\r\n  m_Enabled: 1\r\n  m_CastShadows: 1\r\n  m_ReceiveShadows: 1\r\n  m_DynamicOccludee: 1\r\n  m_StaticShadowCaster: 0\r\n  m_MotionVectors: 1\r\n  m_LightProbeUsage: 1\r\n  m_ReflectionProbeUsage: 1\r\n  m_RayTracingMode: 2\r\n  m_RayTraceProcedural: 0\r\n  m_RenderingLayerMask: 1\r\n  m_RendererPriority: 0\r\n  m_Materials:\r\n  - {{fileID: {materialFileId}, guid: {meshGuid}, type: 3}}\r\n  m_StaticBatchInfo:\r\n    firstSubMesh: 0\r\n    subMeshCount: 0\r\n  m_StaticBatchRoot: {{fileID: 0}}\r\n  m_ProbeAnchor: {{fileID: 0}}\r\n  m_LightProbeVolumeOverride: {{fileID: 0}}\r\n  m_ScaleInLightmap: 1\r\n  m_ReceiveGI: 1\r\n  m_PreserveUVs: 0\r\n  m_IgnoreNormalsForChartDetection: 0\r\n  m_ImportantGI: 0\r\n  m_StitchLightmapSeams: 1\r\n  m_SelectedEditorRenderState: 3\r\n  m_MinimumChartSize: 4\r\n  m_AutoUVMaxDistance: 0.5\r\n  m_AutoUVMaxAngle: 89\r\n  m_LightmapParameters: {{fileID: 0}}\r\n  m_SortingLayerID: 0\r\n  m_SortingLayer: 0\r\n  m_SortingOrder: 0\r\n  m_AdditionalVertexStreams: {{fileID: 0}}\r\n--- !u!64 &7909769035001493932\r\nMeshCollider:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: 5521469611313932757}}\r\n  m_Material: {{fileID: 0}}\r\n  m_IncludeLayers:\r\n    serializedVersion: 2\r\n    m_Bits: 0\r\n  m_ExcludeLayers:\r\n    serializedVersion: 2\r\n    m_Bits: 0\r\n  m_LayerOverridePriority: 0\r\n  m_IsTrigger: 0\r\n  m_ProvidesContacts: 0\r\n  m_Enabled: 1\r\n  serializedVersion: 5\r\n  m_Convex: 0\r\n  m_CookingOptions: 30\r\n  m_Mesh: {{fileID: {meshFileId}, guid: {meshGuid}, type: 3}}\r\n";
+        string prefabFileTemplateBeforeChildren = $"%YAML 1.1\r\n%TAG !u! tag:unity3d.com,2011:\r\n--- !u!1 &{gameObjectComponentFileId}\r\nGameObject:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  serializedVersion: 6\r\n  m_Component:\r\n  - component: {{fileID: {transformComponentFileId}}}\r\n  - component: {{fileID: {meshFilterComponentFileId}}}\r\n  - component: {{fileID: {meshRendererComponentFileId}}}\r\n  - component: {{fileID: {meshColliderComponentFileId}}}\r\n  m_Layer: 0\r\n  m_Name: {name}\r\n  m_TagString: Untagged\r\n  m_Icon: {{fileID: 0}}\r\n  m_NavMeshLayer: 0\r\n  m_StaticEditorFlags: 0\r\n  m_IsActive: 1\r\n--- !u!4 &{transformComponentFileId}\r\nTransform:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  serializedVersion: 2\r\n  m_LocalRotation: {{x: 0, y: 0, z: 0, w: 1}}\r\n  m_LocalPosition: {{x: 0, y: 0, z: 0}}\r\n  m_LocalScale: {{x: 1, y: 1, z: 1}}\r\n  m_ConstrainProportionsScale: 0\r\n  m_Children:\r\n ";
+        string prefabFileTemplateAfterChildren = $" m_Father: {{fileID: 0}}\r\n  m_LocalEulerAnglesHint: {{x: 0, y: 0, z: 0}}\r\n--- !u!33 &{meshFilterComponentFileId}\r\nMeshFilter:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  m_Mesh: {{fileID: {meshFileId}, guid: {meshGuid}, type: 3}}\r\n--- !u!23 &{meshRendererComponentFileId}\r\nMeshRenderer:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  m_Enabled: 1\r\n  m_CastShadows: 1\r\n  m_ReceiveShadows: 1\r\n  m_DynamicOccludee: 1\r\n  m_StaticShadowCaster: 0\r\n  m_MotionVectors: 1\r\n  m_LightProbeUsage: 1\r\n  m_ReflectionProbeUsage: 1\r\n  m_RayTracingMode: 2\r\n  m_RayTraceProcedural: 0\r\n  m_RenderingLayerMask: 1\r\n  m_RendererPriority: 0\r\n  m_Materials:\r\n  - {{fileID: {materialFileId}, guid: {meshGuid}, type: 3}}\r\n  m_StaticBatchInfo:\r\n    firstSubMesh: 0\r\n    subMeshCount: 0\r\n  m_StaticBatchRoot: {{fileID: 0}}\r\n  m_ProbeAnchor: {{fileID: 0}}\r\n  m_LightProbeVolumeOverride: {{fileID: 0}}\r\n  m_ScaleInLightmap: 1\r\n  m_ReceiveGI: 1\r\n  m_PreserveUVs: 0\r\n  m_IgnoreNormalsForChartDetection: 0\r\n  m_ImportantGI: 0\r\n  m_StitchLightmapSeams: 1\r\n  m_SelectedEditorRenderState: 3\r\n  m_MinimumChartSize: 4\r\n  m_AutoUVMaxDistance: 0.5\r\n  m_AutoUVMaxAngle: 89\r\n  m_LightmapParameters: {{fileID: 0}}\r\n  m_SortingLayerID: 0\r\n  m_SortingLayer: 0\r\n  m_SortingOrder: 0\r\n  m_AdditionalVertexStreams: {{fileID: 0}}\r\n--- !u!64 &{meshColliderComponentFileId}\r\nMeshCollider:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  m_Material: {{fileID: 0}}\r\n  m_IncludeLayers:\r\n    serializedVersion: 2\r\n    m_Bits: 0\r\n  m_ExcludeLayers:\r\n    serializedVersion: 2\r\n    m_Bits: 0\r\n  m_LayerOverridePriority: 0\r\n  m_IsTrigger: 0\r\n  m_ProvidesContacts: 0\r\n  m_Enabled: 1\r\n  serializedVersion: 5\r\n  m_Convex: 0\r\n  m_CookingOptions: 30\r\n  m_Mesh: {{fileID: {meshFileId}, guid: {meshGuid}, type: 3}}\r\n";
         
         List<PrefabInstance> instances = new();
         foreach (var voxelPrefab in GameManager.DataManager.ProjectData.voxelPrefabs)
         {
             instances.Add(new PrefabInstance(
                 voxelPrefab.Value.prefabName,
-                voxelPrefab.Value.unityPrefabID,
+                voxelPrefab.Value.unityPrefabGuid,
                 GenerateFileId(),
                 GenerateFileId(),
+                transformComponentFileId,
                 voxelPrefab.Key
             ));
         }
@@ -150,23 +157,7 @@ public class ExportManager : Manager
 
     private string GenerateFileId()
     {
-        string fileId;
-        StringBuilder fileIdBuilder = new();
-
-        do
-        {
-            fileIdBuilder.Clear();
-            fileIdBuilder.Append(random.RandiRange(1, 9));
-            for (int i = 1; i < 19; i++)
-            {
-                fileIdBuilder.Append(random.RandiRange(0, 9));
-            }
-
-            fileId = fileIdBuilder.ToString();
-        }
-        while (long.TryParse(fileId, out long _));
-
-        return fileId;
+        return random.NextLong().ToString();
     }
 
     private void WriteToFile(string output, string filePath)
@@ -185,14 +176,16 @@ public class ExportManager : Manager
         public string prefabGuid;
         public string prefabInstanceFileId;
         public string transformFileId;
+        public string parentTranformComponentFileId;
         public Vector3 position;
 
-        public PrefabInstance(string prefabName, string prefabGuid, string prefabInstanceFileId, string transformFileId, Vector3 position)
+        public PrefabInstance(string prefabName, string prefabGuid, string prefabInstanceFileId, string transformFileId, string parentTranformComponentFileId, Vector3 position)
         {
+            this.prefabName = prefabName;
             this.prefabGuid = prefabGuid;
             this.prefabInstanceFileId = prefabInstanceFileId;
             this.transformFileId = transformFileId;
-            this.prefabName = prefabName;
+            this.parentTranformComponentFileId = parentTranformComponentFileId;
             this.position = position;
         }
 
@@ -204,7 +197,7 @@ public class ExportManager : Manager
         public string GetPrefabInstanceString() 
         {
             string prefabTransformFileId = "726921523353226827";
-            return $"--- !u!1001 &{prefabInstanceFileId}\r\nPrefabInstance:\r\n  m_ObjectHideFlags: 0\r\n  serializedVersion: 2\r\n  m_Modification:\r\n    serializedVersion: 3\r\n    m_TransformParent: {{fileID: 442841242954812055}}\r\n    m_Modifications:\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.x\r\n      value: {-position.X - 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.y\r\n      value: {position.Y + 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.z\r\n      value: {position.Z + 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n      m_RemovedComponents: []\r\n      m_RemovedGameObjects: []\r\n      m_AddedGameObjects: []\r\n      m_AddedComponents: []\r\n  m_SourcePrefab: {{fileID: 100100000, guid: {prefabGuid}, type: 3}}\r\n--- !u!4 &{transformFileId} stripped\r\nTransform:\r\n m_CorrespondingSourceObject: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n  type: 3}}\r\n m_PrefabInstance: {{fileID: {prefabInstanceFileId}}}\r\n m_PrefabAsset: {{fileID: 0}}\r\n";
+            return $"--- !u!1001 &{prefabInstanceFileId}\r\nPrefabInstance:\r\n  m_ObjectHideFlags: 0\r\n  serializedVersion: 2\r\n  m_Modification:\r\n    serializedVersion: 3\r\n    m_TransformParent: {{fileID: {parentTranformComponentFileId}}}\r\n    m_Modifications:\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.x\r\n      value: {-position.X - 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.y\r\n      value: {position.Y + 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.z\r\n      value: {position.Z + 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n      m_RemovedComponents: []\r\n      m_RemovedGameObjects: []\r\n      m_AddedGameObjects: []\r\n      m_AddedComponents: []\r\n  m_SourcePrefab: {{fileID: 100100000, guid: {prefabGuid}, type: 3}}\r\n--- !u!4 &{transformFileId} stripped\r\nTransform:\r\n m_CorrespondingSourceObject: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n  type: 3}}\r\n m_PrefabInstance: {{fileID: {prefabInstanceFileId}}}\r\n m_PrefabAsset: {{fileID: 0}}\r\n";
         }
     }
 }
