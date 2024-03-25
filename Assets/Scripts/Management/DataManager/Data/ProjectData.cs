@@ -3,6 +3,12 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
+public enum ProjectDataPalleteIndex
+{
+    COLORS = 0,
+    PREFABS = 1,
+}
+
 
 [Serializable]
 public class ProjectData
@@ -18,12 +24,12 @@ public class ProjectData
     public int selectedPaletteIndex;
     public int selectedPaletteSwatchIndex;
 
-    [JsonIgnore] 
+    [JsonIgnore]
     public VoxelData SelectedVoxelData
     {
         get
         {
-            if (selectedPaletteIndex == 0)
+            if (selectedPaletteIndex == (int)ProjectDataPalleteIndex.COLORS)
             {
                 if (selectedPaletteSwatchIndex >= GameManager.DataManager.PaletteData.palleteColors.Count)
                 {

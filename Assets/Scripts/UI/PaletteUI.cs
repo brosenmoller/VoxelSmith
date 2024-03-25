@@ -70,7 +70,7 @@ public partial class PaletteUI : BoxContainer
 
             button.Pressed += () =>
             {
-                GameManager.DataManager.ProjectData.selectedPaletteIndex = 0;
+                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = index;
             };
 
@@ -137,7 +137,7 @@ public partial class PaletteUI : BoxContainer
 
             button.Pressed += () =>
             {
-                GameManager.DataManager.ProjectData.selectedPaletteIndex = 1;
+                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = index;
             };
 

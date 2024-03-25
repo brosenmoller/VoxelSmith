@@ -1,4 +1,5 @@
 using Godot;
+using System.Linq;
 
 public partial class VoxelPlacer : RayCast3D
 {
@@ -51,6 +52,29 @@ public partial class VoxelPlacer : RayCast3D
             else if (Input.IsActionJustPressed("break"))
             {
                 GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition));
+            }
+            else if (Input.IsActionJustPressed("pick_block"))
+            {
+                if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
+                {
+                    VoxelColor voxelColor = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
+
+                    if (GameManager.DataManager.PaletteData.palleteColors.Contains(voxelColor))
+                    {
+                        GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
+                        GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.IndexOf(voxelColor);
+                    }
+                }
+                else if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+                {
+                    VoxelPrefab voxelPrefab = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
+
+                    if (GameManager.DataManager.PaletteData.palletePrefabs.Contains(voxelPrefab))
+                    {
+                        GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
+                        GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.IndexOf(voxelPrefab);
+                    }
+                }
             }
         }
         else

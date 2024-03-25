@@ -1,4 +1,4 @@
-﻿// Source: https://stackoverflow.com/questions/6651554/random-number-in-long-range-is-this-the-way
+﻿// Code by: BlueRaja - Danny Pflughoeft and Mark Amery: https://stackoverflow.com/questions/6651554/random-number-in-long-range-is-this-the-way
 
 using System;
 
