@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ybpqluwl33ne"]
 
-[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_ypvy8"]
+[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_q5fi2"]
 
 [node name="PrefabSwatch" type="Button"]
 custom_minimum_size = Vector2(88, 88)
@@ -12,7 +12,7 @@ offset_bottom = -70.2
 tooltip_text = "Right click to edit"
 toggle_mode = true
 button_mask = 3
-button_group = ExtResource("1_ypvy8")
+button_group = ExtResource("1_q5fi2")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1

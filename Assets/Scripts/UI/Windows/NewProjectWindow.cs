@@ -28,7 +28,7 @@ public partial class NewProjectWindow : ConfirmationDialog
             return;
         }
 
-        GameManager.DataManager.CreateNewProject(Name, saveDirectoryPath.Text + "\\", Guid.NewGuid());
+        GameManager.DataManager.CreateNewProject(projectName.Text, saveDirectoryPath.Text, Guid.NewGuid());
         Hide();
     }
 

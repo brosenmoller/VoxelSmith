@@ -1,0 +1,147 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsis6v0sco7es"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/NewPalettePrefabWindow.cs" id="1_7kcl5"]
+
+[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("voxelColorPicker", "loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit")]
+title = "Create new Palette Prefab"
+initial_position = 2
+size = Vector2i(400, 300)
+visible = true
+ok_button_text = "Create"
+script = ExtResource("1_7kcl5")
+voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
+loadPrefabButton = NodePath("VBoxContainer/LoadPrefabButton/Button")
+loadPrefabFileDialog = NodePath("VBoxContainer/LoadPrefabFileDialog")
+prefabNameTextEdit = NodePath("VBoxContainer/PrefabName/TextEdit")
+godotSceneIdTextEdit = NodePath("VBoxContainer/godotSceneID/TextEdit")
+unityPrefabGuidTextEdit = NodePath("VBoxContainer/PrefabGUID/TextEdit")
+unityPrefabTranformFileIdTextEdit = NodePath("VBoxContainer/prefabTransformFileId/TextEdit")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 251.0
+
+[node name="SelectColorGroup" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/SelectColorGroup"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/SelectColorGroup/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Voxel Color"
+
+[node name="VoxelColor" type="ColorPickerButton" parent="VBoxContainer/SelectColorGroup"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPicker" type="ColorPicker" parent="VBoxContainer/SelectColorGroup/VoxelColor"]
+visible = false
+layout_mode = 0
+offset_right = 298.0
+offset_bottom = 576.0
+color_mode = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PrefabName" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/PrefabName"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PrefabName/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Prefab Name"
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/PrefabName"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PrefabGUID" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/PrefabGUID"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PrefabGUID/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Unity Prefab Guid"
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/PrefabGUID"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="prefabTransformFileId" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/prefabTransformFileId"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/prefabTransformFileId/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Transform File ID"
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/prefabTransformFileId"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="godotSceneID" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/godotSceneID"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/godotSceneID/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Godot Scene ID"
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/godotSceneID"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LoadPrefabButton" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="Button" type="Button" parent="VBoxContainer/LoadPrefabButton"]
+layout_mode = 2
+text = "Load Prefab"
+
+[node name="LoadPrefabFileDialog" type="FileDialog" parent="VBoxContainer"]
+title = "Load Prefab"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Open"
+dialog_close_on_escape = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.prefab", "*.tscn")

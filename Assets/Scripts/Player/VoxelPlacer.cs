@@ -63,6 +63,8 @@ public partial class VoxelPlacer : RayCast3D
                     {
                         GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
                         GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.IndexOf(voxelColor);
+
+                        GameManager.PaletteUI.Update();
                     }
                 }
                 else if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
@@ -73,6 +75,8 @@ public partial class VoxelPlacer : RayCast3D
                     {
                         GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
                         GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.IndexOf(voxelPrefab);
+
+                        GameManager.PaletteUI.Update();
                     }
                 }
             }

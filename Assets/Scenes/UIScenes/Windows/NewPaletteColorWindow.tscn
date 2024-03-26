@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca4ewnb8rctni"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/NewPaletteColorWindow.cs" id="1_6frb6"]
+
+[node name="NewPaletteColorWindow" type="ConfirmationDialog" node_paths=PackedStringArray("voxelColorPicker", "minecraftIDEdit")]
+title = "Create new Palette Color"
+initial_position = 2
+size = Vector2i(400, 209)
+visible = true
+ok_button_text = "Create"
+script = ExtResource("1_6frb6")
+voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
+minecraftIDEdit = NodePath("VBoxContainer/MinceraftIDList/MinecraftIdGroup/MinecraftIDEdit")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 160.0
+
+[node name="SelectColorGroup" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/SelectColorGroup"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/SelectColorGroup/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Voxel Color"
+
+[node name="VoxelColor" type="ColorPickerButton" parent="VBoxContainer/SelectColorGroup"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPicker" type="ColorPicker" parent="VBoxContainer/SelectColorGroup/VoxelColor"]
+visible = false
+layout_mode = 0
+offset_right = 298.0
+offset_bottom = 576.0
+color_mode = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MinecraftIdListTitle" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Minecraft ID list"
+
+[node name="MinceraftIDList" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MinecraftIdGroup" type="HBoxContainer" parent="VBoxContainer/MinceraftIDList"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[p align=right]minecraft:"
+
+[node name="MinecraftIDEdit" type="TextEdit" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MinceraftIDList"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="Button" type="Button" parent="VBoxContainer/MinceraftIDList/MarginContainer"]
+layout_mode = 2
+text = "Add Element"

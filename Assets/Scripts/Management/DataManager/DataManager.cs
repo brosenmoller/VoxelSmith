@@ -1,5 +1,6 @@
 ﻿using Godot;
 using System;
+using System.IO;
 using System.Linq;
 
 public class DataManager : Manager
@@ -46,6 +47,7 @@ public class DataManager : Manager
 
         try
         {
+            GD.Print(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
             LoadProject(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
         }
         catch (Exception e)
@@ -64,7 +66,7 @@ public class DataManager : Manager
         paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 255, 255) });
         paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 255, 255) });
 
-        paletteDataHolder.Data.palletePrefabs.Add(new VoxelPrefab() { color = Color.Color8(100, 200, 0), unityPrefabGuid = "67ce479430c155e4cbcd3bb0ef4f4954", prefabName = "TestSpehere" });
+        paletteDataHolder.Data.palletePrefabs.Add(new VoxelPrefab() { color = Color.Color8(100, 200, 0), unityPrefabGuid = "67ce479430c155e4cbcd3bb0ef4f4954", prefabName = "TestSpehere", unityPrefabTransformFileId = "726921523353226827" });
 
         projectDataHolder.Data.selectedPaletteIndex = 0;
         projectDataHolder.Data.selectedPaletteSwatchIndex = 3;
@@ -74,9 +76,10 @@ public class DataManager : Manager
     public void CreateNewProject(string name, string dirPath, Guid paletteGUID)
     {
         // TODO: Warn User if there is unsaved data
-        if (projectDataHolder.Data != null)SaveProject();
+        if (projectDataHolder.Data != null) { SaveProject(); }
 
-        string path = dirPath + name + PROJECT_FILE_EXTENSION;
+        string path = Path.Combine(dirPath, name + PROJECT_FILE_EXTENSION);
+        GD.Print(path);
         projectDataHolder.Data = new ProjectData(name, paletteGUID);
 
         SaveProjectAs(path);

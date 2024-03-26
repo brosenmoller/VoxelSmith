@@ -68,6 +68,12 @@ public partial class PaletteUI : BoxContainer
             button.AddThemeStyleboxOverride("hover pressed", hoverStyleBox);
             button.AddThemeStyleboxOverride("focus", hoverStyleBox);
 
+            if (GameManager.DataManager.ProjectData.selectedPaletteIndex == (int)ProjectDataPalleteIndex.COLORS &&
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex == index)
+            {
+                button.ButtonPressed = true;
+            }
+
             button.Pressed += () =>
             {
                 GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
@@ -134,6 +140,12 @@ public partial class PaletteUI : BoxContainer
             button.AddThemeStyleboxOverride("hover", hoverStyleBox);
             button.AddThemeStyleboxOverride("hover pressed", hoverStyleBox);
             button.AddThemeStyleboxOverride("focus", hoverStyleBox);
+
+            if (GameManager.DataManager.ProjectData.selectedPaletteIndex == (int)ProjectDataPalleteIndex.PREFABS && 
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex == index)
+            {
+                button.ButtonPressed = true;
+            }
 
             button.Pressed += () =>
             {

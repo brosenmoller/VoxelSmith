@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=24 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/Resources/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="2_q2gw8"]
@@ -21,7 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
 [ext_resource type="Script" path="res://Assets/Scripts/Utility/FPSCounter.cs" id="21_v70tf"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/QuickExport.cs" id="22_e5q42"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
+[ext_resource type="Shortcut" uid="uid://b84pfcgc5wl4h" path="res://Assets/Resources/QuickExportShorcut.tres" id="23_lhvlj"]
 
 [node name="TopBar" type="ColorRect"]
 custom_minimum_size = Vector2(0, 50)
@@ -129,6 +130,8 @@ script = ExtResource("22_e5q42")
 
 [node name="QuickExportButton" type="Button" parent="TopBarContainer/QuickExportContainer"]
 layout_mode = 2
+tooltip_text = "Repeat previous export"
+shortcut = ExtResource("23_lhvlj")
 text = "Quick Export"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="TopBarContainer/QuickExportContainer"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://27dpm3c3wrc8"]
 
-[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_rg1tx"]
+[ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_xfp7j"]
 
 [node name="ColorSwatch" type="Button"]
 custom_minimum_size = Vector2(32, 32)
@@ -12,4 +12,4 @@ offset_bottom = -30.24
 tooltip_text = "Right click to edit"
 toggle_mode = true
 button_mask = 3
-button_group = ExtResource("1_rg1tx")
+button_group = ExtResource("1_xfp7j")

@@ -94,6 +94,6 @@ initial_position = 2
 size = Vector2i(800, 600)
 always_on_top = true
 popup_window = true
-ok_button_text = "Select This Folder"
+ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2

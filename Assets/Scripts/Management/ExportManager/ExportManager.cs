@@ -129,6 +129,7 @@ public class ExportManager : Manager
             instances.Add(new PrefabInstance(
                 voxelPrefab.Value.prefabName,
                 voxelPrefab.Value.unityPrefabGuid,
+                voxelPrefab.Value.unityPrefabTransformFileId,
                 GenerateFileId(),
                 GenerateFileId(),
                 transformComponentFileId,
@@ -174,15 +175,17 @@ public class ExportManager : Manager
     {
         public string prefabName;
         public string prefabGuid;
+        public string prefabTransformFileId;
         public string prefabInstanceFileId;
         public string transformFileId;
         public string parentTranformComponentFileId;
         public Vector3 position;
 
-        public PrefabInstance(string prefabName, string prefabGuid, string prefabInstanceFileId, string transformFileId, string parentTranformComponentFileId, Vector3 position)
+        public PrefabInstance(string prefabName, string prefabGuid, string prefabTransformFileId, string prefabInstanceFileId, string transformFileId, string parentTranformComponentFileId, Vector3 position)
         {
             this.prefabName = prefabName;
             this.prefabGuid = prefabGuid;
+            this.prefabTransformFileId = prefabTransformFileId;
             this.prefabInstanceFileId = prefabInstanceFileId;
             this.transformFileId = transformFileId;
             this.parentTranformComponentFileId = parentTranformComponentFileId;
@@ -196,7 +199,6 @@ public class ExportManager : Manager
 
         public string GetPrefabInstanceString() 
         {
-            string prefabTransformFileId = "726921523353226827";
             return $"--- !u!1001 &{prefabInstanceFileId}\r\nPrefabInstance:\r\n  m_ObjectHideFlags: 0\r\n  serializedVersion: 2\r\n  m_Modification:\r\n    serializedVersion: 3\r\n    m_TransformParent: {{fileID: {parentTranformComponentFileId}}}\r\n    m_Modifications:\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.x\r\n      value: {-position.X - 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.y\r\n      value: {position.Y + 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n    - target: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n        type: 3}}\r\n      propertyPath: m_LocalPosition.z\r\n      value: {position.Z + 0.5f}\r\n      objectReference: {{fileID: 0}}\r\n      m_RemovedComponents: []\r\n      m_RemovedGameObjects: []\r\n      m_AddedGameObjects: []\r\n      m_AddedComponents: []\r\n  m_SourcePrefab: {{fileID: 100100000, guid: {prefabGuid}, type: 3}}\r\n--- !u!4 &{transformFileId} stripped\r\nTransform:\r\n m_CorrespondingSourceObject: {{fileID: {prefabTransformFileId}, guid: {prefabGuid},\r\n  type: 3}}\r\n m_PrefabInstance: {{fileID: {prefabInstanceFileId}}}\r\n m_PrefabAsset: {{fileID: 0}}\r\n";
         }
     }
