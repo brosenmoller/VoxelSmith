@@ -13,9 +13,44 @@ public class ExportManager : Manager
         random = new Random();
     }
 
-    public void ExportMesh(string directoryPath, string fileName)
+    private void WriteToFile(string output, string filePath)
     {
-        string name = fileName[..fileName.IndexOf(".")];
+        File.WriteAllText(filePath, string.Empty);
+        using (FileStream fileStream = File.Open(filePath, FileMode.OpenOrCreate))
+        {
+            byte[] info = new UTF8Encoding(true).GetBytes(output);
+            fileStream.Write(info, 0, info.Length);
+        }
+    }
+
+    private void SaveExportSettings(string directoryPath, string fileName, ProjectMenu.ExportOptions exportType)
+    {
+        EditorData.ExportSettings exportSettings = new()
+        {
+            directoryPath = directoryPath,
+            fileName = fileName,
+            exportType = (int)exportType
+        };
+
+        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.projectID))
+        {
+            GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.projectID] = exportSettings;
+        }
+        else
+        {
+            GameManager.DataManager.EditorData.exportPaths.Add(GameManager.DataManager.ProjectData.projectID, exportSettings);
+        }
+
+        GameManager.DataManager.SaveEditorData();
+    }
+
+    public void ExportMesh(string directoryPath, string fileName, bool saveExportSettings = true)
+    {
+        string name = fileName;
+        if (fileName.Contains('.'))
+        {
+            name = fileName[..fileName.IndexOf(".")];
+        }
 
         //StandardMaterial3D blankMaterial = new();
         //blankMaterial.ResourceName = "BlankMaterial";
@@ -76,12 +111,20 @@ public class ExportManager : Manager
 
         WriteToFile(output.ToString(), Path.Combine(directoryPath, name + ".obj"));
         WriteToFile(matOutput.ToString(), Path.Combine(directoryPath, name + ".mtl"));
+
+        if (saveExportSettings)
+        {
+            SaveExportSettings(directoryPath, name, ProjectMenu.ExportOptions.MESH);
+        }
     }
 
-    public void ExportUnityPrefab(string directoryPath, string fileName)
+    public void ExportUnityPrefab(string directoryPath, string fileName, bool saveExportSettings = true)
     {
-        string name = fileName[..fileName.IndexOf(".")];
-
+        string name = fileName;
+        if (fileName.Contains('.'))
+        {
+            name = fileName[..fileName.IndexOf(".")];
+        }
         // Create New Guid in Untiy style without hyphens
         string meshGuid = Guid.NewGuid().ToString("N");
 
@@ -127,24 +170,19 @@ public class ExportManager : Manager
 
         string meshMetaFileTemplate = $"fileFormatVersion: 2\r\nguid: {meshGuid}\r\nModelImporter:\r\n  serializedVersion: 22200\r\n  internalIDToNameTable: []\r\n  externalObjects: {{}}\r\n  materials:\r\n    materialImportMode: 2\r\n    materialName: 0\r\n    materialSearch: 1\r\n    materialLocation: 1\r\n  animations:\r\n    legacyGenerateAnimations: 4\r\n    bakeSimulation: 0\r\n    resampleCurves: 1\r\n    optimizeGameObjects: 0\r\n    removeConstantScaleCurves: 0\r\n    motionNodeName: \r\n    rigImportErrors: \r\n    rigImportWarnings: \r\n    animationImportErrors: \r\n    animationImportWarnings: \r\n    animationRetargetingWarnings: \r\n    animationDoRetargetingWarnings: 0\r\n    importAnimatedCustomProperties: 0\r\n    importConstraints: 0\r\n    animationCompression: 1\r\n    animationRotationError: 0.5\r\n    animationPositionError: 0.5\r\n    animationScaleError: 0.5\r\n    animationWrapMode: 0\r\n    extraExposedTransformPaths: []\r\n    extraUserProperties: []\r\n    clipAnimations: []\r\n    isReadable: 0\r\n  meshes:\r\n    lODScreenPercentages: []\r\n    globalScale: 1\r\n    meshCompression: 0\r\n    addColliders: 0\r\n    useSRGBMaterialColor: 1\r\n    sortHierarchyByName: 1\r\n    importPhysicalCameras: 1\r\n    importVisibility: 1\r\n    importBlendShapes: 1\r\n    importCameras: 1\r\n    importLights: 1\r\n    nodeNameCollisionStrategy: 1\r\n    fileIdsGeneration: 2\r\n    swapUVChannels: 0\r\n    generateSecondaryUV: 0\r\n    useFileUnits: 1\r\n    keepQuads: 0\r\n    weldVertices: 1\r\n    bakeAxisConversion: 0\r\n    preserveHierarchy: 0\r\n    skinWeightsMode: 0\r\n    maxBonesPerVertex: 4\r\n    minBoneWeight: 0.001\r\n    optimizeBones: 1\r\n    meshOptimizationFlags: -1\r\n    indexFormat: 0\r\n    secondaryUVAngleDistortion: 8\r\n    secondaryUVAreaDistortion: 15.000001\r\n    secondaryUVHardAngle: 88\r\n    secondaryUVMarginMethod: 1\r\n    secondaryUVMinLightmapResolution: 40\r\n    secondaryUVMinObjectScale: 1\r\n    secondaryUVPackMargin: 4\r\n    useFileScale: 1\r\n    strictVertexDataChecks: 0\r\n  tangentSpace:\r\n    normalSmoothAngle: 60\r\n    normalImportMode: 0\r\n    tangentImportMode: 3\r\n    normalCalculationMode: 4\r\n    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0\r\n    blendShapeNormalImportMode: 1\r\n    normalSmoothingSource: 0\r\n  referencedClips: []\r\n  importAnimation: 1\r\n  humanDescription:\r\n    serializedVersion: 3\r\n    human: []\r\n    skeleton: []\r\n    armTwist: 0.5\r\n    foreArmTwist: 0.5\r\n    upperLegTwist: 0.5\r\n    legTwist: 0.5\r\n    armStretch: 0.05\r\n    legStretch: 0.05\r\n    feetSpacing: 0\r\n    globalScale: 1\r\n    rootMotionBoneName: \r\n    hasTranslationDoF: 0\r\n    hasExtraRoot: 0\r\n    skeletonHasParents: 1\r\n  lastHumanDescriptionAvatarSource: {{instanceID: 0}}\r\n  autoGenerateAvatarMappingIfUnspecified: 1\r\n  animationType: 2\r\n  humanoidOversampling: 1\r\n  avatarSetup: 0\r\n  addHumanoidExtraRootOnlyWhenUsingAvatar: 1\r\n  importBlendShapeDeformPercent: 1\r\n  remapMaterialsIfMaterialImportModeIsNone: 0\r\n  additionalBone: 0\r\n  userData: \r\n  assetBundleName: \r\n  assetBundleVariant: \r\n";
 
-        ExportMesh(directoryPath, name);
+        ExportMesh(directoryPath, name, false);
         WriteToFile(prefabFile.ToString(), Path.Combine(directoryPath, name + ".prefab"));
         WriteToFile(meshMetaFileTemplate, Path.Combine(directoryPath, name + ".obj.meta"));
+
+        if (saveExportSettings)
+        {
+            SaveExportSettings(directoryPath, name, ProjectMenu.ExportOptions.UNITY);
+        }
     }
 
     private string GenerateFileId()
     {
         return random.NextLong().ToString();
-    }
-
-    private void WriteToFile(string output, string filePath)
-    {
-        File.WriteAllText(filePath, string.Empty);
-        using (FileStream fileStream = File.Open(filePath, FileMode.OpenOrCreate))
-        {
-            byte[] info = new UTF8Encoding(true).GetBytes(output);
-            fileStream.Write(info, 0, info.Length);
-        }
     }
 
     private class PrefabInstance

@@ -40,7 +40,7 @@ public class DataManager : Manager
         try { editorDataHolder.Load(GLOBAL_EDITOR_SAVE_PATH); }
         catch 
         { 
-            GD.PrintErr("Couldn't load editor data");
+            GD.PushWarning("Couldn't load editor data");
             editorDataHolder.Data = new EditorData(); 
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
         }
@@ -52,7 +52,7 @@ public class DataManager : Manager
         }
         catch (Exception e)
         {
-            GD.PrintErr("Failed to load project data: \n" + e.ToString());
+            GD.PushWarning("Failed to load project data: \n" + e.ToString());
             GameManager.UIController.startWindow.Show();
         }
 
@@ -73,6 +73,16 @@ public class DataManager : Manager
         GameManager.PaletteUI.Update();
     }
 
+    #region Editor
+
+    public void SaveEditorData()
+    {
+        editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+    }
+
+    #endregion
+
+    #region Project
     public void CreateNewProject(string name, string directoryPath, Guid paletteGUID)
     {
         // TODO: Warn User if there is unsaved data
@@ -139,22 +149,22 @@ public class DataManager : Manager
         }
         catch (Exception e)
         {
-            GD.PrintErr("Failed to load project data: \n" + e.ToString());
+            GD.PushWarning("Failed to load project data: \n" + e.ToString());
 
             if (editorDataHolder.Data.savePaths.ContainsValue(path))
             {
-                Guid projectKey = editorDataHolder.Data.savePaths.FirstOrDefault(x => x.Value == path).Key;
-                if (projectKey != default)
+                Guid? projectKey = editorDataHolder.Data.savePaths.FirstOrDefault(x => x.Value == path).Key;
+                if (projectKey != null)
                 {
-                    editorDataHolder.Data.savePaths.Remove(projectKey);
-                }
+                    editorDataHolder.Data.savePaths.Remove(projectKey.Value);
 
-                if (editorDataHolder.Data.lastProject == projectKey)
-                {
-                    editorDataHolder.Data.lastProject = null;
-                }
+                    if (editorDataHolder.Data.lastProject == projectKey.Value)
+                    {
+                        editorDataHolder.Data.lastProject = null;
+                    }
 
-                editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+                    editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+                }
             }
 
             if (projectDataHolder.Data == null)
@@ -163,6 +173,9 @@ public class DataManager : Manager
             }
         }
     }
+    #endregion
+
+    #region Palette
 
     public void SavePaletteAs(string path)
     {
@@ -173,5 +186,7 @@ public class DataManager : Manager
     {
 
     }
+
+    #endregion
 }
 

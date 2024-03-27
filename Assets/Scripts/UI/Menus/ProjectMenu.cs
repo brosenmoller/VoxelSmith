@@ -140,7 +140,7 @@ public partial class ProjectMenu : PopupMenu
         REFRESH_SCHEMATIC,
     }
 
-    private enum ExportOptions
+    public enum ExportOptions
     {
         UNITY,
         MESH,

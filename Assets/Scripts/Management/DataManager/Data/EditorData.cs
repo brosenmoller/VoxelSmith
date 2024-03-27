@@ -8,7 +8,7 @@ public class EditorData
     public Guid? lastProject;
     public Dictionary<Guid, string> palettePaths;
     public Dictionary<Guid, string> savePaths;
-    public Dictionary<Guid, string> exportPaths;
+    public Dictionary<Guid, ExportSettings> exportPaths;
 
     public EditorData() 
     {
@@ -16,7 +16,15 @@ public class EditorData
         lastProject = null;
         palettePaths = new Dictionary<Guid, string>();
         savePaths = new Dictionary<Guid, string>();
-        exportPaths = new Dictionary<Guid, string>();
+        exportPaths = new Dictionary<Guid, ExportSettings>();
+    }
+
+    [Serializable]
+    public class ExportSettings
+    {
+        public string directoryPath;
+        public string fileName;
+        public int exportType;
     }
 }
 

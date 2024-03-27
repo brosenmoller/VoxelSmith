@@ -23,6 +23,18 @@ public partial class QuickExport : MarginContainer
 
     private void OnConfirmed()
     {
-        // TODO: Implement Quick Export
+        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.projectID))
+        {
+            EditorData.ExportSettings exportSettings = GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.projectID];
+
+            if (exportSettings.exportType == (int)ProjectMenu.ExportOptions.UNITY)
+            {
+                GameManager.ExportManager.ExportUnityPrefab(exportSettings.directoryPath, exportSettings.fileName, false);
+            }
+            else if (exportSettings.exportType == (int)ProjectMenu.ExportOptions.MESH)
+            {
+                GameManager.ExportManager.ExportMesh(exportSettings.directoryPath, exportSettings.fileName, false);
+            }
+        }
     }
 }
