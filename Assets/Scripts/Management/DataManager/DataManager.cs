@@ -73,13 +73,12 @@ public class DataManager : Manager
         GameManager.PaletteUI.Update();
     }
 
-    public void CreateNewProject(string name, string dirPath, Guid paletteGUID)
+    public void CreateNewProject(string name, string directoryPath, Guid paletteGUID)
     {
         // TODO: Warn User if there is unsaved data
         if (projectDataHolder.Data != null) { SaveProject(); }
 
-        string path = Path.Combine(dirPath, name + PROJECT_FILE_EXTENSION);
-        GD.Print(path);
+        string path = Path.Combine(directoryPath, name + PROJECT_FILE_EXTENSION);
         projectDataHolder.Data = new ProjectData(name, paletteGUID);
 
         SaveProjectAs(path);
@@ -163,6 +162,16 @@ public class DataManager : Manager
                 GameManager.UIController.startWindow.Show();
             }
         }
+    }
+
+    public void SavePaletteAs(string path)
+    {
+
+    }
+
+    public void LoadPalette(string path)
+    {
+
     }
 }
 

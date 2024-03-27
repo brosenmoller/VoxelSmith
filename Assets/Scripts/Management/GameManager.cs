@@ -60,6 +60,7 @@ public partial class GameManager : Node
         ProjectMenu.OnOpenPressed += UIController.loadProjectDialog.Show;
 
         ProjectMenu.OnExportUnityPrefabPressed += UIController.exportPrefabDialog.Show;
+        ProjectMenu.OnExportMeshPressed += UIController.exportMeshDialog.Show;
     }
 
     public override void _PhysicsProcess(double delta)

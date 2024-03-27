@@ -1,8 +1,10 @@
 ﻿using Godot;
+using System;
 
 public partial class WorldController : Node3D
 {
     public static WorldController Instance { get; private set; }
+    public static event Action WentInFocusLastFrame;
 
     private PlayerMovement player;
 
@@ -11,6 +13,11 @@ public partial class WorldController : Node3D
         get { return worldInFocus; } 
         set 
         {
+            if (value == true)
+            {
+                SendWentInFocusEvent();
+            }
+
             worldInFocus = value;
             UpdatePlayerProcess();
         }
@@ -45,6 +52,12 @@ public partial class WorldController : Node3D
                 WorldInFocus = true;
             }
         }
+    }
+
+    private async void SendWentInFocusEvent()
+    {
+        await ToSignal(GetTree().CreateTimer(1f), Timer.SignalName.Timeout);
+        WentInFocusLastFrame?.Invoke();
     }
 
     private void UpdatePlayerProcess()

@@ -137,7 +137,7 @@ layout_mode = 2
 text = "Load Prefab"
 
 [node name="LoadPrefabFileDialog" type="FileDialog" parent="VBoxContainer"]
-title = "Load Prefab"
+title = "Open a File"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Open"

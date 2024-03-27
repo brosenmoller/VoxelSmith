@@ -30,6 +30,15 @@ window/stretch/aspect="keep_height"
 
 project/assembly_name="VoxelSmith"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/Art/": "blue",
+"res://Assets/Resources/": "green",
+"res://Assets/Scenes/": "red",
+"res://Assets/Scripts/": "yellow"
+}
+
 [input]
 
 jump={

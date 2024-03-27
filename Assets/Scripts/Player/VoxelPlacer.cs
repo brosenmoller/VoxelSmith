@@ -1,5 +1,4 @@
 using Godot;
-using System.Linq;
 
 public partial class VoxelPlacer : RayCast3D
 {
@@ -10,15 +9,21 @@ public partial class VoxelPlacer : RayCast3D
     [Export] private Node3D voxelHiglight;
     [Export] private Node3D collisionHighlight;
 
+    private bool enabled = true;
+
     public override void _Ready()
     {
         if (enableCollisionHighlight) { collisionHighlight.Visible = true; }
         if (enableVoxelHighlight) { voxelHiglight.Visible = true; }
+
+        WorldController.WentInFocusLastFrame += () => enabled = true;
     }
 
     public override void _Process(double delta)
     {
-        if (IsColliding())
+        if (!WorldController.Instance.WorldInFocus) { enabled = false; }
+
+        if (IsColliding() && enabled)
         {
             Vector3 point = GetCollisionPoint();
             Vector3 normal = GetCollisionNormal();
@@ -55,36 +60,41 @@ public partial class VoxelPlacer : RayCast3D
             }
             else if (Input.IsActionJustPressed("pick_block"))
             {
-                if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
-                {
-                    VoxelColor voxelColor = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
-
-                    if (GameManager.DataManager.PaletteData.palleteColors.Contains(voxelColor))
-                    {
-                        GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
-                        GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.IndexOf(voxelColor);
-
-                        GameManager.PaletteUI.Update();
-                    }
-                }
-                else if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
-                {
-                    VoxelPrefab voxelPrefab = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
-
-                    if (GameManager.DataManager.PaletteData.palletePrefabs.Contains(voxelPrefab))
-                    {
-                        GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
-                        GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.IndexOf(voxelPrefab);
-
-                        GameManager.PaletteUI.Update();
-                    }
-                }
+                PickBlock(voxelPosition);
             }
         }
         else
         {
             collisionHighlight.Visible = false;
             voxelHiglight.Visible = false;
+        }
+    }
+
+    private void PickBlock(Vector3I voxelPosition)
+    {
+        if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
+        {
+            VoxelColor voxelColor = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
+
+            if (GameManager.DataManager.PaletteData.palleteColors.Contains(voxelColor))
+            {
+                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.IndexOf(voxelColor);
+
+                GameManager.PaletteUI.Update();
+            }
+        }
+        else if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+        {
+            VoxelPrefab voxelPrefab = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
+
+            if (GameManager.DataManager.PaletteData.palletePrefabs.Contains(voxelPrefab))
+            {
+                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.IndexOf(voxelPrefab);
+
+                GameManager.PaletteUI.Update();
+            }
         }
     }
 }

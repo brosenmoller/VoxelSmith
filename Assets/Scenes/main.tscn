@@ -1,17 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://byepkejc3664l"]
+[gd_scene load_steps=8 format=3 uid="uid://byepkejc3664l"]
 
 [ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Assets/Scenes/world.tscn" id="1_3n8tb"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/UIController.cs" id="1_bu3rv"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/LoadProjectWindow.cs" id="2_1ik7u"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/SaveProjectAsWindow.cs" id="3_un5ti"]
 [ext_resource type="PackedScene" uid="uid://clobdvq2u8iod" path="res://Assets/Scenes/UIScenes/Windows/StartWindow.tscn" id="4_k5wr7"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/ExportPrefabWindow.cs" id="4_taxvp"]
 [ext_resource type="PackedScene" uid="uid://bbcks7dv8i8mv" path="res://Assets/Scenes/UIScenes/Windows/NewProjectWindow.tscn" id="5_tvmpl"]
 [ext_resource type="PackedScene" uid="uid://b4fgnx8gu2s5q" path="res://Assets/Scenes/UIScenes/top_bar.tscn" id="6_v81rl"]
 [ext_resource type="PackedScene" uid="uid://c22rhhgvp0lvf" path="res://Assets/Scenes/UIScenes/tool_options.tscn" id="7_0txgo"]
 [ext_resource type="PackedScene" uid="uid://bboqmejcdfufk" path="res://Assets/Scenes/UIScenes/pallete_options.tscn" id="8_rtdt0"]
 
-[node name="UIController" type="Control" node_paths=PackedStringArray("newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "exportPrefabDialog", "startWindow")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,15 +16,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bu3rv")
-newProjectDialog = NodePath("NewProjectWindow")
-loadProjectDialog = NodePath("LoadProjectFileDialog")
-saveProjectAsDialog = NodePath("SaveProjectAsFileDialog")
-exportPrefabDialog = NodePath("ExportPrefabFileDialog")
-startWindow = NodePath("StartWindow")
+startWindow = NodePath("SubWindowHolder/StartWindow")
+newProjectDialog = NodePath("SubWindowHolder/NewProjectWindow")
+loadProjectDialog = NodePath("SubWindowHolder/LoadProjectFileDialog")
+saveProjectAsDialog = NodePath("SubWindowHolder/SaveProjectAsFileDialog")
+loadPaletteDialog = NodePath("SubWindowHolder/LoadPaletteFileDialog")
+savePaletteAsDialog = NodePath("SubWindowHolder/SavePaletteAsFileDialog")
+exportPrefabDialog = NodePath("SubWindowHolder/ExportPrefabFileDialog")
+exportMeshDialog = NodePath("SubWindowHolder/ExportMeshFileDialog")
 metadata/_edit_horizontal_guides_ = []
 
-[node name="LoadProjectFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
+[node name="SubWindowHolder" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LoadProjectFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Open a Project File"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Open"
@@ -35,9 +40,18 @@ dialog_close_on_escape = false
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.vxsProject")
-script = ExtResource("2_1ik7u")
 
-[node name="SaveProjectAsFileDialog" type="FileDialog" parent="."]
+[node name="LoadPaletteFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Open a Palette File"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Open"
+dialog_close_on_escape = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.vxsPalette")
+
+[node name="SaveProjectAsFileDialog" type="FileDialog" parent="SubWindowHolder"]
 title = "Save Project As"
 initial_position = 2
 size = Vector2i(800, 600)
@@ -45,9 +59,17 @@ ok_button_text = "Save"
 dialog_close_on_escape = false
 access = 2
 filters = PackedStringArray("*.vxsProject")
-script = ExtResource("3_un5ti")
 
-[node name="ExportPrefabFileDialog" type="FileDialog" parent="."]
+[node name="SavePaletteAsFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Save Palette As"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Save"
+dialog_close_on_escape = false
+access = 2
+filters = PackedStringArray("*.vxsPalette")
+
+[node name="ExportPrefabFileDialog" type="FileDialog" parent="SubWindowHolder"]
 title = "Export Prefab to"
 initial_position = 2
 size = Vector2i(800, 600)
@@ -55,12 +77,20 @@ ok_button_text = "Export"
 dialog_close_on_escape = false
 access = 2
 filters = PackedStringArray("*.prefab")
-script = ExtResource("4_taxvp")
 
-[node name="StartWindow" parent="." instance=ExtResource("4_k5wr7")]
+[node name="ExportMeshFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Export Prefab to"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Export"
+dialog_close_on_escape = false
+access = 2
+filters = PackedStringArray("*.obj")
+
+[node name="StartWindow" parent="SubWindowHolder" instance=ExtResource("4_k5wr7")]
 visible = false
 
-[node name="NewProjectWindow" parent="." instance=ExtResource("5_tvmpl")]
+[node name="NewProjectWindow" parent="SubWindowHolder" instance=ExtResource("5_tvmpl")]
 visible = false
 
 [node name="MainView" type="VBoxContainer" parent="."]
