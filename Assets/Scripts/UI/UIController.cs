@@ -4,14 +4,15 @@ public partial class UIController : Control
 {
     [ExportGroup("Window References")]
     [Export] public StartWindow startWindow;
-    [Export] public ConfirmationDialog newProjectDialog;
 
-    [ExportGroup("File Dialogs")]
+    [ExportGroup("Files")]
     [ExportSubgroup("Project")]
+    [Export] public ConfirmationDialog newProjectDialog;
     [Export] public FileDialog loadProjectDialog;
     [Export] public FileDialog saveProjectAsDialog;
 
     [ExportSubgroup("Palette")]
+    [Export] public FileDialog newPaletteFileDialog;
     [Export] public FileDialog loadPaletteDialog;
     [Export] public FileDialog savePaletteAsDialog;
 
@@ -44,11 +45,12 @@ public partial class UIController : Control
         loadProjectDialog.Confirmed += () => GameManager.DataManager.LoadProject(loadProjectDialog.CurrentPath);
         saveProjectAsDialog.Confirmed += () => GameManager.DataManager.SaveProjectAs(saveProjectAsDialog.CurrentPath);
 
-        exportPrefabDialog.Confirmed += () => GameManager.ExportManager.ExportUnityPrefab(exportPrefabDialog.CurrentDir, exportPrefabDialog.CurrentFile);
-        exportMeshDialog.Confirmed += () => GameManager.ExportManager.ExportMesh(exportMeshDialog.CurrentDir, exportMeshDialog.CurrentFile);
-
+        newPaletteFileDialog.Confirmed += () => GameManager.DataManager.CreateNewPalette(newPaletteFileDialog.CurrentPath);
         loadPaletteDialog.Confirmed += () => GameManager.DataManager.LoadPalette(loadPaletteDialog.CurrentPath);
         savePaletteAsDialog.Confirmed += () => GameManager.DataManager.SavePaletteAs(savePaletteAsDialog.CurrentPath);
+
+        exportPrefabDialog.Confirmed += () => GameManager.ExportManager.ExportUnityPrefab(exportPrefabDialog.CurrentDir, exportPrefabDialog.CurrentFile);
+        exportMeshDialog.Confirmed += () => GameManager.ExportManager.ExportMesh(exportMeshDialog.CurrentDir, exportMeshDialog.CurrentFile);
     }
 
     private void UpdateFocus()

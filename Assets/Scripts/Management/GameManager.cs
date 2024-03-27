@@ -61,6 +61,11 @@ public partial class GameManager : Node
 
         ProjectMenu.OnExportUnityPrefabPressed += UIController.exportPrefabDialog.Show;
         ProjectMenu.OnExportMeshPressed += UIController.exportMeshDialog.Show;
+
+        PaletteMenu.OnOpenPressed += UIController.loadPaletteDialog.Show;
+        PaletteMenu.OnSaveAsPressed += UIController.savePaletteAsDialog.Show;
+        PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;
+        PaletteMenu.OnSavePressed += DataManager.SavePalette;
     }
 
     public override void _PhysicsProcess(double delta)

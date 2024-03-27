@@ -29,12 +29,20 @@ public class ProjectData
     {
         get
         {
+            if (GameManager.DataManager.PaletteData.palleteColors.Count <= 0 ||
+                GameManager.DataManager.PaletteData.palletePrefabs.Count <= 0)
+            {
+                return null;
+            }
+
+
             if (selectedPaletteIndex == (int)ProjectDataPalleteIndex.COLORS)
             {
                 if (selectedPaletteSwatchIndex >= GameManager.DataManager.PaletteData.palleteColors.Count)
                 {
                     selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.Count - 1;
                 }
+
                 return GameManager.DataManager.PaletteData.palleteColors[selectedPaletteSwatchIndex];
             }
             else

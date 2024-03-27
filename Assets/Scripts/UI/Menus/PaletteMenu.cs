@@ -13,6 +13,7 @@ public partial class PaletteMenu : PopupMenu
     public override void _Ready()
     {
         button.Pressed += OnClick;
+        IdPressed += OnMenuItemSelected;
         SetupMenu();
     }
 

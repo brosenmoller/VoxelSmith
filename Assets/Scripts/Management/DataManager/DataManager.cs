@@ -83,10 +83,13 @@ public class DataManager : Manager
     #endregion
 
     #region Project
-    public void CreateNewProject(string name, string directoryPath, Guid paletteGUID)
+    public void CreateNewProject(string fileName, string directoryPath, Guid paletteGUID)
     {
         // TODO: Warn User if there is unsaved data
         if (projectDataHolder.Data != null) { SaveProject(); }
+
+        string name = fileName;
+        if (fileName.Contains('.')) { name = fileName[..fileName.IndexOf(".")]; }
 
         string path = Path.Combine(directoryPath, name + PROJECT_FILE_EXTENSION);
         projectDataHolder.Data = new ProjectData(name, paletteGUID);
@@ -99,7 +102,10 @@ public class DataManager : Manager
 
     public void SaveProject()
     {
-        SaveProjectAs(editorDataHolder.Data.savePaths[projectDataHolder.Data.projectID]);
+        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.projectID))
+        {
+            SaveProjectAs(editorDataHolder.Data.savePaths[projectDataHolder.Data.projectID]);
+        }
     }
 
     public void SaveProjectAs(string path)
@@ -153,12 +159,12 @@ public class DataManager : Manager
 
             if (editorDataHolder.Data.savePaths.ContainsValue(path))
             {
-                Guid? projectKey = editorDataHolder.Data.savePaths.FirstOrDefault(x => x.Value == path).Key;
-                if (projectKey != null)
+                Guid? projectID = editorDataHolder.Data.savePaths.FirstOrDefault(x => x.Value == path).Key;
+                if (projectID != null)
                 {
-                    editorDataHolder.Data.savePaths.Remove(projectKey.Value);
+                    editorDataHolder.Data.savePaths.Remove(projectID.Value);
 
-                    if (editorDataHolder.Data.lastProject == projectKey.Value)
+                    if (editorDataHolder.Data.lastProject == projectID.Value)
                     {
                         editorDataHolder.Data.lastProject = null;
                     }
@@ -171,20 +177,86 @@ public class DataManager : Manager
             {
                 GameManager.UIController.startWindow.Show();
             }
+
+            return;
+        }
+
+        if (EditorData.palettePaths.ContainsKey(ProjectData.projectID))
+        {
+            LoadPalette(EditorData.palettePaths[ProjectData.palleteID]);
         }
     }
     #endregion
 
     #region Palette
 
+    public void CreateNewPalette(string path)
+    {
+        // TODO: Warn User if there is unsaved data
+        if (paletteDataHolder.Data != null) { SavePalette(); }
+
+        paletteDataHolder.Data = new PaletteData();
+
+        SavePaletteAs(path);
+
+        GameManager.PaletteUI.Update();
+    }
+
+    public void SavePalette()
+    {
+        if (editorDataHolder.Data.palettePaths.ContainsKey(paletteDataHolder.Data.id))
+        {
+            SavePaletteAs(editorDataHolder.Data.palettePaths[paletteDataHolder.Data.id]);
+        }
+    }
+
     public void SavePaletteAs(string path)
     {
+        if (editorDataHolder.Data.palettePaths.ContainsKey(paletteDataHolder.Data.id))
+        {
+            editorDataHolder.Data.palettePaths[paletteDataHolder.Data.id] = path;
+        }
+        else
+        {
+            editorDataHolder.Data.palettePaths.Add(paletteDataHolder.Data.id, path);
+        }
 
+        editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+
+        paletteDataHolder.Save(path);
     }
 
     public void LoadPalette(string path)
     {
+        // TODO: Warn User if there is unsaved data
 
+        try
+        {
+            paletteDataHolder.Load(path);
+
+            GameManager.PaletteUI.Update();
+
+            if (!editorDataHolder.Data.palettePaths.ContainsKey(paletteDataHolder.Data.id))
+            {
+                editorDataHolder.Data.palettePaths.Add(paletteDataHolder.Data.id, path);
+            }
+            editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+        }
+        catch (Exception e)
+        {
+            GD.PushWarning("Failed to load palette data: \n" + e.ToString());
+
+            if (editorDataHolder.Data.palettePaths.ContainsValue(path))
+            {
+                Guid? paletteID = editorDataHolder.Data.palettePaths.FirstOrDefault(x => x.Value == path).Key;
+                if (paletteID != null)
+                {
+                    editorDataHolder.Data.palettePaths.Remove(paletteID.Value);
+
+                    editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+                }
+            }
+        }
     }
 
     #endregion

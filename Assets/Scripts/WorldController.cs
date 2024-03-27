@@ -5,6 +5,7 @@ public partial class WorldController : Node3D
 {
     public static WorldController Instance { get; private set; }
     public static event Action WentInFocusLastFrame;
+    public static event Action WentOutOfFocus;
 
     private PlayerMovement player;
 
@@ -13,10 +14,8 @@ public partial class WorldController : Node3D
         get { return worldInFocus; } 
         set 
         {
-            if (value == true)
-            {
-                SendWentInFocusEvent();
-            }
+            if (value) { SendWentInFocusEvent(); }
+            else { WentOutOfFocus?.Invoke(); }
 
             worldInFocus = value;
             UpdatePlayerProcess();
@@ -56,7 +55,7 @@ public partial class WorldController : Node3D
 
     private async void SendWentInFocusEvent()
     {
-        await ToSignal(GetTree().CreateTimer(1f), Timer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(0.01f), Timer.SignalName.Timeout);
         WentInFocusLastFrame?.Invoke();
     }
 

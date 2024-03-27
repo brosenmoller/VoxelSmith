@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c22rhhgvp0lvf" path="res://Assets/Scenes/UIScenes/tool_options.tscn" id="7_0txgo"]
 [ext_resource type="PackedScene" uid="uid://bboqmejcdfufk" path="res://Assets/Scenes/UIScenes/pallete_options.tscn" id="8_rtdt0"]
 
-[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "newPaletteFileDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,6 +20,7 @@ startWindow = NodePath("SubWindowHolder/StartWindow")
 newProjectDialog = NodePath("SubWindowHolder/NewProjectWindow")
 loadProjectDialog = NodePath("SubWindowHolder/LoadProjectFileDialog")
 saveProjectAsDialog = NodePath("SubWindowHolder/SaveProjectAsFileDialog")
+newPaletteFileDialog = NodePath("SubWindowHolder/NewPaletteFileDialog")
 loadPaletteDialog = NodePath("SubWindowHolder/LoadPaletteFileDialog")
 savePaletteAsDialog = NodePath("SubWindowHolder/SavePaletteAsFileDialog")
 exportPrefabDialog = NodePath("SubWindowHolder/ExportPrefabFileDialog")
@@ -65,6 +66,15 @@ title = "Save Palette As"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Save"
+dialog_close_on_escape = false
+access = 2
+filters = PackedStringArray("*.vxsPalette")
+
+[node name="NewPaletteFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Create New Palette"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Create"
 dialog_close_on_escape = false
 access = 2
 filters = PackedStringArray("*.vxsPalette")

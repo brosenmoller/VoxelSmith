@@ -18,13 +18,12 @@ public partial class VoxelPlacer : RayCast3D
         if (enableVoxelHighlight) { voxelHiglight.Visible = true; }
 
         WorldController.WentInFocusLastFrame += () => enabled = true;
+        WorldController.WentOutOfFocus += () => enabled = false;
     }
 
     public override void _Process(double delta)
     {
-        if (!WorldController.Instance.WorldInFocus) { enabled = false; }
-
-        if (IsColliding() && enabled)
+        if (IsColliding())
         {
             Vector3 point = GetCollisionPoint();
             Vector3 normal = GetCollisionNormal();
@@ -48,6 +47,8 @@ public partial class VoxelPlacer : RayCast3D
                 voxelHiglight.Visible = true;
                 voxelHiglight.GlobalPosition = voxelPosition; 
             }
+
+            if (!enabled) { return; }
 
             if (Input.IsActionJustPressed("place"))
             {
@@ -81,7 +82,7 @@ public partial class VoxelPlacer : RayCast3D
 
         Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
 
-        if (!playerVoxels.Contains(nextVoxel))
+        if (!playerVoxels.Contains(nextVoxel) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
         {
             GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, GameManager.DataManager.ProjectData.SelectedVoxelData));
         }

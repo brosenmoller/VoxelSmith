@@ -7,6 +7,7 @@ public class PaletteData
     public Guid id;
     public List<VoxelColor> palleteColors;
     public List<VoxelPrefab> palletePrefabs;
+
     public PaletteData()
     {
         id = Guid.NewGuid();
