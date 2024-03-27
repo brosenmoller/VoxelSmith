@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=17 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
@@ -42,15 +42,13 @@ size = Vector2(100, 100)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qgt8u"]
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
 
-[sub_resource type="SphereMesh" id="SphereMesh_kysc4"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0sg45"]
 render_priority = 0
 shader = ExtResource("6_bieuy")
 shader_parameter/color_stripe = Color(0, 0, 0, 1)
 shader_parameter/divisions = 8.0
 shader_parameter/stripe_bias = 1.5
-shader_parameter/speed = 0.3
+shader_parameter/speed = 0.0
 shader_parameter/angle = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
@@ -105,7 +103,6 @@ collision_layer = 3
 
 [node name="PrefabMesh" type="MeshInstance3D" parent="PrefabMeshBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000364542, 0.011354, 0.00180387)
-mesh = SubResource("SphereMesh_kysc4")
 skeleton = NodePath("../..")
 script = ExtResource("5_8q8hp")
 material = SubResource("ShaderMaterial_0sg45")

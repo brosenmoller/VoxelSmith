@@ -32,7 +32,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="LoadProjectFileDialog" type="FileDialog" parent="SubWindowHolder"]
-title = "Open a Project File"
+title = "Open a File"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Open"
@@ -42,7 +42,7 @@ access = 2
 filters = PackedStringArray("*.vxsProject")
 
 [node name="LoadPaletteFileDialog" type="FileDialog" parent="SubWindowHolder"]
-title = "Open a Palette File"
+title = "Open a File"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Open"
@@ -118,6 +118,7 @@ split_offset = 200
 layout_mode = 2
 
 [node name="ToolOptions" parent="MainView/MainWindow/Options" instance=ExtResource("7_0txgo")]
+visible = false
 layout_mode = 2
 
 [node name="Pallete" parent="MainView/MainWindow/Options" instance=ExtResource("8_rtdt0")]

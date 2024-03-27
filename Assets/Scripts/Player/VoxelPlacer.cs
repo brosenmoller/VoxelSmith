@@ -1,4 +1,5 @@
 using Godot;
+using System.Linq;
 
 public partial class VoxelPlacer : RayCast3D
 {
@@ -50,9 +51,7 @@ public partial class VoxelPlacer : RayCast3D
 
             if (Input.IsActionJustPressed("place"))
             {
-                Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
-
-                GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, GameManager.DataManager.ProjectData.SelectedVoxelData));
+                PlaceBlock(voxelPosition, normal);
             }
             else if (Input.IsActionJustPressed("break"))
             {
@@ -67,6 +66,24 @@ public partial class VoxelPlacer : RayCast3D
         {
             collisionHighlight.Visible = false;
             voxelHiglight.Visible = false;
+        }
+    }
+
+    private void PlaceBlock(Vector3I voxelPosition, Vector3 normal)
+    {
+        Vector3I[] playerVoxels = new Vector3I[2];
+        playerVoxels[0] = new Vector3I(
+            Mathf.FloorToInt(GlobalPosition.X),
+            Mathf.FloorToInt(GlobalPosition.Y),
+            Mathf.FloorToInt(GlobalPosition.Z)
+        );
+        playerVoxels[1] = playerVoxels[0] + Vector3I.Down;
+
+        Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
+
+        if (!playerVoxels.Contains(nextVoxel))
+        {
+            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, GameManager.DataManager.ProjectData.SelectedVoxelData));
         }
     }
 
