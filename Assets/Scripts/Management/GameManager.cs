@@ -5,6 +5,7 @@ public partial class GameManager : Node
     public static DataManager DataManager { get; private set; }
     public static CommandManager CommandManager { get; private set; }
     public static ExportManager ExportManager { get; private set; }
+    public static ImportManager ImportManager { get; private set; }
 
     public static SurfaceMesh SurfaceMesh { get; private set; }
     public static PrefabMesh PrefabMesh { get; private set; }
@@ -36,11 +37,13 @@ public partial class GameManager : Node
         DataManager = new DataManager();
         CommandManager = new CommandManager();
         ExportManager = new ExportManager();
+        ImportManager = new ImportManager();
 
         activeManagers = new Manager[] {
             DataManager,
             CommandManager,
             ExportManager,
+            ImportManager,
         };
 
         foreach (Manager manager in activeManagers)
