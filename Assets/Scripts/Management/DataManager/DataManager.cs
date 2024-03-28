@@ -102,9 +102,9 @@ public class DataManager : Manager
 
     public void SaveProject()
     {
-        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.projectID))
+        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
-            SaveProjectAs(editorDataHolder.Data.savePaths[projectDataHolder.Data.projectID]);
+            SaveProjectAs(editorDataHolder.Data.savePaths[projectDataHolder.Data.id]);
         }
     }
 
@@ -114,16 +114,16 @@ public class DataManager : Manager
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
 
-        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.projectID))
+        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
-            editorDataHolder.Data.savePaths[projectDataHolder.Data.projectID] = path;
+            editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
         }
         else
         {
-            editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.projectID, path);
+            editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.id, path);
         }
 
-        editorDataHolder.Data.lastProject = projectDataHolder.Data.projectID;
+        editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
         editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
 
         projectDataHolder.Save(path);
@@ -144,11 +144,11 @@ public class DataManager : Manager
             GameManager.SurfaceMesh.UpdateMesh();
             GameManager.PrefabMesh.UpdateMesh();
 
-            if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.projectID))
+            if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
             {
-                editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.projectID, path);
+                editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.id, path);
             }
-            editorDataHolder.Data.lastProject = projectDataHolder.Data.projectID;
+            editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
 
             GameManager.UIController.startWindow.Hide();
@@ -181,9 +181,9 @@ public class DataManager : Manager
             return;
         }
 
-        if (EditorData.palettePaths.ContainsKey(ProjectData.projectID))
+        if (EditorData.palettePaths.ContainsKey(ProjectData.id))
         {
-            LoadPalette(EditorData.palettePaths[ProjectData.palleteID]);
+            LoadPalette(EditorData.palettePaths[ProjectData.paletteID]);
         }
     }
     #endregion
@@ -241,6 +241,9 @@ public class DataManager : Manager
                 editorDataHolder.Data.palettePaths.Add(paletteDataHolder.Data.id, path);
             }
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+
+            ProjectData.paletteID = paletteDataHolder.Data.id;
+            SaveProject();
         }
         catch (Exception e)
         {
@@ -255,6 +258,11 @@ public class DataManager : Manager
 
                     editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
                 }
+            }
+
+            if (paletteDataHolder.Data == null)
+            {
+                
             }
         }
     }

@@ -32,13 +32,13 @@ public class ExportManager : Manager
             exportType = (int)exportType
         };
 
-        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.projectID))
+        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
         {
-            GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.projectID] = exportSettings;
+            GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = exportSettings;
         }
         else
         {
-            GameManager.DataManager.EditorData.exportPaths.Add(GameManager.DataManager.ProjectData.projectID, exportSettings);
+            GameManager.DataManager.EditorData.exportPaths.Add(GameManager.DataManager.ProjectData.id, exportSettings);
         }
 
         GameManager.DataManager.SaveEditorData();

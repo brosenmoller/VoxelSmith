@@ -13,7 +13,7 @@ dialog_close_on_escape = false
 script = ExtResource("1_rlr1p")
 projectName = NodePath("VBoxContainer/ProjectNameEdit")
 saveDirectoryPath = NodePath("VBoxContainer/SaveDirectoryGroup/SaveDirectoryPathEdit")
-palettePath = NodePath("VBoxContainer/PalletePath/PalletePathEdit")
+palettePath = NodePath("")
 openProjectDirectoryButton = NodePath("VBoxContainer/SaveDirectoryGroup/FileDialogButton")
 openPaletteButton = NodePath("VBoxContainer/PalletePath/FileDialogButton")
 newPaletteButton = NodePath("VBoxContainer/PalletePath/CreateNewPalleteButton")
@@ -69,12 +69,6 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Palette
 "
-
-[node name="PalletePathEdit" type="TextEdit" parent="VBoxContainer/PalletePath"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "//"
 
 [node name="FileDialogButton" type="Button" parent="VBoxContainer/PalletePath"]
 clip_contents = true

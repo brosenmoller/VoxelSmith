@@ -20,6 +20,9 @@ public partial class UIController : Control
     [Export] public FileDialog exportPrefabDialog;
     [Export] public FileDialog exportMeshDialog;
 
+    [ExportSubgroup("Import")]
+    [Export] public FileDialog importSchematicFileDialog;
+
 
     private WorldController worldController;
 
@@ -51,6 +54,8 @@ public partial class UIController : Control
 
         exportPrefabDialog.Confirmed += () => GameManager.ExportManager.ExportUnityPrefab(exportPrefabDialog.CurrentDir, exportPrefabDialog.CurrentFile);
         exportMeshDialog.Confirmed += () => GameManager.ExportManager.ExportMesh(exportMeshDialog.CurrentDir, exportMeshDialog.CurrentFile);
+
+        importSchematicFileDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importSchematicFileDialog.CurrentPath);
     }
 
     private void UpdateFocus()

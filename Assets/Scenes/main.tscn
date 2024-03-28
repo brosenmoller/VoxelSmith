@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c22rhhgvp0lvf" path="res://Assets/Scenes/UIScenes/tool_options.tscn" id="7_0txgo"]
 [ext_resource type="PackedScene" uid="uid://bboqmejcdfufk" path="res://Assets/Scenes/UIScenes/pallete_options.tscn" id="8_rtdt0"]
 
-[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "newPaletteFileDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "newPaletteFileDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog", "importSchematicFileDialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,6 +25,7 @@ loadPaletteDialog = NodePath("SubWindowHolder/LoadPaletteFileDialog")
 savePaletteAsDialog = NodePath("SubWindowHolder/SavePaletteAsFileDialog")
 exportPrefabDialog = NodePath("SubWindowHolder/ExportPrefabFileDialog")
 exportMeshDialog = NodePath("SubWindowHolder/ExportMeshFileDialog")
+importSchematicFileDialog = NodePath("SubWindowHolder/ImportSchematicFileDialog")
 metadata/_edit_horizontal_guides_ = []
 
 [node name="SubWindowHolder" type="Control" parent="."]
@@ -51,6 +52,15 @@ dialog_close_on_escape = false
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.vxsPalette")
+
+[node name="ImportSchematicFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.schem", "*.schematic")
 
 [node name="SaveProjectAsFileDialog" type="FileDialog" parent="SubWindowHolder"]
 title = "Save Project As"

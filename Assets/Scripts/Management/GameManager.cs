@@ -65,6 +65,8 @@ public partial class GameManager : Node
         ProjectMenu.OnExportUnityPrefabPressed += UIController.exportPrefabDialog.Show;
         ProjectMenu.OnExportMeshPressed += UIController.exportMeshDialog.Show;
 
+        ProjectMenu.OnImportSchematicPressed += UIController.importSchematicFileDialog.Show;
+
         PaletteMenu.OnOpenPressed += UIController.loadPaletteDialog.Show;
         PaletteMenu.OnSaveAsPressed += UIController.savePaletteAsDialog.Show;
         PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;

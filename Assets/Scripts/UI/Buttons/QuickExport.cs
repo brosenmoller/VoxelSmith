@@ -23,9 +23,9 @@ public partial class QuickExport : MarginContainer
 
     private void OnConfirmed()
     {
-        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.projectID))
+        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
         {
-            EditorData.ExportSettings exportSettings = GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.projectID];
+            EditorData.ExportSettings exportSettings = GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id];
 
             if (exportSettings.exportType == (int)ProjectMenu.ExportOptions.UNITY)
             {

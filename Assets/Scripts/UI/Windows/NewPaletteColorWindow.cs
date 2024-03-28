@@ -15,7 +15,7 @@ public partial class NewPaletteColorWindow : ConfirmationDialog
     {
         VoxelColor voxelColor = new() { 
             color = voxelColorPicker.Color, 
-            minecraftIDlist = new List<string>() { minecraftIDEdit.Text } 
+            minecraftIDlist = new List<string>() { "minecraft:" + minecraftIDEdit.Text } 
         };
 
         GameManager.DataManager.PaletteData.palleteColors.Add(voxelColor);

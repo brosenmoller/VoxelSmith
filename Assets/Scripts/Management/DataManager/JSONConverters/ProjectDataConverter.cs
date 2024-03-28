@@ -11,8 +11,8 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
         JObject obj = new()
         {
             { "name", value.name },
-            { "projectID", value.projectID.ToString() },
-            { "palleteID", value.palleteID.ToString() },
+            { "id", value.id.ToString() },
+            { "paletteID", value.paletteID.ToString() },
             { "player_position", JToken.FromObject(value.playerPosition, serializer) },
             { "camera_rotation", JToken.FromObject(value.cameraRotation, serializer) },
             { "camera_pivot_rotation", JToken.FromObject(value.cameraPivotRotation, serializer) },
@@ -53,8 +53,8 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
         ProjectData projectData = new()
         {
             name = obj["name"].ToObject<string>(),
-            projectID = Guid.Parse(obj["projectID"].ToObject<string>()),
-            palleteID = Guid.Parse(obj["palleteID"].ToObject<string>()),
+            id = Guid.Parse(obj["id"].ToObject<string>()),
+            paletteID = Guid.Parse(obj["paletteID"].ToObject<string>()),
             playerPosition = obj["player_position"].ToObject<Vector3>(serializer),
             cameraRotation = obj["camera_rotation"].ToObject<Vector3>(serializer),
             cameraPivotRotation = obj["camera_pivot_rotation"].ToObject<Vector3>(serializer),
