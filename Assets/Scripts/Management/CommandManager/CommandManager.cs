@@ -26,24 +26,22 @@ public class CommandManager : Manager
 
     public void StepForward()
     {
+        if (commandIndex > commandBuffer.Count - 1 || commandIndex < 0)  { return; }
+
         commandBuffer[commandIndex].Execute();
         commandIndex++;
 
-        if (commandIndex > commandBuffer.Count - 1)
-        {
-            commandIndex = commandBuffer.Count - 1;
-        }
+        if (commandIndex > commandBuffer.Count - 1) { commandIndex = commandBuffer.Count - 1; }
     }
 
     public void StepBack()
     {
+        if (commandIndex > commandBuffer.Count - 1 || commandIndex < 0) { return; }
+
         commandBuffer[commandIndex].Undo();
         commandIndex--;
 
-        if (commandIndex < 0)
-        {
-            commandIndex = 0;
-        }
+        if (commandIndex < 0) { commandIndex = 0; }
     }
 }
 
