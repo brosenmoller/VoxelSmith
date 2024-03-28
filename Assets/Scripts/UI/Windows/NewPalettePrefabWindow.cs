@@ -34,7 +34,7 @@ public partial class NewPalettePrefabWindow : ConfirmationDialog
 
     private void OnCreate()
     {
-        VoxelPrefab voxelColor = new()
+        VoxelPrefab voxelPrefab = new()
         {
             color = voxelColorPicker.Color,
             prefabName = prefabNameTextEdit.Text,
@@ -43,7 +43,7 @@ public partial class NewPalettePrefabWindow : ConfirmationDialog
             unityPrefabGuid = unityPrefabGuidTextEdit.Text,
         };
 
-        GameManager.DataManager.PaletteData.palletePrefabs.Add(voxelColor);
+        GameManager.DataManager.PaletteData.palletePrefabs.Add(voxelPrefab);
         GameManager.PaletteUI.Update();
     }
 }

@@ -242,8 +242,11 @@ public class DataManager : Manager
             }
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
 
-            ProjectData.paletteID = paletteDataHolder.Data.id;
-            SaveProject();
+            if (projectDataHolder.Data != null)
+            {
+                ProjectData.paletteID = paletteDataHolder.Data.id;
+                SaveProject();
+            }
         }
         catch (Exception e)
         {
@@ -262,7 +265,8 @@ public class DataManager : Manager
 
             if (paletteDataHolder.Data == null)
             {
-                
+                // TODO : Show Error
+                GameManager.UIController.loadPaletteDialog.Show();
             }
         }
     }

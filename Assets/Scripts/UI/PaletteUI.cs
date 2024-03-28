@@ -80,6 +80,8 @@ public partial class PaletteUI : BoxContainer
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = index;
             };
 
+
+
             paletteColorsContainer.AddChild(button);
         }
     }

@@ -5,7 +5,6 @@ public partial class NewProjectWindow : ConfirmationDialog
 {
     [Export] private TextEdit projectName;
     [Export] private TextEdit saveDirectoryPath;
-    [Export] private TextEdit palettePath;
     [Export] private Button openProjectDirectoryButton;
     [Export] private Button openPaletteButton;
     [Export] private Button newPaletteButton;
@@ -13,10 +12,13 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     public override void _Ready()
     {
-        openProjectDirectoryButton.Pressed += projectDirectoryFileDialog.Show;
         projectDirectoryFileDialog.Confirmed += OnDirectorySelected;
-
         Confirmed += OnNewProjectConfirmed;
+
+        openProjectDirectoryButton.Pressed += projectDirectoryFileDialog.Show;
+
+        openPaletteButton.Pressed += GameManager.UIController.loadPaletteDialog.Show;
+        newPaletteButton.Pressed += GameManager.UIController.newPaletteFileDialog.Show;
     }
 
     private void OnNewProjectConfirmed()

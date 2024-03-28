@@ -58,11 +58,11 @@ public class ProjectData
 
     public ProjectData() { }
 
-    public ProjectData(string name, Guid palleteID)
+    public ProjectData(string name, Guid paletteID)
     {
         this.name = name;
         id = Guid.NewGuid();
-        this.paletteID = palleteID;
+        this.paletteID = paletteID;
         voxelColors = new Dictionary<Vector3I, VoxelColor>();
         voxelPrefabs = new Dictionary<Vector3I, VoxelPrefab>();
     }
