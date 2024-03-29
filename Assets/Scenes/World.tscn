@@ -5,8 +5,9 @@
 [ext_resource type="Shader" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/PrefabMesh.cs" id="5_8q8hp"]
+[ext_resource type="Material" uid="uid://ctaid16rpjbyu" path="res://Assets/Art/Materials/surface_mesh_material.tres" id="5_vit1y"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/voxel_highlight.tscn" id="5_y16gt"]
-[ext_resource type="Shader" path="res://Assets/Art/Shaders/prefab_mesh.gdshader" id="6_bieuy"]
+[ext_resource type="Material" uid="uid://bysvj84e30qnx" path="res://Assets/Art/Materials/prefab_mesh_material.tres" id="7_n0bo4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_top_color = Color(0.2, 0.482353, 0.611765, 1)
@@ -41,15 +42,6 @@ size = Vector2(100, 100)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qgt8u"]
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sg45"]
-render_priority = 0
-shader = ExtResource("6_bieuy")
-shader_parameter/color_stripe = Color(0, 0, 0, 1)
-shader_parameter/divisions = 8.0
-shader_parameter/stripe_bias = 1.5
-shader_parameter/speed = 0.0
-shader_parameter/angle = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
 albedo_color = Color(1, 0.270588, 0.270588, 1)
@@ -93,6 +85,7 @@ collision_layer = 3
 [node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceMeshBody"]
 skeleton = NodePath("../..")
 script = ExtResource("4_48p0j")
+material = ExtResource("5_vit1y")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceMeshBody"]
 
@@ -103,7 +96,7 @@ collision_layer = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000364542, 0.011354, 0.00180387)
 skeleton = NodePath("../..")
 script = ExtResource("5_8q8hp")
-material = SubResource("ShaderMaterial_0sg45")
+material = ExtResource("7_n0bo4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PrefabMeshBody"]
 

@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bysvj84e30qnx"]
+
+[ext_resource type="Shader" path="res://Assets/Art/Shaders/prefab_mesh.gdshader" id="1_gi3fm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_gi3fm")
+shader_parameter/color_stripe = Color(0, 0, 0, 1)
+shader_parameter/divisions = 8.0
+shader_parameter/stripe_bias = 1.5
+shader_parameter/speed = 0.0
+shader_parameter/angle = 0.5

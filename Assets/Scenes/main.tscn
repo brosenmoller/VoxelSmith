@@ -54,7 +54,7 @@ access = 2
 filters = PackedStringArray("*.vxsPalette")
 
 [node name="ImportSchematicFileDialog" type="FileDialog" parent="SubWindowHolder"]
-title = "Open a File"
+title = "Open a Minecraft Schematic File"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Open"
@@ -99,7 +99,7 @@ access = 2
 filters = PackedStringArray("*.prefab")
 
 [node name="ExportMeshFileDialog" type="FileDialog" parent="SubWindowHolder"]
-title = "Export Prefab to"
+title = "Export Mesh to"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Export"
