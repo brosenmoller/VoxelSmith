@@ -48,7 +48,7 @@ public partial class PaletteUI : BoxContainer
 
             StyleBoxFlat pressedStyleBox = new()
             {
-                BgColor = voxeldata.color / 2,
+                BgColor = voxeldata.color,
                 BorderColor = Color.Color8(255, 255, 255),
                 BorderWidthBottom = 2,
                 BorderWidthRight = 2,
@@ -120,7 +120,7 @@ public partial class PaletteUI : BoxContainer
 
             StyleBoxFlat pressedStyleBox = new()
             {
-                BgColor = voxeldata.color / 2,
+                BgColor = voxeldata.color,
                 BorderColor = Color.Color8(255, 255, 255),
                 BorderWidthBottom = 2,
                 BorderWidthRight = 2,

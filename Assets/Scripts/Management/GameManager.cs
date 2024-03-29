@@ -72,9 +72,7 @@ public partial class GameManager : Node
         PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;
         PaletteMenu.OnSavePressed += DataManager.SavePalette;
 
-
-        PlayerMode.OnWalkModePressed += () => Player.ChangeState<WalkState>();
-        PlayerMode.OnFlyModePressed += () => Player.ChangeState<FlyState>();
+        PlayerMode.OnPlayerMovmenetModeSelected += Player.ChangeState;
     }
 
     public override void _Process(double delta)

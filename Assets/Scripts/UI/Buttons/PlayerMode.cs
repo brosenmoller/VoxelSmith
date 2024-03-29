@@ -7,13 +7,11 @@ public partial class PlayerMode : HBoxContainer
     [Export] private CheckButton flyModeButton;
     [Export] private CheckButton editModeButton;
 
-    public static event Action OnWalkModePressed;
-    public static event Action OnFlyModePressed;
-    public static event Action OnEditModePressed;
+    public static event Action<PlayerMovementState> OnPlayerMovmenetModeSelected;
 
     public override void _Ready()
     {
-        walkModeButton.Pressed += () => OnWalkModePressed?.Invoke();
-        flyModeButton.Pressed += () => OnFlyModePressed?.Invoke();
+        walkModeButton.Pressed += () => OnPlayerMovmenetModeSelected?.Invoke(PlayerMovementState.Walk);
+        flyModeButton.Pressed += () => OnPlayerMovmenetModeSelected?.Invoke(PlayerMovementState.Fly);
     }
 }

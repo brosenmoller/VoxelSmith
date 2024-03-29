@@ -77,15 +77,27 @@ public class DataManager : Manager
 
         string path = Path.Combine(directoryPath, name + PROJECT_FILE_EXTENSION);
 
-        PaletteData paletteData = new();
+        projectDataHolder.Data = new ProjectData(name);
+
         if (option == NewProjectWindow.PaletteOption.Default)
         {
             projectDataHolder.Data.palette = PaletteData.Default();
         }
-
-        projectDataHolder.Data = new ProjectData(name, paletteData);
-
-
+        else
+        {
+            projectDataHolder.Data.palette = new PaletteData();
+        }
+        
+        if (projectDataHolder.Data.palette.paletteColors.Count > 0)
+        {
+            projectDataHolder.Data.selectedPaletteType = PaletteType.Color;
+            projectDataHolder.Data.selectedPaletteSwatchId = projectDataHolder.Data.palette.paletteColors.First().Key;
+        }
+        else if (projectDataHolder.Data.palette.palletePrefabs.Count > 0)
+        {
+            projectDataHolder.Data.selectedPaletteType = PaletteType.Prefab;
+            projectDataHolder.Data.selectedPaletteSwatchId = projectDataHolder.Data.palette.palletePrefabs.First().Key;
+        }
 
         SaveProjectAs(path);
 
@@ -107,7 +119,8 @@ public class DataManager : Manager
         projectDataHolder.Data.playerPosition = GameManager.Player.GlobalPosition;
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
-        if (PaletteData != null) { ProjectData.palette = PaletteData; }
+
+        projectDataHolder.Data.movementState = GameManager.Player.currentState;
 
         if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
@@ -135,6 +148,8 @@ public class DataManager : Manager
             GameManager.Player.GlobalPosition = projectDataHolder.Data.playerPosition;
             camera.Rotation = projectDataHolder.Data.cameraRotation;
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
+
+            GameManager.Player.currentState = projectDataHolder.Data.movementState;
 
             GameManager.SurfaceMesh.UpdateMesh();
             GameManager.PrefabMesh.UpdateMesh();

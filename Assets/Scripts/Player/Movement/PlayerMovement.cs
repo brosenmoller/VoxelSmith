@@ -1,5 +1,11 @@
 using Godot;
 
+public enum PlayerMovementState
+{
+    Walk = 0,
+    Fly = 1
+}
+
 public partial class PlayerMovement : CharacterBody3D
 {
     [ExportGroup("Walk Mode")]
@@ -20,16 +26,24 @@ public partial class PlayerMovement : CharacterBody3D
     private bool active = false;
 
     private StateMachine<PlayerMovement> stateMachine;
+    
+    public PlayerMovementState currentState = PlayerMovementState.Walk;
 
-    public void ChangeState<T>() where T : State<PlayerMovement>
+    public void ChangeState(PlayerMovementState playerMovementState)
     {
-        stateMachine.ChangeState(typeof(T));
+        currentState = playerMovementState;
+
+        switch (playerMovementState)
+        {
+            case PlayerMovementState.Walk: stateMachine.ChangeState(typeof(WalkState)); break;
+            case PlayerMovementState.Fly: stateMachine.ChangeState(typeof(FlyState)); break;
+        }
     }
 
     public override void _Ready()
     {
         stateMachine = new StateMachine<PlayerMovement>(this, new WalkState(), new FlyState());
-        stateMachine.ChangeState(typeof(WalkState));
+        ChangeState(currentState);
     }
 
     public override void _Process(double delta)

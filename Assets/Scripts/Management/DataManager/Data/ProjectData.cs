@@ -9,14 +9,19 @@ public class ProjectData
 {
     public string name;
     public Guid id;
+
     public Vector3 playerPosition;
     public Vector3 cameraRotation;
     public Vector3 cameraPivotRotation;
+
     public Dictionary<Vector3I, Guid> voxelColors;
     public Dictionary<Vector3I, Guid> voxelPrefabs;
+
     public PaletteData palette;
     public PaletteType selectedPaletteType;
     public Guid selectedPaletteSwatchId;
+
+    public PlayerMovementState movementState;
 
     [JsonIgnore]
     public VoxelData SelectedVoxelData
@@ -50,18 +55,11 @@ public class ProjectData
 
     public ProjectData() { }
 
-    public ProjectData(string name, PaletteData paletteData)
+    public ProjectData(string name)
     {
         this.name = name;
         id = Guid.NewGuid();
         voxelColors = new Dictionary<Vector3I, Guid>();
         voxelPrefabs = new Dictionary<Vector3I, Guid>();
-
-        selectedPaletteType = PaletteType.Color;
-        palette = paletteData;
-        if (palette.paletteColors.Count > 0)
-        {
-            selectedPaletteSwatchId = palette.paletteColors.First().Key;
-        }
     }
 }

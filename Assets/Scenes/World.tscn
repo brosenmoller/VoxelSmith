@@ -55,10 +55,8 @@ shader_parameter/angle = 0.5
 albedo_color = Color(1, 0.270588, 0.270588, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_g7we1"]
-radius = 0.05
-height = 0.1
-radial_segments = 8
-rings = 3
+radius = 0.2
+height = 0.4
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_6ekco")
@@ -112,6 +110,10 @@ material = SubResource("ShaderMaterial_0sg45")
 [node name="HitPointHighlight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980523, 0.622928, -0.945743)
 visible = false
+material_override = SubResource("StandardMaterial3D_85b2v")
+mesh = SubResource("SphereMesh_g7we1")
+
+[node name="WorldCenterHighlight" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_85b2v")
 mesh = SubResource("SphereMesh_g7we1")
 
