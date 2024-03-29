@@ -11,58 +11,58 @@
 [ext_resource type="PackedScene" uid="uid://bsis6v0sco7es" path="res://Assets/Scenes/UIScenes/Windows/NewPalettePrefabWindow.tscn" id="10_vya6n"]
 [ext_resource type="PackedScene" uid="uid://ca4ewnb8rctni" path="res://Assets/Scenes/UIScenes/Windows/NewPaletteColorWindow.tscn" id="11_8v2o5"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_heobx"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_4411w"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_cd6r7"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_55rvy"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_s3ikt"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_kx04p"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_tneeo"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_ondl8"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_g7tkm"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_nedcj"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_ctfjj"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_joofo"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_01jwe"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_f0js0"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_h48wu"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_u6pm6"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_u02a5"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_blg2s"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_bfhs2"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_554gj"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_8nxaa"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_smcl4"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_gbht7"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_nbm7j"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_ukshe"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_av7n6"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_7ajcl"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_d4ktp"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_ni1es"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_py1qo"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_sis8x"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_bagxu"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_7fite"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_rbo3u"]
 allow_unpress = true
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_qqi1q"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_2c0se"]
 allow_unpress = true
 
 [node name="Pallete" type="VBoxContainer" node_paths=PackedStringArray("paletteColorsContainer", "palettePrefabsContainer")]
@@ -160,75 +160,75 @@ theme_override_constants/v_separation = 5
 
 [node name="ColorSwatch" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_heobx")
+button_group = SubResource("ButtonGroup_4411w")
 
 [node name="ColorSwatch2" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_cd6r7")
+button_group = SubResource("ButtonGroup_55rvy")
 
 [node name="ColorSwatch3" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_s3ikt")
+button_group = SubResource("ButtonGroup_kx04p")
 
 [node name="ColorSwatch4" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_tneeo")
+button_group = SubResource("ButtonGroup_ondl8")
 
 [node name="ColorSwatch5" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_g7tkm")
+button_group = SubResource("ButtonGroup_nedcj")
 
 [node name="ColorSwatch7" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ctfjj")
+button_group = SubResource("ButtonGroup_joofo")
 
 [node name="ColorSwatch8" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_01jwe")
+button_group = SubResource("ButtonGroup_f0js0")
 
 [node name="ColorSwatch9" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_h48wu")
+button_group = SubResource("ButtonGroup_u6pm6")
 
 [node name="ColorSwatch10" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_u02a5")
+button_group = SubResource("ButtonGroup_blg2s")
 
 [node name="ColorSwatch11" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_bfhs2")
+button_group = SubResource("ButtonGroup_554gj")
 
 [node name="ColorSwatch12" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_8nxaa")
+button_group = SubResource("ButtonGroup_smcl4")
 
 [node name="ColorSwatch13" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_gbht7")
+button_group = SubResource("ButtonGroup_nbm7j")
 
 [node name="ColorSwatch14" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ukshe")
+button_group = SubResource("ButtonGroup_av7n6")
 
 [node name="ColorSwatch15" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_7ajcl")
+button_group = SubResource("ButtonGroup_d4ktp")
 
 [node name="ColorSwatch16" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ni1es")
+button_group = SubResource("ButtonGroup_py1qo")
 
 [node name="ColorSwatch17" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_sis8x")
+button_group = SubResource("ButtonGroup_bagxu")
 
 [node name="ColorSwatch18" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_7fite")
+button_group = SubResource("ButtonGroup_rbo3u")
 
 [node name="ColorSwatch6" parent="ColorArea/PaletteColorContainer" instance=ExtResource("2_onqws")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_qqi1q")
+button_group = SubResource("ButtonGroup_2c0se")
 
 [node name="PrefabHeader" type="HBoxContainer" parent="."]
 layout_mode = 2

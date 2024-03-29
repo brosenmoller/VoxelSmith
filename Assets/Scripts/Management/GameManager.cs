@@ -71,13 +71,17 @@ public partial class GameManager : Node
         PaletteMenu.OnSaveAsPressed += UIController.savePaletteAsDialog.Show;
         PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;
         PaletteMenu.OnSavePressed += DataManager.SavePalette;
+
+
+        PlayerMode.OnWalkModePressed += () => Player.ChangeState<WalkState>();
+        PlayerMode.OnFlyModePressed += () => Player.ChangeState<FlyState>();
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
         foreach (Manager manager in activeManagers)
         {
-            manager.OnFixedUpdate();
+            manager.OnUpdate();
         }
     }
 }

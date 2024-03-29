@@ -99,7 +99,6 @@ text = "Palette
 
 [node name="OptionButton" type="OptionButton" parent="VBoxContainer/PalleteDropdown"]
 layout_mode = 2
-selected = 0
 
 [node name="OpenDirectoryFileDialog" type="FileDialog" parent="."]
 title = "Open a Directory"

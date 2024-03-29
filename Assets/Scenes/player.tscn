@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cy136utjjwqdu"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Player/PlayerMovement.cs" id="1_30cdg"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/Movement/PlayerMovement.cs" id="1_xuqap"]
 [ext_resource type="Script" path="res://Assets/Scripts/Player/FirstPersonCamera.cs" id="2_t6388"]
 [ext_resource type="Script" path="res://Assets/Scripts/Player/VoxelPlacer.cs" id="3_50l5n"]
 
@@ -10,7 +10,11 @@
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.899977, 0)
-script = ExtResource("1_30cdg")
+script = ExtResource("1_xuqap")
+minMaxFlySpeed = Vector2(1, 20)
+flySpeedChangeStep = 0.5
+startFlySpeed = 5.0
+ySpeed = 5.0
 pivot = NodePath("HeadPivot")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
