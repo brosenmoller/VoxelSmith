@@ -12,12 +12,12 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
         {
             { "name", value.name },
             { "id", value.id.ToString() },
-            { "paletteID", value.paletteID.ToString() },
+            { "palette", JToken.FromObject(value.palette, serializer) },
             { "player_position", JToken.FromObject(value.playerPosition, serializer) },
             { "camera_rotation", JToken.FromObject(value.cameraRotation, serializer) },
             { "camera_pivot_rotation", JToken.FromObject(value.cameraPivotRotation, serializer) },
-            { "selected_palette_index", JToken.FromObject(value.selectedPaletteIndex, serializer) },
-            { "selected_palette_swatch_index", JToken.FromObject(value.selectedPaletteSwatchIndex, serializer) },
+            { "selected_palette_type", (int)value.selectedPaletteType },
+            { "selected_palette_swatch_id", value.selectedPaletteSwatchId.ToString() },
         };
 
         JArray voxelColorArray = new();
@@ -26,7 +26,7 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             JObject voxelObj = new()
             {
                 { "position", JToken.FromObject(kvp.Key, serializer) },
-                { "voxelColor", JToken.FromObject(kvp.Value, serializer) }
+                { "palette_id", kvp.Value.ToString() }
             };
             voxelColorArray.Add(voxelObj);
         }
@@ -38,7 +38,7 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             JObject voxelObj = new()
             {
                 { "position", JToken.FromObject(kvp.Key, serializer) },
-                { "voxelPrefab", JToken.FromObject(kvp.Value, serializer) }
+                { "palette_id", kvp.Value.ToString() }
             };
             voxelPrefabArray.Add(voxelObj);
         }
@@ -54,31 +54,31 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
         {
             name = obj["name"].ToObject<string>(),
             id = Guid.Parse(obj["id"].ToObject<string>()),
-            paletteID = Guid.Parse(obj["paletteID"].ToObject<string>()),
+            palette = obj["palette"].ToObject<PaletteData>(serializer),
             playerPosition = obj["player_position"].ToObject<Vector3>(serializer),
             cameraRotation = obj["camera_rotation"].ToObject<Vector3>(serializer),
             cameraPivotRotation = obj["camera_pivot_rotation"].ToObject<Vector3>(serializer),
-            selectedPaletteIndex = obj["selected_palette_index"].ToObject<int>(),
-            selectedPaletteSwatchIndex= obj["selected_palette_swatch_index"].ToObject<int>(),
+            selectedPaletteType = (PaletteType)obj["selected_palette_type"].ToObject<int>(),
+            selectedPaletteSwatchId= Guid.Parse(obj["selected_palette_swatch_id"].ToObject<string>()),
 
-            voxelColors = new Dictionary<Vector3I, VoxelColor>(),
-            voxelPrefabs = new Dictionary<Vector3I, VoxelPrefab>()
+            voxelColors = new Dictionary<Vector3I, Guid>(),
+            voxelPrefabs = new Dictionary<Vector3I, Guid>()
         };
 
         JArray voxelColorArray = (JArray)obj["voxelColors"];
         foreach (JObject voxelObj in voxelColorArray)
         {
             Vector3I position = voxelObj["position"].ToObject<Vector3I>(serializer);
-            VoxelColor voxelColor = voxelObj["voxelColor"].ToObject<VoxelColor>(serializer);
-            projectData.voxelColors.Add(position, voxelColor);
+            Guid paletteID = Guid.Parse(voxelObj["palette_id"].ToObject<string>());
+            projectData.voxelColors.Add(position, paletteID);
         }
 
         JArray voxelPrefabArray = (JArray)obj["voxelPrefabs"];
         foreach (JObject voxelObj in voxelPrefabArray)
         {
             Vector3I position = voxelObj["position"].ToObject<Vector3I>(serializer);
-            VoxelPrefab voxelPrefab = voxelObj["voxelPrefab"].ToObject<VoxelPrefab>(serializer);
-            projectData.voxelPrefabs.Add(position, voxelPrefab);
+            Guid paletteID = Guid.Parse(voxelObj["palette_id"].ToObject<string>());
+            projectData.voxelPrefabs.Add(position, paletteID);
         }
 
         return projectData;

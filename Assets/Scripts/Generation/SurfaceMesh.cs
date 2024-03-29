@@ -15,7 +15,7 @@ public partial class SurfaceMesh : MeshInstance3D
 
     public void UpdateMesh()
     {
-        Mesh = meshGenerator.CreateMesh(GameManager.DataManager.ProjectData.voxelColors);
+        Mesh = meshGenerator.CreateMesh(GameManager.DataManager.ProjectData.voxelColors, GameManager.DataManager.PaletteData.paletteColors);
         collisionShape.Shape = Mesh.CreateTrimeshShape();
     }
 }

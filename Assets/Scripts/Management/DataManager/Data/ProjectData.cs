@@ -2,68 +2,66 @@ using Godot;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-
-public enum ProjectDataPalleteIndex
-{
-    COLORS = 0,
-    PREFABS = 1,
-}
-
+using System.Linq;
 
 [Serializable]
 public class ProjectData
 {
     public string name;
     public Guid id;
-    public Guid paletteID;
     public Vector3 playerPosition;
     public Vector3 cameraRotation;
     public Vector3 cameraPivotRotation;
-    public Dictionary<Vector3I, VoxelColor> voxelColors;
-    public Dictionary<Vector3I, VoxelPrefab> voxelPrefabs;
-    public int selectedPaletteIndex;
-    public int selectedPaletteSwatchIndex;
+    public Dictionary<Vector3I, Guid> voxelColors;
+    public Dictionary<Vector3I, Guid> voxelPrefabs;
+    public PaletteData palette;
+    public PaletteType selectedPaletteType;
+    public Guid selectedPaletteSwatchId;
 
     [JsonIgnore]
     public VoxelData SelectedVoxelData
     {
         get
         {
-            if (GameManager.DataManager.PaletteData.palleteColors.Count <= 0 ||
-                GameManager.DataManager.PaletteData.palletePrefabs.Count <= 0)
+            if (selectedPaletteType == PaletteType.Prefab && GameManager.DataManager.PaletteData.palletePrefabs.Count > 0)
             {
-                return null;
-            }
-
-
-            if (selectedPaletteIndex == (int)ProjectDataPalleteIndex.COLORS)
-            {
-                if (selectedPaletteSwatchIndex >= GameManager.DataManager.PaletteData.palleteColors.Count)
+                if (!GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(selectedPaletteSwatchId))
                 {
-                    selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.Count - 1;
+                    selectedPaletteSwatchId = GameManager.DataManager.PaletteData.palletePrefabs.First().Key;
                 }
 
-                return GameManager.DataManager.PaletteData.palleteColors[selectedPaletteSwatchIndex];
+                return GameManager.DataManager.PaletteData.palletePrefabs[selectedPaletteSwatchId];
+            }
+            else if (selectedPaletteType == PaletteType.Color && GameManager.DataManager.PaletteData.paletteColors.Count > 0)
+            {
+                if (!GameManager.DataManager.PaletteData.paletteColors.ContainsKey(selectedPaletteSwatchId))
+                {
+                    selectedPaletteSwatchId = GameManager.DataManager.PaletteData.paletteColors.First().Key;
+                }
+
+                return GameManager.DataManager.PaletteData.paletteColors[selectedPaletteSwatchId];
             }
             else
             {
-                if (selectedPaletteSwatchIndex >= GameManager.DataManager.PaletteData.palletePrefabs.Count)
-                {
-                    selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.Count - 1;
-                }
-                return GameManager.DataManager.PaletteData.palletePrefabs[selectedPaletteSwatchIndex];
+                return null;
             }
         }
     }
 
     public ProjectData() { }
 
-    public ProjectData(string name, Guid paletteID)
+    public ProjectData(string name, PaletteData paletteData)
     {
         this.name = name;
         id = Guid.NewGuid();
-        this.paletteID = paletteID;
-        voxelColors = new Dictionary<Vector3I, VoxelColor>();
-        voxelPrefabs = new Dictionary<Vector3I, VoxelPrefab>();
+        voxelColors = new Dictionary<Vector3I, Guid>();
+        voxelPrefabs = new Dictionary<Vector3I, Guid>();
+
+        selectedPaletteType = PaletteType.Color;
+        palette = paletteData;
+        if (palette.paletteColors.Count > 0)
+        {
+            selectedPaletteSwatchId = palette.paletteColors.First().Key;
+        }
     }
 }

@@ -143,16 +143,20 @@ public class ExportManager : Manager
         string prefabFileTemplateAfterChildren = $" m_Father: {{fileID: 0}}\r\n  m_LocalEulerAnglesHint: {{x: 0, y: 0, z: 0}}\r\n--- !u!33 &{meshFilterComponentFileId}\r\nMeshFilter:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  m_Mesh: {{fileID: {meshFileId}, guid: {meshGuid}, type: 3}}\r\n--- !u!23 &{meshRendererComponentFileId}\r\nMeshRenderer:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  m_Enabled: 1\r\n  m_CastShadows: 1\r\n  m_ReceiveShadows: 1\r\n  m_DynamicOccludee: 1\r\n  m_StaticShadowCaster: 0\r\n  m_MotionVectors: 1\r\n  m_LightProbeUsage: 1\r\n  m_ReflectionProbeUsage: 1\r\n  m_RayTracingMode: 2\r\n  m_RayTraceProcedural: 0\r\n  m_RenderingLayerMask: 1\r\n  m_RendererPriority: 0\r\n  m_Materials:\r\n  - {{fileID: {materialFileId}, guid: {meshGuid}, type: 3}}\r\n  m_StaticBatchInfo:\r\n    firstSubMesh: 0\r\n    subMeshCount: 0\r\n  m_StaticBatchRoot: {{fileID: 0}}\r\n  m_ProbeAnchor: {{fileID: 0}}\r\n  m_LightProbeVolumeOverride: {{fileID: 0}}\r\n  m_ScaleInLightmap: 1\r\n  m_ReceiveGI: 1\r\n  m_PreserveUVs: 0\r\n  m_IgnoreNormalsForChartDetection: 0\r\n  m_ImportantGI: 0\r\n  m_StitchLightmapSeams: 1\r\n  m_SelectedEditorRenderState: 3\r\n  m_MinimumChartSize: 4\r\n  m_AutoUVMaxDistance: 0.5\r\n  m_AutoUVMaxAngle: 89\r\n  m_LightmapParameters: {{fileID: 0}}\r\n  m_SortingLayerID: 0\r\n  m_SortingLayer: 0\r\n  m_SortingOrder: 0\r\n  m_AdditionalVertexStreams: {{fileID: 0}}\r\n--- !u!64 &{meshColliderComponentFileId}\r\nMeshCollider:\r\n  m_ObjectHideFlags: 0\r\n  m_CorrespondingSourceObject: {{fileID: 0}}\r\n  m_PrefabInstance: {{fileID: 0}}\r\n  m_PrefabAsset: {{fileID: 0}}\r\n  m_GameObject: {{fileID: {gameObjectComponentFileId}}}\r\n  m_Material: {{fileID: 0}}\r\n  m_IncludeLayers:\r\n    serializedVersion: 2\r\n    m_Bits: 0\r\n  m_ExcludeLayers:\r\n    serializedVersion: 2\r\n    m_Bits: 0\r\n  m_LayerOverridePriority: 0\r\n  m_IsTrigger: 0\r\n  m_ProvidesContacts: 0\r\n  m_Enabled: 1\r\n  serializedVersion: 5\r\n  m_Convex: 0\r\n  m_CookingOptions: 30\r\n  m_Mesh: {{fileID: {meshFileId}, guid: {meshGuid}, type: 3}}\r\n";
         
         List<PrefabInstance> instances = new();
-        foreach (var voxelPrefab in GameManager.DataManager.ProjectData.voxelPrefabs)
+        foreach (var paletteItem in GameManager.DataManager.ProjectData.voxelPrefabs)
         {
+            if (!GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(paletteItem.Value)) { continue; }
+
+            VoxelPrefab voxelPrefab = GameManager.DataManager.PaletteData.palletePrefabs[paletteItem.Value];
+
             instances.Add(new PrefabInstance(
-                voxelPrefab.Value.prefabName,
-                voxelPrefab.Value.unityPrefabGuid,
-                voxelPrefab.Value.unityPrefabTransformFileId,
+                voxelPrefab.prefabName,
+                voxelPrefab.unityPrefabGuid,
+                voxelPrefab.unityPrefabTransformFileId,
                 GenerateFileId(),
                 GenerateFileId(),
                 transformComponentFileId,
-                voxelPrefab.Key
+                paletteItem.Key
             ));
         }
 

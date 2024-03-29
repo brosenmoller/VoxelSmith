@@ -21,10 +21,9 @@ public partial class PaletteUI : BoxContainer
             paletteColorsContainer.GetChildren()[i].QueueFree();
         }
 
-        for (int i = 0; i < GameManager.DataManager.PaletteData.palleteColors.Count; i++)
+        foreach (var paletteColor in GameManager.DataManager.PaletteData.paletteColors)
         {
-            int index = i;
-            VoxelData voxeldata = GameManager.DataManager.PaletteData.palleteColors[index];
+            VoxelData voxeldata = paletteColor.Value;
             Button button = colorSwatch.Instantiate<Button>();
 
             StyleBoxFlat normalStyleBox = new()
@@ -38,7 +37,7 @@ public partial class PaletteUI : BoxContainer
             };
 
             StyleBoxFlat hoverStyleBox = new()
-            { 
+            {
                 BgColor = voxeldata.color / 2,
                 DrawCenter = true,
                 CornerRadiusBottomLeft = 5,
@@ -68,19 +67,17 @@ public partial class PaletteUI : BoxContainer
             button.AddThemeStyleboxOverride("hover pressed", hoverStyleBox);
             button.AddThemeStyleboxOverride("focus", hoverStyleBox);
 
-            if (GameManager.DataManager.ProjectData.selectedPaletteIndex == (int)ProjectDataPalleteIndex.COLORS &&
-                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex == index)
+            if (GameManager.DataManager.ProjectData.selectedPaletteType == PaletteType.Color &&
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId == paletteColor.Key)
             {
                 button.ButtonPressed = true;
             }
 
             button.Pressed += () =>
             {
-                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
-                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = index;
+                GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Color;
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = paletteColor.Key;
             };
-
-
 
             paletteColorsContainer.AddChild(button);
         }
@@ -93,10 +90,9 @@ public partial class PaletteUI : BoxContainer
             palettePrefabsContainer.GetChildren()[i].QueueFree();
         }
 
-        for (int i = 0; i < GameManager.DataManager.PaletteData.palletePrefabs.Count; i++)
+        foreach (var palettePrefab in GameManager.DataManager.PaletteData.palletePrefabs)
         {
-            int index = i;
-            VoxelPrefab voxeldata = GameManager.DataManager.PaletteData.palletePrefabs[index];
+            VoxelPrefab voxeldata = palettePrefab.Value;
             Button button = prefabSwatch.Instantiate<Button>();
             RichTextLabel text = button.GetChildByType<RichTextLabel>();
 
@@ -143,16 +139,16 @@ public partial class PaletteUI : BoxContainer
             button.AddThemeStyleboxOverride("hover pressed", hoverStyleBox);
             button.AddThemeStyleboxOverride("focus", hoverStyleBox);
 
-            if (GameManager.DataManager.ProjectData.selectedPaletteIndex == (int)ProjectDataPalleteIndex.PREFABS && 
-                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex == index)
+            if (GameManager.DataManager.ProjectData.selectedPaletteType == PaletteType.Prefab &&
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId == palettePrefab.Key)
             {
                 button.ButtonPressed = true;
             }
 
             button.Pressed += () =>
             {
-                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
-                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = index;
+                GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Prefab;
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = palettePrefab.Key;
             };
 
             palettePrefabsContainer.AddChild(button);

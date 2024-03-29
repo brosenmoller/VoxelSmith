@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System;
 using System.IO;
 
 public partial class NewPalettePrefabWindow : ConfirmationDialog
@@ -43,7 +44,7 @@ public partial class NewPalettePrefabWindow : ConfirmationDialog
             unityPrefabGuid = unityPrefabGuidTextEdit.Text,
         };
 
-        GameManager.DataManager.PaletteData.palletePrefabs.Add(voxelPrefab);
+        GameManager.DataManager.PaletteData.palletePrefabs.Add(Guid.NewGuid(), voxelPrefab);
         GameManager.PaletteUI.Update();
     }
 }

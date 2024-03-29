@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class NewPaletteColorWindow : ConfirmationDialog
@@ -18,7 +19,7 @@ public partial class NewPaletteColorWindow : ConfirmationDialog
             minecraftIDlist = new List<string>() { "minecraft:" + minecraftIDEdit.Text } 
         };
 
-        GameManager.DataManager.PaletteData.palleteColors.Add(voxelColor);
+        GameManager.DataManager.PaletteData.paletteColors.Add(Guid.NewGuid(), voxelColor);
         GameManager.PaletteUI.Update();
     }
 }

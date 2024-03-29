@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System;
 using System.Collections.Generic;
 
 public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
@@ -46,21 +47,21 @@ public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
         else { defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true }; }
     }
 
-    public Mesh CreateMesh(Dictionary<Vector3I, TVoxelData> voxels)
+    public Mesh CreateMesh(Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, TVoxelData> palette)
     {
         surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
         surfaceTool.SetMaterial(defaultMaterial);
 
         foreach (Vector3I voxel in voxels.Keys)
         {
-            CreateVoxel(voxel, voxels[voxel].color, voxels);
+            CreateVoxel(voxel, palette[voxels[voxel]].color, voxels);
         }
 
         surfaceTool.Index();
         return surfaceTool.Commit();
     }
 
-    private void CreateVoxel(Vector3I position, Color color, Dictionary<Vector3I, TVoxelData> voxels)
+    private void CreateVoxel(Vector3I position, Color color, Dictionary<Vector3I, Guid> voxels)
     {
         for (int i = 0; i < 6; i++)
         {
@@ -69,7 +70,6 @@ public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
 
         surfaceTool.SetColor(color);
 
-        //void addVertex(Vector3 pos) => surfaceTool.AddVertex(pos * voxelSize);
         void addVertex(Vector3 pos, Vector2 uv)
         {
             surfaceTool.SetUV(uv);

@@ -15,7 +15,7 @@ public partial class PrefabMesh : MeshInstance3D
 
     public void UpdateMesh()
     {
-        Mesh = meshGenerator.CreateMesh(GameManager.DataManager.ProjectData.voxelPrefabs);
+        Mesh = meshGenerator.CreateMesh(GameManager.DataManager.ProjectData.voxelPrefabs, GameManager.DataManager.PaletteData.palletePrefabs);
         collisionShape.Shape = Mesh.CreateTrimeshShape();
     }
 }

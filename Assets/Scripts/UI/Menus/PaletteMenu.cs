@@ -12,7 +12,10 @@ public partial class PaletteMenu : PopupMenu
 
     public override void _Ready()
     {
-        button.Pressed += OnClick;
+        // Disable Palette Menu for now, for beta
+        //button.Pressed += OnClick;
+
+
         IdPressed += OnMenuItemSelected;
         SetupMenu();
     }

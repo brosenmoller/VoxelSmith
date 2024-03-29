@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/NewProjectWindow.cs" id="1_rlr1p"]
 
-[node name="NewProjectWindow" type="ConfirmationDialog" node_paths=PackedStringArray("projectName", "saveDirectoryPath", "palettePath", "openProjectDirectoryButton", "openPaletteButton", "newPaletteButton", "projectDirectoryFileDialog")]
+[node name="NewProjectWindow" type="ConfirmationDialog" node_paths=PackedStringArray("projectName", "saveDirectoryPath", "openProjectDirectoryButton", "projectDirectoryFileDialog", "paletteOptionButton", "openPaletteButton", "newPaletteButton")]
 title = "Create New Project"
 initial_position = 2
-size = Vector2i(540, 200)
+size = Vector2i(540, 207)
 visible = true
 ok_button_text = "Create"
 dialog_hide_on_ok = false
@@ -13,17 +13,17 @@ dialog_close_on_escape = false
 script = ExtResource("1_rlr1p")
 projectName = NodePath("VBoxContainer/ProjectNameEdit")
 saveDirectoryPath = NodePath("VBoxContainer/SaveDirectoryGroup/SaveDirectoryPathEdit")
-palettePath = NodePath("")
 openProjectDirectoryButton = NodePath("VBoxContainer/SaveDirectoryGroup/FileDialogButton")
+projectDirectoryFileDialog = NodePath("OpenDirectoryFileDialog")
+paletteOptionButton = NodePath("VBoxContainer/PalleteDropdown/OptionButton")
 openPaletteButton = NodePath("VBoxContainer/PalletePath/FileDialogButton")
 newPaletteButton = NodePath("VBoxContainer/PalletePath/CreateNewPalleteButton")
-projectDirectoryFileDialog = NodePath("OpenDirectoryFileDialog")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 532.0
-offset_bottom = 151.0
+offset_bottom = 158.0
 
 [node name="ProjectNameEdit" type="TextEdit" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
@@ -45,10 +45,10 @@ text = "Save Folder
 "
 
 [node name="SaveDirectoryPathEdit" type="TextEdit" parent="VBoxContainer/SaveDirectoryGroup"]
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 43)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "//"
+placeholder_text = "/Path/To/Save"
 
 [node name="FileDialogButton" type="Button" parent="VBoxContainer/SaveDirectoryGroup"]
 clip_contents = true
@@ -57,6 +57,7 @@ layout_mode = 2
 text = "Open"
 
 [node name="PalletePath" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/PalletePath"]
@@ -81,6 +82,24 @@ clip_contents = true
 custom_minimum_size = Vector2(58, 0)
 layout_mode = 2
 text = "New"
+
+[node name="PalleteDropdown" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/PalleteDropdown"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PalleteDropdown/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Palette
+"
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/PalleteDropdown"]
+layout_mode = 2
+selected = 0
 
 [node name="OpenDirectoryFileDialog" type="FileDialog" parent="."]
 title = "Open a Directory"

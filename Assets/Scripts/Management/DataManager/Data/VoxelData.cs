@@ -6,6 +6,7 @@ using System.Linq;
 public class VoxelData
 {
     public Color color;
+    public Guid id;
 }
 
 [Serializable]

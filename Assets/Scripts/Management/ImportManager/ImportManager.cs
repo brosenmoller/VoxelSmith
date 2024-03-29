@@ -2,6 +2,7 @@
 using Godot;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 public class ImportManager : Manager
 {
@@ -35,11 +36,11 @@ public class ImportManager : Manager
             airValue = schematic.palette.FirstOrDefault(x => x.Value == "minecraft:air").Key;
         }
 
-        Dictionary<string, VoxelColor> minecraftIDsToVoxelColor = new();
+        Dictionary<string, Guid> minecraftIDsToVoxelColor = new();
 
-        for (int i = 0; i < GameManager.DataManager.PaletteData.palleteColors.Count; i++)
+        foreach (var paletteItem in GameManager.DataManager.PaletteData.paletteColors)
         {
-            VoxelColor voxelColor = GameManager.DataManager.PaletteData.palleteColors[i];
+            VoxelColor voxelColor = paletteItem.Value;
 
             for (int j = 0; j < voxelColor.minecraftIDlist.Count; j++)
             {
@@ -47,7 +48,7 @@ public class ImportManager : Manager
 
                 if (!minecraftIDsToVoxelColor.ContainsKey(voxelColor.minecraftIDlist[j]))
                 {
-                    minecraftIDsToVoxelColor.Add(voxelColor.minecraftIDlist[j], voxelColor);
+                    minecraftIDsToVoxelColor.Add(voxelColor.minecraftIDlist[j], paletteItem.Key);
                 }
             }
         }
@@ -75,18 +76,18 @@ public class ImportManager : Manager
                             minecraftIDsToVoxelColor[minecraftID]
                         );
                     }
-                    else
+                    else if (GameManager.DataManager.PaletteData.paletteColors.Count > 0)
                     {
                         GameManager.DataManager.ProjectData.voxelColors.Add(
                             new Vector3I(x, y, z),
-                            GameManager.DataManager.PaletteData.palleteColors.Count > 0 ? 
-                                GameManager.DataManager.PaletteData.palleteColors[0] : 
-                                new VoxelColor()
+                            GameManager.DataManager.PaletteData.paletteColors.First().Key
                         );
                     }
                 }
             }
         }
+
+        GameManager.SurfaceMesh.UpdateMesh();
 
         if (saveImportSettings)
         {

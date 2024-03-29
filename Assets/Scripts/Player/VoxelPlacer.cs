@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Linq;
 
 public partial class VoxelPlacer : RayCast3D
@@ -84,7 +85,7 @@ public partial class VoxelPlacer : RayCast3D
 
         if (!playerVoxels.Contains(nextVoxel) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
         {
-            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel, GameManager.DataManager.ProjectData.SelectedVoxelData));
+            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
         }
     }
 
@@ -92,24 +93,24 @@ public partial class VoxelPlacer : RayCast3D
     {
         if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
         {
-            VoxelColor voxelColor = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
+            Guid paletteId = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
 
-            if (GameManager.DataManager.PaletteData.palleteColors.Contains(voxelColor))
+            if (GameManager.DataManager.PaletteData.paletteColors.ContainsKey(paletteId))
             {
-                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.COLORS;
-                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palleteColors.IndexOf(voxelColor);
+                GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Color;
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = paletteId;
 
                 GameManager.PaletteUI.Update();
             }
         }
         else if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
         {
-            VoxelPrefab voxelPrefab = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
+            Guid paletteId = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
 
-            if (GameManager.DataManager.PaletteData.palletePrefabs.Contains(voxelPrefab))
+            if (GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(paletteId))
             {
-                GameManager.DataManager.ProjectData.selectedPaletteIndex = (int)ProjectDataPalleteIndex.PREFABS;
-                GameManager.DataManager.ProjectData.selectedPaletteSwatchIndex = GameManager.DataManager.PaletteData.palletePrefabs.IndexOf(voxelPrefab);
+                GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Prefab;
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = paletteId;
 
                 GameManager.PaletteUI.Update();
             }

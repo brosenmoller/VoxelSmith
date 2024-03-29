@@ -1,50 +1,54 @@
 ﻿using Godot;
+using System;
 
 public class BreakVoxelCommand : ICommand
 {
-    public Vector3I voxelPosition;
-    public VoxelData voxelData;
+    private Vector3I voxelPosition;
+    private Guid paletteSwatchID;
+    private PaletteType paletteType;
 
     public BreakVoxelCommand(Vector3I voxelPosition)
     {
         this.voxelPosition = voxelPosition;
+        paletteType = PaletteType.None;
     }
 
     public void Execute()
     {
         if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
         {
-            voxelData = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
-            GameManager.DataManager.ProjectData.voxelColors.Remove(voxelPosition);
+            paletteType = PaletteType.Color;
+            paletteSwatchID = GameManager.DataManager.ProjectData.voxelColors[voxelPosition];
 
+            GameManager.DataManager.ProjectData.voxelColors.Remove(voxelPosition);
             GameManager.SurfaceMesh.UpdateMesh();
         }
-
-        if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
+        else if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
         {
-            voxelData = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
-            GameManager.DataManager.ProjectData.voxelPrefabs.Remove(voxelPosition);
+            paletteType = PaletteType.Prefab;
+            paletteSwatchID = GameManager.DataManager.ProjectData.voxelPrefabs[voxelPosition];
 
+            GameManager.DataManager.ProjectData.voxelPrefabs.Remove(voxelPosition);
             GameManager.PrefabMesh.UpdateMesh();
         }
     }
 
     public void Undo()
     {
-        if (voxelData is VoxelColor color)
+        if (paletteType == PaletteType.Color)
         {
             if (!GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))
             {
-                GameManager.DataManager.ProjectData.voxelColors.Add(voxelPosition, color);
+                GameManager.DataManager.ProjectData.voxelColors.Add(voxelPosition, paletteSwatchID);
             }
 
             GameManager.SurfaceMesh.UpdateMesh();
         }
-        else if (voxelData is VoxelPrefab prefab)
+        else if (paletteType == PaletteType.Prefab)
         {
             if (!GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition))
             {
-                GameManager.DataManager.ProjectData.voxelPrefabs.Add(voxelPosition, prefab);
+                GameManager.DataManager.ProjectData.voxelPrefabs.Add(voxelPosition, paletteSwatchID);
             }
 
             GameManager.PrefabMesh.UpdateMesh();

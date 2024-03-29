@@ -7,7 +7,7 @@ public class DataManager : Manager
 {
     public ProjectData ProjectData => projectDataHolder.Data;
     public EditorData EditorData => editorDataHolder.Data;
-    public PaletteData PaletteData => paletteDataHolder.Data;
+    public PaletteData PaletteData => projectDataHolder.Data.palette;
 
     private DataHolder<ProjectData> projectDataHolder;
     private DataHolder<EditorData> editorDataHolder;
@@ -55,22 +55,6 @@ public class DataManager : Manager
             GD.PushWarning("Failed to load project data: \n" + e.ToString());
             GameManager.UIController.startWindow.Show();
         }
-
-        paletteDataHolder.Data = new PaletteData();
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 0, 0) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 0, 0) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 255, 0) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 0, 255) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 255, 0) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 0, 255) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(0, 255, 255) });
-        paletteDataHolder.Data.palleteColors.Add(new VoxelColor() { color = Color.Color8(255, 255, 255) });
-
-        paletteDataHolder.Data.palletePrefabs.Add(new VoxelPrefab() { color = Color.Color8(100, 200, 0), unityPrefabGuid = "67ce479430c155e4cbcd3bb0ef4f4954", prefabName = "TestSpehere", unityPrefabTransformFileId = "726921523353226827" });
-
-        projectDataHolder.Data.selectedPaletteIndex = 0;
-        projectDataHolder.Data.selectedPaletteSwatchIndex = 3;
-        GameManager.PaletteUI.Update();
     }
 
     #region Editor
@@ -83,19 +67,29 @@ public class DataManager : Manager
     #endregion
 
     #region Project
-    public void CreateNewProject(string fileName, string directoryPath, Guid paletteGUID)
+    public void CreateNewProject(string fileName, string directoryPath, NewProjectWindow.PaletteOption option)
     {
         // TODO: Warn User if there is unsaved data
         if (projectDataHolder.Data != null) { SaveProject(); }
 
         string name = fileName;
-        if (fileName.Contains('.')) { name = fileName[..fileName.IndexOf(".")]; }
+        if (fileName.Contains('.')) { name = fileName[..fileName.IndexOf('.')]; }
 
         string path = Path.Combine(directoryPath, name + PROJECT_FILE_EXTENSION);
-        projectDataHolder.Data = new ProjectData(name, paletteGUID);
+
+        PaletteData paletteData = new();
+        if (option == NewProjectWindow.PaletteOption.Default)
+        {
+            projectDataHolder.Data.palette = PaletteData.Default();
+        }
+
+        projectDataHolder.Data = new ProjectData(name, paletteData);
+
+
 
         SaveProjectAs(path);
 
+        GameManager.PaletteUI.Update();
         GameManager.SurfaceMesh.UpdateMesh();
         GameManager.PrefabMesh.UpdateMesh();
     }
@@ -113,6 +107,7 @@ public class DataManager : Manager
         projectDataHolder.Data.playerPosition = GameManager.Player.GlobalPosition;
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
+        if (PaletteData != null) { ProjectData.palette = PaletteData; }
 
         if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
@@ -131,7 +126,7 @@ public class DataManager : Manager
 
     public void LoadProject(string path)
     {
-        // TODO: Warn User if there is unsaved data
+        // TODO: Warn User if there is unsaved data (Also in Palette)
 
         try
         {
@@ -148,9 +143,20 @@ public class DataManager : Manager
             {
                 editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.id, path);
             }
+            else
+            {
+                editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
+            }
+
             editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
 
+            if (projectDataHolder.Data.palette == null) 
+            {
+                projectDataHolder.Data.palette = new PaletteData();
+            }
+
+            GameManager.PaletteUI.Update();
             GameManager.UIController.startWindow.Hide();
         }
         catch (Exception e)
@@ -180,14 +186,13 @@ public class DataManager : Manager
 
             return;
         }
-
-        if (EditorData.palettePaths.ContainsKey(ProjectData.id))
-        {
-            LoadPalette(EditorData.palettePaths[ProjectData.paletteID]);
-        }
     }
     #endregion
 
+
+    // -------------------------------------
+    // Excluded from Beta
+    // -------------------------------------
     #region Palette
 
     public void CreateNewPalette(string path)
@@ -244,7 +249,7 @@ public class DataManager : Manager
 
             if (projectDataHolder.Data != null)
             {
-                ProjectData.paletteID = paletteDataHolder.Data.id;
+                ProjectData.palette = paletteDataHolder.Data;
                 SaveProject();
             }
         }
