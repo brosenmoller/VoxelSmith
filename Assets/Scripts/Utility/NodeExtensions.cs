@@ -83,7 +83,7 @@ public static class NodeExtensions
     public static T[] GetAllNodesByType<T>(this Node node) where T : Node
     {
         Node rootNode = node.GetTree().Root;
-        return rootNode.GetAllNodesByType<T>();
+        return rootNode.GetAllChildrenByType<T>();
     }
 
     public static bool RayCast2D(this CanvasItem node, Vector2 startPosition, Vector2 endPosition, out RayCastHitInfo2D hitInfo, uint layermask = 0xffffffff, bool collideWithAreas = true, bool collideWithBodies = true)

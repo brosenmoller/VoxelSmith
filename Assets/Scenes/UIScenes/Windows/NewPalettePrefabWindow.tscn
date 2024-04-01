@@ -130,6 +130,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="LoadPrefabButton" type="MarginContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50

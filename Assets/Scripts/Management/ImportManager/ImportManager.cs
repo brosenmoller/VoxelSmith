@@ -123,8 +123,6 @@ public class ImportManager : Manager
             byte[] unfilteredBlockData = compoundTag.Get<NbtByteArray>("BlockData").ByteArrayValue;
             schematic.blockData = new List<byte>(schematic.width * schematic.height * schematic.length);
 
-            GD.Print(schematic.blockData.Count);
-
             for (int i = 0; i < unfilteredBlockData.Length; i++)
             {
                 byte blockValue = unfilteredBlockData[i];
