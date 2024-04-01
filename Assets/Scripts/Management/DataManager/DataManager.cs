@@ -81,7 +81,7 @@ public class DataManager : Manager
 
         if (option == NewProjectWindow.PaletteOption.Default)
         {
-            projectDataHolder.Data.palette = PaletteData.Default();
+            projectDataHolder.Data.palette = PaletteDataFactory.GetDefaultPalette();
         }
         else
         {

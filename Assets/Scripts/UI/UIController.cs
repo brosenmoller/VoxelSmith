@@ -22,6 +22,8 @@ public partial class UIController : Control
 
     [ExportSubgroup("Import")]
     [Export] public FileDialog importSchematicFileDialog;
+    [Export] public ConfirmationDialog importConfirmationDialog;
+    private string importPath;
 
 
     private WorldController worldController;
@@ -55,7 +57,24 @@ public partial class UIController : Control
         exportPrefabDialog.Confirmed += () => GameManager.ExportManager.ExportUnityPrefab(exportPrefabDialog.CurrentDir, exportPrefabDialog.CurrentFile);
         exportMeshDialog.Confirmed += () => GameManager.ExportManager.ExportMesh(exportMeshDialog.CurrentDir, exportMeshDialog.CurrentFile);
 
-        importSchematicFileDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importSchematicFileDialog.CurrentPath);
+        importSchematicFileDialog.Confirmed += () => ImportPath(importSchematicFileDialog.CurrentPath);
+        importConfirmationDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importPath);
+        importConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
+    }
+
+    public void ImportPath(string path)
+    {
+        importPath = path;
+
+        if (GameManager.DataManager.ProjectData.voxelColors.Count <= 0 &&
+            GameManager.DataManager.ProjectData.voxelPrefabs.Count <= 0)
+        {
+            GameManager.ImportManager.ImportMinecraftSchematic(path);
+        }
+        else
+        {
+            importConfirmationDialog.Show();
+        }
     }
 
     private void UpdateFocus()

@@ -17,7 +17,7 @@ public partial class PaletteUI : BoxContainer
     public override void _Ready()
     {
         newPaletteColorButton.Pressed += newPaletteColorWindow.ShowCreateWindow;
-        newPalettePrefabButton.Pressed += newPalettePrefabWindow.Show;
+        newPalettePrefabButton.Pressed += newPalettePrefabWindow.ShowCreateWindow;
     }
 
     public void Update()
@@ -107,6 +107,8 @@ public partial class PaletteUI : BoxContainer
             palettePrefabsContainer.GetChildren()[i].QueueFree();
         }
 
+        GD.Print(GameManager.DataManager.PaletteData.palletePrefabs.Count);
+
         foreach (var palettePrefab in GameManager.DataManager.PaletteData.palletePrefabs)
         {
             VoxelPrefab voxeldata = palettePrefab.Value;
@@ -170,7 +172,7 @@ public partial class PaletteUI : BoxContainer
 
             button.OnRightClick += () =>
             {
-                GD.Print("Prefab Right Click");
+                newPalettePrefabWindow.ShowEditWindow(palettePrefab.Key);
             };
 
             palettePrefabsContainer.AddChild(button);

@@ -30,6 +30,9 @@ public class ImportManager : Manager
     {
         MinecraftSchematic schematic = MinecraftSchematic.FromPath(path);
 
+        GameManager.DataManager.ProjectData.voxelColors.Clear();
+        GameManager.DataManager.ProjectData.voxelPrefabs.Clear();
+
         int airValue = int.MaxValue;
         if (schematic.palette.ContainsValue("minecraft:air"))
         {
@@ -61,7 +64,7 @@ public class ImportManager : Manager
                 {
                     int index = (y * schematic.length + z) * schematic.width + x;
 
-                    if (index > schematic.blockData.Count) { continue; }
+                    if (index >= schematic.blockData.Count) { continue; }
 
                     int blockValue = schematic.blockData[index];
 

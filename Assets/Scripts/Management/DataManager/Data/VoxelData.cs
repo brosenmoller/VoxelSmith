@@ -16,6 +16,7 @@ public class VoxelColor : VoxelData, IEquatable<VoxelColor>
 
     public VoxelColor()
     {
+        id = Guid.NewGuid();
         minecraftIDlist = new List<string>();
     }
 
@@ -37,6 +38,11 @@ public class VoxelPrefab : VoxelData, IEquatable<VoxelPrefab>
     public string unityPrefabGuid;
     public string unityPrefabTransformFileId;
     public string godotSceneID;
+
+    public VoxelPrefab()
+    {
+        id = Guid.NewGuid();
+    }
 
     public bool Equals(VoxelPrefab other)
     {

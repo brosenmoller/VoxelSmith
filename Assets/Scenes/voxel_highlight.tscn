@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://b651kxq5o005l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_637lk"]
-albedo_color = Color(0.611765, 1, 0.643137, 1)
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.0392157)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nlj78"]
 uv2_padding = 0.0

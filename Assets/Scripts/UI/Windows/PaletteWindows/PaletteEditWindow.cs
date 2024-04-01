@@ -4,11 +4,11 @@ using System;
 public abstract partial class PaletteEditWindow : ConfirmationDialog
 {
     [Export] private string name;
-    [Export] private ConfirmationDialog deleteConfirmationDialog;
-    [Export] private ColorPickerButton voxelColorPicker;
+    [Export] protected ConfirmationDialog deleteConfirmationDialog;
+    [Export] protected ColorPickerButton voxelColorPicker;
 
     private Button deleteButton;
-    private Guid paletteGuid;
+    protected Guid paletteGuid;
 
     private const string DELETE_ACTION_STRING = "DELETE";
 
@@ -37,6 +37,8 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
 
         deleteConfirmationDialog.Confirmed += OnDelete;
         deleteConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
+
+        OnReady();
     }
 
     private void OnCustomAction(StringName action)
@@ -46,8 +48,6 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
             OnDeleteButtonPressed();
         }
     }
-
-    protected abstract void OnDeleteButtonPressed();
 
     public void ShowCreateWindow()
     {
@@ -65,27 +65,10 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         Show();
     }
 
-    public void ShowEditWindow(Guid paletteColorGuid)
+    public void ShowEditWindow(Guid paletteGuid)
     {
-        VoxelData voxelData = null;
-        if (GameManager.DataManager.PaletteData.paletteColors.ContainsKey(paletteColorGuid))
-        {
-            voxelData = GameManager.DataManager.PaletteData.paletteColors[paletteColorGuid];
-        }
-        else if (GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(paletteColorGuid))
-        {
-            voxelData = GameManager.DataManager.PaletteData.palletePrefabs[paletteColorGuid];
-        }
-
-        if (voxelData != null)
-        {
-            voxelColorPicker.Color = voxelData.color;
-            paletteGuid = paletteColorGuid;
-        }
-        else
-        {
-            return;
-        }
+        this.paletteGuid = paletteGuid;
+        OnLoad();
 
         Title = "Edit Palette " + name;
         OkButtonText = "Save";
@@ -99,10 +82,16 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         Show();
     }
 
+    protected abstract void OnLoad();
+
+    protected abstract void OnDeleteButtonPressed();
+
     protected abstract void OnSave();
 
     protected abstract void OnCreate();
 
-    protected abstract void OnDelete()
+    protected abstract void OnDelete();
+
+    protected virtual void OnReady() { }
 }
 

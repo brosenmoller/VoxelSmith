@@ -1,21 +1,23 @@
 [gd_scene load_steps=2 format=3 uid="uid://bsis6v0sco7es"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/PaletteWindows/NewPalettePrefabWindow.cs" id="1_7kcl5"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/PaletteWindows/NewPalettePrefabWindow.cs" id="1_rfhmd"]
 
-[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("voxelColorPicker", "loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit")]
+[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker")]
 title = "Create new Palette Prefab"
 initial_position = 2
 size = Vector2i(400, 300)
 visible = true
 ok_button_text = "Create"
-script = ExtResource("1_7kcl5")
-voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
+script = ExtResource("1_rfhmd")
 loadPrefabButton = NodePath("VBoxContainer/LoadPrefabButton/Button")
 loadPrefabFileDialog = NodePath("VBoxContainer/LoadPrefabFileDialog")
 prefabNameTextEdit = NodePath("VBoxContainer/PrefabName/TextEdit")
 godotSceneIdTextEdit = NodePath("VBoxContainer/godotSceneID/TextEdit")
 unityPrefabGuidTextEdit = NodePath("VBoxContainer/PrefabGUID/TextEdit")
 unityPrefabTranformFileIdTextEdit = NodePath("VBoxContainer/prefabTransformFileId/TextEdit")
+name = "Prefab"
+deleteConfirmationDialog = NodePath("DeleteConfirmationDialog")
+voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 8.0
@@ -145,3 +147,12 @@ dialog_close_on_escape = false
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.prefab", "*.tscn")
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="."]
+title = "Are you sure?"
+initial_position = 2
+size = Vector2i(408, 132)
+always_on_top = true
+dialog_text = "Voxels of this color have been found in the project.
+This action will delete all associated voxels and 
+it can NOT be undone"

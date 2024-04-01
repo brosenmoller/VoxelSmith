@@ -2,4 +2,6 @@
 
 [resource]
 vertex_color_use_as_albedo = true
-metallic = 1.0
+vertex_color_is_srgb = true
+ao_light_affect = 1.0
+subsurf_scatter_strength = 0.3

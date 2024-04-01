@@ -172,12 +172,3 @@ layout_mode = 2
 tooltip_text = "Repeat previous export"
 shortcut = SubResource("Shortcut_qef2u")
 text = "Quick Import"
-
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="TopBarContainer/QuickImportContainer"]
-title = "Warning"
-initial_position = 2
-size = Vector2i(612, 110)
-always_on_top = true
-dialog_text = "This action will override the previous files,
- are you sure you want to proceed?"
-dialog_close_on_escape = false

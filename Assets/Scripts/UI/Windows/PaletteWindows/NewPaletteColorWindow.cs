@@ -3,95 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class NewPaletteColorWindow : ConfirmationDialog
+public partial class NewPaletteColorWindow : PaletteEditWindow
 {
-    [Export] private ColorPickerButton voxelColorPicker;
     [Export] private TextEdit minecraftIDEdit;
-    [Export] private ConfirmationDialog deleteConfirmationDialog;
 
-    private Button deleteButton;
-    private Guid paletteGuid;
-
-    private const string DELETE_ACTION_STRING = "DELETE";
-
-    private bool createSubscribed = false;
-    private bool editSubscribed = false;
-
-    private void UnSubcribeConfirmed()
+    protected override void OnDeleteButtonPressed()
     {
-        if (createSubscribed)
+        if (GameManager.DataManager.ProjectData.voxelColors.ContainsValue(paletteGuid))
         {
-            Confirmed -= OnCreate;
-            createSubscribed = false;
+            deleteConfirmationDialog.Show();
         }
-        else if (editSubscribed)
+        else
         {
-            Confirmed -= OnSave;
-            createSubscribed = false;
+            OnDelete();
         }
     }
 
-    public override void _Ready()
-    {
-        deleteButton = AddButton("Delete", true, DELETE_ACTION_STRING);
-        deleteButton.Hide();
-        CustomAction += OnCustomAction;
-
-        deleteConfirmationDialog.Confirmed += OnDelete;
-        deleteConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
-    }
-
-    private void OnCustomAction(StringName action)
-    {
-        if (action.ToString() == DELETE_ACTION_STRING)
-        {
-            if (GameManager.DataManager.ProjectData.voxelColors.ContainsValue(paletteGuid))
-            {
-                deleteConfirmationDialog.Show();
-            }
-            else
-            {
-                OnDelete();
-            }
-            
-        }
-    }
-
-    public void ShowCreateWindow()
-    {
-        voxelColorPicker.Color = new Color();
-
-        Title = "Create New Palette Color";
-        OkButtonText = "Create";
-
-        UnSubcribeConfirmed();
-        createSubscribed = true;
-        Confirmed += OnCreate;
-
-        deleteButton.Hide();
-
-        Show();
-    }
-
-    public void ShowEditWindow(Guid paletteColorGuid)
-    {
-        VoxelColor voxelColor = GameManager.DataManager.PaletteData.paletteColors[paletteColorGuid];
-        voxelColorPicker.Color = voxelColor.color;
-        paletteGuid = paletteColorGuid;
-
-        Title = "Edit Palette Color";
-        OkButtonText = "Save";
-
-        UnSubcribeConfirmed();
-        editSubscribed = true;
-        Confirmed += OnSave;
-
-        deleteButton.Show();
-
-        Show();
-    }
-
-    private void OnSave()
+    protected override void OnSave()
     {
         VoxelColor voxelColor = GameManager.DataManager.PaletteData.paletteColors[paletteGuid];
         voxelColor.color = voxelColorPicker.Color;
@@ -100,18 +28,21 @@ public partial class NewPaletteColorWindow : ConfirmationDialog
         GameManager.SurfaceMesh.UpdateMesh();
     }
 
-    private void OnCreate()
+    protected override void OnCreate()
     {
-        VoxelColor voxelColor = new() { 
-            color = voxelColorPicker.Color, 
-            minecraftIDlist = new List<string>() { "minecraft:" + minecraftIDEdit.Text } 
+        Guid newID = Guid.NewGuid();
+        VoxelColor voxelColor = new()
+        {
+            id = newID,
+            color = voxelColorPicker.Color,
+            minecraftIDlist = new List<string>() { "minecraft:" + minecraftIDEdit.Text },
         };
 
-        GameManager.DataManager.PaletteData.paletteColors.Add(Guid.NewGuid(), voxelColor);
+        GameManager.DataManager.PaletteData.paletteColors.Add(newID, voxelColor);
         GameManager.PaletteUI.Update();
     }
 
-    private void OnDelete()
+    protected override void OnDelete()
     {
         if (GameManager.DataManager.PaletteData.paletteColors.ContainsKey(paletteGuid))
         {
@@ -134,5 +65,12 @@ public partial class NewPaletteColorWindow : ConfirmationDialog
         {
             // TODO: Error
         }
+    }
+
+    protected override void OnLoad()
+    {
+        VoxelColor voxelColor = GameManager.DataManager.PaletteData.paletteColors[paletteGuid];
+        voxelColorPicker.Color = voxelColor.color;
+
     }
 }

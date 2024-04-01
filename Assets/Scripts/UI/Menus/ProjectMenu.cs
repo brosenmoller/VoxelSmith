@@ -18,7 +18,6 @@ public partial class ProjectMenu : PopupMenu
     public static event Action OnSaveAsPressed;
     public static event Action OnOpenPressed;
     public static event Action OnImportSchematicPressed;
-    public static event Action OnRefreshSchematicPressed;
 
     public static event Action OnExportUnityPrefabPressed;
     public static event Action OnExportMeshPressed;
@@ -43,7 +42,6 @@ public partial class ProjectMenu : PopupMenu
             case (long)ProjectOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
             case (long)ProjectOptions.OPEN: OnOpenPressed?.Invoke(); break;
             case (long)ProjectOptions.IMPORT_SCHEMATIC: OnImportSchematicPressed?.Invoke(); break;
-            case (long)ProjectOptions.REFRESH_SCHEMATIC: OnRefreshSchematicPressed?.Invoke(); break;
         }
     }
 
@@ -74,10 +72,6 @@ public partial class ProjectMenu : PopupMenu
         // 6
         AddItem("Import Schematic", (int)ProjectOptions.IMPORT_SCHEMATIC);
         SetItemShortcut(6, importSchematicShortcut, true);
-
-        // 7
-        AddItem("Refresh Schematic", (int)ProjectOptions.REFRESH_SCHEMATIC);
-        SetItemShortcut(7, refreshSchematicShortcut, true);
     }
 
     private void SetupRecentsSubMenu()
@@ -137,7 +131,6 @@ public partial class ProjectMenu : PopupMenu
         OPEN,
         EXPORT,
         IMPORT_SCHEMATIC,
-        REFRESH_SCHEMATIC,
     }
 
     public enum ExportOptions

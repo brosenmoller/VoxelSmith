@@ -7,16 +7,15 @@ public partial class QuickImport : MarginContainer
     public override void _Ready()
     {
         button = this.GetChildByType<Button>();
-
-        button.Pressed += OnConfirmed;
+        button.Pressed += OnButtonPress;
     }
 
-    private void OnConfirmed()
+    private void OnButtonPress()
     {
         if (GameManager.DataManager.EditorData.importPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
         {
             EditorData.ImportSettings importSettings = GameManager.DataManager.EditorData.importPaths[GameManager.DataManager.ProjectData.id];
-            GameManager.ImportManager.ImportMinecraftSchematic(importSettings.path);
+            GameManager.UIController.ImportPath(importSettings.path);
         }
     }
 }
