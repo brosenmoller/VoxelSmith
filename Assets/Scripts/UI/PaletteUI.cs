@@ -8,6 +8,18 @@ public partial class PaletteUI : BoxContainer
     [Export] private HFlowContainer paletteColorsContainer;
     [Export] private HFlowContainer palettePrefabsContainer;
 
+    [Export] private NewPaletteColorWindow newPaletteColorWindow;
+    [Export] private NewPalettePrefabWindow newPalettePrefabWindow;
+
+    [Export] private Button newPaletteColorButton;
+    [Export] private Button newPalettePrefabButton;
+
+    public override void _Ready()
+    {
+        newPaletteColorButton.Pressed += newPaletteColorWindow.ShowCreateWindow;
+        newPalettePrefabButton.Pressed += newPalettePrefabWindow.Show;
+    }
+
     public void Update()
     {
         UpdateVoxelColorPalette();
@@ -24,7 +36,7 @@ public partial class PaletteUI : BoxContainer
         foreach (var paletteColor in GameManager.DataManager.PaletteData.paletteColors)
         {
             VoxelData voxeldata = paletteColor.Value;
-            Button button = colorSwatch.Instantiate<Button>();
+            EventButton button = colorSwatch.Instantiate<EventButton>();
 
             StyleBoxFlat normalStyleBox = new()
             {
@@ -73,10 +85,15 @@ public partial class PaletteUI : BoxContainer
                 button.ButtonPressed = true;
             }
 
-            button.Pressed += () =>
+            button.OnLeftClick += () =>
             {
                 GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Color;
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchId = paletteColor.Key;
+            };
+
+            button.OnRightClick += () =>
+            {
+                newPaletteColorWindow.ShowEditWindow(paletteColor.Key);
             };
 
             paletteColorsContainer.AddChild(button);
@@ -93,7 +110,7 @@ public partial class PaletteUI : BoxContainer
         foreach (var palettePrefab in GameManager.DataManager.PaletteData.palletePrefabs)
         {
             VoxelPrefab voxeldata = palettePrefab.Value;
-            Button button = prefabSwatch.Instantiate<Button>();
+            EventButton button = prefabSwatch.Instantiate<EventButton>();
             RichTextLabel text = button.GetChildByType<RichTextLabel>();
 
             text.Text = voxeldata.prefabName;
@@ -145,10 +162,15 @@ public partial class PaletteUI : BoxContainer
                 button.ButtonPressed = true;
             }
 
-            button.Pressed += () =>
+            button.OnLeftClick += () =>
             {
                 GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Prefab;
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchId = palettePrefab.Key;
+            };
+
+            button.OnRightClick += () =>
+            {
+                GD.Print("Prefab Right Click");
             };
 
             palettePrefabsContainer.AddChild(button);

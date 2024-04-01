@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bsis6v0sco7es"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/NewPalettePrefabWindow.cs" id="1_7kcl5"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/PaletteWindows/NewPalettePrefabWindow.cs" id="1_7kcl5"]
 
 [node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("voxelColorPicker", "loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit")]
 title = "Create new Palette Prefab"

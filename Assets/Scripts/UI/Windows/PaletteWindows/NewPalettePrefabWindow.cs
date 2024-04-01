@@ -14,6 +14,8 @@ public partial class NewPalettePrefabWindow : ConfirmationDialog
     [Export] private TextEdit unityPrefabGuidTextEdit;
     [Export] private TextEdit unityPrefabTranformFileIdTextEdit;
 
+    [Export] private ConfirmationDialog deleteConfirmationDialog;
+
     public override void _Ready()
     {
         Confirmed += OnCreate;

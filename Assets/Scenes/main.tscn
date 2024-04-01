@@ -54,7 +54,7 @@ access = 2
 filters = PackedStringArray("*.vxsPalette")
 
 [node name="ImportSchematicFileDialog" type="FileDialog" parent="SubWindowHolder"]
-title = "Open a Minecraft Schematic File"
+title = "Open a File"
 initial_position = 2
 size = Vector2i(800, 600)
 ok_button_text = "Open"
@@ -160,7 +160,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MainView/MainWindow/ViewPortHolder/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1712, 1030)
+size = Vector2i(600, 200)
 size_2d_override = Vector2i(1920, 1080)
 render_target_update_mode = 4
 

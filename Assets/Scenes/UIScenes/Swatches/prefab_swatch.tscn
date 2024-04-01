@@ -1,18 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://ybpqluwl33ne"]
+[gd_scene load_steps=3 format=3 uid="uid://ybpqluwl33ne"]
 
 [ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_q5fi2"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/EventButton.cs" id="2_6o6li"]
 
 [node name="PrefabSwatch" type="Button"]
 custom_minimum_size = Vector2(88, 88)
 anchors_preset = -1
-anchor_right = 0.036
-anchor_bottom = 0.065
-offset_right = -69.12
-offset_bottom = -70.2
-tooltip_text = "Right click to edit"
+anchor_right = 0.046
+anchor_bottom = 0.081
+offset_right = -88.32
+offset_bottom = -87.48
+tooltip_text = "Left Click to select
+Right click to edit"
 toggle_mode = true
-button_mask = 3
 button_group = ExtResource("1_q5fi2")
+script = ExtResource("2_6o6li")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1

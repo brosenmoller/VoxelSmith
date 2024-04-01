@@ -33,7 +33,8 @@ public class PaletteData
             minecraftIDlist = new List<string>() 
             {
                 "minecraft:grass_block"
-            }
+            },
+            id = new Guid()
         });
 
         data.paletteColors.Add(Guid.NewGuid(), new VoxelColor()

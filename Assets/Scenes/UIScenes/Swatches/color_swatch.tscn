@@ -1,15 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://27dpm3c3wrc8"]
+[gd_scene load_steps=3 format=3 uid="uid://27dpm3c3wrc8"]
 
 [ext_resource type="ButtonGroup" uid="uid://lbphikd51sok" path="res://Assets/Resources/Palette/PaletteButtonGroup.tres" id="1_xfp7j"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/EventButton.cs" id="2_pxa6f"]
 
 [node name="ColorSwatch" type="Button"]
 custom_minimum_size = Vector2(32, 32)
 anchors_preset = -1
-anchor_right = 0.016
-anchor_bottom = 0.028
-offset_right = -30.72
-offset_bottom = -30.24
-tooltip_text = "Right click to edit"
+anchor_right = 0.017
+anchor_bottom = 0.03
+offset_right = -32.64
+offset_bottom = -32.4
+tooltip_text = "Left Click to select
+Right click to edit"
 toggle_mode = true
-button_mask = 3
 button_group = ExtResource("1_xfp7j")
+script = ExtResource("2_pxa6f")
