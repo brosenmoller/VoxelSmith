@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dx5oj13hl7c12"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Utility/FPSCounter.cs" id="1_a3ya8"]
+
+[node name="FPSCounter" type="RichTextLabel"]
+clip_contents = false
+size_flags_vertical = 4
+text = "Fps: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("1_a3ya8")
