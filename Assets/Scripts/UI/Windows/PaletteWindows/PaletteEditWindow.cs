@@ -42,6 +42,8 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         deleteConfirmationDialog.Confirmed += OnDelete;
         deleteConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
 
+        minecraftIDEdit.RemoveChild(minecraftIDEdit.GetVScrollBar());
+
         OnReady();
     }
 
