@@ -69,7 +69,7 @@ voxelHiglight = NodePath("../../../../VoxelHighight")
 collisionHighlight = NodePath("../../../../HitPointHighlight")
 
 [node name="Ground" type="StaticBody3D" parent="."]
-collision_layer = 3
+collision_layer = 12
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 material_override = SubResource("ShaderMaterial_bpmsq")
@@ -80,7 +80,7 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_qgt8u")
 
 [node name="SurfaceMeshBody" type="StaticBody3D" parent="."]
-collision_layer = 3
+collision_layer = 12
 
 [node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceMeshBody"]
 skeleton = NodePath("../..")
@@ -90,7 +90,7 @@ material = ExtResource("5_vit1y")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceMeshBody"]
 
 [node name="PrefabMeshBody" type="StaticBody3D" parent="."]
-collision_layer = 3
+collision_layer = 12
 
 [node name="PrefabMesh" type="MeshInstance3D" parent="PrefabMeshBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000364542, 0.011354, 0.00180387)

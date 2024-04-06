@@ -13,6 +13,8 @@ public partial class VoxelPlacer : RayCast3D
 
     private bool enabled = true;
 
+    public bool checkForPlayerInside;
+
     public override void _Ready()
     {
         if (enableCollisionHighlight) { collisionHighlight.Visible = true; }
@@ -73,6 +75,16 @@ public partial class VoxelPlacer : RayCast3D
 
     private void PlaceBlock(Vector3I voxelPosition, Vector3 normal)
     {
+        Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
+
+        if ((!IsVoxelInPlayer(nextVoxel) || !checkForPlayerInside) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
+        {
+            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
+        }
+    }
+
+    public bool IsVoxelInPlayer(Vector3I voxelPosition)
+    {
         Vector3I[] playerVoxels = new Vector3I[2];
         playerVoxels[0] = new Vector3I(
             Mathf.FloorToInt(GlobalPosition.X),
@@ -81,12 +93,7 @@ public partial class VoxelPlacer : RayCast3D
         );
         playerVoxels[1] = playerVoxels[0] + Vector3I.Down;
 
-        Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
-
-        if (!playerVoxels.Contains(nextVoxel) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
-        {
-            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
-        }
+        return playerVoxels.Contains(voxelPosition);
     }
 
     private void PickBlock(Vector3I voxelPosition)
