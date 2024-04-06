@@ -16,7 +16,6 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             { "player_position", JToken.FromObject(value.playerPosition, serializer) },
             { "camera_rotation", JToken.FromObject(value.cameraRotation, serializer) },
             { "camera_pivot_rotation", JToken.FromObject(value.cameraPivotRotation, serializer) },
-            { "movement_state", (int)value.movementState },
             { "selected_palette_type", (int)value.selectedPaletteType },
             { "selected_palette_swatch_id", value.selectedPaletteSwatchId.ToString() },
         };
@@ -60,8 +59,6 @@ public class ProjectDataConverter : JsonConverter<ProjectData>
             playerPosition = obj["player_position"].ToObject<Vector3>(serializer),
             cameraRotation = obj["camera_rotation"].ToObject<Vector3>(serializer),
             cameraPivotRotation = obj["camera_pivot_rotation"].ToObject<Vector3>(serializer),
-
-            movementState = (PlayerMovementState)obj["movement_state"].ToObject<int>(),
 
             selectedPaletteType = (PaletteType)obj["selected_palette_type"].ToObject<int>(),
             selectedPaletteSwatchId= Guid.Parse(obj["selected_palette_swatch_id"].ToObject<string>()),

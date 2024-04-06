@@ -99,7 +99,6 @@ tooltip_text = "Walk Mode"
 focus_mode = 0
 theme_override_icons/checked = ExtResource("11_okt8g")
 theme_override_icons/unchecked = ExtResource("12_4lqd0")
-button_pressed = true
 button_group = ExtResource("13_wjne3")
 shortcut = ExtResource("14_8x3hs")
 expand_icon = true
@@ -110,6 +109,7 @@ tooltip_text = "Fly Mode"
 focus_mode = 0
 theme_override_icons/checked = ExtResource("15_araxc")
 theme_override_icons/unchecked = ExtResource("16_wywux")
+button_pressed = true
 button_group = ExtResource("13_wjne3")
 shortcut = ExtResource("17_844aw")
 

@@ -121,8 +121,6 @@ public class DataManager : Manager
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
 
-        projectDataHolder.Data.movementState = GameManager.Player.currentState;
-
         if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
             editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
@@ -149,8 +147,6 @@ public class DataManager : Manager
             GameManager.Player.GlobalPosition = projectDataHolder.Data.playerPosition;
             camera.Rotation = projectDataHolder.Data.cameraRotation;
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
-
-            GameManager.Player.currentState = projectDataHolder.Data.movementState;
 
             GameManager.SurfaceMesh.UpdateMesh();
             GameManager.PrefabMesh.UpdateMesh();
