@@ -11,8 +11,8 @@
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.899977, 0)
 script = ExtResource("1_xuqap")
-minMaxFlySpeed = Vector2(1, 20)
-flySpeedChangeStep = 0.5
+minMaxFlySpeed = Vector2(1, 40)
+flySpeedChangeStep = 1.0
 startFlySpeed = 5.0
 ySpeed = 5.0
 pivot = NodePath("HeadPivot")
@@ -31,7 +31,7 @@ playerMovement = NodePath("..")
 [node name="Camera3D" type="Camera3D" parent="HeadPivot"]
 
 [node name="RayCastVoxelPlacer" type="RayCast3D" parent="HeadPivot/Camera3D"]
-target_position = Vector3(0, 0, -6.23)
+target_position = Vector3(0, 0, -100)
 collision_mask = 2
 hit_from_inside = true
 script = ExtResource("3_50l5n")
