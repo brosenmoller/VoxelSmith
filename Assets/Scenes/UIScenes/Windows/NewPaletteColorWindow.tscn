@@ -4,23 +4,23 @@
 [ext_resource type="Texture2D" uid="uid://de28wltf8x3l6" path="res://Assets/Art/Icons/trash-solid.svg" id="2_1miep"]
 [ext_resource type="Texture2D" uid="uid://bx0ocyu68yd8g" path="res://Assets/Art/Icons/plus-solid-white.svg" id="2_21kx7"]
 
-[node name="NewPaletteColorWindow" type="ConfirmationDialog" node_paths=PackedStringArray("minecraftIDEdit", "deleteConfirmationDialog", "voxelColorPicker")]
+[node name="NewPaletteColorWindow" type="ConfirmationDialog" node_paths=PackedStringArray("deleteConfirmationDialog", "voxelColorPicker", "minecraftIDEdit")]
 title = "Create new Palette Color"
 initial_position = 2
-size = Vector2i(400, 200)
+size = Vector2i(400, 150)
 visible = true
 ok_button_text = "Create"
 script = ExtResource("1_4ko0p")
-minecraftIDEdit = NodePath("VBoxContainer/MinceraftIDList/MinecraftIdGroup/MinecraftIDEdit")
 name = "Color"
 deleteConfirmationDialog = NodePath("DeleteConfirmationDialog")
 voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
+minecraftIDEdit = NodePath("VBoxContainer/MinceraftIDList/MinecraftIdGroup/MinecraftIDEdit")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 392.0
-offset_bottom = 151.0
+offset_bottom = 101.0
 
 [node name="SelectColorGroup" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -50,16 +50,17 @@ color_mode = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="MinecraftIDListHeader" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="MinecraftIdListTitle" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+[node name="MinecraftIdListTitle" type="RichTextLabel" parent="VBoxContainer/MinecraftIDListHeader"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Minecraft ID list"
 
-[node name="AddMinecraftIdButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="AddMinecraftIdButton" type="Button" parent="VBoxContainer/MinecraftIDListHeader"]
 custom_minimum_size = Vector2(22.335, 0)
 layout_mode = 2
 icon = ExtResource("2_21kx7")
@@ -89,6 +90,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="DeleteMinecraftIDButton" type="Button" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+visible = false
 custom_minimum_size = Vector2(42.09, 0)
 layout_mode = 2
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)

@@ -5,15 +5,14 @@ using System.Linq;
 
 public class VoxelData
 {
-    public Color color;
     public Guid id;
+    public Color color;
+    public List<string> minecraftIDlist;
 }
 
 [Serializable]
 public class VoxelColor : VoxelData, IEquatable<VoxelColor>
 {
-    public List<string> minecraftIDlist;
-
     public VoxelColor()
     {
         id = Guid.NewGuid();
@@ -42,6 +41,7 @@ public class VoxelPrefab : VoxelData, IEquatable<VoxelPrefab>
     public VoxelPrefab()
     {
         id = Guid.NewGuid();
+        minecraftIDlist = new List<string>();
     }
 
     public bool Equals(VoxelPrefab other)
@@ -51,6 +51,7 @@ public class VoxelPrefab : VoxelData, IEquatable<VoxelPrefab>
                Mathf.IsEqualApprox(other.color.G, color.G) &&
                Mathf.IsEqualApprox(other.color.B, color.B) &&
                Mathf.IsEqualApprox(other.color.A, color.A) &&
+               other.minecraftIDlist.SequenceEqual(minecraftIDlist) &&
 
                other.prefabName == prefabName &&
                other.unityPrefabGuid == unityPrefabGuid &&

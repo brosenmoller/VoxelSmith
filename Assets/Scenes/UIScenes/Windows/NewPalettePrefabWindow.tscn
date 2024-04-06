@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsis6v0sco7es"]
+[gd_scene load_steps=4 format=3 uid="uid://bsis6v0sco7es"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/PaletteWindows/NewPalettePrefabWindow.cs" id="1_rfhmd"]
+[ext_resource type="Texture2D" uid="uid://bx0ocyu68yd8g" path="res://Assets/Art/Icons/plus-solid-white.svg" id="2_fe2lv"]
+[ext_resource type="Texture2D" uid="uid://de28wltf8x3l6" path="res://Assets/Art/Icons/trash-solid.svg" id="3_b8nwe"]
 
-[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker")]
+[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker", "minecraftIDEdit")]
 title = "Create new Palette Prefab"
 initial_position = 2
-size = Vector2i(400, 300)
+size = Vector2i(400, 341)
 visible = true
 ok_button_text = "Create"
 script = ExtResource("1_rfhmd")
@@ -18,12 +20,13 @@ unityPrefabTranformFileIdTextEdit = NodePath("VBoxContainer/prefabTransformFileI
 name = "Prefab"
 deleteConfirmationDialog = NodePath("DeleteConfirmationDialog")
 voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
+minecraftIDEdit = NodePath("VBoxContainer/MinceraftIDList/MinecraftIdGroup/MinecraftIDEdit")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 392.0
-offset_bottom = 251.0
+offset_bottom = 292.0
 
 [node name="SelectColorGroup" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -53,6 +56,60 @@ color_mode = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
+[node name="MinecraftIDListHeader" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MinecraftIdListTitle" type="RichTextLabel" parent="VBoxContainer/MinecraftIDListHeader"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Minecraft ID list"
+
+[node name="AddMinecraftIdButton" type="Button" parent="VBoxContainer/MinecraftIDListHeader"]
+custom_minimum_size = Vector2(22.335, 0)
+layout_mode = 2
+icon = ExtResource("2_fe2lv")
+flat = true
+expand_icon = true
+
+[node name="MinceraftIDList" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MinecraftIdGroup" type="HBoxContainer" parent="VBoxContainer/MinceraftIDList"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[p align=right]minecraft:"
+
+[node name="MinecraftIDEdit" type="TextEdit" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeleteMinecraftIDButton" type="Button" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+visible = false
+custom_minimum_size = Vector2(42.09, 0)
+layout_mode = 2
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.305882, 0.305882, 0.305882, 1)
+theme_override_colors/icon_hover_color = Color(0.572549, 0.572549, 0.572549, 1)
+icon = ExtResource("3_b8nwe")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
 [node name="PrefabName" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -71,6 +128,9 @@ text = "Prefab Name"
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="PrefabGUID" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -111,6 +171,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="godotSceneID" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/godotSceneID"]
@@ -130,7 +191,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="LoadPrefabButton" type="MarginContainer" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50

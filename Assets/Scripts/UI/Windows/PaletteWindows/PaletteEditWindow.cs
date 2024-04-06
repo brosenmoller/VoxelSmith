@@ -1,11 +1,13 @@
 ﻿using Godot;
 using System;
+using System.Collections.Generic;
 
 public abstract partial class PaletteEditWindow : ConfirmationDialog
 {
     [Export] private string name;
     [Export] protected ConfirmationDialog deleteConfirmationDialog;
     [Export] protected ColorPickerButton voxelColorPicker;
+    [Export] protected TextEdit minecraftIDEdit;
 
     private Button deleteButton;
     protected Guid paletteGuid;
@@ -14,6 +16,8 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
 
     private bool createSubscribed = false;
     private bool editSubscribed = false;
+
+    protected List<string> GetCompeletedMinecraftID() => new() { "minecraft:" + minecraftIDEdit.Text };
 
     private void UnSubcribeConfirmed()
     {
@@ -68,6 +72,20 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
     public void ShowEditWindow(Guid paletteGuid)
     {
         this.paletteGuid = paletteGuid;
+        VoxelData voxelData;
+
+        if (GameManager.DataManager.PaletteData.paletteColors.ContainsKey(paletteGuid)) 
+        { 
+            voxelData = GameManager.DataManager.PaletteData.paletteColors[paletteGuid]; 
+        }
+        else 
+        { 
+            voxelData = GameManager.DataManager.PaletteData.palletePrefabs[paletteGuid]; 
+        }
+
+        voxelColorPicker.Color = voxelData.color;
+        minecraftIDEdit.Text = voxelData.minecraftIDlist[0][10..];
+
         OnLoad();
 
         Title = "Edit Palette " + name;
@@ -82,7 +100,7 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         Show();
     }
 
-    protected abstract void OnLoad();
+    protected virtual void OnLoad() { }
 
     protected abstract void OnDeleteButtonPressed();
 

@@ -5,8 +5,6 @@ using System.Linq;
 
 public partial class NewPaletteColorWindow : PaletteEditWindow
 {
-    [Export] private TextEdit minecraftIDEdit;
-
     protected override void OnDeleteButtonPressed()
     {
         if (GameManager.DataManager.ProjectData.voxelColors.ContainsValue(paletteGuid))
@@ -35,7 +33,7 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
         {
             id = newID,
             color = voxelColorPicker.Color,
-            minecraftIDlist = new List<string>() { "minecraft:" + minecraftIDEdit.Text },
+            minecraftIDlist = GetCompeletedMinecraftID(),
         };
 
         GameManager.DataManager.PaletteData.paletteColors.Add(newID, voxelColor);
@@ -65,12 +63,5 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
         {
             // TODO: Error
         }
-    }
-
-    protected override void OnLoad()
-    {
-        VoxelColor voxelColor = GameManager.DataManager.PaletteData.paletteColors[paletteGuid];
-        voxelColorPicker.Color = voxelColor.color;
-
     }
 }

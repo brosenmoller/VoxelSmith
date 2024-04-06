@@ -62,6 +62,7 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
         {
             id = newID,
             color = voxelColorPicker.Color,
+            minecraftIDlist = GetCompeletedMinecraftID(),
             prefabName = prefabNameTextEdit.Text,
             unityPrefabTransformFileId = unityPrefabTranformFileIdTextEdit.Text,
             godotSceneID = godotSceneIdTextEdit.Text,
@@ -102,7 +103,11 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
     protected override void OnLoad()
     {
         VoxelPrefab voxelPrefab = GameManager.DataManager.PaletteData.palletePrefabs[paletteGuid];
-        voxelColorPicker.Color = voxelPrefab.color;
+
+        prefabNameTextEdit.Text = voxelPrefab.prefabName;
+        unityPrefabGuidTextEdit.Text = voxelPrefab.unityPrefabGuid;
+        unityPrefabTranformFileIdTextEdit.Text = voxelPrefab.unityPrefabTransformFileId;
+        godotSceneIdTextEdit.Text = voxelPrefab.godotSceneID;
     }
 }
 

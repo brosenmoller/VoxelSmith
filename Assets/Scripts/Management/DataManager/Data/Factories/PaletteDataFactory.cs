@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System;
 using Godot;
 
 public class PaletteDataFactory
@@ -73,6 +72,7 @@ public class PaletteDataFactory
                 "minecraft:smooth_quartz"
             }
         );
+
 
         //data.palletePrefabs.Add(Guid.NewGuid(), new VoxelPrefab() { 
         //    color = Color.Color8(100, 200, 0), 
