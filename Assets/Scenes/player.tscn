@@ -31,7 +31,7 @@ playerMovement = NodePath("..")
 [node name="Camera3D" type="Camera3D" parent="HeadPivot"]
 
 [node name="RayCastVoxelPlacer" type="RayCast3D" parent="HeadPivot/Camera3D"]
-target_position = Vector3(0, 0, -6.23)
+target_position = Vector3(0, 0, -100)
 collision_mask = 2
 hit_from_inside = true
 script = ExtResource("3_50l5n")

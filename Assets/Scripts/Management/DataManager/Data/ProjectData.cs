@@ -21,8 +21,6 @@ public class ProjectData
     public PaletteType selectedPaletteType;
     public Guid selectedPaletteSwatchId;
 
-    public TopBarSettings topBarSettings;
-
     [JsonIgnore]
     public VoxelData SelectedVoxelData
     {

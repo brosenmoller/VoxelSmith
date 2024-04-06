@@ -27,7 +27,7 @@ public partial class PlayerMovement : CharacterBody3D
 
     private StateMachine<PlayerMovement> stateMachine;
     
-    public PlayerMovementState currentState = PlayerMovementState.Walk;
+    public PlayerMovementState currentState = PlayerMovementState.Fly;
 
     public void ChangeState(PlayerMovementState playerMovementState)
     {

@@ -15,7 +15,8 @@ public class DataManager : Manager
 
     private const string PROJECT_FILE_EXTENSION = ".vxsProject";
     private const string PALETTE_FILE_EXTENSION = ".vxsPalette";
-    private const string LOCAL_EDITOR_SAVE_PATH = "user://editor.vxsConfig";
+    private const string CONFIG_FILE_EXTENSION = ".vxsConfig";
+    private const string LOCAL_EDITOR_SAVE_PATH = "user://editor" + CONFIG_FILE_EXTENSION;
     private string GLOBAL_EDITOR_SAVE_PATH;
 
     private Camera3D camera;
@@ -120,8 +121,6 @@ public class DataManager : Manager
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
 
-        projectDataHolder.Data.topBarSettings =  GameManager.TopBarUI.GetSettings();
-
         if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
             editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
@@ -148,8 +147,6 @@ public class DataManager : Manager
             GameManager.Player.GlobalPosition = projectDataHolder.Data.playerPosition;
             camera.Rotation = projectDataHolder.Data.cameraRotation;
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
-
-            GameManager.TopBarUI.LoadSettings(projectDataHolder.Data.topBarSettings);
 
             GameManager.SurfaceMesh.UpdateMesh();
             GameManager.PrefabMesh.UpdateMesh();
@@ -205,15 +202,50 @@ public class DataManager : Manager
     #endregion
 
 
+    public void ImportPaletteFromProject(string path)
+    {
+        DataHolder<ProjectData> importedProject = new();
+
+        try
+        {
+            importedProject.Load(path);
+
+            foreach (var paletteItem in importedProject.Data.palette.paletteColors)
+            {
+                if (!PaletteData.paletteColors.ContainsKey(paletteItem.Key))
+                {
+                    PaletteData.paletteColors.Add(paletteItem.Key, paletteItem.Value);
+                }
+            }
+
+            foreach (var paletteItem in importedProject.Data.palette.palletePrefabs)
+            {
+                if (!PaletteData.palletePrefabs.ContainsKey(paletteItem.Key))
+                {
+                    PaletteData.palletePrefabs.Add(paletteItem.Key, paletteItem.Value);
+                }
+            }
+
+            GameManager.PaletteUI.Update();
+        }
+        catch
+        {
+            GD.PrintErr("Couldn't load projecﭏ");
+            // TODO : SHow Error
+        }
+    }
+
     // -------------------------------------
     // Excluded from Beta
     // -------------------------------------
     #region Palette
 
-    public void CreateNewPalette(string path)
+    public void CreateNewPalette(string filePath)
     {
         // TODO: Warn User if there is unsaved data
         if (paletteDataHolder.Data != null) { SavePalette(); }
+
+        string path = Path.Combine(filePath + PALETTE_FILE_EXTENSION);
 
         paletteDataHolder.Data = new PaletteData();
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public partial class NewPalettePrefabWindow : PaletteEditWindow
 {
@@ -19,18 +20,46 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
     {
         loadPrefabButton.Pressed += loadPrefabFileDialog.Show;
         loadPrefabFileDialog.Confirmed += LoadPrefab;
+
+        prefabNameTextEdit.RemoveChild(prefabNameTextEdit.GetVScrollBar());
+        godotSceneIdTextEdit.RemoveChild(godotSceneIdTextEdit.GetVScrollBar());
+        unityPrefabGuidTextEdit.RemoveChild(unityPrefabGuidTextEdit.GetVScrollBar());
+        unityPrefabTranformFileIdTextEdit.RemoveChild(unityPrefabTranformFileIdTextEdit.GetVScrollBar());
     }
 
     private void LoadPrefab()
     {
-        if (loadPrefabFileDialog.CurrentFile.Length <= 0 && loadPrefabFileDialog.CurrentDir.Length <= 0) 
+        if (loadPrefabFileDialog.CurrentFile.Length <= 0 || loadPrefabFileDialog.CurrentDir.Length <= 0) 
         { 
             return; 
         }
 
-        string path = Path.Combine(loadPrefabFileDialog.CurrentDir, loadPrefabFileDialog.CurrentFile);
+        string prefabPath = Path.Combine(loadPrefabFileDialog.CurrentDir, loadPrefabFileDialog.CurrentFile);
+        string prefabMetaPath = prefabPath + ".meta";
 
-        GD.Print("Not implemented, but here's the path: " + path);
+        if (!File.Exists(prefabPath) || !File.Exists(prefabMetaPath))
+        {
+            // TODO : Show Error to the User
+            GD.PrintErr("Couldn't find files");
+            return;
+        }
+
+        string prefabFileString = File.ReadAllText(prefabPath);
+        string prefabMetaFileString = File.ReadAllText(prefabMetaPath);
+
+        string guidRegex = @"[0-9a-fA-F]{32}";
+        Match guidMatch = Regex.Match(prefabMetaFileString, guidRegex);
+        if (guidMatch.Success) 
+        { 
+            unityPrefabGuidTextEdit.Text = guidMatch.Value;
+        }
+
+        string transformIDRegex = @"(?<=---\s\!u\!4\s\&)\s*(-?\d+)";
+        Match transformFileIDMatch = Regex.Match(prefabFileString, transformIDRegex);
+        if (guidMatch.Success)
+        {
+            unityPrefabTranformFileIdTextEdit.Text = transformFileIDMatch.Value;
+        }
     }
 
 

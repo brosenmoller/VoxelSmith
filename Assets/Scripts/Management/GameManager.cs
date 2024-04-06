@@ -73,6 +73,7 @@ public partial class GameManager : Node
         PaletteMenu.OnSaveAsPressed += UIController.savePaletteAsDialog.Show;
         PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;
         PaletteMenu.OnSavePressed += DataManager.SavePalette;
+        PaletteMenu.OnImportFromProjectPressed += UIController.importPaletteFromProjectFileDialog.Show;
     }
 
     public override void _Process(double delta)

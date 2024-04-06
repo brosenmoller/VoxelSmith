@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c22rhhgvp0lvf" path="res://Assets/Scenes/UIScenes/tool_options.tscn" id="7_0txgo"]
 [ext_resource type="PackedScene" uid="uid://bboqmejcdfufk" path="res://Assets/Scenes/UIScenes/pallete_options.tscn" id="8_rtdt0"]
 
-[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "newPaletteFileDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog", "importSchematicFileDialog", "importConfirmationDialog")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "loadProjectDialog", "saveProjectAsDialog", "newPaletteFileDialog", "loadPaletteDialog", "savePaletteAsDialog", "exportPrefabDialog", "exportMeshDialog", "importSchematicFileDialog", "importConfirmationDialog", "importPaletteFromProjectFileDialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +27,7 @@ exportPrefabDialog = NodePath("SubWindowHolder/ExportPrefabFileDialog")
 exportMeshDialog = NodePath("SubWindowHolder/ExportMeshFileDialog")
 importSchematicFileDialog = NodePath("SubWindowHolder/ImportSchematicFileDialog")
 importConfirmationDialog = NodePath("SubWindowHolder/ImportConfirmationDialog")
+importPaletteFromProjectFileDialog = NodePath("SubWindowHolder/ImportPaletteFromProjectFileDialog")
 metadata/_edit_horizontal_guides_ = []
 
 [node name="SubWindowHolder" type="Control" parent="."]
@@ -41,6 +42,16 @@ visible = false
 visible = false
 
 [node name="LoadProjectFileDialog" type="FileDialog" parent="SubWindowHolder"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Open"
+dialog_close_on_escape = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.vxsProject")
+
+[node name="ImportPaletteFromProjectFileDialog" type="FileDialog" parent="SubWindowHolder"]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(800, 600)
@@ -170,7 +181,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MainView/MainWindow/ViewPortHolder/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1712, 1030)
+size = Vector2i(600, 200)
 size_2d_override = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
