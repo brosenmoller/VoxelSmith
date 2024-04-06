@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=29 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/Resources/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="2_q2gw8"]
@@ -8,7 +8,9 @@
 [ext_resource type="Shortcut" uid="uid://bqajjcmabxkcd" path="res://Assets/Resources/MenuResources/ProjectMenu/ImportSchematicShortcut.tres" id="6_g1vkc"]
 [ext_resource type="Shortcut" uid="uid://db4ls4pp6ps3j" path="res://Assets/Resources/MenuResources/ProjectMenu/RefreshSchematicShortcut.tres" id="7_rmvxb"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/EditMenu.cs" id="8_fxvqp"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/PaletteMenu.cs" id="8_kvnbl"]
 [ext_resource type="Shortcut" uid="uid://cat3smbjtttve" path="res://Assets/Resources/MenuResources/EditMenu/UndoShortcut.tres" id="9_3vpiw"]
+[ext_resource type="Shortcut" uid="uid://mi2vprto6kca" path="res://Assets/Resources/MenuResources/PaletteMenu/impor_palette_from_project_shortcut.tres" id="9_ls3xn"]
 [ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://Assets/Resources/MenuResources/EditMenu/RedoShortcut.tres" id="10_2k02o"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/PlayerMode.cs" id="11_44v8d"]
 [ext_resource type="Texture2D" uid="uid://bf27fb15ywbpu" path="res://Assets/Art/Icons/person-walking-solid-accent.png" id="11_okt8g"]
@@ -68,6 +70,11 @@ saveAsShortcut = ExtResource("4_7og8a")
 openShortcut = ExtResource("5_lx1nm")
 importSchematicShortcut = ExtResource("6_g1vkc")
 refreshSchematicShortcut = ExtResource("7_rmvxb")
+
+[node name="Palette" type="PopupMenu" parent="TopBarContainer/MenuBar"]
+size = Vector2i(171, 224)
+script = ExtResource("8_kvnbl")
+ImportFromProjectShortcut = ExtResource("9_ls3xn")
 
 [node name="Edit" type="PopupMenu" parent="TopBarContainer/MenuBar"]
 script = ExtResource("8_fxvqp")

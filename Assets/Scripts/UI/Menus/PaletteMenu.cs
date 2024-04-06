@@ -3,60 +3,60 @@ using System;
 
 public partial class PaletteMenu : PopupMenu
 {
-    [Export] private Button button;
+    [Export] private Shortcut ImportFromProjectShortcut;
 
     public static event Action OnNewPressed;
     public static event Action OnOpenPressed;
     public static event Action OnSavePressed;
     public static event Action OnSaveAsPressed;
+    public static event Action OnImportFromProjectPressed;
 
     public override void _Ready()
     {
-        // Disable Palette Menu for now, for beta
-        //button.Pressed += OnClick;
-
-
         IdPressed += OnMenuItemSelected;
         SetupMenu();
-    }
-
-    private void OnClick()
-    {
-        Show();
-        Position = (Vector2I)button.GetGlobalTransformWithCanvas().Origin;
     }
 
     private void OnMenuItemSelected(long id)
     {
         switch (id)
         {
-            case (long)PalleteOptions.NEW: OnNewPressed?.Invoke(); break;
-            case (long)PalleteOptions.OPEN: OnOpenPressed?.Invoke(); break;
-            case (long)PalleteOptions.SAVE: OnSavePressed?.Invoke(); break;
-            case (long)PalleteOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
+            case (long)PaletteOptions.NEW: OnNewPressed?.Invoke(); break;
+            case (long)PaletteOptions.OPEN: OnOpenPressed?.Invoke(); break;
+            case (long)PaletteOptions.SAVE: OnSavePressed?.Invoke(); break;
+            case (long)PaletteOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
+            case (long)PaletteOptions.IMPORT_FROM_Project: OnImportFromProjectPressed?.Invoke(); break;
         }
     }
 
     private void SetupMenu()
     {
-        // 0
-        AddItem("New", (int)PalleteOptions.NEW);
 
-        // 1
-        AddItem("Open", (int)PalleteOptions.OPEN);
+        // Disabled these options for now for simplicity
 
-        // 2
-        AddItem("Save", (int)PalleteOptions.SAVE);
+        //// 0
+        //AddItem("New", (int)PaletteOptions.NEW);
 
-        // 3
-        AddItem("Save As", (int)PalleteOptions.SAVE_AS);
+        //// 1
+        //AddItem("Open", (int)PaletteOptions.OPEN);
+
+        //// 2
+        //AddItem("Save", (int)PaletteOptions.SAVE);
+
+        //// 3
+        //AddItem("Save As", (int)PaletteOptions.SAVE_AS);
+
+        // 4
+        AddItem("Import", (int)PaletteOptions.IMPORT_FROM_Project);
+        AddShortcut(ImportFromProjectShortcut, (int)PaletteOptions.IMPORT_FROM_Project);
     }
 
-    private enum PalleteOptions
+    private enum PaletteOptions
     {
         NEW,
         OPEN,
         SAVE,
         SAVE_AS,
+        IMPORT_FROM_Project
     }
 }

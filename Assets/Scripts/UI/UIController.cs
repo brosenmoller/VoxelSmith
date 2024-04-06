@@ -23,6 +23,7 @@ public partial class UIController : Control
     [ExportSubgroup("Import")]
     [Export] public FileDialog importSchematicFileDialog;
     [Export] public ConfirmationDialog importConfirmationDialog;
+    [Export] public FileDialog importPaletteFromProjectFileDialog;
     private string importPath;
 
 
@@ -60,6 +61,8 @@ public partial class UIController : Control
         importSchematicFileDialog.Confirmed += () => ImportPath(importSchematicFileDialog.CurrentPath);
         importConfirmationDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importPath);
         importConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
+
+        importPaletteFromProjectFileDialog.Confirmed += () => GameManager.DataManager.ImportPaletteFromProject(importPaletteFromProjectFileDialog.CurrentPath);
     }
 
     public void ImportPath(string path)
