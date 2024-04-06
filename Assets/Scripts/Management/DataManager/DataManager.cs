@@ -120,7 +120,7 @@ public class DataManager : Manager
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
 
-        projectDataHolder.Data.movementState = GameManager.Player.currentState;
+        projectDataHolder.Data.topBarSettings =  GameManager.TopBarUI.GetSettings();
 
         if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
         {
@@ -149,7 +149,7 @@ public class DataManager : Manager
             camera.Rotation = projectDataHolder.Data.cameraRotation;
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
 
-            GameManager.Player.currentState = projectDataHolder.Data.movementState;
+            GameManager.TopBarUI.LoadSettings(projectDataHolder.Data.topBarSettings);
 
             GameManager.SurfaceMesh.UpdateMesh();
             GameManager.PrefabMesh.UpdateMesh();

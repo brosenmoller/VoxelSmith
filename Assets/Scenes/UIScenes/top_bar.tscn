@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=31 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/TopBarUI.cs" id="1_uo8va"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/Resources/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="2_q2gw8"]
 [ext_resource type="Shortcut" uid="uid://c1ora4olvy0r4" path="res://Assets/Resources/MenuResources/ProjectMenu/SaveProjectShortcut.tres" id="3_0wbqa"]
 [ext_resource type="Shortcut" uid="uid://bq41hvwupxt7j" path="res://Assets/Resources/MenuResources/ProjectMenu/SaveAsProjectShortcut.tres" id="4_7og8a"]
@@ -21,9 +22,14 @@
 [ext_resource type="Texture2D" uid="uid://d1csa0n0egfeg" path="res://Assets/Art/Icons/satellite-accent.png" id="18_aay2d"]
 [ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
+[ext_resource type="Texture2D" uid="uid://ci42dncng3gn8" path="res://Assets/Art/Icons/square-dashed.png" id="22_258pr"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
+[ext_resource type="Texture2D" uid="uid://b1mfh3fpeqesb" path="res://Assets/Art/Icons/infinity-solid.png" id="23_huegb"]
 [ext_resource type="Shortcut" uid="uid://b84pfcgc5wl4h" path="res://Assets/Resources/QuickExportShorcut.tres" id="23_lhvlj"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickImport.cs" id="24_j8l2r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45gcr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="InputEventKey" id="InputEventKey_xs7pw"]
 device = -1
@@ -34,7 +40,7 @@ keycode = 73
 [sub_resource type="Shortcut" id="Shortcut_qef2u"]
 events = [SubResource("InputEventKey_xs7pw")]
 
-[node name="TopBar" type="ColorRect"]
+[node name="TopBar" type="ColorRect" node_paths=PackedStringArray("playerMode", "hasDisabledCollisionsToggle", "hasInfiniteReachToggle", "playerSpeedSlider")]
 custom_minimum_size = Vector2(0, 50)
 anchors_preset = -1
 anchor_right = 1.0
@@ -42,6 +48,11 @@ anchor_bottom = 0.046
 offset_bottom = -5.68
 size_flags_vertical = 0
 color = Color(0.133333, 0.141176, 0.152941, 1)
+script = ExtResource("1_uo8va")
+playerMode = NodePath("TopBarContainer/PlayerMode")
+hasDisabledCollisionsToggle = NodePath("TopBarContainer/NoCollisionToggle")
+hasInfiniteReachToggle = NodePath("TopBarContainer/InfiniteReachToggle")
+playerSpeedSlider = NodePath("TopBarContainer/PlayerSpeedContainer/PlayerSpeedSlider")
 
 [node name="TopBarContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -117,6 +128,48 @@ button_group = ExtResource("13_wjne3")
 shortcut = ExtResource("20_xf0qk")
 
 [node name="VSeparator2" type="VSeparator" parent="TopBarContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="NoCollisionToggle" type="Button" parent="TopBarContainer"]
+custom_minimum_size = Vector2(55.63, 0)
+layout_mode = 2
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_45gcr")
+toggle_mode = true
+icon = ExtResource("22_258pr")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="InfiniteReachToggle" type="Button" parent="TopBarContainer"]
+custom_minimum_size = Vector2(55.63, 0)
+layout_mode = 2
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_45gcr")
+toggle_mode = true
+icon = ExtResource("23_huegb")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="VSeparator3" type="VSeparator" parent="TopBarContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PlayerSpeedContainer" type="MarginContainer" parent="TopBarContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+
+[node name="PlayerSpeedSlider" type="HSlider" parent="TopBarContainer/PlayerSpeedContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="VSeparator4" type="VSeparator" parent="TopBarContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 

@@ -12,6 +12,7 @@ public partial class GameManager : Node
     public static PlayerMovement Player { get; private set; }
     public static UIController UIController { get; private set; }
     public static PaletteUI PaletteUI { get; private set; }
+    public static TopBarUI TopBarUI { get; private set; }
 
 
     private Manager[] activeManagers;
@@ -21,6 +22,7 @@ public partial class GameManager : Node
         Player = this.GetNodeByType<PlayerMovement>();
         UIController = this.GetNodeByType<UIController>();
         PaletteUI = this.GetNodeByType<PaletteUI>();
+        TopBarUI = this.GetNodeByType<TopBarUI>();
         
         SurfaceMesh = this.GetNodeByType<SurfaceMesh>();
         PrefabMesh = this.GetNodeByType<PrefabMesh>();
@@ -71,8 +73,6 @@ public partial class GameManager : Node
         PaletteMenu.OnSaveAsPressed += UIController.savePaletteAsDialog.Show;
         PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;
         PaletteMenu.OnSavePressed += DataManager.SavePalette;
-
-        PlayerMode.OnPlayerMovmenetModeSelected += Player.ChangeState;
     }
 
     public override void _Process(double delta)
