@@ -39,28 +39,29 @@ public class ImportManager : Manager
             airValue = schematic.palette.FirstOrDefault(x => x.Value == "minecraft:air").Key;
         }
 
-        Dictionary<string, Guid> minecraftIDsToVoxelColor = new();
+        Dictionary<string, Guid> minecraftIDsToVoxelData = new();
 
         foreach (var paletteItem in GameManager.DataManager.PaletteData.paletteColors)
         {
-            VoxelColor voxelColor = paletteItem.Value;
-
-            for (int j = 0; j < voxelColor.minecraftIDlist.Count; j++)
+            foreach (string minecraftID in paletteItem.Value.minecraftIDlist)
             {
-                string minecraftID = voxelColor.minecraftIDlist[j];
+                minecraftIDsToVoxelData.Add(minecraftID, paletteItem.Key);
+            }
+        }
 
-                if (!minecraftIDsToVoxelColor.ContainsKey(voxelColor.minecraftIDlist[j]))
-                {
-                    minecraftIDsToVoxelColor.Add(voxelColor.minecraftIDlist[j], paletteItem.Key);
-                }
+        foreach (var paletteItem in GameManager.DataManager.PaletteData.palletePrefabs)
+        {
+            foreach (string minecraftID in paletteItem.Value.minecraftIDlist)
+            {
+                minecraftIDsToVoxelData.Add(minecraftID, paletteItem.Key);
             }
         }
 
         for (int y = 0; y < schematic.height; y++)
         {
-            for (int x = 0; x < schematic.height; x++)
+            for (int x = 0; x < schematic.width; x++)
             {
-                for (int z = 0; z < schematic.height; z++)
+                for (int z = 0; z < schematic.length; z++)
                 {
                     int index = (y * schematic.length + z) * schematic.width + x;
 
@@ -72,17 +73,29 @@ public class ImportManager : Manager
 
                     string minecraftID = schematic.palette[blockValue];
 
-                    if (minecraftIDsToVoxelColor.ContainsKey(minecraftID))
+                    Vector3I position = new(x, y, z);
+
+                    if (minecraftIDsToVoxelData.ContainsKey(minecraftID))
                     {
-                        GameManager.DataManager.ProjectData.voxelColors.Add(
-                            new Vector3I(x, y, z),
-                            minecraftIDsToVoxelColor[minecraftID]
-                        );
+                        if (GameManager.DataManager.PaletteData.paletteColors.ContainsKey(minecraftIDsToVoxelData[minecraftID]))
+                        {
+                            GameManager.DataManager.ProjectData.voxelColors.Add(
+                                position,
+                                minecraftIDsToVoxelData[minecraftID]
+                            );
+                        }
+                        else if (GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(minecraftIDsToVoxelData[minecraftID]))
+                        {
+                            GameManager.DataManager.ProjectData.voxelPrefabs.Add(
+                                position,
+                                minecraftIDsToVoxelData[minecraftID]
+                            );
+                        }
                     }
                     else if (GameManager.DataManager.PaletteData.paletteColors.Count > 0)
                     {
                         GameManager.DataManager.ProjectData.voxelColors.Add(
-                            new Vector3I(x, y, z),
+                            position,
                             GameManager.DataManager.PaletteData.paletteColors.First().Key
                         );
                     }
@@ -91,6 +104,7 @@ public class ImportManager : Manager
         }
 
         GameManager.SurfaceMesh.UpdateMesh();
+        GameManager.PrefabMesh.UpdateMesh();
 
         if (saveImportSettings)
         {
@@ -103,7 +117,7 @@ public class ImportManager : Manager
         public short width;
         public short height;
         public short length;
-        public List<byte> blockData;
+        public List<sbyte> blockData;
         public Dictionary<int, string> palette;
 
         public static MinecraftSchematic FromPath(string path)
@@ -121,11 +135,11 @@ public class ImportManager : Manager
             };
 
             byte[] unfilteredBlockData = compoundTag.Get<NbtByteArray>("BlockData").ByteArrayValue;
-            schematic.blockData = new List<byte>(schematic.width * schematic.height * schematic.length);
+            schematic.blockData = new List<sbyte>(schematic.width * schematic.height * schematic.length);
 
             for (int i = 0; i < unfilteredBlockData.Length; i++)
             {
-                byte blockValue = unfilteredBlockData[i];
+                sbyte blockValue = (sbyte)unfilteredBlockData[i];
 
                 if (blockValue >= 0)
                 {
