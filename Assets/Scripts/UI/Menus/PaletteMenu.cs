@@ -25,7 +25,7 @@ public partial class PaletteMenu : PopupMenu
             case (long)PaletteOptions.OPEN: OnOpenPressed?.Invoke(); break;
             case (long)PaletteOptions.SAVE: OnSavePressed?.Invoke(); break;
             case (long)PaletteOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
-            case (long)PaletteOptions.IMPORT_FROM_Project: OnImportFromProjectPressed?.Invoke(); break;
+            case (long)PaletteOptions.IMPORT_FROM_PROJECT: OnImportFromProjectPressed?.Invoke(); break;
         }
     }
 
@@ -47,16 +47,16 @@ public partial class PaletteMenu : PopupMenu
         //AddItem("Save As", (int)PaletteOptions.SAVE_AS);
 
         // 4
-        AddItem("Import", (int)PaletteOptions.IMPORT_FROM_Project);
-        AddShortcut(ImportFromProjectShortcut, (int)PaletteOptions.IMPORT_FROM_Project);
+        AddItem("Import", (int)PaletteOptions.IMPORT_FROM_PROJECT);
+        AddShortcut(ImportFromProjectShortcut, (int)PaletteOptions.IMPORT_FROM_PROJECT);
     }
 
     private enum PaletteOptions
     {
+        IMPORT_FROM_PROJECT,
         NEW,
         OPEN,
         SAVE,
-        SAVE_AS,
-        IMPORT_FROM_Project
+        SAVE_AS
     }
 }

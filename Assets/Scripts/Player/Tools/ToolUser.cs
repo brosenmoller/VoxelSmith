@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 
-public partial class VoxelPlacer : RayCast3D
+public partial class ToolUser : RayCast3D
 {
     [Export] private bool enableCollisionHighlight;
     [Export] private bool enableVoxelHighlight;
@@ -12,8 +12,14 @@ public partial class VoxelPlacer : RayCast3D
     [Export] private Node3D collisionHighlight;
 
     private bool enabled = true;
-
     public bool checkForPlayerInside;
+
+    private StateMachine<ToolUser> stateMachine;
+
+    public bool HasHit { get; private set; }
+    public Vector3 Point { get; private set; }
+    public Vector3I VoxelPosition { get; private set; }
+    public Vector3 Normal { get; private set; }
 
     public override void _Ready()
     {
@@ -22,64 +28,81 @@ public partial class VoxelPlacer : RayCast3D
 
         WorldController.WentInFocusLastFrame += () => enabled = true;
         WorldController.WentOutOfFocus += () => enabled = false;
+
+        stateMachine = new StateMachine<ToolUser>(
+            this,
+            new BrushTool(),
+            new CubeTool(),
+            new LineTool()
+        );
+        stateMachine.ChangeState(typeof(BrushTool));
     }
 
     public override void _Process(double delta)
     {
+        DefaultBehaiviour();
+        if (enabled)
+        {
+            stateMachine.OnUpdate(delta);
+        }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (enabled)
+        {
+            stateMachine.OnPhysicsUpdate(delta);
+        }
+    }
+
+    public void ChangeState(Type stateType)
+    {
+        if (stateMachine.stateDictionary.ContainsKey(stateType))
+        {
+            stateMachine.ChangeState(stateType);
+        }
+    }
+
+    private void DefaultBehaiviour()
+    {
         if (IsColliding())
         {
-            Vector3 point = GetCollisionPoint();
-            Vector3 normal = GetCollisionNormal();
+            HasHit = true;
+            Point = GetCollisionPoint();
+            Normal = GetCollisionNormal();
 
-            if (enableCollisionHighlight) 
+            if (enableCollisionHighlight)
             {
                 collisionHighlight.Visible = true;
-                collisionHighlight.GlobalPosition = point; 
+                collisionHighlight.GlobalPosition = Point;
             }
 
-            point -= normal * 0.1f;
+            Vector3 insetPoint = Point - (Normal * 0.1f);
 
-            Vector3I voxelPosition = new(
-                Mathf.FloorToInt(point.X),
-                Mathf.FloorToInt(point.Y),
-                Mathf.FloorToInt(point.Z)
+            VoxelPosition = new(
+                Mathf.FloorToInt(insetPoint.X),
+                Mathf.FloorToInt(insetPoint.Y),
+                Mathf.FloorToInt(insetPoint.Z)
             );
 
-            if (enableVoxelHighlight) 
+            if (enableVoxelHighlight)
             {
                 voxelHiglight.Visible = true;
-                voxelHiglight.GlobalPosition = voxelPosition; 
+                voxelHiglight.GlobalPosition = VoxelPosition;
             }
 
             if (!enabled) { return; }
 
-            if (Input.IsActionJustPressed("place"))
+            if (Input.IsActionJustPressed("pick_block"))
             {
-                PlaceBlock(voxelPosition, normal);
-            }
-            else if (Input.IsActionJustPressed("break"))
-            {
-                GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(voxelPosition));
-            }
-            else if (Input.IsActionJustPressed("pick_block"))
-            {
-                PickBlock(voxelPosition);
+                PickBlock(VoxelPosition);
             }
         }
         else
         {
+            HasHit = false;
             collisionHighlight.Visible = false;
             voxelHiglight.Visible = false;
-        }
-    }
-
-    private void PlaceBlock(Vector3I voxelPosition, Vector3 normal)
-    {
-        Vector3I nextVoxel = voxelPosition + (Vector3I)normal.Normalized();
-
-        if ((!IsVoxelInPlayer(nextVoxel) || !checkForPlayerInside) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
-        {
-            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
         }
     }
 

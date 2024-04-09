@@ -4,6 +4,8 @@ public abstract class State<T>
 {
     protected StateMachine<T> stateOwner;
 
+    protected T ctx { get { return stateOwner.Controller; } }
+
     public void Setup(StateMachine<T> stateMachine)
     {
         stateOwner = stateMachine;

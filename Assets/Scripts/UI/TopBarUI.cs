@@ -10,14 +10,14 @@ public partial class TopBarUI : Control
     [Export] private float defaultReach = 7;
     [Export] private float infiniteReach = 100;
 
-    private VoxelPlacer playerReach;
+    private ToolUser playerReach;
 
     private StaticBody3D surfaceBody;
     private StaticBody3D prefabBody;
 
     public override void _Ready()
     {
-        playerReach = GameManager.Player.GetChildByType<VoxelPlacer>();
+        playerReach = GameManager.Player.GetChildByType<ToolUser>();
 
         surfaceBody = GameManager.SurfaceMesh.GetParent<StaticBody3D>();
         prefabBody = GameManager.PrefabMesh.GetParent<StaticBody3D>();

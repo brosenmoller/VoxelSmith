@@ -24,22 +24,22 @@
 [ext_resource type="Texture2D" uid="uid://d1csa0n0egfeg" path="res://Assets/Art/Icons/satellite-accent.png" id="18_aay2d"]
 [ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
-[ext_resource type="Texture2D" path="res://Assets/Art/Icons/square-dashed.png" id="22_258pr"]
+[ext_resource type="Texture2D" uid="uid://ci42dncng3gn8" path="res://Assets/Art/Icons/square-dashed.png" id="22_258pr"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
-[ext_resource type="Texture2D" path="res://Assets/Art/Icons/infinity-solid.png" id="23_huegb"]
+[ext_resource type="Texture2D" uid="uid://b1mfh3fpeqesb" path="res://Assets/Art/Icons/infinity-solid.png" id="23_huegb"]
 [ext_resource type="Shortcut" uid="uid://b84pfcgc5wl4h" path="res://Assets/Resources/QuickExportShorcut.tres" id="23_lhvlj"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickImport.cs" id="24_j8l2r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45gcr"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="InputEventKey" id="InputEventKey_nabce"]
+[sub_resource type="InputEventKey" id="InputEventKey_ri2q0"]
 device = -1
 keycode = 52
 unicode = 52
 
-[sub_resource type="Shortcut" id="Shortcut_4oobi"]
-events = [SubResource("InputEventKey_nabce")]
+[sub_resource type="Shortcut" id="Shortcut_a7yv8"]
+events = [SubResource("InputEventKey_ri2q0")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_0y7ex"]
 device = -1
@@ -163,7 +163,7 @@ theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1
 theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_45gcr")
 toggle_mode = true
-shortcut = SubResource("Shortcut_4oobi")
+shortcut = SubResource("Shortcut_a7yv8")
 icon = ExtResource("22_258pr")
 flat = true
 icon_alignment = 1

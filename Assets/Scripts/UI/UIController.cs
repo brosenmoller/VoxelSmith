@@ -49,6 +49,7 @@ public partial class UIController : Control
     private void LinkFileDialogEvents()
     {
         loadProjectDialog.Confirmed += () => GameManager.DataManager.LoadProject(loadProjectDialog.CurrentPath);
+
         saveProjectAsDialog.Confirmed += () => GameManager.DataManager.SaveProjectAs(saveProjectAsDialog.CurrentPath);
 
         newPaletteFileDialog.Confirmed += () => GameManager.DataManager.CreateNewPalette(newPaletteFileDialog.CurrentPath);

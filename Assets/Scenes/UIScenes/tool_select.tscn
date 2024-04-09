@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7s6j05eta33g"]
+[gd_scene load_steps=13 format=3 uid="uid://c7s6j05eta33g"]
 
 [ext_resource type="Texture2D" uid="uid://dg55b8bihcm0n" path="res://Assets/Art/Icons/paintbrush-solid.png" id="1_4q0ds"]
 [ext_resource type="ButtonGroup" uid="uid://dsjdq6ltkms03" path="res://Assets/Resources/Tools/ToolSelectButtonGroup.tres" id="1_d6l1v"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/ToolSelectUI.cs" id="1_isyru"]
 [ext_resource type="Texture2D" uid="uid://b5hn3noq888v4" path="res://Assets/Art/Icons/cube-solid.png" id="3_pg565"]
 [ext_resource type="Texture2D" uid="uid://bue6hix5bofd4" path="res://Assets/Art/Icons/slash-solid.png" id="4_cgnbl"]
 
@@ -32,7 +33,7 @@ keycode = 51
 [sub_resource type="Shortcut" id="Shortcut_dhsqt"]
 events = [SubResource("InputEventKey_8v1f8")]
 
-[node name="ToolSelect" type="ColorRect"]
+[node name="ToolSelect" type="ColorRect" node_paths=PackedStringArray("brushButton", "cubeButton", "lineButton")]
 custom_minimum_size = Vector2(50, 0)
 anchors_preset = 1
 anchor_left = 1.0
@@ -42,6 +43,10 @@ offset_bottom = 158.0
 grow_horizontal = 0
 size_flags_vertical = 3
 color = Color(0.156863, 0.156863, 0.156863, 1)
+script = ExtResource("1_isyru")
+brushButton = NodePath("VBoxContainer/BrushToolContainer/BrushTool")
+cubeButton = NodePath("VBoxContainer/CubeToolContainer/CubeTool")
+lineButton = NodePath("VBoxContainer/LineToolContainer/LineTool")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

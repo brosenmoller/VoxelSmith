@@ -2,6 +2,6 @@
 {
     public virtual void Setup() { }
     public virtual void OnSceneLoad() { }
-    public virtual void OnUpdate() { }
+    public virtual void OnUpdate(double delta) { }
 }
 

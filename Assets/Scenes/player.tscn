@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player/Movement/PlayerMovement.cs" id="1_xuqap"]
 [ext_resource type="Script" path="res://Assets/Scripts/Player/FirstPersonCamera.cs" id="2_t6388"]
-[ext_resource type="Script" path="res://Assets/Scripts/Player/VoxelPlacer.cs" id="3_50l5n"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/Tools/ToolUser.cs" id="3_7vkoi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uefvg"]
 
@@ -35,4 +35,4 @@ playerMovement = NodePath("..")
 target_position = Vector3(0, 0, -100)
 collision_mask = 8
 hit_from_inside = true
-script = ExtResource("3_50l5n")
+script = ExtResource("3_7vkoi")
