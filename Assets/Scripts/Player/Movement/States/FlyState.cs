@@ -7,8 +7,8 @@ public class FlyState : State<PlayerMovement>
 
     public override void OnEnter()
     {
-        speed = stateOwner.Controller.startFlySpeed;
-        ySpeed = stateOwner.Controller.ySpeed;
+        speed = ctx.startFlySpeed;
+        ySpeed = ctx.ySpeed;
     }
 
     public override void UnHandledInput(InputEvent @event)
@@ -19,24 +19,24 @@ public class FlyState : State<PlayerMovement>
             {
                 if (mouseEvent.ButtonIndex == MouseButton.WheelUp)
                 {
-                    speed += stateOwner.Controller.flySpeedChangeStep;
-                    ySpeed += stateOwner.Controller.flySpeedChangeStep / 2; 
+                    speed += ctx.flySpeedChangeStep;
+                    ySpeed += ctx.flySpeedChangeStep / 2; 
                 }
                 if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
                 {
-                    speed -= stateOwner.Controller.flySpeedChangeStep;
-                    ySpeed -= stateOwner.Controller.flySpeedChangeStep / 2;
+                    speed -= ctx.flySpeedChangeStep;
+                    ySpeed -= ctx.flySpeedChangeStep / 2;
                 }
 
-                speed = Mathf.Clamp(speed, stateOwner.Controller.minMaxFlySpeed.X, stateOwner.Controller.minMaxFlySpeed.Y);
-                ySpeed = Mathf.Clamp(ySpeed, stateOwner.Controller.minMaxFlySpeed.X * 2, stateOwner.Controller.minMaxFlySpeed.Y / 2);
+                speed = Mathf.Clamp(speed, ctx.minMaxFlySpeed.X, ctx.minMaxFlySpeed.Y);
+                ySpeed = Mathf.Clamp(ySpeed, ctx.minMaxFlySpeed.X * 2, ctx.minMaxFlySpeed.Y / 2);
             }
         }
     }
 
     public override void OnPhysicsUpdate(double delta)
     {
-        Vector3 tempVelocity = stateOwner.Controller.Velocity;
+        Vector3 tempVelocity = ctx.Velocity;
 
         // Handle ascend and descend
         if (Input.IsActionPressed("ascend") && !Input.IsActionPressed("descend"))
@@ -55,7 +55,7 @@ public class FlyState : State<PlayerMovement>
 
         // Get the input direction and handle the movement/deceleration.
         Vector2 inputDir = Input.GetVector("left", "right", "up", "down");
-        Vector3 direction = (stateOwner.Controller.pivot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+        Vector3 direction = (ctx.pivot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
         if (direction != Vector3.Zero)
         {
@@ -68,9 +68,9 @@ public class FlyState : State<PlayerMovement>
             tempVelocity.Z = (float)Mathf.Lerp(tempVelocity.Z, direction.Z * speed, delta * 7.0f);
         }
 
-        stateOwner.Controller.Velocity = tempVelocity;
+        ctx.Velocity = tempVelocity;
 
-        stateOwner.Controller.MoveAndSlide();
+        ctx.MoveAndSlide();
     }
 }
 

@@ -6,35 +6,35 @@ public class WalkState : State<PlayerMovement>
 
     public override void OnPhysicsUpdate(double delta)
     {
-        Vector3 tempVelocity = stateOwner.Controller.Velocity;
+        Vector3 tempVelocity = ctx.Velocity;
 
         // Add the gravity.
-        if (!stateOwner.Controller.IsOnFloor())
+        if (!ctx.IsOnFloor())
         {
-            tempVelocity.Y -= stateOwner.Controller.gravity * (float)delta;
+            tempVelocity.Y -= ctx.gravity * (float)delta;
         }
 
         // Handle Jump.
-        if (Input.IsActionJustPressed("jump") && stateOwner.Controller.IsOnFloor())
+        if (Input.IsActionJustPressed("jump") && ctx.IsOnFloor())
         {
-            tempVelocity.Y = stateOwner.Controller.jumpVelocity;
+            tempVelocity.Y = ctx.jumpVelocity;
         }
 
         // Handle Sprint.
         if (Input.IsActionPressed("sprint"))
         {
-            speed = stateOwner.Controller.sprintSpeed;
+            speed = ctx.sprintSpeed;
         }
         else
         {
-            speed = stateOwner.Controller.walkSpeed;
+            speed = ctx.walkSpeed;
         }
 
         // Get the input direction and handle the movement/deceleration.
         Vector2 inputDir = Input.GetVector("left", "right", "up", "down");
-        Vector3 direction = (stateOwner.Controller.pivot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+        Vector3 direction = (ctx.pivot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
-        if (stateOwner.Controller.IsOnFloor())
+        if (ctx.IsOnFloor())
         {
             if (direction != Vector3.Zero)
             {
@@ -53,9 +53,9 @@ public class WalkState : State<PlayerMovement>
             tempVelocity.Z = (float)Mathf.Lerp(tempVelocity.Z, direction.Z * speed, delta * 3.0f);
         }
 
-        stateOwner.Controller.Velocity = tempVelocity;
+        ctx.Velocity = tempVelocity;
 
-        stateOwner.Controller.MoveAndSlide();
+        ctx.MoveAndSlide();
     }
 }
 
