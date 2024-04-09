@@ -11,6 +11,7 @@ public partial class GameManager : Node
     public static SurfaceMesh SurfaceMesh { get; private set; }
     public static PrefabMesh PrefabMesh { get; private set; }
     public static PlayerMovement Player { get; private set; }
+    public static ToolUser ToolUser { get; private set; }
     public static UIController UIController { get; private set; }
     public static PaletteUI PaletteUI { get; private set; }
     public static TopBarUI TopBarUI { get; private set; }
@@ -21,6 +22,7 @@ public partial class GameManager : Node
     public override void _Ready()
     {
         Player = this.GetNodeByType<PlayerMovement>();
+        ToolUser = this.GetNodeByType<ToolUser>();
         UIController = this.GetNodeByType<UIController>();
         PaletteUI = this.GetNodeByType<PaletteUI>();
         TopBarUI = this.GetNodeByType<TopBarUI>();

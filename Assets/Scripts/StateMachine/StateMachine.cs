@@ -30,6 +30,8 @@ public class StateMachine<T>
             return;
         }
 
+        if (stateDictionary[newStateType] == CurrentState) { return; }
+
         CurrentState?.OnExit();
 
         CurrentState = stateDictionary[newStateType];

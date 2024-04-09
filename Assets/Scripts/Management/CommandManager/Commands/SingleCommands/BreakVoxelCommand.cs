@@ -14,10 +14,6 @@ public class BreakVoxelCommand : VoxelCommand, ICommand
             paletteType = PaletteType.Prefab;
             paletteSwatchID = projectData.voxelPrefabs[voxelPosition];
         }
-        else
-        {
-            GD.PrintErr("Broke non exsistent block, should never happen");
-        }
     }
 
     public void Execute()

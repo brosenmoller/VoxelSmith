@@ -26,17 +26,15 @@ public class VoxelListCommand
         {
             Vector3I position = voxelPositions[i];
             VoxelType type = VoxelType.Air;
-            Guid id = Guid.Empty;
+            Guid id;
 
-            if (projectData.voxelColors.TryGetValue(position, out Guid colorID))
+            if (projectData.voxelColors.TryGetValue(position, out id))
             {
-                id = colorID;
                 containsColors = true;
                 type = VoxelType.Color;
             }
-            else if (projectData.voxelPrefabs.TryGetValue(position, out Guid prefabID))
+            else if (projectData.voxelPrefabs.TryGetValue(position, out id))
             {
-                id = prefabID;
                 containsPrefabs = true;
                 type = VoxelType.Prefab;
             }

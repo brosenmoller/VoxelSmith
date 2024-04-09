@@ -10,6 +10,8 @@ public partial class ToolUser : RayCast3D
     [ExportSubgroup("References")]
     [Export] private Node3D voxelHiglight;
     [Export] private Node3D collisionHighlight;
+    [Export] public Node3D cornerHighlight1;
+    [Export] public Node3D cornerHighlight2;
 
     private bool enabled = true;
     public bool checkForPlayerInside;
@@ -77,13 +79,7 @@ public partial class ToolUser : RayCast3D
                 collisionHighlight.GlobalPosition = Point;
             }
 
-            Vector3 insetPoint = Point - (Normal * 0.1f);
-
-            VoxelPosition = new(
-                Mathf.FloorToInt(insetPoint.X),
-                Mathf.FloorToInt(insetPoint.Y),
-                Mathf.FloorToInt(insetPoint.Z)
-            );
+            VoxelPosition = GetGridPositionFromHitPoint(Point, Normal);
 
             if (enableVoxelHighlight)
             {
@@ -104,6 +100,19 @@ public partial class ToolUser : RayCast3D
             collisionHighlight.Visible = false;
             voxelHiglight.Visible = false;
         }
+    }
+
+    public Vector3I GetGridPositionFromHitPoint(Vector3 hitPoint, Vector3 normal)
+    {
+        Vector3 insetPoint = hitPoint - (normal * 0.1f);
+
+        Vector3I voxelPosition = new(
+            Mathf.FloorToInt(insetPoint.X),
+            Mathf.FloorToInt(insetPoint.Y),
+            Mathf.FloorToInt(insetPoint.Z)
+        );
+
+        return voxelPosition;
     }
 
     public bool IsVoxelInPlayer(Vector3I voxelPosition)

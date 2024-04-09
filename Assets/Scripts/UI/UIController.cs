@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 
 public partial class UIController : Control
 {
@@ -48,6 +49,9 @@ public partial class UIController : Control
 
     private void LinkFileDialogEvents()
     {
+        Callable callable = new Callable(this, MethodName.PrintArgs);
+        DisplayServer.FileDialogShow("Get File", "", "", true, DisplayServer.FileDialogMode.OpenFile, new string[] {"*.vxsProject"}, callable);
+
         loadProjectDialog.Confirmed += () => GameManager.DataManager.LoadProject(loadProjectDialog.CurrentPath);
 
         saveProjectAsDialog.Confirmed += () => GameManager.DataManager.SaveProjectAs(saveProjectAsDialog.CurrentPath);
@@ -64,6 +68,11 @@ public partial class UIController : Control
         importConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
 
         importPaletteFromProjectFileDialog.Confirmed += () => GameManager.DataManager.ImportPaletteFromProject(importPaletteFromProjectFileDialog.CurrentPath);
+    }
+
+    public void PrintArgs(Variant arg1, Variant arg2, Variant arg3)
+    {
+        GD.PrintS(arg1, arg2, arg3);
     }
 
     public void ImportPath(string path)

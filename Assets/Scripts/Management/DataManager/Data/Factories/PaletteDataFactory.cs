@@ -73,14 +73,6 @@ public class PaletteDataFactory
             }
         );
 
-
-        //data.palletePrefabs.Add(Guid.NewGuid(), new VoxelPrefab() { 
-        //    color = Color.Color8(100, 200, 0), 
-        //    unityPrefabGuid = "67ce479430c155e4cbcd3bb0ef4f4954", 
-        //    prefabName = "TestSpehere", 
-        //    unityPrefabTransformFileId = "726921523353226827"
-        //});
-
         return data;
     }
 }
