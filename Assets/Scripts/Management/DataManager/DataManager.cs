@@ -22,6 +22,8 @@ public class DataManager : Manager
     private Camera3D camera;
     private FirstPersonCamera cameraPivot;
 
+    public static event Action OnProjectLoad;
+
     public override void Setup()
     {
         camera = GameManager.Player.GetChildByType<Camera3D>();
@@ -100,6 +102,8 @@ public class DataManager : Manager
             projectDataHolder.Data.selectedPaletteSwatchId = projectDataHolder.Data.palette.palletePrefabs.First().Key;
         }
 
+        OnProjectLoad?.Invoke();
+
         SaveProjectAs(path);
 
         GameManager.PaletteUI.Update();
@@ -167,6 +171,8 @@ public class DataManager : Manager
             {
                 projectDataHolder.Data.palette = new PaletteData();
             }
+
+            OnProjectLoad?.Invoke();
 
             GameManager.PaletteUI.Update();
             GameManager.UIController.startWindow.Hide();

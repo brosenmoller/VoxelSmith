@@ -9,6 +9,8 @@ public class CommandManager : Manager
     {
         commandBuffer = new List<ICommand>();
         commandIndex = 0;
+
+        DataManager.OnProjectLoad += ClearHistory;
     }
 
     public void ExecuteCommand(ICommand command)
@@ -42,6 +44,11 @@ public class CommandManager : Manager
         commandIndex--;
 
         if (commandIndex < 0) { commandIndex = 0; }
+    }
+
+    public void ClearHistory()
+    {
+        commandBuffer.Clear();
     }
 }
 
