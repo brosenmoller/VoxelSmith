@@ -1,0 +1,119 @@
+[gd_scene load_steps=12 format=3 uid="uid://c7s6j05eta33g"]
+
+[ext_resource type="Texture2D" uid="uid://dg55b8bihcm0n" path="res://Assets/Art/Icons/paintbrush-solid.png" id="1_4q0ds"]
+[ext_resource type="ButtonGroup" uid="uid://dsjdq6ltkms03" path="res://Assets/Resources/Tools/ToolSelectButtonGroup.tres" id="1_d6l1v"]
+[ext_resource type="Texture2D" uid="uid://b5hn3noq888v4" path="res://Assets/Art/Icons/cube-solid.png" id="3_pg565"]
+[ext_resource type="Texture2D" uid="uid://bue6hix5bofd4" path="res://Assets/Art/Icons/slash-solid.png" id="4_cgnbl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjcli"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="InputEventKey" id="InputEventKey_nabce"]
+device = -1
+ctrl_pressed = true
+keycode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_j2f1c"]
+events = [SubResource("InputEventKey_nabce")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_tpn2e"]
+device = -1
+ctrl_pressed = true
+keycode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_itrkg"]
+events = [SubResource("InputEventKey_tpn2e")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_8v1f8"]
+device = -1
+ctrl_pressed = true
+keycode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_dhsqt"]
+events = [SubResource("InputEventKey_8v1f8")]
+
+[node name="ToolSelect" type="ColorRect"]
+custom_minimum_size = Vector2(50, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 158.0
+grow_horizontal = 0
+size_flags_vertical = 3
+color = Color(0.156863, 0.156863, 0.156863, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 50.0
+
+[node name="BrushToolContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="BrushTool" type="Button" parent="VBoxContainer/BrushToolContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+tooltip_text = "Brush Tool
+"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_bjcli")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("1_d6l1v")
+shortcut = SubResource("Shortcut_j2f1c")
+icon = ExtResource("1_4q0ds")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="CubeToolContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="CubeTool" type="Button" parent="VBoxContainer/CubeToolContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+tooltip_text = "Cube Tool"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_bjcli")
+toggle_mode = true
+button_group = ExtResource("1_d6l1v")
+shortcut = SubResource("Shortcut_itrkg")
+icon = ExtResource("3_pg565")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="LineToolContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="LineTool" type="Button" parent="VBoxContainer/LineToolContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+tooltip_text = "Line Tool"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_bjcli")
+toggle_mode = true
+button_group = ExtResource("1_d6l1v")
+shortcut = SubResource("Shortcut_dhsqt")
+icon = ExtResource("4_cgnbl")
+flat = true
+icon_alignment = 1
+expand_icon = true
