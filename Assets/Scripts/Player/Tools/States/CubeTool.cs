@@ -9,6 +9,7 @@ public class CubeTool : State<ToolUser>
     private Vector3I secondPosition;
 
     private bool placeSequence;
+    private bool breakSequence;
 
     public override void OnEnter()
     {
@@ -18,35 +19,49 @@ public class CubeTool : State<ToolUser>
 
     public override void OnUpdate(double delta)
     {
-        if (!placeSequence)
+        if (!placeSequence && !breakSequence)
         {
-            firstPosition = GetPosition();
+            firstPosition = ctx.GetPosition(checkLength, emptyDistance);
             ctx.cornerHighlight1.GlobalPosition = firstPosition;
-        }
 
-        if (Input.IsActionJustPressed("place"))
-        {
-            placeSequence = true;
-            ctx.cornerHighlight2.Show();
-            ctx.meshHighlight.Show();
-        }
+            if (Input.IsActionJustPressed("place"))
+            {
+                placeSequence = true;
+            }
+            else if (Input.IsActionJustPressed("break"))
+            {
+                breakSequence = true;
+            }
 
-        if (placeSequence)
+            if (placeSequence || breakSequence)
+            {
+                ctx.cornerHighlight2.Show();
+                ctx.meshHighlight.Show();
+            }
+        }
+        else if (placeSequence || breakSequence)
         {
-            secondPosition = GetPosition();
+            secondPosition = ctx.GetPosition(checkLength, emptyDistance);
 
             Vector3I[] voxelPositions = GetAllPointsInCube();
             ctx.GenerateMeshHighlight(voxelPositions);
             ctx.cornerHighlight2.GlobalPosition = secondPosition;
 
-            if (Input.IsActionJustReleased("place"))
+            if (Input.IsActionJustReleased("place") && placeSequence)
             {
                 placeSequence = false;
+                GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxelPositions));
+            }
+            else if (Input.IsActionJustReleased("break") && breakSequence)
+            {
+                breakSequence = false;
+                GameManager.CommandManager.ExecuteCommand(new BreakListCommand(voxelPositions));
+            }
 
+            if (!placeSequence && !breakSequence)
+            {
                 ctx.cornerHighlight2.Hide();
                 ctx.meshHighlight.Hide();
-                
-                GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxelPositions));
             }
         }
     }
@@ -91,23 +106,6 @@ public class CubeTool : State<ToolUser>
         }
 
         return voxelPositions;
-    }
-
-    private Vector3I GetPosition()
-    {
-        Vector3 normalizedGlobalDirection = (-1 * ctx.GlobalTransform.Basis.Z).Normalized();
-
-        Vector3 checkEndPoint = normalizedGlobalDirection * checkLength + ctx.GlobalPosition;
-
-        if (ctx.RayCast3D(ctx.GlobalPosition, checkEndPoint, out var hitInfo, ctx.CollisionMask, false, true))
-        {
-            Vector3I voxelPostion = ctx.GetGridPositionFromHitPoint(hitInfo.position, hitInfo.normal);
-            Vector3I nextVoxel = voxelPostion + (Vector3I)hitInfo.normal.Normalized();
-            return nextVoxel;
-        }
-
-        Vector3 emptySpacePoint = normalizedGlobalDirection * emptyDistance + ctx.GlobalPosition;
-        return ctx.GetGridPositionFromHitPoint(emptySpacePoint, normalizedGlobalDirection);
     }
 }
 
