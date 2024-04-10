@@ -111,14 +111,16 @@ public partial class ToolUser : RayCast3D
     public Vector3I GetGridPositionFromHitPoint(Vector3 hitPoint, Vector3 normal)
     {
         Vector3 insetPoint = hitPoint - (normal * 0.1f);
+        return GetGridPosition(insetPoint);
+    }
 
-        Vector3I voxelPosition = new(
-            Mathf.FloorToInt(insetPoint.X),
-            Mathf.FloorToInt(insetPoint.Y),
-            Mathf.FloorToInt(insetPoint.Z)
+    public Vector3I GetGridPosition(Vector3 point)
+    {
+        return new(
+            Mathf.FloorToInt(point.X),
+            Mathf.FloorToInt(point.Y),
+            Mathf.FloorToInt(point.Z)
         );
-
-        return voxelPosition;
     }
 
     public bool IsVoxelInPlayer(Vector3I voxelPosition)
@@ -134,7 +136,7 @@ public partial class ToolUser : RayCast3D
         return playerVoxels.Contains(voxelPosition);
     }
 
-    public Vector3I GetPosition(float checkLength, float emptyDistance, bool returnNextVoxelOnHit = true)
+    public Vector3I GetVoxelPositionFromLook(float checkLength, float emptyDistance, bool returnNextVoxelOnHit = true)
     {
         Vector3 normalizedGlobalDirection = (-1 * GlobalTransform.Basis.Z).Normalized();
 
