@@ -4,14 +4,16 @@ using System.Linq;
 
 public partial class ToolUser : RayCast3D
 {
-    [Export] private bool enableCollisionHighlight;
-    [Export] private bool enableVoxelHighlight;
+    [Export] public bool enableCollisionHighlight;
 
     [ExportSubgroup("References")]
-    [Export] private Node3D voxelHiglight;
-    [Export] private Node3D collisionHighlight;
+    [Export] public Node3D voxelHiglight;
+    [Export] public Node3D collisionHighlight;
+
+    [ExportSubgroup("Cube")]
     [Export] public Node3D cornerHighlight1;
     [Export] public Node3D cornerHighlight2;
+    [Export] public Node3D cubeHighlight;
 
     private bool enabled = true;
     public bool checkForPlayerInside;
@@ -25,8 +27,7 @@ public partial class ToolUser : RayCast3D
 
     public override void _Ready()
     {
-        if (enableCollisionHighlight) { collisionHighlight.Visible = true; }
-        if (enableVoxelHighlight) { voxelHiglight.Visible = true; }
+        if (enableCollisionHighlight) { collisionHighlight.Show(); }
 
         WorldController.WentInFocusLastFrame += () => enabled = true;
         WorldController.WentOutOfFocus += () => enabled = false;
@@ -75,17 +76,11 @@ public partial class ToolUser : RayCast3D
 
             if (enableCollisionHighlight)
             {
-                collisionHighlight.Visible = true;
+                collisionHighlight.Show();
                 collisionHighlight.GlobalPosition = Point;
             }
 
             VoxelPosition = GetGridPositionFromHitPoint(Point, Normal);
-
-            if (enableVoxelHighlight)
-            {
-                voxelHiglight.Visible = true;
-                voxelHiglight.GlobalPosition = VoxelPosition;
-            }
 
             if (!enabled) { return; }
 

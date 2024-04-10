@@ -10,20 +10,23 @@ public class CubeTool : State<ToolUser>
 
     private bool placeSequence = false;
 
+    public override void OnEnter()
+    {
+        ctx.cornerHighlight1.Show();
+    }
+
     public override void OnUpdate(double delta)
     {
-        if (Input.IsActionJustPressed("place"))
+        if (!placeSequence)
         {
             firstPosition = GetPosition();
-
-            placeSequence = true;
-            ctx.cornerHighlight1.Show();
-            ctx.cornerHighlight2.Show();
-
-            GD.Print(-ctx.GetParent().GetParent<Node3D>().GlobalTransform.Basis.Z);
-            GD.Print(-ctx.GlobalTransform.Basis.Z);
-
             ctx.cornerHighlight1.GlobalPosition = firstPosition;
+        }
+
+        if (Input.IsActionJustPressed("place"))
+        {
+            placeSequence = true;
+            ctx.cornerHighlight2.Show();
         }
 
         if (placeSequence)
@@ -35,13 +38,17 @@ public class CubeTool : State<ToolUser>
         if (Input.IsActionJustReleased("place"))
         {
             placeSequence = false;
-            ctx.cornerHighlight1.Hide();
             ctx.cornerHighlight2.Hide();
 
             Vector3I[] voxelPositions = GetAllPointsInCube();
-
             GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxelPositions));
         }
+    }
+
+    public override void OnExit()
+    {
+        ctx.cornerHighlight1.Hide();
+        ctx.cornerHighlight2.Hide();
     }
 
     private Vector3I[] GetAllPointsInCube()
@@ -82,11 +89,9 @@ public class CubeTool : State<ToolUser>
 
     private Vector3I GetPosition()
     {
-        //Vector3 globalTarget = ctx.ToGlobal(ctx.TargetPosition);
-        //Vector3 normalizedGlobalDirection = (globalTarget - ctx.GlobalPosition).Normalized();
-        Vector3 normalizedGlobalDirection = (-1 * ctx.GetParent().GetParent<Node3D>().GlobalTransform.Basis.Z).Normalized();
+        Vector3 normalizedGlobalDirection = (-1 * ctx.GlobalTransform.Basis.Z).Normalized();
 
-        Vector3 checkEndPoint = normalizedGlobalDirection * checkLength;
+        Vector3 checkEndPoint = normalizedGlobalDirection * checkLength + ctx.GlobalPosition;
 
         if (ctx.RayCast3D(ctx.GlobalPosition, checkEndPoint, out var hitInfo, ctx.CollisionMask, false, true))
         {
@@ -95,7 +100,7 @@ public class CubeTool : State<ToolUser>
             return nextVoxel;
         }
 
-        Vector3 emptySpacePoint = normalizedGlobalDirection * emptyDistance;
+        Vector3 emptySpacePoint = normalizedGlobalDirection * emptyDistance + ctx.GlobalPosition;
         return ctx.GetGridPositionFromHitPoint(emptySpacePoint, normalizedGlobalDirection);
     }
 }

@@ -13,7 +13,14 @@ public class BrushTool : State<ToolUser>
 
     public override void OnUpdate(double delta)
     {
-        if (!ctx.HasHit) { return; }
+        if (!ctx.HasHit) 
+        {
+            ctx.voxelHiglight.Hide();
+            return; 
+        }
+
+        ctx.voxelHiglight.Show();
+        ctx.voxelHiglight.GlobalPosition = ctx.VoxelPosition;
 
         if (Input.IsActionJustPressed("place"))
         {
@@ -34,6 +41,10 @@ public class BrushTool : State<ToolUser>
         {
             breakTimer.Pause();
         }
+    }
+    public override void OnExit()
+    {
+        ctx.voxelHiglight.Hide();
     }
 
     private void BreakBlock()

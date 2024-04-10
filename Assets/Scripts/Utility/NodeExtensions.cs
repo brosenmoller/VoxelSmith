@@ -141,7 +141,7 @@ public static class NodeExtensions
     }
 
 
-    public static bool RayCast3D(this Node3D node, Vector3 startPosition, Vector3 endPosition, out RayCastHitInfo3D hitInfo, uint layermask = 0xffffffff, bool collideWithAreas = true, bool collideWithBodies = true)
+    public static bool RayCast3D(this Node3D node, Vector3 startPosition, Vector3 endPosition, out RayCastHitInfo3D hitInfo, uint collisionMask = 0xffffffff, bool collideWithAreas = true, bool collideWithBodies = true)
     {
         PhysicsRayQueryParameters3D query = new()
         {
@@ -150,7 +150,7 @@ public static class NodeExtensions
             HitFromInside = false,
             From = startPosition,
             To = endPosition,
-            CollisionMask = layermask,
+            CollisionMask = collisionMask,
         };
 
         return RayCast3D(node, query, out hitInfo);

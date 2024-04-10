@@ -122,14 +122,23 @@ public partial class UIController : Control
     private void UpdateFocus()
     {
         bool aWindowIsVisible = false;
-        for (int i = 0; i < windows.Length; i++)
+
+        if (GameManager.NativeDialog.visible)
         {
-            if (windows[i].Visible) 
+            aWindowIsVisible = true;
+        }
+        else
+        {
+            for (int i = 0; i < windows.Length; i++)
             {
-                aWindowIsVisible = true;
-                break;
+                if (windows[i].Visible)
+                {
+                    aWindowIsVisible = true;
+                    break;
+                }
             }
         }
+
 
         if (!aWindowIsVisible && GameManager.DataManager.ProjectData == null)
         {

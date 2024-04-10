@@ -4,10 +4,12 @@ using System;
 public partial class NativeDialog : Control
 {
     private Action<Info> OnFileDialogCallBack;
+    public bool visible = false;
 
     private void FileDialogCallBack(Variant variantStatus, Variant variantSelectedPaths, Variant variantfilterIndex)
     {
         bool status = variantStatus.AsBool();
+        visible = false;
 
         if (!status) { return; }
 
@@ -41,6 +43,7 @@ public partial class NativeDialog : Control
 
     public void ShowFileDialog(string title, DisplayServer.FileDialogMode mode, string[] filters, Action<Info> callBack, string directory = "", string fileName = "")
     {
+        visible = true;
         OnFileDialogCallBack = null;
         OnFileDialogCallBack += callBack;
         Callable callable = new(this, MethodName.FileDialogCallBack);

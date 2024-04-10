@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=22 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
@@ -50,12 +50,21 @@ albedo_color = Color(1, 0.270588, 0.270588, 1)
 radius = 0.2
 height = 0.4
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fay6r"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.309804)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nlj78"]
+uv2_padding = 0.0
+size = Vector3(1.05, 1.05, 1.05)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e14l5"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.188235, 0.560784, 0.74902, 0.4)
 
-[sub_resource type="BoxMesh" id="BoxMesh_nlj78"]
+[sub_resource type="BoxMesh" id="BoxMesh_akqf8"]
 uv2_padding = 0.0
 size = Vector3(1.05, 1.05, 1.05)
 
@@ -78,7 +87,6 @@ shadow_enabled = true
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.501172, 0.899977, 0.260335)
 
 [node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "collisionHighlight", "cornerHighlight1", "cornerHighlight2")]
-enableVoxelHighlight = true
 voxelHiglight = NodePath("../../../../VoxelHighight")
 collisionHighlight = NodePath("../../../../HitPointHighlight")
 cornerHighlight1 = NodePath("../../../../CornerHighlight1")
@@ -129,6 +137,16 @@ mesh = SubResource("SphereMesh_g7we1")
 [node name="VoxelHighight" parent="." instance=ExtResource("5_y16gt")]
 visible = false
 
+[node name="MeshHighlight" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshHighlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.475, 0.5, 0.475)
+material_override = SubResource("StandardMaterial3D_fay6r")
+transparency = 0.5
+cast_shadow = 0
+mesh = SubResource("BoxMesh_nlj78")
+
 [node name="CornerHighlight1" type="Node3D" parent="."]
 visible = false
 
@@ -137,7 +155,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.475, 0.5, 0.475)
 material_override = SubResource("StandardMaterial3D_e14l5")
 transparency = 0.5
 cast_shadow = 0
-mesh = SubResource("BoxMesh_nlj78")
+mesh = SubResource("BoxMesh_akqf8")
 
 [node name="CornerHighlight2" type="Node3D" parent="."]
 visible = false
@@ -147,6 +165,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.475, 0.5, 0.475)
 material_override = SubResource("StandardMaterial3D_vyj01")
 transparency = 0.5
 cast_shadow = 0
-mesh = SubResource("BoxMesh_nlj78")
+mesh = SubResource("BoxMesh_akqf8")
 
 [editable path="Player"]
