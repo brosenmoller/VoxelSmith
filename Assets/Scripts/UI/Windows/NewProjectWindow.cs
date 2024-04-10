@@ -5,7 +5,6 @@ public partial class NewProjectWindow : ConfirmationDialog
     [Export] private TextEdit projectName;
     [Export] private TextEdit saveDirectoryPath;
     [Export] private Button openProjectDirectoryButton;
-    [Export] private FileDialog projectDirectoryFileDialog;
     [Export] private OptionButton paletteOptionButton;
 
     [ExportSubgroup("Unused")]
@@ -14,15 +13,22 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     public override void _Ready()
     {
-        projectDirectoryFileDialog.Confirmed += OnDirectorySelected;
         Confirmed += OnNewProjectConfirmed;
 
-        openProjectDirectoryButton.Pressed += projectDirectoryFileDialog.Show;
+        openProjectDirectoryButton.Pressed += OnButtonPress;
 
-        openPaletteButton.Pressed += GameManager.UIController.loadPaletteDialog.Show;
-        newPaletteButton.Pressed += GameManager.UIController.newPaletteFileDialog.Show;
+        openPaletteButton.Pressed += GameManager.UIController.ShowLoadPaletteDialog;
+        newPaletteButton.Pressed += GameManager.UIController.ShowCreateNewPaletteDialog;
 
         SetupPaletteOptionButton();
+    }
+
+    private void OnButtonPress()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Select Project Directory", DisplayServer.FileDialogMode.OpenDir, System.Array.Empty<string>(), (NativeDialog.Info info) =>
+        {
+            OnDirectorySelected(info.path);
+        });
     }
 
     private void SetupPaletteOptionButton()
@@ -44,9 +50,9 @@ public partial class NewProjectWindow : ConfirmationDialog
         Hide();
     }
 
-    private void OnDirectorySelected()
+    private void OnDirectorySelected(string path)
     {
-        saveDirectoryPath.Text = projectDirectoryFileDialog.CurrentDir;
+        saveDirectoryPath.Text = path;
     }
 
     public enum PaletteOption

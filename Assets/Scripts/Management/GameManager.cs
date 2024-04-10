@@ -15,6 +15,7 @@ public partial class GameManager : Node
     public static UIController UIController { get; private set; }
     public static PaletteUI PaletteUI { get; private set; }
     public static TopBarUI TopBarUI { get; private set; }
+    public static NativeDialog NativeDialog { get; private set; }
 
 
     private Manager[] activeManagers;
@@ -26,6 +27,7 @@ public partial class GameManager : Node
         UIController = this.GetNodeByType<UIController>();
         PaletteUI = this.GetNodeByType<PaletteUI>();
         TopBarUI = this.GetNodeByType<TopBarUI>();
+        NativeDialog = this.GetNodeByType<NativeDialog>();
         
         SurfaceMesh = this.GetNodeByType<SurfaceMesh>();
         PrefabMesh = this.GetNodeByType<PrefabMesh>();
@@ -65,20 +67,20 @@ public partial class GameManager : Node
         EditMenu.OnRedoPressed += CommandManager.StepForward;
 
         ProjectMenu.OnSavePressed += DataManager.SaveProject;
-        ProjectMenu.OnSaveAsPressed += UIController.saveProjectAsDialog.Show;
+        ProjectMenu.OnSaveAsPressed += UIController.ShowSaveProjectAsDialog;
         ProjectMenu.OnNewPressed += UIController.newProjectDialog.Show;
-        ProjectMenu.OnOpenPressed += UIController.loadProjectDialog.Show;
+        ProjectMenu.OnOpenPressed += UIController.ShowLoadProjectDialog;
 
-        ProjectMenu.OnExportUnityPrefabPressed += UIController.exportPrefabDialog.Show;
-        ProjectMenu.OnExportMeshPressed += UIController.exportMeshDialog.Show;
+        ProjectMenu.OnExportUnityPrefabPressed += UIController.ShowExportUnityPrefabDialog;
+        ProjectMenu.OnExportMeshPressed += UIController.ShowExportMeshDialog;
 
-        ProjectMenu.OnImportSchematicPressed += UIController.importSchematicFileDialog.Show;
+        ProjectMenu.OnImportSchematicPressed += UIController.ShowImportSchematicDialog;
 
-        PaletteMenu.OnOpenPressed += UIController.loadPaletteDialog.Show;
-        PaletteMenu.OnSaveAsPressed += UIController.savePaletteAsDialog.Show;
-        PaletteMenu.OnNewPressed += UIController.newPaletteFileDialog.Show;
+        PaletteMenu.OnOpenPressed += UIController.ShowLoadPaletteDialog;
+        PaletteMenu.OnSaveAsPressed += UIController.ShowSavePaletteAsDialog;
+        PaletteMenu.OnNewPressed += UIController.ShowCreateNewPaletteDialog;
         PaletteMenu.OnSavePressed += DataManager.SavePalette;
-        PaletteMenu.OnImportFromProjectPressed += UIController.importPaletteFromProjectFileDialog.Show;
+        PaletteMenu.OnImportFromProjectPressed += UIController.ShowImportPaletteFromProjectDialog;
     }
 
     public override void _Process(double delta)

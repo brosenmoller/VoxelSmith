@@ -1,32 +1,16 @@
 using Godot;
-using Godot.NativeInterop;
+using System;
 
 public partial class UIController : Control
 {
     [ExportGroup("Window References")]
     [Export] public StartWindow startWindow;
 
-    [ExportGroup("Files")]
-    [ExportSubgroup("Project")]
+    [ExportGroup("Dialogs")]
     [Export] public ConfirmationDialog newProjectDialog;
-    [Export] public FileDialog loadProjectDialog;
-    [Export] public FileDialog saveProjectAsDialog;
-
-    [ExportSubgroup("Palette")]
-    [Export] public FileDialog newPaletteFileDialog;
-    [Export] public FileDialog loadPaletteDialog;
-    [Export] public FileDialog savePaletteAsDialog;
-
-    [ExportSubgroup("Export")]
-    [Export] public FileDialog exportPrefabDialog;
-    [Export] public FileDialog exportMeshDialog;
-
-    [ExportSubgroup("Import")]
-    [Export] public FileDialog importSchematicFileDialog;
     [Export] public ConfirmationDialog importConfirmationDialog;
-    [Export] public FileDialog importPaletteFromProjectFileDialog;
-    private string importPath;
 
+    private string importPath;
 
     private WorldController worldController;
 
@@ -34,7 +18,8 @@ public partial class UIController : Control
 
     public override void _Ready()
     {
-        LinkFileDialogEvents();
+        importConfirmationDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importPath);
+        importConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
 
         worldController = this.GetChildByType<WorldController>();
         windows = this.GetAllChildrenByType<Window>();
@@ -47,33 +32,77 @@ public partial class UIController : Control
         UpdateFocus();
     }
 
-    private void LinkFileDialogEvents()
+    public void ShowLoadProjectDialog()
     {
-        Callable callable = new Callable(this, MethodName.PrintArgs);
-        DisplayServer.FileDialogShow("Get File", "", "", true, DisplayServer.FileDialogMode.OpenFile, new string[] {"*.vxsProject"}, callable);
-
-        loadProjectDialog.Confirmed += () => GameManager.DataManager.LoadProject(loadProjectDialog.CurrentPath);
-
-        saveProjectAsDialog.Confirmed += () => GameManager.DataManager.SaveProjectAs(saveProjectAsDialog.CurrentPath);
-
-        newPaletteFileDialog.Confirmed += () => GameManager.DataManager.CreateNewPalette(newPaletteFileDialog.CurrentPath);
-        loadPaletteDialog.Confirmed += () => GameManager.DataManager.LoadPalette(loadPaletteDialog.CurrentPath);
-        savePaletteAsDialog.Confirmed += () => GameManager.DataManager.SavePaletteAs(savePaletteAsDialog.CurrentPath);
-
-        exportPrefabDialog.Confirmed += () => GameManager.ExportManager.ExportUnityPrefab(exportPrefabDialog.CurrentDir, exportPrefabDialog.CurrentFile);
-        exportMeshDialog.Confirmed += () => GameManager.ExportManager.ExportMesh(exportMeshDialog.CurrentDir, exportMeshDialog.CurrentFile);
-
-        importSchematicFileDialog.Confirmed += () => ImportPath(importSchematicFileDialog.CurrentPath);
-        importConfirmationDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importPath);
-        importConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
-
-        importPaletteFromProjectFileDialog.Confirmed += () => GameManager.DataManager.ImportPaletteFromProject(importPaletteFromProjectFileDialog.CurrentPath);
+        GameManager.NativeDialog.ShowFileDialog("Open a Project File", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
+        {
+            GameManager.DataManager.LoadProject(info.path);
+        });
     }
 
-    public void PrintArgs(Variant arg1, Variant arg2, Variant arg3)
+    public void ShowSaveProjectAsDialog()
     {
-        GD.PrintS(arg1, arg2, arg3);
+        GameManager.NativeDialog.ShowFileDialog("Save Project As", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
+        {
+            GameManager.DataManager.SaveProjectAs(info.path);
+        });
     }
+
+    public void ShowCreateNewPaletteDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Create New Palette", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsPalette" }, (NativeDialog.Info info) =>
+        {
+            GameManager.DataManager.CreateNewPalette(info.path);
+        });
+    }
+    public void ShowLoadPaletteDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Load Palette", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsPalette" }, (NativeDialog.Info info) =>
+        {
+            GameManager.DataManager.LoadPalette(info.path);
+        });
+    }
+
+    public void ShowSavePaletteAsDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Save Palette As", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsPalette" }, (NativeDialog.Info info) =>
+        {
+            GameManager.DataManager.SavePaletteAs(info.path);
+        });
+    }
+
+    public void ShowImportPaletteFromProjectDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Import Palette From Project", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
+        {
+            GameManager.DataManager.ImportPaletteFromProject(info.path);
+        });
+    }
+
+    public void ShowExportUnityPrefabDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Export Unity Prefab", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.prefab" }, (NativeDialog.Info info) =>
+        {
+            GameManager.ExportManager.ExportUnityPrefab(info.directory, info.fileName);
+        });
+    }
+
+    public void ShowExportMeshDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Export Obj Mesh", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.obj" }, (NativeDialog.Info info) =>
+        {
+            GameManager.ExportManager.ExportMesh(info.directory, info.fileName);
+        });
+    }
+
+    public void ShowImportSchematicDialog()
+    {
+        GameManager.NativeDialog.ShowFileDialog("Import Minecraft Schematic", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.schem", "*.schematic" }, (NativeDialog.Info info) =>
+        {
+            ImportPath(info.path);
+        });
+    }
+
 
     public void ImportPath(string path)
     {

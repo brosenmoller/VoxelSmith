@@ -25,8 +25,7 @@ public partial class TopBarUI : Control
         ToggleInfiniteReach(hasInfiniteReachToggle.ButtonPressed);
         ToggleNoColissions(hasDisabledCollisionsToggle.ButtonPressed);
 
-        playerMode.OnPlayerMovmenetModeSelected += GameManager.Player.ChangeState;
-        playerMode.OnPlayerMovmenetModeSelected += (PlayerMovementState state) => GD.Print(state.ToString());
+        playerMode.OnPlayerMovementModeSelected += GameManager.Player.ChangeState;
 
         hasInfiniteReachToggle.Toggled += ToggleInfiniteReach;
         hasDisabledCollisionsToggle.Toggled += ToggleNoColissions;

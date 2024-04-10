@@ -13,7 +13,7 @@ public partial class StartWindow : Window
 
     private void LoadProject()
     {
-        GameManager.UIController.loadProjectDialog.Show();
+        GameManager.UIController.ShowLoadProjectDialog();
         Hide();
     }
 

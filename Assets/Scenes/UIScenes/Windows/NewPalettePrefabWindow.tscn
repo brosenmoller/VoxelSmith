@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bx0ocyu68yd8g" path="res://Assets/Art/Icons/plus-solid-white.svg" id="2_fe2lv"]
 [ext_resource type="Texture2D" uid="uid://de28wltf8x3l6" path="res://Assets/Art/Icons/trash-solid.svg" id="3_b8nwe"]
 
-[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "loadPrefabFileDialog", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker", "minecraftIDEdit")]
+[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker", "minecraftIDEdit")]
 title = "Create new Palette Prefab"
 initial_position = 2
 size = Vector2i(400, 341)
@@ -12,7 +12,6 @@ visible = true
 ok_button_text = "Create"
 script = ExtResource("1_rfhmd")
 loadPrefabButton = NodePath("VBoxContainer/LoadPrefabButton/Button")
-loadPrefabFileDialog = NodePath("VBoxContainer/LoadPrefabFileDialog")
 prefabNameTextEdit = NodePath("VBoxContainer/PrefabName/TextEdit")
 godotSceneIdTextEdit = NodePath("VBoxContainer/godotSceneID/TextEdit")
 unityPrefabGuidTextEdit = NodePath("VBoxContainer/PrefabGUID/TextEdit")
@@ -198,16 +197,6 @@ theme_override_constants/margin_right = 50
 [node name="Button" type="Button" parent="VBoxContainer/LoadPrefabButton"]
 layout_mode = 2
 text = "Load Prefab"
-
-[node name="LoadPrefabFileDialog" type="FileDialog" parent="VBoxContainer"]
-title = "Open a File"
-initial_position = 2
-size = Vector2i(800, 600)
-ok_button_text = "Open"
-dialog_close_on_escape = false
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.prefab", "*.tscn")
 
 [node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="."]
 title = "Are you sure?"

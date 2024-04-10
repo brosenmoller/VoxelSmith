@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/NewProjectWindow.cs" id="1_rlr1p"]
 
-[node name="NewProjectWindow" type="ConfirmationDialog" node_paths=PackedStringArray("projectName", "saveDirectoryPath", "openProjectDirectoryButton", "projectDirectoryFileDialog", "paletteOptionButton", "openPaletteButton", "newPaletteButton")]
+[node name="NewProjectWindow" type="ConfirmationDialog" node_paths=PackedStringArray("projectName", "saveDirectoryPath", "openProjectDirectoryButton", "paletteOptionButton", "openPaletteButton", "newPaletteButton")]
 title = "Create New Project"
 initial_position = 2
 size = Vector2i(540, 207)
@@ -14,7 +14,6 @@ script = ExtResource("1_rlr1p")
 projectName = NodePath("VBoxContainer/ProjectNameEdit")
 saveDirectoryPath = NodePath("VBoxContainer/SaveDirectoryGroup/SaveDirectoryPathEdit")
 openProjectDirectoryButton = NodePath("VBoxContainer/SaveDirectoryGroup/FileDialogButton")
-projectDirectoryFileDialog = NodePath("OpenDirectoryFileDialog")
 paletteOptionButton = NodePath("VBoxContainer/PalleteDropdown/OptionButton")
 openPaletteButton = NodePath("VBoxContainer/PalletePath/FileDialogButton")
 newPaletteButton = NodePath("VBoxContainer/PalletePath/CreateNewPalleteButton")
@@ -99,13 +98,3 @@ text = "Palette
 
 [node name="OptionButton" type="OptionButton" parent="VBoxContainer/PalleteDropdown"]
 layout_mode = 2
-
-[node name="OpenDirectoryFileDialog" type="FileDialog" parent="."]
-title = "Open a Directory"
-initial_position = 2
-size = Vector2i(800, 600)
-always_on_top = true
-popup_window = true
-ok_button_text = "Select Current Folder"
-file_mode = 2
-access = 2

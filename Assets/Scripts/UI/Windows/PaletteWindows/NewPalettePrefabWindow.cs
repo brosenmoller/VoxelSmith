@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 public partial class NewPalettePrefabWindow : PaletteEditWindow
 {
     [Export] private Button loadPrefabButton;
-    [Export] private FileDialog loadPrefabFileDialog;
 
     [Export] private TextEdit prefabNameTextEdit;
 
@@ -18,8 +17,7 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
 
     protected override void OnReady()
     {
-        loadPrefabButton.Pressed += loadPrefabFileDialog.Show;
-        loadPrefabFileDialog.Confirmed += LoadPrefab;
+        loadPrefabButton.Pressed += OnButtonPress;
 
         prefabNameTextEdit.RemoveChild(prefabNameTextEdit.GetVScrollBar());
         godotSceneIdTextEdit.RemoveChild(godotSceneIdTextEdit.GetVScrollBar());
@@ -27,14 +25,22 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
         unityPrefabTranformFileIdTextEdit.RemoveChild(unityPrefabTranformFileIdTextEdit.GetVScrollBar());
     }
 
-    private void LoadPrefab()
+    private void OnButtonPress()
     {
-        if (loadPrefabFileDialog.CurrentFile.Length <= 0 || loadPrefabFileDialog.CurrentDir.Length <= 0) 
+        GameManager.NativeDialog.ShowFileDialog("Open a Prefab File", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.prefab", "*.tscn" }, (NativeDialog.Info info) =>
+        {
+            LoadPrefab(info.directory, info.fileName);
+        });
+    }
+
+    private void LoadPrefab(string dir, string file)
+    {
+        if (dir.Length <= 0 || file.Length <= 0) 
         { 
             return; 
         }
 
-        string prefabPath = Path.Combine(loadPrefabFileDialog.CurrentDir, loadPrefabFileDialog.CurrentFile);
+        string prefabPath = Path.Combine(dir, file);
         string prefabMetaPath = prefabPath + ".meta";
 
         if (!File.Exists(prefabPath) || !File.Exists(prefabMetaPath))

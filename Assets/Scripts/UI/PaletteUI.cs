@@ -107,8 +107,6 @@ public partial class PaletteUI : BoxContainer
             palettePrefabsContainer.GetChildren()[i].QueueFree();
         }
 
-        GD.Print(GameManager.DataManager.PaletteData.palletePrefabs.Count);
-
         foreach (var palettePrefab in GameManager.DataManager.PaletteData.palletePrefabs)
         {
             VoxelPrefab voxeldata = palettePrefab.Value;

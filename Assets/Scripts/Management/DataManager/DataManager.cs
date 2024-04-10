@@ -324,7 +324,7 @@ public class DataManager : Manager
             if (paletteDataHolder.Data == null)
             {
                 // TODO : Show Error
-                GameManager.UIController.loadPaletteDialog.Show();
+                GameManager.UIController.ShowLoadPaletteDialog();
             }
         }
     }
