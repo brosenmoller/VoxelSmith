@@ -40,6 +40,7 @@ public partial class ToolUser : RayCast3D
         stateMachine = new StateMachine<ToolUser>(
             this,
             new BrushTool(),
+            new SpeedBrushTool(),
             new CubeTool(),
             new LineTool()
         );
@@ -131,6 +132,30 @@ public partial class ToolUser : RayCast3D
         playerVoxels[1] = playerVoxels[0] + Vector3I.Down;
 
         return playerVoxels.Contains(voxelPosition);
+    }
+
+    public Vector3I GetPosition(float checkLength, float emptyDistance, bool returnNextVoxelOnHit = true)
+    {
+        Vector3 normalizedGlobalDirection = (-1 * GlobalTransform.Basis.Z).Normalized();
+
+        Vector3 checkEndPoint = normalizedGlobalDirection * checkLength + GlobalPosition;
+
+        if (this.RayCast3D(GlobalPosition, checkEndPoint, out var hitInfo, CollisionMask, false, true))
+        {
+            Vector3I voxelPostion = GetGridPositionFromHitPoint(hitInfo.position, hitInfo.normal);
+            if (returnNextVoxelOnHit)
+            {
+                Vector3I nextVoxel = voxelPostion + (Vector3I)hitInfo.normal.Normalized();
+                return nextVoxel;
+            }
+            else
+            {
+                return voxelPostion;
+            }
+        }
+
+        Vector3 emptySpacePoint = normalizedGlobalDirection * emptyDistance + GlobalPosition;
+        return GetGridPositionFromHitPoint(emptySpacePoint, normalizedGlobalDirection);
     }
 
     private void PickBlock(Vector3I voxelPosition)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7s6j05eta33g"]
+[gd_scene load_steps=16 format=3 uid="uid://c7s6j05eta33g"]
 
 [ext_resource type="Texture2D" uid="uid://dg55b8bihcm0n" path="res://Assets/Art/Icons/paintbrush-solid.png" id="1_4q0ds"]
 [ext_resource type="ButtonGroup" uid="uid://dsjdq6ltkms03" path="res://Assets/Resources/Tools/ToolSelectButtonGroup.tres" id="1_d6l1v"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/ToolSelectUI.cs" id="1_isyru"]
 [ext_resource type="Texture2D" uid="uid://b5hn3noq888v4" path="res://Assets/Art/Icons/cube-solid.png" id="3_pg565"]
 [ext_resource type="Texture2D" uid="uid://bue6hix5bofd4" path="res://Assets/Art/Icons/slash-solid.png" id="4_cgnbl"]
+[ext_resource type="Texture2D" uid="uid://dk1v4wy8hmdho" path="res://Assets/Art/Icons/pickaxe.png" id="4_soxf8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjcli"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -17,10 +18,18 @@ keycode = 49
 [sub_resource type="Shortcut" id="Shortcut_j2f1c"]
 events = [SubResource("InputEventKey_nabce")]
 
-[sub_resource type="InputEventKey" id="InputEventKey_tpn2e"]
+[sub_resource type="InputEventKey" id="InputEventKey_2ddw5"]
 device = -1
 ctrl_pressed = true
 keycode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_oxfua"]
+events = [SubResource("InputEventKey_2ddw5")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_tpn2e"]
+device = -1
+ctrl_pressed = true
+keycode = 51
 
 [sub_resource type="Shortcut" id="Shortcut_itrkg"]
 events = [SubResource("InputEventKey_tpn2e")]
@@ -28,12 +37,12 @@ events = [SubResource("InputEventKey_tpn2e")]
 [sub_resource type="InputEventKey" id="InputEventKey_8v1f8"]
 device = -1
 ctrl_pressed = true
-keycode = 51
+keycode = 52
 
 [sub_resource type="Shortcut" id="Shortcut_dhsqt"]
 events = [SubResource("InputEventKey_8v1f8")]
 
-[node name="ToolSelect" type="ColorRect" node_paths=PackedStringArray("brushButton", "cubeButton", "lineButton")]
+[node name="ToolSelect" type="ColorRect" node_paths=PackedStringArray("brushButton", "speedBrushButton", "cubeButton", "lineButton")]
 custom_minimum_size = Vector2(50, 0)
 anchors_preset = 1
 anchor_left = 1.0
@@ -45,6 +54,7 @@ size_flags_vertical = 3
 color = Color(0.156863, 0.156863, 0.156863, 1)
 script = ExtResource("1_isyru")
 brushButton = NodePath("VBoxContainer/BrushToolContainer/BrushTool")
+speedBrushButton = NodePath("VBoxContainer/SpeedBrushToolContainer/SpeedBrushTool")
 cubeButton = NodePath("VBoxContainer/CubeToolContainer/CubeTool")
 lineButton = NodePath("VBoxContainer/LineToolContainer/LineTool")
 
@@ -73,6 +83,29 @@ button_pressed = true
 button_group = ExtResource("1_d6l1v")
 shortcut = SubResource("Shortcut_j2f1c")
 icon = ExtResource("1_4q0ds")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="SpeedBrushToolContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SpeedBrushTool" type="Button" parent="VBoxContainer/SpeedBrushToolContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+tooltip_text = "Speed Brush Tool"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_bjcli")
+toggle_mode = true
+button_group = ExtResource("1_d6l1v")
+shortcut = SubResource("Shortcut_oxfua")
+icon = ExtResource("4_soxf8")
 flat = true
 icon_alignment = 1
 expand_icon = true

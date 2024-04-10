@@ -2,8 +2,8 @@
 
 public class BrushTool : State<ToolUser>
 {
-    private readonly VoxelSmith.Timer placeTimer;
-    private readonly VoxelSmith.Timer breakTimer;
+    protected readonly VoxelSmith.Timer placeTimer;
+    protected readonly VoxelSmith.Timer breakTimer;
 
     public BrushTool() 
     {
