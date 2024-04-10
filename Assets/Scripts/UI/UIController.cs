@@ -12,7 +12,7 @@ public partial class UIController : Control
 
     private string importPath;
 
-    private WorldController worldController;
+    public WorldController worldController;
 
     private Window[] windows;
 
@@ -97,7 +97,7 @@ public partial class UIController : Control
 
     public void ShowImportSchematicDialog()
     {
-        GameManager.NativeDialog.ShowFileDialog("Import Minecraft Schematic", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.schem", "*.schematic" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Import Minecraft Schematic", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.schem", "*.schematic" }, (NativeDialog.Info info) =>
         {
             ImportPath(info.path);
         });

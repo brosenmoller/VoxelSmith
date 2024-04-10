@@ -86,9 +86,9 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.501172, 0.899977, 0.260335)
 
-[node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "collisionHighlight", "cornerHighlight1", "cornerHighlight2")]
+[node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "meshHighlight", "cornerHighlight1", "cornerHighlight2")]
 voxelHiglight = NodePath("../../../../VoxelHighight")
-collisionHighlight = NodePath("../../../../HitPointHighlight")
+meshHighlight = NodePath("../../../../MeshHighlight")
 cornerHighlight1 = NodePath("../../../../CornerHighlight1")
 cornerHighlight2 = NodePath("../../../../CornerHighlight2")
 
@@ -138,6 +138,7 @@ mesh = SubResource("SphereMesh_g7we1")
 visible = false
 
 [node name="MeshHighlight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -0.5)
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshHighlight"]

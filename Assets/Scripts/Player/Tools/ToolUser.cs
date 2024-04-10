@@ -8,12 +8,12 @@ public partial class ToolUser : RayCast3D
 
     [ExportSubgroup("References")]
     [Export] public Node3D voxelHiglight;
-    [Export] public Node3D collisionHighlight;
+    [Export] public Node3D meshHighlight;
+    private MeshInstance3D meshHighlightMeshInstance;
 
     [ExportSubgroup("Cube")]
     [Export] public Node3D cornerHighlight1;
     [Export] public Node3D cornerHighlight2;
-    [Export] public Node3D cubeHighlight;
 
     private bool enabled = true;
     public bool checkForPlayerInside;
@@ -25,9 +25,14 @@ public partial class ToolUser : RayCast3D
     public Vector3I VoxelPosition { get; private set; }
     public Vector3 Normal { get; private set; }
 
+    private MeshGenerator<VoxelData> meshGenerator;
+
     public override void _Ready()
     {
-        if (enableCollisionHighlight) { collisionHighlight.Show(); }
+        if (enableCollisionHighlight) { meshHighlight.Show(); }
+
+        meshGenerator = new MeshGenerator<VoxelData>();
+        meshHighlightMeshInstance = meshHighlight.GetChildByType<MeshInstance3D>();
 
         WorldController.WentInFocusLastFrame += () => enabled = true;
         WorldController.WentOutOfFocus += () => enabled = false;
@@ -76,8 +81,8 @@ public partial class ToolUser : RayCast3D
 
             if (enableCollisionHighlight)
             {
-                collisionHighlight.Show();
-                collisionHighlight.GlobalPosition = Point;
+                meshHighlight.Show();
+                meshHighlight.GlobalPosition = Point;
             }
 
             VoxelPosition = GetGridPositionFromHitPoint(Point, Normal);
@@ -92,9 +97,14 @@ public partial class ToolUser : RayCast3D
         else
         {
             HasHit = false;
-            collisionHighlight.Visible = false;
+            meshHighlight.Visible = false;
             voxelHiglight.Visible = false;
         }
+    }
+
+    public void GenerateMeshHighlight(Vector3I[] voxelPositions)
+    {
+        meshHighlightMeshInstance.Mesh = meshGenerator.CreateMesh(voxelPositions);
     }
 
     public Vector3I GetGridPositionFromHitPoint(Vector3 hitPoint, Vector3 normal)

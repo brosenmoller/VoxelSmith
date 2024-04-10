@@ -43,6 +43,9 @@ public partial class NativeDialog : Control
 
     public void ShowFileDialog(string title, DisplayServer.FileDialogMode mode, string[] filters, Action<Info> callBack, string directory = "", string fileName = "")
     {
+        // Hacky
+        GameManager.UIController.worldController.WorldInFocus = false;
+
         visible = true;
         OnFileDialogCallBack = null;
         OnFileDialogCallBack += callBack;

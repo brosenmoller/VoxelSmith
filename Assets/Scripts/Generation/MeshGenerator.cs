@@ -47,28 +47,50 @@ public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
         else { defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true }; }
     }
 
-    public Mesh CreateMesh(Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, TVoxelData> palette)
+    public MeshGenerator()
+    {
+        surfaceTool = new SurfaceTool();
+        defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true };
+    }
+
+    public Mesh CreateColorMesh(Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, TVoxelData> palette)
     {
         surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
         surfaceTool.SetMaterial(defaultMaterial);
 
+        HashSet<Vector3I> voxelPositions = new(voxels.Keys);
+
         foreach (Vector3I voxel in voxels.Keys)
         {
-            CreateVoxel(voxel, palette[voxels[voxel]].color, voxels);
+            surfaceTool.SetColor(palette[voxels[voxel]].color);
+            CreateVoxel(voxel, voxelPositions);
         }
 
         surfaceTool.Index();
         return surfaceTool.Commit();
     }
 
-    private void CreateVoxel(Vector3I position, Color color, Dictionary<Vector3I, Guid> voxels)
+    public Mesh CreateMesh(Vector3I[] voxelPositionList)
+    {
+        surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
+
+        HashSet<Vector3I> voxelPositions = new(voxelPositionList);
+
+        foreach (Vector3I voxel in voxelPositions)
+        {
+            CreateVoxel(voxel, voxelPositions);
+        }
+
+        surfaceTool.Index();
+        return surfaceTool.Commit();
+    }
+
+    private void CreateVoxel(Vector3I position, HashSet<Vector3I> voxelPositions)
     {
         for (int i = 0; i < 6; i++)
         {
-            faces[i] = !voxels.ContainsKey(position + offsets[i]);
+            faces[i] = !voxelPositions.Contains(position + offsets[i]);
         }
-
-        surfaceTool.SetColor(color);
 
         void addVertex(Vector3 pos, Vector2 uv)
         {

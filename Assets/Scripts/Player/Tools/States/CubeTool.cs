@@ -8,11 +8,12 @@ public class CubeTool : State<ToolUser>
     private Vector3I firstPosition;
     private Vector3I secondPosition;
 
-    private bool placeSequence = false;
+    private bool placeSequence;
 
     public override void OnEnter()
     {
         ctx.cornerHighlight1.Show();
+        placeSequence = false;
     }
 
     public override void OnUpdate(double delta)
@@ -27,21 +28,26 @@ public class CubeTool : State<ToolUser>
         {
             placeSequence = true;
             ctx.cornerHighlight2.Show();
+            ctx.meshHighlight.Show();
         }
 
         if (placeSequence)
         {
             secondPosition = GetPosition();
-            ctx.cornerHighlight2.GlobalPosition = secondPosition;
-        }
-
-        if (Input.IsActionJustReleased("place"))
-        {
-            placeSequence = false;
-            ctx.cornerHighlight2.Hide();
 
             Vector3I[] voxelPositions = GetAllPointsInCube();
-            GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxelPositions));
+            ctx.GenerateMeshHighlight(voxelPositions);
+            ctx.cornerHighlight2.GlobalPosition = secondPosition;
+
+            if (Input.IsActionJustReleased("place"))
+            {
+                placeSequence = false;
+
+                ctx.cornerHighlight2.Hide();
+                ctx.meshHighlight.Hide();
+                
+                GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxelPositions));
+            }
         }
     }
 
