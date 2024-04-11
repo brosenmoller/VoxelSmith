@@ -76,9 +76,9 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.501172, 0.899977, 0.
 
 [node name="RayCastVoxelPlacer" parent="Player/HeadPivot/Camera3D" index="0" node_paths=PackedStringArray("voxelHiglight", "meshHighlight", "cornerHighlight1", "cornerHighlight2")]
 voxelHiglight = NodePath("../../../../VoxelHighight")
-meshHighlight = NodePath("../../../../MeshHighlight")
-blueMaterial = ExtResource("10_s0rvl")
+whiteMaterial = ExtResource("9_qvph6")
 redMaterial = ExtResource("4_b1jf1")
+meshHighlight = NodePath("../../../../MeshHighlight")
 cornerHighlight1 = NodePath("../../../../CornerHighlight1")
 cornerHighlight2 = NodePath("../../../../CornerHighlight2")
 

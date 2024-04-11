@@ -18,12 +18,14 @@ public partial class PlayerMovement : CharacterBody3D
     [Export] public Vector2 minMaxFlySpeed;
     [Export] public float flySpeedChangeStep;
     [Export] public float startFlySpeed;
-    [Export] public float ySpeed;
 
     [ExportGroup("References")]
     [Export] public Node3D pivot;
 
     private bool active = false;
+
+    public float horizontalFlySpeed;
+    public float verticalFlySpeed;
 
     private StateMachine<PlayerMovement> stateMachine;
     

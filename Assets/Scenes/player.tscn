@@ -15,7 +15,6 @@ script = ExtResource("1_xuqap")
 minMaxFlySpeed = Vector2(1, 40)
 flySpeedChangeStep = 1.0
 startFlySpeed = 5.0
-ySpeed = 5.0
 pivot = NodePath("HeadPivot")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
