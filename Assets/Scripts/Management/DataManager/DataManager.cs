@@ -50,7 +50,6 @@ public class DataManager : Manager
 
         try
         {
-            GD.Print(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
             LoadProject(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
         }
         catch (Exception e)

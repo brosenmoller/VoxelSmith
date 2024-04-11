@@ -47,6 +47,15 @@ public abstract class TwoPointsTool : State<ToolUser>
             ctx.GenerateMeshHighlight(voxelPositions);
             ctx.cornerHighlight2.GlobalPosition = secondPosition;
 
+            if (Input.IsActionJustPressed("place") && breakSequence)
+            {
+                breakSequence = false;
+            }
+            else if (Input.IsActionJustPressed("break") && placeSequence)
+            {
+                placeSequence = false;
+            }
+
             if (Input.IsActionJustReleased("place") && placeSequence)
             {
                 placeSequence = false;
