@@ -27,10 +27,12 @@ public abstract class TwoPointsTool : State<ToolUser>
             if (Input.IsActionJustPressed("place"))
             {
                 placeSequence = true;
+                ctx.meshHighlightMeshInstance.MaterialOverride = ctx.whiteMaterial;
             }
             else if (Input.IsActionJustPressed("break"))
             {
                 breakSequence = true;
+                ctx.meshHighlightMeshInstance.MaterialOverride = ctx.redMaterial;
             }
 
             if (placeSequence || breakSequence)

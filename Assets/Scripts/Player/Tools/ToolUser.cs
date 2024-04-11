@@ -8,8 +8,10 @@ public partial class ToolUser : RayCast3D
 
     [ExportSubgroup("References")]
     [Export] public Node3D voxelHiglight;
+    [Export] public Material whiteMaterial;
+    [Export] public Material redMaterial;
     [Export] public Node3D meshHighlight;
-    private MeshInstance3D meshHighlightMeshInstance;
+    public MeshInstance3D meshHighlightMeshInstance;
 
     [ExportSubgroup("Cube")]
     [Export] public Node3D cornerHighlight1;
