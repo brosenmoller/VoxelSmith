@@ -19,6 +19,7 @@ public partial class ToolUser : RayCast3D
 
     private bool enabled = true;
     public bool checkForPlayerInside;
+    public bool selectInsideEnabled = false;
 
     private StateMachine<ToolUser> stateMachine;
 
@@ -138,7 +139,7 @@ public partial class ToolUser : RayCast3D
         return playerVoxels.Contains(voxelPosition);
     }
 
-    public Vector3I GetVoxelPositionFromLook(float checkLength, float emptyDistance, bool returnNextVoxelOnHit = true)
+    public Vector3I GetVoxelPositionFromLook(float checkLength, float emptyDistance, bool selectInside = false)
     {
         Vector3 normalizedGlobalDirection = (-1 * GlobalTransform.Basis.Z).Normalized();
 
@@ -147,14 +148,14 @@ public partial class ToolUser : RayCast3D
         if (this.RayCast3D(GlobalPosition, checkEndPoint, out var hitInfo, CollisionMask, false, true))
         {
             Vector3I voxelPostion = GetGridPositionFromHitPoint(hitInfo.position, hitInfo.normal);
-            if (returnNextVoxelOnHit)
+            if (selectInside)
             {
-                Vector3I nextVoxel = voxelPostion + (Vector3I)hitInfo.normal.Normalized();
-                return nextVoxel;
+                return voxelPostion;
             }
             else
             {
-                return voxelPostion;
+                Vector3I nextVoxel = voxelPostion + (Vector3I)hitInfo.normal.Normalized();
+                return nextVoxel;
             }
         }
 
