@@ -2,7 +2,6 @@
 
 public abstract class TwoPointsTool : State<ToolUser>
 {
-    protected const float checkLength = 7;
     protected const float emptyDistance = 3;
 
     protected Vector3I firstPosition;
@@ -15,13 +14,14 @@ public abstract class TwoPointsTool : State<ToolUser>
     {
         ctx.cornerHighlight1.Show();
         placeSequence = false;
+        breakSequence = false;
     }
 
     public override void OnUpdate(double delta)
     {
         if (!placeSequence && !breakSequence)
         {
-            firstPosition = ctx.GetVoxelPositionFromLook(checkLength, emptyDistance);
+            firstPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
             ctx.cornerHighlight1.GlobalPosition = firstPosition;
 
             if (Input.IsActionJustPressed("place"))
@@ -43,7 +43,7 @@ public abstract class TwoPointsTool : State<ToolUser>
         }
         else if (placeSequence || breakSequence)
         {
-            secondPosition = ctx.GetVoxelPositionFromLook(checkLength, emptyDistance);
+            secondPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
 
             Vector3I[] voxelPositions = GetVoxelPositions();
             ctx.GenerateMeshHighlight(voxelPositions);
@@ -81,6 +81,7 @@ public abstract class TwoPointsTool : State<ToolUser>
     {
         ctx.cornerHighlight1.Hide();
         ctx.cornerHighlight2.Hide();
+        ctx.meshHighlight.Hide();
     }
 
     protected abstract Vector3I[] GetVoxelPositions();
