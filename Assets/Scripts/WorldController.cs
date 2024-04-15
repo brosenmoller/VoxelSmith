@@ -27,9 +27,24 @@ public partial class WorldController : Node3D
     public override void _Ready()
     {
         Instance = this;
+        
 
         player = this.GetChildByType<PlayerMovement>();
         WorldInFocus = false;
+    }
+
+    public override void _Notification(int notificationID)
+    {
+        switch (notificationID)
+        {
+            case (int)NotificationApplicationFocusOut:
+                WorldInFocus = false;
+                break;
+            
+            case (int)NotificationApplicationFocusIn:
+                
+                break;
+        }
     }
 
     public override void _Process(double delta)

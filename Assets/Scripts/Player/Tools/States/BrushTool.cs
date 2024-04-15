@@ -33,17 +33,19 @@ public class BrushTool : State<ToolUser>
             BreakBlock();
         }
 
-        if (Input.IsActionJustReleased("place"))
+        if (!Input.IsActionPressed("place"))
         {
             placeTimer.Pause();
         }
-        else if (Input.IsActionJustReleased("break"))
+        else if (!Input.IsActionPressed("break"))
         {
             breakTimer.Pause();
         }
     }
     public override void OnExit()
     {
+        placeTimer.Pause();
+        breakTimer.Pause();
         ctx.voxelHiglight.Hide();
     }
 
