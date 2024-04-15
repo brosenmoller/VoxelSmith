@@ -37,7 +37,8 @@ public class BrushTool : State<ToolUser>
         {
             placeTimer.Pause();
         }
-        else if (!Input.IsActionPressed("break"))
+
+        if (!Input.IsActionPressed("break"))
         {
             breakTimer.Pause();
         }
