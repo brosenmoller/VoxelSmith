@@ -226,7 +226,7 @@ expand_icon = true
 [node name="SelectInsideToggle" type="Button" parent="TopBarContainer"]
 custom_minimum_size = Vector2(55.63, 0)
 layout_mode = 2
-tooltip_text = "Toggle Infinite Reach"
+tooltip_text = "Toggle Select Inside of Voxel"
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
 theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
