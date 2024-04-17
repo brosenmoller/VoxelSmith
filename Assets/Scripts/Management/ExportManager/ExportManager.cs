@@ -105,7 +105,7 @@ public class ExportManager : Manager
         }
 
         matOutput.AppendLine($"newmtl defaultMat");
-        matOutput.AppendLine($"Kd 1.0 0.0 0.0");
+        matOutput.AppendLine($"Kd 0.1 0.1 0.1");
         matOutput.AppendLine($"Ks 0.50 0.50 0.50");
         matOutput.AppendLine($"Ns 18.00");
 
