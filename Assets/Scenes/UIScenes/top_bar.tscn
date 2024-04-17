@@ -279,7 +279,7 @@ theme_override_styles/slider = SubResource("StyleBoxFlat_qyi32")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_mbo10")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_w3hfo")
 step = 4.0
-value = 40.0
+value = 20.0
 
 [node name="SpeedPercentage" type="VBoxContainer" parent="TopBarContainer"]
 custom_minimum_size = Vector2(48.52, 0)
