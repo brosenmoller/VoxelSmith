@@ -22,6 +22,8 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
         VoxelColor voxelColor = GameManager.DataManager.PaletteData.paletteColors[paletteGuid];
         voxelColor.color = voxelColorPicker.Color;
 
+        voxelColor.minecraftIDlist = GetCompeletedMinecraftID();
+
         GameManager.PaletteUI.Update();
         GameManager.SurfaceMesh.UpdateMesh();
     }

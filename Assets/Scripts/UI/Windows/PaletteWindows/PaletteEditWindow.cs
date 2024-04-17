@@ -86,7 +86,15 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         }
 
         voxelColorPicker.Color = voxelData.color;
-        minecraftIDEdit.Text = voxelData.minecraftIDlist[0][10..];
+        if (voxelData.minecraftIDlist[0].Length > 10)
+        {
+            minecraftIDEdit.Text = voxelData.minecraftIDlist[0][10..];
+        }
+        else
+        {
+            minecraftIDEdit.Text = "";
+        }
+        
 
         OnLoad();
 

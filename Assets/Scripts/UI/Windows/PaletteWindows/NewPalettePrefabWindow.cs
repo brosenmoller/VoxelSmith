@@ -60,11 +60,24 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
             unityPrefabGuidTextEdit.Text = guidMatch.Value;
         }
 
+        // Making sure it is the root gameobject
+        string fatherLess = "m_Father: {fileID: 0}";
+        int indexFatherLess = prefabFileString.IndexOf(fatherLess);
+
         string transformIDRegex = @"(?<=---\s\!u\!4\s\&)\s*(-?\d+)";
-        Match transformFileIDMatch = Regex.Match(prefabFileString, transformIDRegex);
-        if (guidMatch.Success)
+
+        Regex regex = new(transformIDRegex, RegexOptions.Compiled);
+        MatchCollection matches = regex.Matches(prefabFileString);
+
+        int closestDistance = int.MaxValue;
+        foreach (Match match in matches)
         {
-            unityPrefabTranformFileIdTextEdit.Text = transformFileIDMatch.Value;
+            int distance = Mathf.Abs(match.Index - indexFatherLess);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                unityPrefabTranformFileIdTextEdit.Text = match.Value;
+            }
         }
     }
 
@@ -85,6 +98,13 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
     {
         VoxelPrefab voxelPrefab = GameManager.DataManager.PaletteData.palletePrefabs[paletteGuid];
         voxelPrefab.color = voxelColorPicker.Color;
+
+        voxelPrefab.minecraftIDlist = GetCompeletedMinecraftID();
+
+        voxelPrefab.prefabName = prefabNameTextEdit.Text;
+        voxelPrefab.unityPrefabGuid = unityPrefabGuidTextEdit.Text;
+        voxelPrefab.unityPrefabTransformFileId = unityPrefabTranformFileIdTextEdit.Text;
+        voxelPrefab.godotSceneID = godotSceneIdTextEdit.Text;
 
         GameManager.PaletteUI.Update();
         GameManager.SurfaceMesh.UpdateMesh();
