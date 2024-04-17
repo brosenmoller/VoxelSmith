@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public static class NodeExtensions
 {
-    //acts like Unity's GetComponent<T> / GetComponentInChildren<T>
+    // Acts like Unity's GetComponent<T> and GetComponentInChildren<T>
     public static T GetChildByType<T>(this Node node, bool recursive = true) where T : Node
     {
         int childCount = node.GetChildCount();
@@ -29,7 +29,7 @@ public static class NodeExtensions
 
         return null;
     }
-
+    // Acts like Unity's GetComponents<T> and GetComponentsInChildren<T>
     public static T[] GetAllChildrenByType<T>(this Node node, bool recursive = true) where T : Node
     {
         List<T> values = new();
@@ -53,7 +53,7 @@ public static class NodeExtensions
         return values.ToArray();
     }
 
-    //acts like Unity's GetComponentInParent<T>
+    // Acts like Unity's GetComponentInParent<T>
     public static T GetParentByType<T>(this Node node) where T : Node
     {
         Node parent = node.GetParent();
@@ -72,14 +72,14 @@ public static class NodeExtensions
         return null;
     }
 
-    //acts like Unity's FindObjectOfType<T>
+    // Acts like Unity's FindObjectOfType<T>
     public static T GetNodeByType<T>(this Node node) where T : Node
     {
         Node rootNode = node.GetTree().Root;
         return rootNode.GetChildByType<T>();
     }
 
-    //acts like Unity's FindObjectsOfType<T>
+    // Acts like Unity's FindObjectsOfType<T>
     public static T[] GetAllNodesByType<T>(this Node node) where T : Node
     {
         Node rootNode = node.GetTree().Root;

@@ -315,6 +315,7 @@ script = ExtResource("22_e5q42")
 [node name="QuickExportButton" type="Button" parent="TopBarContainer/QuickExportContainer"]
 layout_mode = 2
 tooltip_text = "Repeat previous export"
+focus_mode = 0
 shortcut = ExtResource("23_lhvlj")
 text = "Quick Export"
 
@@ -338,5 +339,6 @@ script = ExtResource("24_j8l2r")
 [node name="QuickImportButton" type="Button" parent="TopBarContainer/QuickImportContainer"]
 layout_mode = 2
 tooltip_text = "Repeat previous export"
+focus_mode = 0
 shortcut = SubResource("Shortcut_qef2u")
 text = "Quick Import"
