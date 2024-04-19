@@ -83,6 +83,19 @@ public class ExportManager : Manager
         output.AppendLine("vn 0 -1 0");  // 5
         output.AppendLine("vn 0 1 0");   // 6
 
+        output.AppendLine("vt 0 0"); // 1
+        output.AppendLine("vt 1 1"); // 2
+        output.AppendLine("vt 1 0"); // 3
+        output.AppendLine("vt 0 1"); // 4
+
+        Dictionary<Vector2, int> cubeUVs = new()
+        {
+            { new(0, 0), 1 },
+            { new(1, 1), 2 },
+            { new(1, 0), 3 },
+            { new(0, 1), 4 },
+        };
+
         for (int i = 0; i < tool.GetVertexCount(); i++)
         {
             output.AppendLine($"v {tool.GetVertex(i).X} {tool.GetVertex(i).Y} {tool.GetVertex(i).Z}");
@@ -101,7 +114,30 @@ public class ExportManager : Manager
             if (normal == Vector3.Down) { normalIndex = 5; }
             if (normal == Vector3.Up) { normalIndex = 6; }
 
-            output.AppendLine($"f {tool.GetFaceVertex(i, 2) + 1}//{normalIndex} {tool.GetFaceVertex(i, 1) + 1}//{normalIndex} {tool.GetFaceVertex(i, 0) + 1}//{normalIndex}");
+            int vertex1 = tool.GetFaceVertex(i, 2) + 1;
+            int vertex2 = tool.GetFaceVertex(i, 1) + 1;
+            int vertex3 = tool.GetFaceVertex(i, 0) + 1;
+
+            string uv1 = "";
+            string uv2 = "";
+            string uv3 = "";
+
+            if (vertex1 < tool.GetVertexCount())
+            {
+                uv1 = cubeUVs[tool.GetVertexUV(vertex1)].ToString();
+            }
+
+            if (vertex2 < tool.GetVertexCount())
+            {
+                uv2 = cubeUVs[tool.GetVertexUV(vertex2)].ToString();
+            }
+
+            if (vertex3 < tool.GetVertexCount())
+            {
+                uv3 = cubeUVs[tool.GetVertexUV(vertex3)].ToString();
+            }
+
+            output.AppendLine($"f {vertex1}/{uv1}/{normalIndex} {vertex2}/{uv2}/{normalIndex} {vertex3}/{uv3}/{normalIndex}");
         }
 
         matOutput.AppendLine($"newmtl defaultMat");
