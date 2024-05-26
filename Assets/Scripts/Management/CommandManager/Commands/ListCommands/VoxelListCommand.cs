@@ -66,15 +66,8 @@ public class VoxelListCommand
             }
         }
 
-        if (containsColors)
-        {
-            GameManager.SurfaceMesh.UpdateMesh();
-        }
-        
-        if (containsPrefabs)
-        {
-            GameManager.PrefabMesh.UpdateMesh();
-        }
+        GameManager.SurfaceMesh.UpdateMesh();
+        GameManager.PrefabMesh.UpdateMesh();
     }
 
     public struct VoxelMemory 
