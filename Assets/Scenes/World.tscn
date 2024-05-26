@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=24 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/PrefabMesh.cs" id="5_8q8hp"]
 [ext_resource type="Material" uid="uid://ctaid16rpjbyu" path="res://Assets/Art/Materials/surface_mesh_material.tres" id="5_vit1y"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/voxel_highlight.tscn" id="5_y16gt"]
+[ext_resource type="Texture2D" uid="uid://bt6rf8gtap3sf" path="res://Assets/Art/Materials/texture_06.png" id="6_ngjf1"]
 [ext_resource type="Material" uid="uid://bysvj84e30qnx" path="res://Assets/Art/Materials/prefab_mesh_material.tres" id="7_n0bo4"]
 [ext_resource type="Material" uid="uid://b071teac28h04" path="res://Assets/Art/Materials/WhiteHighlight.tres" id="9_qvph6"]
 [ext_resource type="Material" uid="uid://cj8722h0aif67" path="res://Assets/Art/Materials/BlueHighlight.tres" id="10_s0rvl"]
@@ -45,6 +46,10 @@ size = Vector2(500, 500)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ciqo6"]
 points = PackedVector3Array(-250, 0, -250, -250, 0, 250, 250, 0, -250, 250, 0, 250)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilb6d"]
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("6_ngjf1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
 albedo_color = Color(1, 0.270588, 0.270588, 1)
@@ -97,6 +102,7 @@ shape = SubResource("ConvexPolygonShape3D_ciqo6")
 collision_layer = 12
 
 [node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceMeshBody"]
+material_override = SubResource("StandardMaterial3D_ilb6d")
 skeleton = NodePath("../..")
 script = ExtResource("4_48p0j")
 material = ExtResource("5_vit1y")
