@@ -5,12 +5,12 @@ public partial class PrefabMesh : MeshInstance3D
     [Export] private Material material;
 
     private CollisionShape3D collisionShape;
-    private MeshGenerator<VoxelPrefab> meshGenerator;
+    private IMeshGenerator<VoxelPrefab> meshGenerator;
 
     public void Setup()
     {
         collisionShape = GetParent().GetChildByType<CollisionShape3D>();
-        meshGenerator = new MeshGenerator<VoxelPrefab>(material);
+        meshGenerator = new BasicMeshGenerator<VoxelPrefab>(material);
     }
 
     public void UpdateMesh()

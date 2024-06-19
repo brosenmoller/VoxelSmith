@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://4ay24ns374nh"
+path="res://.godot/imported/CubeMeshGenerator.glsl-49bfba6053131280ca02fec53229919d.res"
+
+[deps]
+
+source_file="res://Assets/Scripts/Generation/CubeMeshGenerator.glsl"
+dest_files=["res://.godot/imported/CubeMeshGenerator.glsl-49bfba6053131280ca02fec53229919d.res"]
+
+[params]
+

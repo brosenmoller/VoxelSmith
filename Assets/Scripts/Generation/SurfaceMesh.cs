@@ -5,12 +5,12 @@ public partial class SurfaceMesh : MeshInstance3D
     [Export] private Material material;
 
     private CollisionShape3D collisionShape;
-    private MeshGenerator<VoxelColor> meshGenerator;
+    private IMeshGenerator<VoxelColor> meshGenerator;
 
     public void Setup()
     {
-        collisionShape ??= GetParent().GetChildByType<CollisionShape3D>();
-        meshGenerator = new MeshGenerator<VoxelColor>(material);
+        collisionShape = GetParent().GetChildByType<CollisionShape3D>();
+        meshGenerator = new BasicMeshGenerator<VoxelColor>(material);
     }
 
     public void UpdateMesh()

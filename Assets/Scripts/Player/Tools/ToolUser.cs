@@ -28,13 +28,13 @@ public partial class ToolUser : RayCast3D
     public Vector3I VoxelPosition { get; private set; }
     public Vector3 Normal { get; private set; }
 
-    private MeshGenerator<VoxelData> meshGenerator;
+    private IMeshGenerator<VoxelData> meshGenerator;
 
     public override void _Ready()
     {
         if (enableCollisionHighlight) { meshHighlight.Show(); }
 
-        meshGenerator = new MeshGenerator<VoxelData>();
+        meshGenerator = new BasicMeshGenerator<VoxelData>();
         meshHighlightMeshInstance = meshHighlight.GetChildByType<MeshInstance3D>();
 
         WorldController.WentInFocusLastFrame += () => enabled = true;

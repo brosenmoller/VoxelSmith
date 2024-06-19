@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
+public class BasicMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where TVoxelData : VoxelData
 {
     private const float voxelSize = 1f;
 
@@ -37,7 +37,7 @@ public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
 
     private readonly bool[] faces = new bool[6];
 
-    public MeshGenerator(Material material)
+    public BasicMeshGenerator(Material material)
     {
         surfaceTool = new SurfaceTool();
 
@@ -45,7 +45,7 @@ public class MeshGenerator<TVoxelData> where TVoxelData : VoxelData
         else { defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true }; }
     }
 
-    public MeshGenerator()
+    public BasicMeshGenerator()
     {
         surfaceTool = new SurfaceTool();
         defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true };
