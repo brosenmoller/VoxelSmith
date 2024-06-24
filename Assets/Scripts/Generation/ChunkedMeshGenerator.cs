@@ -2,66 +2,83 @@
 using System;
 using System.Collections.Generic;
 
-public class BasicMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where TVoxelData : VoxelData
+public class ChunkedMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where TVoxelData : VoxelData
 {
-    private const float voxelSize = 1f;
+    private int chunkSize;
+    private Dictionary<Vector3I, Chunk> chunks;
+    private HashSet<Vector3I> lastPositions;
 
-    private readonly Material defaultMaterial;
-    private readonly SurfaceTool surfaceTool;
-
-    private readonly bool[] faces = new bool[6];
-
-    public BasicMeshGenerator(Material material)
+    public ChunkedMeshGenerator(int chunkSize)
     {
-        surfaceTool = new SurfaceTool();
-
-        if (material != null) { defaultMaterial = material; }
-        else { defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true }; }
-    }
-
-    public BasicMeshGenerator()
-    {
-        surfaceTool = new SurfaceTool();
-        defaultMaterial = new StandardMaterial3D() { VertexColorUseAsAlbedo = true };
+        this.chunkSize = chunkSize;
+        chunks = new Dictionary<Vector2I, Chunk>();
+        lastPositions = new HashSet<Vector3I>();
     }
 
     public Mesh CreateColorMesh(Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, TVoxelData> palette)
     {
-        surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
-        surfaceTool.SetMaterial(defaultMaterial);
-
         HashSet<Vector3I> voxelPositions = new(voxels.Keys);
 
-        foreach (Vector3I voxel in voxels.Keys)
-        {
-            surfaceTool.SetColor(palette[voxels[voxel]].color);
-            CreateVoxel(voxel, voxelPositions);
-        }
-
-        surfaceTool.Index();
-        return surfaceTool.Commit();
+        throw new NotImplementedException();
     }
 
     public Mesh CreateMesh(Vector3I[] voxelPositionList)
     {
-        surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
-
         HashSet<Vector3I> voxelPositions = new(voxelPositionList);
 
-        foreach (Vector3I voxel in voxelPositions)
+        voxelPositions.IntersectWith(lastPositions);
+
+        List<Chunk> chunksToBeUpdate = new();
+
+        foreach (Vector3I item in voxelPositions)
         {
-            CreateVoxel(voxel, voxelPositions);
+            
+        }
+
+        foreach (Chunk chunk in chunksToBeUpdate)
+        {
+            //chunk.CreateChunkMesh()
+        }
+
+        throw new NotImplementedException();
+    }
+}
+
+public class Chunk
+{
+    private const float voxelSize = 1f;
+
+    public Mesh mesh;
+
+    private readonly SurfaceTool surfaceTool;
+    private readonly bool[] faces = new bool[6];
+
+    public HashSet<Vector3I> chunkPositions;
+
+    public Chunk()
+    {
+        surfaceTool = new SurfaceTool();
+        chunkPositions = new HashSet<Vector3I>();
+    }
+
+    public Mesh CreateChunkMesh(HashSet<Vector3I> allPositions)
+    {
+        surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
+
+        foreach (Vector3I voxel in chunkPositions)
+        {
+            CreateVoxel(voxel, allPositions);
         }
 
         surfaceTool.Index();
         return surfaceTool.Commit();
     }
 
-    private void CreateVoxel(Vector3I position, HashSet<Vector3I> voxelPositions)
+    private void CreateVoxel(Vector3I position, HashSet<Vector3I> allPositions)
     {
         for (int i = 0; i < 6; i++)
         {
-            faces[i] = !voxelPositions.Contains(position + CubeValues.cubeOffsets[i]);
+            faces[i] = !allPositions.Contains(position + CubeValues.cubeOffsets[i]);
         }
 
         void addVertex(Vector3 pos, Vector2 uv)
@@ -134,4 +151,3 @@ public class BasicMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where T
         }
     }
 }
-

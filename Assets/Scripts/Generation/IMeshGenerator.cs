@@ -8,4 +8,3 @@ public interface IMeshGenerator<TVoxelData> where TVoxelData : VoxelData
 
     public Mesh CreateMesh(Vector3I[] voxelPositionList);
 }
-

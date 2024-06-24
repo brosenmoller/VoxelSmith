@@ -63,7 +63,6 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
 
     public ComputeMeshGenerator()
     {
-        // Initialize the rendering device and load the compute shader
         renderingDevice = RenderingServer.CreateLocalRenderingDevice();
         RDShaderFile shaderFile = GD.Load<RDShaderFile>("res://Assets/Scripts/Generation/CubeMeshGenerator.glsl");
         RDShaderSpirV shaderBytecode = shaderFile.GetSpirV();
@@ -73,7 +72,6 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
 
     public Mesh CreateMesh(Vector3I[] voxelPositionList)
     {
-        // Prepare voxel data as bytes
         int voxelCount = voxelPositionList.Length;
         byte[] voxelDataBytes = new byte[voxelCount * 3 * sizeof(float)];
         for (int i = 0; i < voxelCount; i++)
@@ -83,12 +81,10 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
             Buffer.BlockCopy(BitConverter.GetBytes(voxelPositionList[i].Z), 0, voxelDataBytes, (i * 3 + 2) * sizeof(float), sizeof(float));
         }
 
-        // Create storage buffers for voxel data, vertex data, and index data
         Rid voxelBufferID = renderingDevice.StorageBufferCreate((uint)voxelDataBytes.Length, voxelDataBytes);
         Rid vertexBufferID = renderingDevice.StorageBufferCreate((uint)(voxelCount * 8 * 3 * sizeof(float)), null);
         Rid indexBufferID = renderingDevice.StorageBufferCreate((uint)(voxelCount * 36 * sizeof(int)), null);
 
-        // Create uniform sets for the shader
         RDUniform voxelUniform = new()
         {
             UniformType = RenderingDevice.UniformType.StorageBuffer,
@@ -112,7 +108,6 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
 
         Rid uniformSetID = renderingDevice.UniformSetCreate(new Godot.Collections.Array<RDUniform> { voxelUniform, vertexUniform, indexUniform }, shaderID, 0);
 
-        // Execute the compute shader
         long computeListBegin = renderingDevice.ComputeListBegin();
         renderingDevice.ComputeListBindComputePipeline(computeListBegin, pipelineID);
         renderingDevice.ComputeListBindUniformSet(computeListBegin, uniformSetID, 0);
@@ -122,7 +117,6 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
         renderingDevice.Submit();
         renderingDevice.Sync(); // Wait for GPU to finish
 
-        // Retrieve vertex and index data from the GPU
         byte[] vertexDataBytes = renderingDevice.BufferGetData(vertexBufferID);
         byte[] indexDataBytes = renderingDevice.BufferGetData(indexBufferID);
 
@@ -142,7 +136,6 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
             indices[i] = BitConverter.ToInt32(indexDataBytes, i * sizeof(int));
         }
 
-        // Create and return the mesh
         return BuildMesh(vertices, indices);
     }
 
