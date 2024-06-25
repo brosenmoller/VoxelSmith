@@ -51,22 +51,28 @@ public class VoxelListCommand
 
             if (memory.type == VoxelType.Air)
             {
-                projectData.voxelColors.Remove(memory.position);
+                //projectData.voxelColors.Remove(memory.position);
+                GameManager.SurfaceMesh.ClearVoxel(memory.position);
+
                 projectData.voxelPrefabs.Remove(memory.position);
             }
             else if (memory.type == VoxelType.Color)
             {
                 projectData.voxelPrefabs.Remove(memory.position);
-                projectData.voxelColors[memory.position] = memory.id;
+
+                GameManager.SurfaceMesh.UpdateVoxel(memory.position, memory.id);
+                //projectData.voxelColors[memory.position] = memory.id;
             }
             else if (memory.type == VoxelType.Prefab)
             {
-                projectData.voxelColors.Remove(memory.position);
+                //projectData.voxelColors.Remove(memory.position);
+                GameManager.SurfaceMesh.ClearVoxel(memory.position);
+
                 projectData.voxelPrefabs[memory.position] = memory.id;
             }
         }
 
-        GameManager.SurfaceMesh.UpdateMesh();
+        //GameManager.SurfaceMesh.UpdateMesh();
         GameManager.PrefabMesh.UpdateMesh();
     }
 

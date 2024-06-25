@@ -48,10 +48,10 @@ using System;
 
 public abstract partial class WorldMesh<TVoxelData> : MeshInstance3D where TVoxelData : VoxelData
 {
-    [Export] private Material material;
+    [Export] protected Material material;
 
-    private CollisionShape3D collisionShape;
-    private ChunkedMeshGenerator<TVoxelData> meshGenerator;
+    protected CollisionShape3D collisionShape;
+    protected ChunkedMeshGenerator<TVoxelData> meshGenerator;
 
     public void Setup()
     {

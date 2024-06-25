@@ -25,7 +25,7 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
         voxelColor.minecraftIDlist = GetCompeletedMinecraftID();
 
         GameManager.PaletteUI.Update();
-        GameManager.SurfaceMesh.UpdateMesh();
+        //GameManager.SurfaceMesh.UpdateMesh();
     }
 
     protected override void OnCreate()
@@ -53,12 +53,13 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
             {
                 if (GameManager.DataManager.ProjectData.voxelColors[keyList[i]] == paletteGuid)
                 {
-                    GameManager.DataManager.ProjectData.voxelColors.Remove(keyList[i]);
+                    GameManager.SurfaceMesh.ClearVoxel(keyList[i]);
+                    //GameManager.DataManager.ProjectData.voxelColors.Remove(keyList[i]);
                 }
             }
 
             GameManager.PaletteUI.Update();
-            GameManager.SurfaceMesh.UpdateMesh();
+            //GameManager.SurfaceMesh.UpdateMesh();
             Hide();
         }
         else

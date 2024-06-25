@@ -1,21 +1,20 @@
 using Godot;
+using System.Collections.Generic;
 
-public partial class SurfaceMesh : MeshInstance3D
+public partial class SurfaceMesh : WorldMesh<VoxelColor>
 {
-    [Export] private Material material;
-
-    private CollisionShape3D collisionShape;
-    private IMeshGenerator<VoxelColor> meshGenerator;
-
-    public void Setup()
+    public override void SetupMeshGenerator()
     {
-        collisionShape = GetParent().GetChildByType<CollisionShape3D>();
-        meshGenerator = new BasicMeshGenerator<VoxelColor>(material);
+        meshGenerator = new ChunkedMeshGenerator<VoxelColor>(8);
     }
 
-    public void UpdateMesh()
+    public override void UpdateMesh()
     {
-        Mesh = meshGenerator.CreateColorMesh(GameManager.DataManager.ProjectData.voxelColors, GameManager.DataManager.PaletteData.paletteColors);
+        Mesh = meshGenerator.CreateColorMesh(
+            new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelColors.Keys), 
+            GameManager.DataManager.PaletteData.paletteColors
+        );
+
         collisionShape.Shape = Mesh.CreateTrimeshShape();
     }
 }

@@ -29,16 +29,20 @@ public class PlaceListCommand : VoxelListCommand, ICommand
             foreach (Vector3I voxelPosition in voxelPositions)
             {
                 projectData.voxelPrefabs.Remove(voxelPosition);
-                projectData.voxelColors[voxelPosition] = paletteSwatchID;
+
+                GameManager.SurfaceMesh.UpdateVoxel(voxelPosition, paletteSwatchID);
+                //projectData.voxelColors[voxelPosition] = paletteSwatchID;
             }
 
-            GameManager.SurfaceMesh.UpdateMesh();
+            //GameManager.SurfaceMesh.UpdateMesh();
         }
         else if (paletteType == PaletteType.Prefab)
         {
             foreach (Vector3I voxelPosition in voxelPositions)
             {
-                projectData.voxelColors.Remove(voxelPosition);
+                GameManager.SurfaceMesh.ClearVoxel(voxelPosition);
+                //projectData.voxelColors.Remove(voxelPosition);
+
                 projectData.voxelPrefabs[voxelPosition] = paletteSwatchID;
             }
 
