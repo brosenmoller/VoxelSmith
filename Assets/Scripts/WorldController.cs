@@ -28,7 +28,6 @@ public partial class WorldController : Node3D
     {
         Instance = this;
         
-
         player = this.GetChildByType<PlayerMovement>();
         WorldInFocus = false;
     }

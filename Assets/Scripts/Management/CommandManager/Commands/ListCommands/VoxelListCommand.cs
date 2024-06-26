@@ -54,26 +54,29 @@ public class VoxelListCommand
                 //projectData.voxelColors.Remove(memory.position);
                 GameManager.SurfaceMesh.ClearVoxel(memory.position);
 
-                projectData.voxelPrefabs.Remove(memory.position);
+                //projectData.voxelPrefabs.Remove(memory.position);
+                GameManager.PrefabMesh.ClearVoxel(memory.position);
             }
             else if (memory.type == VoxelType.Color)
             {
-                projectData.voxelPrefabs.Remove(memory.position);
+                //projectData.voxelPrefabs.Remove(memory.position);
+                GameManager.PrefabMesh.ClearVoxel(memory.position);
 
-                GameManager.SurfaceMesh.UpdateVoxel(memory.position, memory.id);
                 //projectData.voxelColors[memory.position] = memory.id;
+                GameManager.SurfaceMesh.UpdateVoxel(memory.position, memory.id);
             }
             else if (memory.type == VoxelType.Prefab)
             {
                 //projectData.voxelColors.Remove(memory.position);
                 GameManager.SurfaceMesh.ClearVoxel(memory.position);
 
-                projectData.voxelPrefabs[memory.position] = memory.id;
+                //projectData.voxelPrefabs[memory.position] = memory.id;
+                GameManager.PrefabMesh.UpdateVoxel(memory.position, memory.id);
             }
         }
 
         //GameManager.SurfaceMesh.UpdateMesh();
-        GameManager.PrefabMesh.UpdateMesh();
+        //GameManager.PrefabMesh.UpdateMesh();
     }
 
     public struct VoxelMemory 

@@ -1,15 +1,14 @@
-[gd_scene load_steps=24 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=23 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
 [ext_resource type="Shader" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
-[ext_resource type="Script" path="res://Assets/Scripts/Generation/SurfaceMesh.cs" id="4_48p0j"]
+[ext_resource type="Script" path="res://Assets/Scripts/Generation/WorldMesh/SurfaceMesh.cs" id="4_48p0j"]
 [ext_resource type="Material" uid="uid://cx46gfmlwbfpy" path="res://Assets/Art/Materials/RedHighlight.tres" id="4_b1jf1"]
-[ext_resource type="Script" path="res://Assets/Scripts/Generation/PrefabMesh.cs" id="5_8q8hp"]
-[ext_resource type="Material" uid="uid://ctaid16rpjbyu" path="res://Assets/Art/Materials/surface_mesh_material.tres" id="5_vit1y"]
+[ext_resource type="Script" path="res://Assets/Scripts/Generation/WorldMesh/PrefabMesh.cs" id="5_8q8hp"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/voxel_highlight.tscn" id="5_y16gt"]
 [ext_resource type="Material" uid="uid://qplcbcs4x4pi" path="res://Assets/Art/Materials/surface_mesh_material_textured.tres" id="6_3a01a"]
-[ext_resource type="Material" uid="uid://bysvj84e30qnx" path="res://Assets/Art/Materials/prefab_mesh_material.tres" id="7_n0bo4"]
+[ext_resource type="PackedScene" uid="uid://c5g1tyd40xqtm" path="res://Assets/Scenes/chunk.tscn" id="7_1yr4w"]
 [ext_resource type="Material" uid="uid://b071teac28h04" path="res://Assets/Art/Materials/WhiteHighlight.tres" id="9_qvph6"]
 [ext_resource type="Material" uid="uid://cj8722h0aif67" path="res://Assets/Art/Materials/BlueHighlight.tres" id="10_s0rvl"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/TestMesh.cs" id="13_1sq3m"]
@@ -95,27 +94,13 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("ConvexPolygonShape3D_ciqo6")
 
-[node name="SurfaceMeshBody" type="StaticBody3D" parent="."]
-collision_layer = 12
-
-[node name="SurfaceMesh" type="MeshInstance3D" parent="SurfaceMeshBody"]
-material_override = ExtResource("6_3a01a")
-skeleton = NodePath("../..")
+[node name="SurfaceMesh" type="Node3D" parent="."]
 script = ExtResource("4_48p0j")
-material = ExtResource("5_vit1y")
+chunkScene = ExtResource("7_1yr4w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceMeshBody"]
-
-[node name="PrefabMeshBody" type="StaticBody3D" parent="."]
-collision_layer = 12
-
-[node name="PrefabMesh" type="MeshInstance3D" parent="PrefabMeshBody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000364542, 0.011354, 0.00180387)
-skeleton = NodePath("../..")
+[node name="PrefabMesh" type="Node3D" parent="."]
 script = ExtResource("5_8q8hp")
-material = ExtResource("7_n0bo4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PrefabMeshBody"]
+chunkScene = ExtResource("7_1yr4w")
 
 [node name="HitPointHighlight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980523, 0.622928, -0.945743)

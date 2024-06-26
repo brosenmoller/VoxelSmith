@@ -20,12 +20,16 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
     protected override void OnSave()
     {
         VoxelColor voxelColor = GameManager.DataManager.PaletteData.paletteColors[paletteGuid];
-        voxelColor.color = voxelColorPicker.Color;
 
+        if (voxelColor.color != voxelColorPicker.Color)
+        {
+            GameManager.SurfaceMesh.UpdateAllOfGUID(paletteGuid);
+        }
+
+        voxelColor.color = voxelColorPicker.Color;
         voxelColor.minecraftIDlist = GetCompeletedMinecraftID();
 
         GameManager.PaletteUI.Update();
-        //GameManager.SurfaceMesh.UpdateMesh();
     }
 
     protected override void OnCreate()
@@ -44,27 +48,23 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
 
     protected override void OnDelete()
     {
-        if (GameManager.DataManager.PaletteData.paletteColors.ContainsKey(paletteGuid))
+        if (!GameManager.DataManager.PaletteData.paletteColors.ContainsKey(paletteGuid))
         {
-            GameManager.DataManager.PaletteData.paletteColors.Remove(paletteGuid);
+            return; // TODO: Error
+        }
+        
+        GameManager.DataManager.PaletteData.paletteColors.Remove(paletteGuid);
 
-            List<Vector3I> keyList = GameManager.DataManager.ProjectData.voxelColors.Keys.ToList();
-            for (int i = keyList.Count - 1; i >= 0; i--)
+        List<Vector3I> keyList = GameManager.DataManager.ProjectData.voxelColors.Keys.ToList();
+        for (int i = keyList.Count - 1; i >= 0; i--)
+        {
+            if (GameManager.DataManager.ProjectData.voxelColors[keyList[i]] == paletteGuid)
             {
-                if (GameManager.DataManager.ProjectData.voxelColors[keyList[i]] == paletteGuid)
-                {
-                    GameManager.SurfaceMesh.ClearVoxel(keyList[i]);
-                    //GameManager.DataManager.ProjectData.voxelColors.Remove(keyList[i]);
-                }
+                GameManager.SurfaceMesh.ClearVoxel(keyList[i]);
             }
+        }
 
-            GameManager.PaletteUI.Update();
-            //GameManager.SurfaceMesh.UpdateMesh();
-            Hide();
-        }
-        else
-        {
-            // TODO: Error
-        }
+        GameManager.PaletteUI.Update();
+        Hide();
     }
 }

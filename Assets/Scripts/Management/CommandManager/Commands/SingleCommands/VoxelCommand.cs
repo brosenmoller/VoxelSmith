@@ -19,15 +19,17 @@ public class VoxelCommand
     {
         if (paletteType == PaletteType.Color)
         {
-            //projectData.voxelColors[voxelPosition] = paletteSwatchID;
             GameManager.SurfaceMesh.UpdateVoxel(voxelPosition, paletteSwatchID);
 
+            //projectData.voxelColors[voxelPosition] = paletteSwatchID;
             //GameManager.SurfaceMesh.UpdateMesh();
         }
         else if (paletteType == PaletteType.Prefab)
         {
-            projectData.voxelPrefabs[voxelPosition] = paletteSwatchID;
-            GameManager.PrefabMesh.UpdateMesh();
+            GameManager.PrefabMesh.UpdateVoxel(voxelPosition, paletteSwatchID);
+
+            //projectData.voxelPrefabs[voxelPosition] = paletteSwatchID;
+            //GameManager.PrefabMesh.UpdateMesh();
         }
     }
 
@@ -35,15 +37,16 @@ public class VoxelCommand
     {
         if (paletteType == PaletteType.Color)
         {
-            //projectData.voxelColors.Remove(voxelPosition);
             GameManager.SurfaceMesh.ClearVoxel(voxelPosition);
             
+            //projectData.voxelColors.Remove(voxelPosition);
             //GameManager.SurfaceMesh.UpdateMesh();
         }
         else if (paletteType == PaletteType.Prefab)
         {
-            projectData.voxelPrefabs.Remove(voxelPosition);
-            GameManager.PrefabMesh.UpdateMesh();
+            GameManager.PrefabMesh.ClearVoxel(voxelPosition);
+            //projectData.voxelPrefabs.Remove(voxelPosition);
+            //GameManager.PrefabMesh.UpdateMesh();
         }
     }
 }

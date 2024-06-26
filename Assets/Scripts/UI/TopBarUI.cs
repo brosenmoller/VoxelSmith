@@ -12,14 +12,8 @@ public partial class TopBarUI : Control
     [Export] private float defaultReach = 7;
     [Export] private float infiniteReach = 100;
 
-    private StaticBody3D surfaceBody;
-    private StaticBody3D prefabBody;
-
     public override void _Ready()
     {
-        surfaceBody = GameManager.SurfaceMesh.GetParent<StaticBody3D>();
-        prefabBody = GameManager.PrefabMesh.GetParent<StaticBody3D>();
-        
         ToggleInfiniteReach(hasInfiniteReachToggle.ButtonPressed);
         ToggleNoColissions(hasDisabledCollisionsToggle.ButtonPressed);
 
@@ -62,14 +56,14 @@ public partial class TopBarUI : Control
     {
         if (toggle)
         {
-            surfaceBody.SetCollisionLayerValue(3, false);
-            prefabBody.SetCollisionLayerValue(3, false);
+            GameManager.SurfaceMesh.SetCollisionLayerValue(3, false);
+            GameManager.PrefabMesh.SetCollisionLayerValue(3, false);
             GameManager.ToolUser.checkForPlayerInside = false;
         }
         else
         {
-            surfaceBody.SetCollisionLayerValue(3, true);
-            prefabBody.SetCollisionLayerValue(3, true);
+            GameManager.SurfaceMesh.SetCollisionLayerValue(3, true);
+            GameManager.PrefabMesh.SetCollisionLayerValue(3, true);
             GameManager.ToolUser.checkForPlayerInside = true;
         }
     }

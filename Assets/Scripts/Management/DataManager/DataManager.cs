@@ -105,8 +105,8 @@ public class DataManager : Manager
         SaveProjectAs(path);
 
         GameManager.PaletteUI.Update();
-        GameManager.SurfaceMesh.UpdateMesh();
-        GameManager.PrefabMesh.UpdateMesh();
+        GameManager.SurfaceMesh.UpdateAll();
+        GameManager.PrefabMesh.UpdateAll();
     }
 
     public void SaveProject()
@@ -150,8 +150,8 @@ public class DataManager : Manager
             camera.Rotation = projectDataHolder.Data.cameraRotation;
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
 
-            GameManager.SurfaceMesh.UpdateMesh();
-            GameManager.PrefabMesh.UpdateMesh();
+            GameManager.SurfaceMesh.UpdateAll();
+            GameManager.PrefabMesh.UpdateAll();
 
             if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
             {

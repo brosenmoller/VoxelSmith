@@ -2,93 +2,23 @@
 using System;
 using System.Collections.Generic;
 
-public class ChunkedMeshGenerator<TVoxelData> where TVoxelData : VoxelData
+public partial class Chunk : StaticBody3D
 {
-    private int chunkSize;
-    public Dictionary<Vector3I, Chunk<TVoxelData>> chunks;
-    public HashSet<Chunk<TVoxelData>> chunksToBeUpdated;
-
-    public Vector3I GetChunkPosition(Vector3I position)
-    {
-        return new Vector3I(
-            Mathf.FloorToInt(position.X / chunkSize),
-            Mathf.FloorToInt(position.Y / chunkSize),
-            Mathf.FloorToInt(position.Z / chunkSize)
-        );
-    }
-
-    public ChunkedMeshGenerator(int chunkSize)
-    {
-        this.chunkSize = chunkSize;
-        chunks = new Dictionary<Vector3I, Chunk<TVoxelData>>();
-        chunksToBeUpdated = new HashSet<Chunk<TVoxelData>>();
-    }
-
-    public Mesh CreateColorMesh(HashSet<Vector3I> allPositions, Dictionary<Guid, TVoxelData> palette)
-    {
-        ArrayMesh completeMesh = new();
-
-        foreach (Chunk<TVoxelData> chunk in chunks.Values)
-        {
-            if (chunksToBeUpdated.Contains(chunk))
-            {
-                chunk.CreateChunkColorMesh(allPositions, palette);
-            }
-
-            completeMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, chunk.meshArray);
-        }
-
-        return completeMesh;
-    }
-
-    public Mesh CreateMesh(HashSet<Vector3I> allPositions)
-    {
-        ArrayMesh completeMesh = new();
-
-        foreach (Chunk<TVoxelData> chunk in chunks.Values)
-        {
-            if (chunksToBeUpdated.Contains(chunk))
-            {
-                chunk.CreateChunkMesh(allPositions);
-            }
-
-            completeMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, chunk.meshArray);
-        }
-
-        return completeMesh;
-    }
-}
-
-public class Chunk<TVoxelData> where TVoxelData : VoxelData
-{
-    private const float voxelSize = 1f;
-
-    public Godot.Collections.Array meshArray;
-
-    private readonly SurfaceTool surfaceTool;
-    private readonly bool[] faces = new bool[6];
+    [Export] private CollisionShape3D collisionShape;
+    [Export] private MeshInstance3D meshInstance;
 
     public Dictionary<Vector3I, Guid> chunkPositions;
 
-    public Chunk()
+    private SurfaceTool surfaceTool;
+    private readonly bool[] faces = new bool[6];
+
+    public void Setup()
     {
         surfaceTool = new SurfaceTool();
         chunkPositions = new Dictionary<Vector3I, Guid>();
     }
 
-    public void CreateChunkMesh(HashSet<Vector3I> allPositions)
-    {
-        surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
-
-        foreach (Vector3I voxel in chunkPositions.Keys)
-        {
-            CreateVoxel(voxel, allPositions);
-        }
-
-        surfaceTool.Index();
-        meshArray = surfaceTool.CommitToArrays();
-    }
-    public void CreateChunkColorMesh(HashSet<Vector3I> allPositions, Dictionary<Guid, TVoxelData> palette)
+    public void UpdateChunkMesh<TVoxelData>(HashSet<Vector3I> allPositions, Dictionary<Guid, TVoxelData> palette) where TVoxelData : VoxelData
     {
         surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
 
@@ -99,9 +29,9 @@ public class Chunk<TVoxelData> where TVoxelData : VoxelData
         }
 
         surfaceTool.Index();
-        meshArray = surfaceTool.CommitToArrays();
+        meshInstance.Mesh = surfaceTool.Commit();
+        collisionShape.Shape = meshInstance.Mesh.CreateTrimeshShape();
     }
-
 
     private void CreateVoxel(Vector3I position, HashSet<Vector3I> allPositions)
     {
@@ -113,7 +43,7 @@ public class Chunk<TVoxelData> where TVoxelData : VoxelData
         void addVertex(Vector3 pos, Vector2 uv)
         {
             surfaceTool.SetUV(uv);
-            surfaceTool.AddVertex(pos * voxelSize);
+            surfaceTool.AddVertex(pos);
         }
 
         Vector3 vertexOffset = position;

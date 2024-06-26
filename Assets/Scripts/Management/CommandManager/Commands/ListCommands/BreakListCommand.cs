@@ -21,18 +21,19 @@ public class BreakListCommand : VoxelListCommand, ICommand
             //projectData.voxelColors.Remove(voxelPosition);
             GameManager.SurfaceMesh.ClearVoxel(voxelPosition);
 
-            projectData.voxelPrefabs.Remove(voxelPosition);
+            //projectData.voxelPrefabs.Remove(voxelPosition);
+            GameManager.PrefabMesh.ClearVoxel(voxelPosition);
         }
 
-        if (containsColors)
-        {
-            //GameManager.SurfaceMesh.UpdateMesh();
-        }
+        //if (containsColors)
+        //{
+        //    GameManager.SurfaceMesh.UpdateMesh();
+        //}
 
-        if (containsPrefabs)
-        {
-            GameManager.PrefabMesh.UpdateMesh();
-        }
+        //if (containsPrefabs)
+        //{
+        //    GameManager.PrefabMesh.UpdateMesh();
+        //}
     }
 }
 

@@ -7,10 +7,12 @@ using System.Text;
 public class ExportManager : Manager
 {
     private Random random;
+    private IMeshGenerator<VoxelColor> meshGenerator;
 
     public override void Setup()
     {
         random = new Random();
+        meshGenerator = new BasicMeshGenerator<VoxelColor>();
     }
 
     private void WriteToFile(string output, string filePath)
@@ -58,8 +60,10 @@ public class ExportManager : Manager
         //StandardMaterial3D mat = (StandardMaterial3D)GameManager.SurfaceMesh.Mesh.SurfaceGetMaterial(0);
         //mat ??= blankMaterial;
 
-        ArrayMesh arrayMesh = new();
-        arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, GameManager.SurfaceMesh.Mesh.SurfaceGetArrays(0));
+        ArrayMesh arrayMesh = (ArrayMesh)meshGenerator.CreateColorMesh(
+            GameManager.DataManager.ProjectData.voxelColors, 
+            GameManager.DataManager.PaletteData.paletteColors
+        );
 
         MeshDataTool tool = new();
         tool.CreateFromSurface(arrayMesh, 0);
