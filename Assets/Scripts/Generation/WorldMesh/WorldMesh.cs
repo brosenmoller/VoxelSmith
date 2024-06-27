@@ -1,60 +1,14 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
-
-//using Godot;
-
-//public partial class SurfaceMesh : MeshInstance3D
-//{
-//    [Export] private Material material;
-
-//    private CollisionShape3D collisionShape;
-//    private IMeshGenerator<VoxelColor> meshGenerator;
-
-//    public void Setup()
-//    {
-//        collisionShape = GetParent().GetChildByType<CollisionShape3D>();
-//        meshGenerator = new BasicMeshGenerator<VoxelColor>(material);
-//    }
-
-//    public void UpdateMesh()
-//    {
-//        Mesh = meshGenerator.CreateColorMesh(voxelData, GameManager.DataManager.PaletteData.paletteColors);
-//        collisionShape.Shape = Mesh.CreateTrimeshShape();
-//    }
-//}
-
-//using Godot;
-
-//public partial class PrefabMesh : MeshInstance3D
-//{
-//    [Export] private Material material;
-
-//    private CollisionShape3D collisionShape;
-//    private IMeshGenerator<VoxelPrefab> meshGenerator;
-
-//    public void Setup()
-//    {
-//        collisionShape = GetParent().GetChildByType<CollisionShape3D>();
-//        meshGenerator = new BasicMeshGenerator<VoxelPrefab>(material);
-//    }
-
-//    public void UpdateMesh()
-//    {
-//        Mesh = meshGenerator.CreateColorMesh(GameManager.DataManager.ProjectData.voxelPrefabs, GameManager.DataManager.PaletteData.palletePrefabs);
-//        collisionShape.Shape = Mesh.CreateTrimeshShape();
-//    }
-//}
-
+using System.Threading.Tasks;
 
 public abstract partial class WorldMesh : Node3D
 {
     [Export] protected PackedScene chunkScene;
-    [Export] protected Material material;
+    [Export(PropertyHint.Layers3DPhysics)] private uint collisionLayer;
 
     protected ChunkedMeshGenerator meshGenerator;
-    protected uint currentCollisionLayer = 0;
 
     public void Setup()
     {
@@ -69,28 +23,57 @@ public abstract partial class WorldMesh : Node3D
 
     public void SetCollisionLayerValue(int layerNumber, bool value)
     {
-        bool first = true;
+        layerNumber--;
+        value = !value;
+
+        if (layerNumber < 0 || layerNumber > 31)
+        {
+            throw new ArgumentOutOfRangeException(nameof(layerNumber), "Layer number must be between 0 and 31.");
+        }
+
+        if (value)
+        {
+            // Set the bit at layerNumber to 1
+            collisionLayer |= (1u << layerNumber);
+        }
+        else
+        {
+            // Set the bit at layerNumber to 0
+            collisionLayer &= ~(1u << layerNumber);
+        }
+
         foreach (Chunk chunk in meshGenerator.chunks.Values)
         {
-            if (first)
-            {
-                currentCollisionLayer = chunk.CollisionLayer;
-                first = false;
-            }
-
-            chunk.SetCollisionLayerValue(layerNumber, value);
+            chunk.CollisionLayer = collisionLayer;
+            GD.Print(chunk.GetCollisionLayerValue(layerNumber));
         }
     }
 
     protected void UpdateAll(Dictionary<Vector3I, Guid> voxelData)
     {
+        //UpdateAllDelayed(voxelData);
         meshGenerator.ResetAll();
 
         foreach (Vector3I position in voxelData.Keys)
         {
-            UpdateVoxel(position, voxelData[position]);
+            UpdateChunkVoxel(position, voxelData[position], voxelData);
         }
     }
+
+    //private async void UpdateAllDelayed(Dictionary<Vector3I, Guid> voxelData)
+    //{
+    //    GD.Print("Start");
+    //    //meshGenerator.ResetAll();
+    //    await Task.Delay(1000);
+
+    //    GD.Print("Update All");
+    //    GD.Print("VoxelData Count " + voxelData.Count);
+
+    //    foreach (Vector3I position in voxelData.Keys)
+    //    {
+    //        UpdateVoxel(position, voxelData[position]);
+    //    }
+    //}
 
     protected void UpdateAllOfGUID(Guid guid, Dictionary<Vector3I, Guid> voxelData)
     {
@@ -124,14 +107,17 @@ public abstract partial class WorldMesh : Node3D
 
         voxelData[position] = guid;
 
+        UpdateChunkVoxel(position, guid, voxelData);
+    }
+
+    private void UpdateChunkVoxel(Vector3I position, Guid guid, Dictionary<Vector3I, Guid> voxelData)
+    {
         Vector3I chunkPosition = meshGenerator.GetChunkPosition(position);
 
         if (!meshGenerator.chunks.TryGetValue(chunkPosition, out Chunk chunk))
         {
             chunk = chunkScene.Instantiate<Chunk>();
-            
-            if (currentCollisionLayer > 0) { chunk.CollisionLayer = currentCollisionLayer; }
-
+            chunk.CollisionLayer = collisionLayer;
             chunk.Setup();
             AddChild(chunk);
 

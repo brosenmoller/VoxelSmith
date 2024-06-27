@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class ChunkedMeshGenerator 
+public class ChunkedMeshGenerator
 {
-    private int chunkSize;
+    private readonly int chunkSize;
     public Dictionary<Vector3I, Chunk> chunks;
     public HashSet<Chunk> chunksToBeUpdated;
 

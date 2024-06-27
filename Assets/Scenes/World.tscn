@@ -97,10 +97,12 @@ shape = SubResource("ConvexPolygonShape3D_ciqo6")
 [node name="SurfaceMesh" type="Node3D" parent="."]
 script = ExtResource("4_48p0j")
 chunkScene = ExtResource("7_1yr4w")
+collisionLayer = 12
 
 [node name="PrefabMesh" type="Node3D" parent="."]
 script = ExtResource("5_8q8hp")
 chunkScene = ExtResource("7_1yr4w")
+collisionLayer = 12
 
 [node name="HitPointHighlight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.980523, 0.622928, -0.945743)

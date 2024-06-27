@@ -41,18 +41,18 @@ public partial class GameManager : Node
 
     private void SetupManagers()
     {
+        TimerManager = new TimerManager();
         DataManager = new DataManager();
         CommandManager = new CommandManager();
         ExportManager = new ExportManager();
         ImportManager = new ImportManager();
-        TimerManager = new TimerManager();
 
         activeManagers = new Manager[] {
+            TimerManager,
             DataManager,
             CommandManager,
             ExportManager,
             ImportManager,
-            TimerManager
         };
 
         foreach (Manager manager in activeManagers)
