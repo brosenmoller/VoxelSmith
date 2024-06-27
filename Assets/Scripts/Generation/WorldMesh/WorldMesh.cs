@@ -1,10 +1,10 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public abstract partial class WorldMesh : Node3D
 {
+    [Export] private Material material;
     [Export] protected PackedScene chunkScene;
     [Export(PropertyHint.Layers3DPhysics)] private uint collisionLayer;
 
@@ -118,6 +118,7 @@ public abstract partial class WorldMesh : Node3D
         {
             chunk = chunkScene.Instantiate<Chunk>();
             chunk.CollisionLayer = collisionLayer;
+            chunk.meshInstance.MaterialOverride = material;
             chunk.Setup();
             AddChild(chunk);
 

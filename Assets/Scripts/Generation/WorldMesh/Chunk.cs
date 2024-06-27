@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public partial class Chunk : StaticBody3D
 {
-    [Export] private CollisionShape3D collisionShape;
-    [Export] private MeshInstance3D meshInstance;
+    [Export] public CollisionShape3D collisionShape;
+    [Export] public MeshInstance3D meshInstance;
 
     public Dictionary<Vector3I, Guid> chunkPositions;
 
