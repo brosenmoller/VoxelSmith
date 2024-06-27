@@ -152,6 +152,14 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
             }
         }
 
+        if (GameManager.DataManager.ProjectData.selectedPaletteSwatchId == paletteGuid)
+        {
+            if (GameManager.DataManager.PaletteData.palletePrefabs.Count > 0)
+            {
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.palletePrefabs.Keys.First();
+            }
+        }
+
         GameManager.PaletteUI.Update();
         Hide();
     }

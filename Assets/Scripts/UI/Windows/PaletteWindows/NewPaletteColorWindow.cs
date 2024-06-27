@@ -64,6 +64,14 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
             }
         }
 
+        if (GameManager.DataManager.ProjectData.selectedPaletteSwatchId == paletteGuid)
+        {
+            if (GameManager.DataManager.PaletteData.paletteColors.Count > 0)
+            {
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.paletteColors.Keys.First();
+            }
+        }
+
         GameManager.PaletteUI.Update();
         Hide();
     }
