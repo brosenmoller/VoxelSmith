@@ -1,4 +1,7 @@
 using Godot;
+using System;
+using System.Linq;
+using static Godot.TextServer;
 
 public partial class PaletteUI : BoxContainer
 {
@@ -14,16 +17,105 @@ public partial class PaletteUI : BoxContainer
     [Export] private Button newPaletteColorButton;
     [Export] private Button newPalettePrefabButton;
 
+    private int lastColorSwatchIndex = 0;
+    private int lastPrefabSwatchIndex = 0;
+
     public override void _Ready()
     {
         newPaletteColorButton.Pressed += newPaletteColorWindow.ShowCreateWindow;
         newPalettePrefabButton.Pressed += newPalettePrefabWindow.ShowCreateWindow;
     }
 
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("cycle_swatch_forward"))
+        {
+            CycleSwatch(true);
+        }
+
+        if (Input.IsActionJustPressed("cycle_swatch_back"))
+        {
+            CycleSwatch(false);
+        }
+
+        if (Input.IsActionJustPressed("swap_palette_type"))
+        {
+            SwapPaletteType();
+        }
+    }
+
+    private void SwapPaletteType()
+    {
+        if (GameManager.DataManager.ProjectData.selectedPaletteType == PaletteType.Color)
+        {
+            if (GameManager.DataManager.PaletteData.palletePrefabs.Count > 0)
+            {
+                GD.Print(lastPrefabSwatchIndex);
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.palletePrefabs.Keys.ElementAt(lastPrefabSwatchIndex);
+                GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Prefab;
+                Update();
+            }
+        }
+        else
+        {
+            if (GameManager.DataManager.PaletteData.paletteColors.Count > 0)
+            {
+                GD.Print(lastColorSwatchIndex);
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.paletteColors.Keys.ElementAt(lastColorSwatchIndex);
+                GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Color;
+                Update();
+            }
+        }
+    }
+
+    private void CycleSwatch(bool forward)
+    {
+        Guid[] guidArray;
+
+        if (GameManager.DataManager.ProjectData.selectedPaletteType == PaletteType.Color)
+        {
+            if (GameManager.DataManager.PaletteData.paletteColors.Count <= 1) { return; }
+
+            guidArray = GameManager.DataManager.PaletteData.paletteColors.Keys.ToArray();
+        }
+        else
+        {
+            if (GameManager.DataManager.PaletteData.palletePrefabs.Count <= 1) { return; }
+            
+            guidArray = GameManager.DataManager.PaletteData.palletePrefabs.Keys.ToArray();
+        }
+
+        int index = Array.IndexOf(guidArray, GameManager.DataManager.ProjectData.selectedPaletteSwatchId);
+
+        if (forward)
+        {
+            if (index == guidArray.Length - 1) { index = 0; }
+            else { index++; }
+        }
+        else
+        {
+            if (index == 0) { index = guidArray.Length; }
+            else { index--; }
+        }
+
+        GameManager.DataManager.ProjectData.selectedPaletteSwatchId = guidArray[index];
+        Update();
+    }
+
     public void Update()
     {
         UpdateVoxelColorPalette();
         UpdateVoxelPrefabPalette();
+
+        if (lastColorSwatchIndex < 0 || lastColorSwatchIndex >= GameManager.DataManager.PaletteData.paletteColors.Count)
+        {
+            lastColorSwatchIndex = 0;
+        }
+
+        if (lastPrefabSwatchIndex < 0 || lastPrefabSwatchIndex >= GameManager.DataManager.PaletteData.palletePrefabs.Count)
+        {
+            lastPrefabSwatchIndex = 0;
+        }
     }
 
     private void UpdateVoxelColorPalette()
@@ -82,6 +174,7 @@ public partial class PaletteUI : BoxContainer
             if (GameManager.DataManager.ProjectData.selectedPaletteType == PaletteType.Color &&
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchId == paletteColor.Key)
             {
+                lastColorSwatchIndex = Array.IndexOf(GameManager.DataManager.PaletteData.paletteColors.Keys.ToArray(), paletteColor.Key);
                 button.ButtonPressed = true;
             }
 
@@ -159,6 +252,7 @@ public partial class PaletteUI : BoxContainer
             if (GameManager.DataManager.ProjectData.selectedPaletteType == PaletteType.Prefab &&
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchId == palettePrefab.Key)
             {
+                lastPrefabSwatchIndex = Array.IndexOf(GameManager.DataManager.PaletteData.palletePrefabs.Keys.ToArray(), palettePrefab.Key);
                 button.ButtonPressed = true;
             }
 

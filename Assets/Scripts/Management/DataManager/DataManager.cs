@@ -48,13 +48,12 @@ public class DataManager : Manager
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
         }
 
-        try
+        if (editorDataHolder.Data.lastProject.HasValue)
         {
             LoadProject(editorDataHolder.Data.savePaths[editorDataHolder.Data.lastProject.Value]);
         }
-        catch (Exception e)
+        else
         {
-            GD.PushWarning("Failed to load project data: \n" + e.ToString());
             GameManager.UIController.startWindow.Show();
         }
     }
@@ -106,8 +105,8 @@ public class DataManager : Manager
         SaveProjectAs(path);
 
         GameManager.PaletteUI.Update();
-        GameManager.SurfaceMesh.UpdateMesh();
-        GameManager.PrefabMesh.UpdateMesh();
+        GameManager.SurfaceMesh.UpdateAll();
+        GameManager.PrefabMesh.UpdateAll();
     }
 
     public void SaveProject()
@@ -151,8 +150,8 @@ public class DataManager : Manager
             camera.Rotation = projectDataHolder.Data.cameraRotation;
             cameraPivot.Rotation = projectDataHolder.Data.cameraPivotRotation;
 
-            GameManager.SurfaceMesh.UpdateMesh();
-            GameManager.PrefabMesh.UpdateMesh();
+            GameManager.SurfaceMesh.UpdateAll();
+            GameManager.PrefabMesh.UpdateAll();
 
             if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
             {

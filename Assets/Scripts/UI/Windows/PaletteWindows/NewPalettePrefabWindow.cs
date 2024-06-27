@@ -97,6 +97,12 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
     protected override void OnSave()
     {
         VoxelPrefab voxelPrefab = GameManager.DataManager.PaletteData.palletePrefabs[paletteGuid];
+
+        if (voxelPrefab.color != voxelColorPicker.Color)
+        {
+            GameManager.PrefabMesh.UpdateAllOfGUID(paletteGuid);
+        }
+
         voxelPrefab.color = voxelColorPicker.Color;
 
         voxelPrefab.minecraftIDlist = GetCompeletedMinecraftID();
@@ -107,7 +113,6 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
         voxelPrefab.godotSceneID = godotSceneIdTextEdit.Text;
 
         GameManager.PaletteUI.Update();
-        GameManager.SurfaceMesh.UpdateMesh();
     }
 
     protected override void OnCreate()
@@ -123,7 +128,6 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
             godotSceneID = godotSceneIdTextEdit.Text,
             unityPrefabGuid = unityPrefabGuidTextEdit.Text,
         };
-
        
         GameManager.DataManager.PaletteData.palletePrefabs.Add(newID, voxelPrefab);
         GameManager.PaletteUI.Update();
@@ -132,27 +136,32 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
 
     protected override void OnDelete()
     {
-        if (GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(paletteGuid))
+        if (!GameManager.DataManager.PaletteData.palletePrefabs.ContainsKey(paletteGuid))
         {
-            GameManager.DataManager.PaletteData.palletePrefabs.Remove(paletteGuid);
+            return; // TODO: Error
+        }
 
-            List<Vector3I> keyList = GameManager.DataManager.ProjectData.voxelPrefabs.Keys.ToList();
-            for (int i = keyList.Count - 1; i >= 0; i--)
+        GameManager.DataManager.PaletteData.palletePrefabs.Remove(paletteGuid);
+
+        List<Vector3I> keyList = GameManager.DataManager.ProjectData.voxelPrefabs.Keys.ToList();
+        for (int i = keyList.Count - 1; i >= 0; i--)
+        {
+            if (GameManager.DataManager.ProjectData.voxelPrefabs[keyList[i]] == paletteGuid)
             {
-                if (GameManager.DataManager.ProjectData.voxelPrefabs[keyList[i]] == paletteGuid)
-                {
-                    GameManager.DataManager.ProjectData.voxelPrefabs.Remove(keyList[i]);
-                }
+                GameManager.PrefabMesh.ClearVoxel(keyList[i]);
             }
+        }
 
-            GameManager.PaletteUI.Update();
-            GameManager.PrefabMesh.UpdateMesh();
-            Hide();
-        }
-        else
+        if (GameManager.DataManager.ProjectData.selectedPaletteSwatchId == paletteGuid)
         {
-            // TODO: Error
+            if (GameManager.DataManager.PaletteData.palletePrefabs.Count > 0)
+            {
+                GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.palletePrefabs.Keys.First();
+            }
         }
+
+        GameManager.PaletteUI.Update();
+        Hide();
     }
 
     protected override void OnLoad()

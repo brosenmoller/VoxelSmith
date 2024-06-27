@@ -103,8 +103,8 @@ public class ImportManager : Manager
             }
         }
 
-        GameManager.SurfaceMesh.UpdateMesh();
-        GameManager.PrefabMesh.UpdateMesh();
+        GameManager.SurfaceMesh.UpdateAll();
+        GameManager.PrefabMesh.UpdateAll();
 
         if (saveImportSettings)
         {

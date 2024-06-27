@@ -35,3 +35,11 @@ target_position = Vector3(0, 0, -100)
 collision_mask = 8
 hit_from_inside = true
 script = ExtResource("3_7vkoi")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+light_color = Color(0.901961, 0.819608, 0.776471, 1)
+light_energy = 0.5
+spot_range = 20.0
+spot_attenuation = 0.0669862
+spot_angle = 180.0
+spot_angle_attenuation = 0.0220971
