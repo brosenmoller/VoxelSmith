@@ -33,12 +33,10 @@ public abstract partial class WorldMesh : Node3D
 
         if (value)
         {
-            // Set the bit at layerNumber to 1
             collisionLayer |= (1u << layerNumber);
         }
         else
         {
-            // Set the bit at layerNumber to 0
             collisionLayer &= ~(1u << layerNumber);
         }
 
@@ -51,7 +49,6 @@ public abstract partial class WorldMesh : Node3D
 
     protected void UpdateAll(Dictionary<Vector3I, Guid> voxelData)
     {
-        //UpdateAllDelayed(voxelData);
         meshGenerator.ResetAll();
 
         foreach (Vector3I position in voxelData.Keys)
@@ -59,21 +56,6 @@ public abstract partial class WorldMesh : Node3D
             UpdateChunkVoxel(position, voxelData[position], voxelData);
         }
     }
-
-    //private async void UpdateAllDelayed(Dictionary<Vector3I, Guid> voxelData)
-    //{
-    //    GD.Print("Start");
-    //    //meshGenerator.ResetAll();
-    //    await Task.Delay(1000);
-
-    //    GD.Print("Update All");
-    //    GD.Print("VoxelData Count " + voxelData.Count);
-
-    //    foreach (Vector3I position in voxelData.Keys)
-    //    {
-    //        UpdateVoxel(position, voxelData[position]);
-    //    }
-    //}
 
     protected void UpdateAllOfGUID(Guid guid, Dictionary<Vector3I, Guid> voxelData)
     {
@@ -108,6 +90,7 @@ public abstract partial class WorldMesh : Node3D
         voxelData[position] = guid;
 
         UpdateChunkVoxel(position, guid, voxelData);
+        CheckAdjacentChunksForUpdate(position, voxelData);
     }
 
     private void UpdateChunkVoxel(Vector3I position, Guid guid, Dictionary<Vector3I, Guid> voxelData)
@@ -128,7 +111,6 @@ public abstract partial class WorldMesh : Node3D
         chunk.chunkPositions[position] = guid;
 
         meshGenerator.chunksToBeUpdated.Add(chunk);
-        CheckAdjacentChunksForUpdate(position, voxelData);
     }
 
     protected void ClearVoxel(Vector3I position, Dictionary<Vector3I, Guid> voxelData)

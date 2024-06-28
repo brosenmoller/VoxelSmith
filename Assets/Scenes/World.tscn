@@ -151,7 +151,7 @@ transparency = 0.5
 cast_shadow = 0
 mesh = SubResource("BoxMesh_akqf8")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="ComputeShaderTestMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392708, 1.56531, -7.24734)
 material_override = ExtResource("6_3a01a")
 script = ExtResource("13_1sq3m")
