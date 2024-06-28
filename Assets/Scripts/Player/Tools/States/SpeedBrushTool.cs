@@ -2,8 +2,8 @@
 {
     public SpeedBrushTool() : base()
     {
-        placeTimer.EndTime = 0.01f;
-        breakTimer.EndTime = 0.01f;
+        placeTimer.EndTime = 0.05f;
+        breakTimer.EndTime = 0.05f;
     }
 }
 

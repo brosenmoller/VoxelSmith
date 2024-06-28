@@ -56,7 +56,7 @@ public partial class TopBarUI : Control
     {
         GameManager.SurfaceMesh.SetCollisionLayerValue(3, toggle);
         GameManager.PrefabMesh.SetCollisionLayerValue(3, toggle);
-        GameManager.ToolUser.checkForPlayerInside = toggle;
+        GameManager.ToolUser.ignorePlayerCheck = toggle;
     }
 
     public void ToggleSelectingInside(bool toggle)

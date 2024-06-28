@@ -18,7 +18,7 @@ public partial class ToolUser : RayCast3D
     [Export] public Node3D cornerHighlight2;
 
     private bool enabled = true;
-    public bool checkForPlayerInside;
+    public bool ignorePlayerCheck;
     public bool selectInsideEnabled = false;
 
     private StateMachine<ToolUser> stateMachine;

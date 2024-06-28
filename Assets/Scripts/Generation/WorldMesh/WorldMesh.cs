@@ -12,7 +12,7 @@ public abstract partial class WorldMesh : Node3D
 
     public void Setup()
     {
-        meshGenerator = new ChunkedMeshGenerator(8);
+        meshGenerator = new ChunkedMeshGenerator(16);
     }
 
     public abstract void UpdateVoxel(Vector3I position, Guid guid);

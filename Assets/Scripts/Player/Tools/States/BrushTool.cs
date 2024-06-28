@@ -59,7 +59,7 @@ public class BrushTool : State<ToolUser>
     {
         Vector3I nextVoxel = ctx.VoxelPosition + (Vector3I)ctx.Normal.Normalized();
 
-        if ((!ctx.IsVoxelInPlayer(nextVoxel) || !ctx.checkForPlayerInside) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
+        if ((!ctx.IsVoxelInPlayer(nextVoxel) || ctx.ignorePlayerCheck) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
         {
             GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
         }
