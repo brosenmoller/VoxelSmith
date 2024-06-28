@@ -101,12 +101,12 @@ public partial class ToolUser : RayCast3D
         else
         {
             HasHit = false;
-            meshHighlight.Visible = false;
-            voxelHiglight.Visible = false;
+            //meshHighlight.Visible = false;
+            voxelHiglight.Hide();
         }
     }
 
-    public void GenerateMeshHighlight(Vector3I[] voxelPositions)
+    public void GenerateVoxelBasedMeshHighlight(Vector3I[] voxelPositions)
     {
         meshHighlightMeshInstance.Mesh = meshGenerator.CreateMesh(voxelPositions);
     }

@@ -8,7 +8,7 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
     //public ComputeMeshGenerator()
     //{
     //    RenderingDevice renderingDevice = RenderingServer.CreateLocalRenderingDevice();
-    //    RDShaderFile shaderFile = GD.Load<RDShaderFile>("res://Assets/Scripts/Generation/CubeMeshGenerator.glsl");
+    //    RDShaderFile shaderFile = GD.Load<RDShaderFile>("res://Assets/Scripts/Generation/ComputeShaders/VoxelMeshGenerator.glsl");
 
     //    RDShaderSpirV shaderBytecode = shaderFile.GetSpirV();
     //    Rid shaderID = renderingDevice.ShaderCreateFromSpirV(shaderBytecode);
@@ -46,7 +46,7 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
     //    float[] output = new float[input.Length];
 
     //    Buffer.BlockCopy(outputBytes, 0, output, 0, outputBytes.Length);
-        
+
     //    GD.Print("Input: ", string.Join(", ", input));
     //    GD.Print("Output: ", string.Join(", ", output));
     //}
@@ -64,7 +64,7 @@ public class ComputeMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where
     public ComputeMeshGenerator()
     {
         renderingDevice = RenderingServer.CreateLocalRenderingDevice();
-        RDShaderFile shaderFile = GD.Load<RDShaderFile>("res://Assets/Scripts/Generation/CubeMeshGenerator.glsl");
+        RDShaderFile shaderFile = GD.Load<RDShaderFile>("res://Assets/Scripts/Generation/ComputeShaders/VoxelMeshGenerator.glsl");
         RDShaderSpirV shaderBytecode = shaderFile.GetSpirV();
         shaderID = renderingDevice.ShaderCreateFromSpirV(shaderBytecode);
         pipelineID = renderingDevice.ComputePipelineCreate(shaderID);

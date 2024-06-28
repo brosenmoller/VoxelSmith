@@ -46,7 +46,7 @@ public abstract class TwoPointsTool : State<ToolUser>
             secondPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
 
             Vector3I[] voxelPositions = GetVoxelPositions();
-            ctx.GenerateMeshHighlight(voxelPositions);
+            GenerateMeshHighlight(voxelPositions);
             ctx.cornerHighlight2.GlobalPosition = secondPosition;
 
             if (Input.IsActionJustPressed("place") && breakSequence)
@@ -85,5 +85,10 @@ public abstract class TwoPointsTool : State<ToolUser>
     }
 
     protected abstract Vector3I[] GetVoxelPositions();
+
+    protected virtual void GenerateMeshHighlight(Vector3I[] voxelPositions)
+    {
+        ctx.GenerateVoxelBasedMeshHighlight(voxelPositions);
+    }
 }
 
