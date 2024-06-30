@@ -4,8 +4,8 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Assets\Scripts\Generation\CubeMeshGenerator.glsl" />
-    <None Include="Assets\Scripts\Generation\MeshGeneration.glsl" />
+    <None Include="Assets\Scripts\Generation\ComputeShaders\VoxelMeshGenerator.glsl" />
+    <None Include="Assets\Scripts\Generation\ComputeShaders\MeshGeneration.glsl" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="fNbt" Version="0.6.4" />

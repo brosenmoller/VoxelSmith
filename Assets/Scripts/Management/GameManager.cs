@@ -7,6 +7,7 @@ public partial class GameManager : Node
     public static ExportManager ExportManager { get; private set; }
     public static ImportManager ImportManager { get; private set; }
     public static TimerManager TimerManager { get; private set; }
+    public static SelectionManager SelectionManager { get; private set; }
 
     public static SurfaceMesh SurfaceMesh { get; private set; }
     public static PrefabMesh PrefabMesh { get; private set; }
@@ -46,6 +47,7 @@ public partial class GameManager : Node
         CommandManager = new CommandManager();
         ExportManager = new ExportManager();
         ImportManager = new ImportManager();
+        SelectionManager = new SelectionManager();
 
         activeManagers = new Manager[] {
             TimerManager,
@@ -53,6 +55,7 @@ public partial class GameManager : Node
             CommandManager,
             ExportManager,
             ImportManager,
+            SelectionManager,
         };
 
         foreach (Manager manager in activeManagers)
@@ -81,6 +84,11 @@ public partial class GameManager : Node
         PaletteMenu.OnNewPressed += UIController.ShowCreateNewPaletteDialog;
         PaletteMenu.OnSavePressed += DataManager.SavePalette;
         PaletteMenu.OnImportFromProjectPressed += UIController.ShowImportPaletteFromProjectDialog;
+
+        SelectMenu.OnSelectAllPressed += SelectionManager.SelectAll;
+        SelectMenu.OnDeselectPressed += SelectionManager.Deselect;
+        SelectMenu.OnReselectPressed += SelectionManager.Reselect;
+        SelectMenu.OnInvertSelectionPressed += SelectionManager.InvertSelection;
     }
 
     public override void _Process(double delta)
