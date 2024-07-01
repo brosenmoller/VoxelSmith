@@ -1,7 +1,7 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://ctaid16rpjbyu"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://qplcbcs4x4pi"]
+
+[ext_resource type="Texture2D" uid="uid://bt6rf8gtap3sf" path="res://Assets/Art/Materials/texture_06.png" id="1_imbup"]
 
 [resource]
 vertex_color_use_as_albedo = true
-vertex_color_is_srgb = true
-ao_light_affect = 1.0
-subsurf_scatter_strength = 0.3
+albedo_texture = ExtResource("1_imbup")

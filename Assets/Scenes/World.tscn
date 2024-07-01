@@ -7,7 +7,7 @@
 [ext_resource type="Material" uid="uid://cx46gfmlwbfpy" path="res://Assets/Art/Materials/RedHighlight.tres" id="4_b1jf1"]
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/WorldMesh/PrefabMesh.cs" id="5_8q8hp"]
 [ext_resource type="PackedScene" uid="uid://b651kxq5o005l" path="res://Assets/Scenes/voxel_highlight.tscn" id="5_y16gt"]
-[ext_resource type="Material" uid="uid://qplcbcs4x4pi" path="res://Assets/Art/Materials/surface_mesh_material_textured.tres" id="6_3a01a"]
+[ext_resource type="Material" uid="uid://qplcbcs4x4pi" path="res://Assets/Art/Materials/surface_mesh_material.tres" id="6_3a01a"]
 [ext_resource type="PackedScene" uid="uid://c5g1tyd40xqtm" path="res://Assets/Scenes/chunk.tscn" id="7_1yr4w"]
 [ext_resource type="Material" uid="uid://bysvj84e30qnx" path="res://Assets/Art/Materials/prefab_mesh_material.tres" id="7_bqnqk"]
 [ext_resource type="Material" uid="uid://b071teac28h04" path="res://Assets/Art/Materials/WhiteHighlight.tres" id="9_qvph6"]

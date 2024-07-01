@@ -43,7 +43,6 @@ public abstract partial class WorldMesh : Node3D
         foreach (Chunk chunk in meshGenerator.chunks.Values)
         {
             chunk.CollisionLayer = collisionLayer;
-            GD.Print(chunk.GetCollisionLayerValue(layerNumber));
         }
     }
 
