@@ -17,38 +17,36 @@ public class CommandManager : Manager
     {
         command.Execute();
 
-        for (int i = commandBuffer.Count - 1; i > commandIndex; i--)
+        for (int i = commandBuffer.Count - 1; i >= commandIndex; i--)
         {
             commandBuffer.RemoveAt(i);
         }
 
         commandBuffer.Add(command);
-        commandIndex = commandBuffer.Count - 1;
-    }
-
-    public void StepForward()
-    {
-        if (commandIndex > commandBuffer.Count - 1 || commandIndex < 0)  { return; }
-
-        commandBuffer[commandIndex].Execute();
         commandIndex++;
-
-        if (commandIndex > commandBuffer.Count - 1) { commandIndex = commandBuffer.Count - 1; }
     }
 
     public void StepBack()
     {
-        if (commandIndex > commandBuffer.Count - 1 || commandIndex < 0) { return; }
+        if (commandIndex > 0)
+        {
+            commandIndex--;
+            commandBuffer[commandIndex].Undo();
+        }
+    }
 
-        commandBuffer[commandIndex].Undo();
-        commandIndex--;
-
-        if (commandIndex < 0) { commandIndex = 0; }
+    public void StepForward()
+    {
+        if (commandIndex < commandBuffer.Count)
+        {
+            commandBuffer[commandIndex].Execute();
+            commandIndex++;
+        }
     }
 
     public void ClearHistory()
     {
         commandBuffer.Clear();
+        commandIndex = 0;
     }
 }
-
