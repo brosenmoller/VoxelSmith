@@ -1,4 +1,4 @@
-﻿public class SpeedBrushTool : BrushTool
+﻿public class SpeedBrushTool : VoxelBrushTool
 {
     public SpeedBrushTool() : base()
     {

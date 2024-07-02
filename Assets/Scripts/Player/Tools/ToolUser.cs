@@ -42,12 +42,12 @@ public partial class ToolUser : RayCast3D
 
         stateMachine = new StateMachine<ToolUser>(
             this,
-            new BrushTool(),
+            new VoxelBrushTool(),
             new SpeedBrushTool(),
             new CubeTool(),
             new LineTool()
         );
-        stateMachine.ChangeState(typeof(BrushTool));
+        stateMachine.ChangeState(typeof(VoxelBrushTool));
     }
 
     public override void _Process(double delta)

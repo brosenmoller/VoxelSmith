@@ -1,5 +1,6 @@
 ﻿using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SelectionManager : Manager
 {
@@ -13,40 +14,45 @@ public class SelectionManager : Manager
         }
     }
 
-    private HashSet<Vector3I> previousSelection;
-
     public override void Setup()
     {
-        CurrentSelection = new HashSet<Vector3I>();
-        previousSelection = new HashSet<Vector3I>();
+        CurrentSelection = new HashSet<Vector3I>
+        {
+            new(0, 0, 0),
+            new(0, 1, 0),
+            new(1, 1, 0),
+            new(0, 1, 1),
+            new(1, 1, 1),
+            new(2, 1, 1),
+            new(2, 1, 2),
+            new(2, 5, 2)
+        };
     }
 
     public void SelectAll()
     {
-        previousSelection = CurrentSelection;
+        HashSet<Vector3I> selection = new(GameManager.DataManager.ProjectData.voxelColors.Keys);
+        selection.UnionWith(new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelPrefabs.Keys));
 
-        CurrentSelection = new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelColors.Keys);
+        GameManager.CommandManager.ExecuteCommand(new AddSelectionListCommand(selection.ToArray()));
     }
 
     public void Deselect()
     {
-        previousSelection = CurrentSelection;
-
-        CurrentSelection.Clear();
+        GameManager.CommandManager.ExecuteCommand(new ClearSelectionListCommand(CurrentSelection.ToArray()));
     }
 
     public void InvertSelection()
     {
-        previousSelection = CurrentSelection;
+        HashSet<Vector3I> selection = new(GameManager.DataManager.ProjectData.voxelColors.Keys);
+        selection.UnionWith(new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelPrefabs.Keys));
+        selection.ExceptWith(CurrentSelection);
 
-        HashSet<Vector3I> allPositions = new(GameManager.DataManager.ProjectData.voxelColors.Keys);
-        allPositions.ExceptWith(CurrentSelection);
-        CurrentSelection = allPositions;
+        GameManager.CommandManager.ExecuteCommand(new AddSelectionListCommand(selection.ToArray()));
     }
 
     public void Reselect()
     {
-        (previousSelection, CurrentSelection) = (CurrentSelection, previousSelection);
+        GD.Print("Not SUpported: Reselect");
     }
 }
-

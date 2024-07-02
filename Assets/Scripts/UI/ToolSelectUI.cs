@@ -9,7 +9,7 @@ public partial class ToolSelectUI : Control
 
     public override void _Ready()
     {
-        brushButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(BrushTool));
+        brushButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(VoxelBrushTool));
         speedBrushButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(SpeedBrushTool));
         cubeButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(CubeTool));
         lineButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(LineTool));

@@ -8,13 +8,14 @@ public partial class WorldController : Node3D
     public static event Action WentOutOfFocus;
 
     private PlayerMovement player;
+    private VoxelSmith.Timer wentInFocusEventTimer;
 
     private bool worldInFocus;
     public bool WorldInFocus { 
         get { return worldInFocus; } 
         set 
         {
-            if (value) { SendWentInFocusEvent(); }
+            if (value) { wentInFocusEventTimer.Restart(); }
             else { WentOutOfFocus?.Invoke(); }
 
             worldInFocus = value;
@@ -27,6 +28,7 @@ public partial class WorldController : Node3D
     public override void _Ready()
     {
         Instance = this;
+        wentInFocusEventTimer = new(0.01f, SendWentInFocusEvent, false);
         
         player = this.GetChildByType<PlayerMovement>();
         WorldInFocus = false;
@@ -67,9 +69,8 @@ public partial class WorldController : Node3D
         }
     }
 
-    private async void SendWentInFocusEvent()
+    private void SendWentInFocusEvent()
     {
-        await ToSignal(GetTree().CreateTimer(0.01f), Timer.SignalName.Timeout);
         WentInFocusLastFrame?.Invoke();
     }
 

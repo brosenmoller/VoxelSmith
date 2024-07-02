@@ -1,6 +1,8 @@
 shader_type spatial;
 
 uniform sampler2D depth_texture : source_color, hint_depth_texture;
+uniform vec3 camera_world_position;
+
 varying mat4 CAMERA;
 
 void vertex() {
@@ -17,6 +19,9 @@ void fragment() {
 	
 	vec4 world = CAMERA * INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	vec3 world_position = world.xyz / world.w;
+	
+	vec3 cameraDir = normalize(world_position - camera_world_position);
+	world_position += cameraDir * 0.1f;
 	
 	
 }

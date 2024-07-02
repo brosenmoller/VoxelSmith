@@ -2,12 +2,15 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/WorldMesh/Chunk.cs" id="1_jy2pt"]
 
-[node name="Chunk" type="StaticBody3D" node_paths=PackedStringArray("collisionShape", "meshInstance")]
+[node name="Chunk" type="StaticBody3D" node_paths=PackedStringArray("collisionShape", "meshInstance", "selectionMeshInstance")]
 collision_layer = 12
 script = ExtResource("1_jy2pt")
 collisionShape = NodePath("CollisionShape3D")
 meshInstance = NodePath("MeshInstance3D")
+selectionMeshInstance = NodePath("SelectionMeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="SelectionMeshInstance3D" type="MeshInstance3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

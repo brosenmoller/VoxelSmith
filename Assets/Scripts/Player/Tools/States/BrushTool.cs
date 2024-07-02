@@ -1,22 +1,24 @@
 ﻿using Godot;
 
-public class BrushTool : State<ToolUser>
+public abstract class BrushTool : State<ToolUser>
 {
+    private const float TIMER_LENGTH = 0.2f;
+
     protected readonly VoxelSmith.Timer placeTimer;
     protected readonly VoxelSmith.Timer breakTimer;
 
-    public BrushTool() 
+    public BrushTool()
     {
-        placeTimer = new VoxelSmith.Timer(0.2f, PlaceBlock, autoStart: false, loop: true);
-        breakTimer = new VoxelSmith.Timer(0.2f, BreakBlock, autoStart: false, loop: true);
+        placeTimer = new VoxelSmith.Timer(TIMER_LENGTH, PlaceAction, autoStart: false, loop: true);
+        breakTimer = new VoxelSmith.Timer(TIMER_LENGTH, BreakAction, autoStart: false, loop: true);
     }
 
     public override void OnUpdate(double delta)
     {
-        if (!ctx.HasHit) 
+        if (!ctx.HasHit)
         {
             ctx.voxelHiglight.Hide();
-            return; 
+            return;
         }
 
         ctx.voxelHiglight.Show();
@@ -25,12 +27,12 @@ public class BrushTool : State<ToolUser>
         if (Input.IsActionJustPressed("place"))
         {
             placeTimer.Restart();
-            PlaceBlock();
+            PlaceAction();
         }
-        else if(Input.IsActionJustPressed("break"))
+        else if (Input.IsActionJustPressed("break"))
         {
             breakTimer.Restart();
-            BreakBlock();
+            BreakAction();
         }
 
         if (!Input.IsActionPressed("place"))
@@ -50,18 +52,11 @@ public class BrushTool : State<ToolUser>
         ctx.voxelHiglight.Hide();
     }
 
-    private void BreakBlock()
+    protected Vector3I GetNextVoxel()
     {
-        GameManager.CommandManager.ExecuteCommand(new BreakVoxelCommand(ctx.VoxelPosition));
+        return ctx.VoxelPosition + (Vector3I)ctx.Normal.Normalized();
     }
 
-    private void PlaceBlock()
-    {
-        Vector3I nextVoxel = ctx.VoxelPosition + (Vector3I)ctx.Normal.Normalized();
-
-        if ((!ctx.IsVoxelInPlayer(nextVoxel) || ctx.ignorePlayerCheck) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
-        {
-            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
-        }
-    }
+    protected abstract void BreakAction();
+    protected abstract void PlaceAction();
 }

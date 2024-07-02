@@ -6,9 +6,6 @@ public class VoxelListCommand
     protected Vector3I[] voxelPositions;
     private VoxelMemory[] voxelMemory;
 
-    protected bool containsColors = false;
-    protected bool containsPrefabs = false;
-
     protected ProjectData projectData;
 
     public VoxelListCommand(params Vector3I[] voxelPositions)
@@ -30,12 +27,10 @@ public class VoxelListCommand
 
             if (projectData.voxelColors.TryGetValue(position, out id))
             {
-                containsColors = true;
                 type = VoxelType.Color;
             }
             else if (projectData.voxelPrefabs.TryGetValue(position, out id))
             {
-                containsPrefabs = true;
                 type = VoxelType.Prefab;
             }
 
@@ -51,32 +46,20 @@ public class VoxelListCommand
 
             if (memory.type == VoxelType.Air)
             {
-                //projectData.voxelColors.Remove(memory.position);
                 GameManager.SurfaceMesh.ClearVoxel(memory.position);
-
-                //projectData.voxelPrefabs.Remove(memory.position);
                 GameManager.PrefabMesh.ClearVoxel(memory.position);
             }
             else if (memory.type == VoxelType.Color)
             {
-                //projectData.voxelPrefabs.Remove(memory.position);
                 GameManager.PrefabMesh.ClearVoxel(memory.position);
-
-                //projectData.voxelColors[memory.position] = memory.id;
                 GameManager.SurfaceMesh.UpdateVoxel(memory.position, memory.id);
             }
             else if (memory.type == VoxelType.Prefab)
             {
-                //projectData.voxelColors.Remove(memory.position);
                 GameManager.SurfaceMesh.ClearVoxel(memory.position);
-
-                //projectData.voxelPrefabs[memory.position] = memory.id;
                 GameManager.PrefabMesh.UpdateVoxel(memory.position, memory.id);
             }
         }
-
-        //GameManager.SurfaceMesh.UpdateMesh();
-        //GameManager.PrefabMesh.UpdateMesh();
     }
 
     public struct VoxelMemory 

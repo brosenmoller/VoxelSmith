@@ -40,7 +40,7 @@ public class CubeTool : TwoPointsTool
 
     protected override void GenerateMeshHighlight(Vector3I[] voxelPositions)
     {
-        ctx.meshHighlightMeshInstance.Mesh = CubeMeshGenerator.CreateCubeMesh(firstPosition, secondPosition);
+        ctx.meshHighlightMeshInstance.Mesh = MeshHelper.CreateCubeMesh(firstPosition, secondPosition);
     }
 }
 
