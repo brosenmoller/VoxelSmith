@@ -73,6 +73,15 @@ public abstract partial class WorldMesh : Node3D
         }
     }
 
+    public void UpdateChunkContainingPosition(Vector3I position)
+    {
+        Vector3I chunkPosition = meshGenerator.GetChunkPosition(position);
+        if (meshGenerator.chunks.TryGetValue(chunkPosition, out Chunk chunk))
+        {
+            meshGenerator.chunks.Add(chunkPosition, chunk);
+        }
+    }
+
     protected void UpdateMesh<TVoxelData>(HashSet<Vector3I> allPositions, Dictionary<Guid, TVoxelData> palette) where TVoxelData : VoxelData
     {
         meshGenerator.CreateMesh(allPositions, palette);
