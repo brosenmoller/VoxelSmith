@@ -58,7 +58,7 @@ impl MeshGenerator {
 
     fn create_voxel(&mut self, position: &Vector3i, color: &Color, voxels: &HashMap<Vector3i, VoxelData>) {
 
-        let left = !voxels.contains_key(position + Vector3i::new(-1, 0, 0));
+        let left = !voxels.contains_key(position* + Vector3i::new(-1, 0, 0));
         let right = !voxels.contains_key(position + Vector3i::new(1, 0, 0));
         let bottom = !voxels.contains_key(position + Vector3i::new(0, -1, 0));
         let top = !voxels.contains_key(position + Vector3i::new(0, 1, 0));
@@ -69,7 +69,7 @@ impl MeshGenerator {
 
         if left {
             self.surface_tool.set_normal(Vector3::new(-1.0, 0.0, 0.0));
-            self.add_vertex(vertices[0] + vertex_offset);
+            add_vertex(vertices[0] + vertex_offset);
             self.add_vertex(vertices[7] + vertex_offset);
             self.add_vertex(vertices[3] + vertex_offset);
             self.add_vertex(vertices[0] + vertex_offset);

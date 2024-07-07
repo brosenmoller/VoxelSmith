@@ -17,4 +17,3 @@ public class ClearSelectionListCommand : SelectionListCommand, ICommand
         ReplaceFromMemory();
     }
 }
-

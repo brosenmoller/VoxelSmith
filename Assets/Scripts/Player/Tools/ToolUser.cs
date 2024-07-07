@@ -45,7 +45,8 @@ public partial class ToolUser : RayCast3D
             new VoxelBrushTool(),
             new SpeedBrushTool(),
             new CubeTool(),
-            new LineTool()
+            new LineTool(),
+            new SelectionBrushTool()
         );
         stateMachine.ChangeState(typeof(VoxelBrushTool));
     }

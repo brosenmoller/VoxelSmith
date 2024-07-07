@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5g1tyd40xqtm"]
+[gd_scene load_steps=3 format=3 uid="uid://c5g1tyd40xqtm"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Generation/WorldMesh/Chunk.cs" id="1_jy2pt"]
+[ext_resource type="Material" uid="uid://c8e4utwcmb2vt" path="res://Assets/Art/Materials/selection_mesh_material.tres" id="2_lfdpa"]
 
 [node name="Chunk" type="StaticBody3D" node_paths=PackedStringArray("collisionShape", "meshInstance", "selectionMeshInstance")]
 collision_layer = 12
@@ -12,5 +13,6 @@ selectionMeshInstance = NodePath("SelectionMeshInstance3D")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 
 [node name="SelectionMeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_lfdpa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

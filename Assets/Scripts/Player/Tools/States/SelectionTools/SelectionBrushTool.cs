@@ -9,7 +9,6 @@ public class SelectionBrushTool : BrushTool
 
     protected override void PlaceAction()
     {
-        Vector3I nextVoxel = GetNextVoxel();
-        GameManager.CommandManager.ExecuteCommand(new AddSelectionListCommand(nextVoxel));
+        GameManager.CommandManager.ExecuteCommand(new AddSelectionListCommand(ctx.VoxelPosition));
     }
 }

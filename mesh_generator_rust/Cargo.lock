@@ -148,6 +148,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
 
 [[package]]
+name = "mesh_generator_rust"
+version = "0.1.0"
+dependencies = [
+ "godot",
+]
+
+[[package]]
 name = "nanoserde"
 version = "0.1.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -248,13 +255,6 @@ source = "git+https://github.com/PoignardAzur/venial?rev=32ade31408eb0ffba4ce7b0
 dependencies = [
  "proc-macro2",
  "quote",
-]
-
-[[package]]
-name = "voxel_smith_rust"
-version = "0.1.0"
-dependencies = [
- "godot",
 ]
 
 [[package]]

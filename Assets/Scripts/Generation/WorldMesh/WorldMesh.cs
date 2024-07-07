@@ -78,7 +78,7 @@ public abstract partial class WorldMesh : Node3D
         Vector3I chunkPosition = meshGenerator.GetChunkPosition(position);
         if (meshGenerator.chunks.TryGetValue(chunkPosition, out Chunk chunk))
         {
-            meshGenerator.chunks.Add(chunkPosition, chunk);
+            meshGenerator.chunksToBeUpdated.Add(chunk);
         }
     }
 

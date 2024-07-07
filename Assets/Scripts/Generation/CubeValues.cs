@@ -11,10 +11,14 @@ public static class CubeValues
 
     public static readonly Vector3[] cubeVertices =
     {
-        new(0, 0, 0), new(1, 0, 0),
-        new(1, 0, 1), new(0, 0, 1),
-        new(0, 1, 0), new(1, 1, 0),
-        new(1, 1, 1), new(0, 1, 1)
+        new(0, 0, 0), 
+        new(1, 0, 0),
+        new(1, 0, 1), 
+        new(0, 0, 1),
+        new(0, 1, 0), 
+        new(1, 1, 0),
+        new(1, 1, 1), 
+        new(0, 1, 1),
     };
 
     public static readonly Vector3I[] cubeOffsets =
