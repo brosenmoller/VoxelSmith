@@ -1,6 +1,8 @@
 ﻿using Godot;
 using Godot.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 public static class NodeExtensions
 {
@@ -84,6 +86,16 @@ public static class NodeExtensions
     {
         Node rootNode = node.GetTree().Root;
         return rootNode.GetAllChildrenByType<T>();
+    }
+
+    public static void RemoveAllChildren(this Node node)
+    {
+        for (int i = 0; i < node.GetChildCount(); i++)
+        {
+            Node currentChild = node.GetChild(i);
+            RemoveAllChildren(currentChild);
+            currentChild.QueueFree();
+        }
     }
 
     public static bool RayCast2D(this CanvasItem node, Vector2 startPosition, Vector2 endPosition, out RayCastHitInfo2D hitInfo, uint layermask = 0xffffffff, bool collideWithAreas = true, bool collideWithBodies = true)

@@ -86,7 +86,7 @@ public partial class GameManager : Node
         PaletteMenu.OnImportFromProjectPressed += UIController.ShowImportPaletteFromProjectDialog;
 
         SelectMenu.OnSelectAllPressed += SelectionManager.SelectAll;
-        SelectMenu.OnDeselectPressed += SelectionManager.Deselect;
+        SelectMenu.OnDeselectPressed += SelectionManager.DeselectAll;
         SelectMenu.OnReselectPressed += SelectionManager.Reselect;
         SelectMenu.OnInvertSelectionPressed += SelectionManager.InvertSelection;
     }

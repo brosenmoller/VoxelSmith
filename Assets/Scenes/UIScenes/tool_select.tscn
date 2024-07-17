@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c7s6j05eta33g"]
+[gd_scene load_steps=20 format=3 uid="uid://c7s6j05eta33g"]
 
 [ext_resource type="Texture2D" uid="uid://dg55b8bihcm0n" path="res://Assets/Art/Icons/paintbrush-solid.png" id="1_4q0ds"]
 [ext_resource type="ButtonGroup" uid="uid://dsjdq6ltkms03" path="res://Assets/Resources/Tools/ToolSelectButtonGroup.tres" id="1_d6l1v"]
@@ -50,7 +50,15 @@ keycode = 53
 [sub_resource type="Shortcut" id="Shortcut_8xvxy"]
 events = [SubResource("InputEventKey_7ityq")]
 
-[node name="ToolSelect" type="ColorRect" node_paths=PackedStringArray("brushButton", "speedBrushButton", "cubeButton", "lineButton", "selectionBrushButton")]
+[sub_resource type="InputEventKey" id="InputEventKey_gyok0"]
+device = -1
+ctrl_pressed = true
+keycode = 54
+
+[sub_resource type="Shortcut" id="Shortcut_natvp"]
+events = [SubResource("InputEventKey_gyok0")]
+
+[node name="ToolSelect" type="ColorRect" node_paths=PackedStringArray("brushButton", "speedBrushButton", "cubeButton", "lineButton", "selectionBrushButton", "selectionCubeButton")]
 custom_minimum_size = Vector2(50, 0)
 anchors_preset = 1
 anchor_left = 1.0
@@ -66,6 +74,7 @@ speedBrushButton = NodePath("VBoxContainer/SpeedBrushToolContainer/SpeedBrushToo
 cubeButton = NodePath("VBoxContainer/CubeToolContainer/CubeTool")
 lineButton = NodePath("VBoxContainer/LineToolContainer/LineTool")
 selectionBrushButton = NodePath("VBoxContainer/SelectionBrushToolContainer/SelectionBrushTool")
+selectionCubeButton = NodePath("VBoxContainer/SelectionCubeToolContainer/SelectionCubeTool")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -188,6 +197,30 @@ toggle_mode = true
 button_group = ExtResource("1_d6l1v")
 shortcut = SubResource("Shortcut_8xvxy")
 icon = ExtResource("1_4q0ds")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="SelectionCubeToolContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SelectionCubeTool" type="Button" parent="VBoxContainer/SelectionCubeToolContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+tooltip_text = "Brush Tool
+"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_bjcli")
+toggle_mode = true
+button_group = ExtResource("1_d6l1v")
+shortcut = SubResource("Shortcut_natvp")
+icon = ExtResource("3_pg565")
 flat = true
 icon_alignment = 1
 expand_icon = true

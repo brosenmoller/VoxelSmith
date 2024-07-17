@@ -37,7 +37,7 @@ public class SelectionManager : Manager
         GameManager.CommandManager.ExecuteCommand(new AddSelectionListCommand(selection.ToArray()));
     }
 
-    public void Deselect()
+    public void DeselectAll()
     {
         GameManager.CommandManager.ExecuteCommand(new ClearSelectionListCommand(CurrentSelection.ToArray()));
     }
@@ -48,11 +48,12 @@ public class SelectionManager : Manager
         selection.UnionWith(new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelPrefabs.Keys));
         selection.ExceptWith(CurrentSelection);
 
+        DeselectAll();
         GameManager.CommandManager.ExecuteCommand(new AddSelectionListCommand(selection.ToArray()));
     }
 
     public void Reselect()
     {
-        GD.Print("Not SUpported: Reselect");
+        GD.Print("Not Supported: Reselect");
     }
 }

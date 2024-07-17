@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://c22rhhgvp0lvf"]
+[gd_scene load_steps=2 format=3 uid="uid://c22rhhgvp0lvf"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/UI/ToolOptionsUI.cs" id="1_e2nx1"]
 
 [node name="ToolOptions" type="VBoxContainer"]
 anchors_preset = -1
@@ -7,6 +9,7 @@ anchor_bottom = 0.287
 offset_right = -100.224
 offset_bottom = -185.976
 theme_override_constants/separation = 0
+script = ExtResource("1_e2nx1")
 
 [node name="Header" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(0, 26)
@@ -29,3 +32,4 @@ text = "Tool Options
 [node name="Panel" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
+color = Color(1, 1, 1, 0)
