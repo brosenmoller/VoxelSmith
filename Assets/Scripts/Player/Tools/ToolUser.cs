@@ -43,10 +43,11 @@ public partial class ToolUser : RayCast3D
         stateMachine = new StateMachine<ToolUser>(
             this,
             new VoxelBrushTool(),
-            new SpeedBrushTool(),
-            new CubeTool(),
-            new LineTool(),
-            new SelectionBrushTool()
+            new VoxelSpeedBrushTool(),
+            new VoxelCubeTool(),
+            new VoxelLineTool(),
+            new SelectionBrushTool(),
+            new SelectionCubeTool()
         );
         stateMachine.ChangeState(typeof(VoxelBrushTool));
     }

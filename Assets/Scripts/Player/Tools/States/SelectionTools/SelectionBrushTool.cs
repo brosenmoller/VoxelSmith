@@ -1,5 +1,3 @@
-using Godot;
-
 public class SelectionBrushTool : BrushTool
 {
     protected override void BreakAction()
