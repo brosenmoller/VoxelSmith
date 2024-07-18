@@ -16,6 +16,7 @@ public partial class GameManager : Node
     public static UIController UIController { get; private set; }
     public static PaletteUI PaletteUI { get; private set; }
     public static TopBarUI TopBarUI { get; private set; }
+    public static ToolOptionsUI ToolOptionsUI { get; private set; }
     public static NativeDialog NativeDialog { get; private set; }
 
 
@@ -28,6 +29,7 @@ public partial class GameManager : Node
         UIController = this.GetNodeByType<UIController>();
         PaletteUI = this.GetNodeByType<PaletteUI>();
         TopBarUI = this.GetNodeByType<TopBarUI>();
+        ToolOptionsUI = this.GetNodeByType<ToolOptionsUI>();
         NativeDialog = this.GetNodeByType<NativeDialog>();
         
         SurfaceMesh = this.GetNodeByType<SurfaceMesh>();

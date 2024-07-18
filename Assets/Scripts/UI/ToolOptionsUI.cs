@@ -1,9 +1,15 @@
 using Godot;
+using System;
 using System.Reflection;
 
 public partial class ToolOptionsUI : Control
 {
     [Export] private Control toolOptionsParent;
+
+    public void ClearToolOptions()
+    {
+        toolOptionsParent.RemoveAllChildren();
+    }
     
     public void SetToolOptions(IToolOptions toolOptions)
     {
@@ -26,12 +32,12 @@ public partial class ToolOptionsUI : Control
 
         Control typeSpecificUI = fieldInfo.GetValue(toolOptions) switch
         {
-            int _ => AddOption_Int(toolOptions, fieldInfo),
-            float _ => AddOption_Float(toolOptions, fieldInfo),
-            double _ => AddOption_Double(toolOptions, fieldInfo),
+            int _ => AddOption_Number(toolOptions, fieldInfo),
+            float _ => AddOption_Number(toolOptions, fieldInfo, 0.01f),
+            double _ => AddOption_Number(toolOptions, fieldInfo, 0.01f),
             bool _ => AddOption_Bool(toolOptions, fieldInfo),
             string _ => AddOption_String(toolOptions, fieldInfo),
-            _ => throw new System.Exception($"Unsupported Type in ToolOptionsUI\n name: {fieldInfo.Name} type: {fieldInfo.GetType()}"),
+            _ => throw new Exception($"Unsupported Type in ToolOptionsUI\n name: {fieldInfo.Name} type: {fieldInfo.GetType()}"),
         };
 
         toolOptionsParent.AddChild(parent);
@@ -41,27 +47,47 @@ public partial class ToolOptionsUI : Control
         parent.AddChild(typeSpecificUI);
     }
 
-    private Control AddOption_Int(IToolOptions toolOptions, FieldInfo fieldInfo)
-    {
-        SpinBox spinBox = new() { Value = (int)fieldInfo.GetValue(toolOptions), Step = 1};
-        spinBox.ValueChanged += (double value) => fieldInfo.SetValue(toolOptions, (int)value);
-        return spinBox;
-    }
 
-    private Control AddOption_Float(IToolOptions toolOptions, FieldInfo fieldInfo)
+    private Control AddOption_Number(IToolOptions toolOptions, FieldInfo fieldInfo, float defaultStep = 1f, float defaultMin = 0f, float defaultMax = 100f)
     {
-        SpinBox spinBox = new() { Value = (float)fieldInfo.GetValue(toolOptions), Step = 0.01f };
-        spinBox.ValueChanged += (double value) => fieldInfo.SetValue(toolOptions, (float)value);
-        return spinBox;
-    }
+        float step = defaultStep, min = defaultMin, max = defaultMax;
+        bool hasSlider = false;
 
-    private Control AddOption_Double(IToolOptions toolOptions, FieldInfo fieldInfo)
-    {
-        SpinBox spinBox = new() { Value = (double)fieldInfo.GetValue(toolOptions), Step = 0.01 };
-        spinBox.ValueChanged += (double value) => fieldInfo.SetValue(toolOptions, value);
-        return spinBox;
-    }
+        if (fieldInfo.GetAttribute(out ToolOptionStepAttribute stepAttribute)) { step = stepAttribute.Step; }
+        if (fieldInfo.GetAttribute(out ToolOptionRangeAttribute rangeAttribute)) { min = rangeAttribute.Min; max = rangeAttribute.Max; }
+        if (fieldInfo.HasAttribute<ToolOptionSliderAttribute>()) { hasSlider = true; }
 
+        double value = 0;
+        Type fieldType = fieldInfo.FieldType;
+        if (fieldType == typeof(int)) { value = (int)fieldInfo.GetValue(toolOptions); }
+        else if (fieldType == typeof(float)) { value = (float)fieldInfo.GetValue(toolOptions); }
+        else if (fieldType == typeof(double)) { value = (double)fieldInfo.GetValue(toolOptions); }
+
+        Godot.Range range;
+        if (hasSlider)
+        {
+            range = new HSlider() { Value = value, Step = step, MinValue = min, MaxValue = max };
+        }
+        else
+        {
+            range = new SpinBox() { Value = value, Step = step, MinValue = min, MaxValue = max };
+        }
+
+        if (fieldType == typeof(int)) 
+        {
+            range.ValueChanged += (double value) => fieldInfo.SetValue(toolOptions, (int)value);
+        }
+        else if (fieldType == typeof(float))
+        {
+            range.ValueChanged += (double value) => fieldInfo.SetValue(toolOptions, (float)value);
+        }
+        else if (fieldType == typeof(double))
+        {
+            range.ValueChanged += (double value) => fieldInfo.SetValue(toolOptions, (double)value);
+        }
+        
+        return range;
+    }
 
     private Control AddOption_Bool(IToolOptions toolOptions, FieldInfo fieldInfo)
     {

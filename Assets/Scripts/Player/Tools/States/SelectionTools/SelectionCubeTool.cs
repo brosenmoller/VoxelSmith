@@ -4,7 +4,7 @@ public class SelectionCubeTool : TwoPointsTool
 {
     protected override Vector3I[] GetVoxelPositions()
     {
-        return GetCubeVoxels();
+        return VoxelHelper.GetCubeVoxels(firstPosition, secondPosition);
     }
 
     protected override void GenerateMeshHighlight(Vector3I[] voxelPositions)

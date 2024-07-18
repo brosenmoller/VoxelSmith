@@ -90,11 +90,12 @@ public static class NodeExtensions
 
     public static void RemoveAllChildren(this Node node)
     {
-        for (int i = 0; i < node.GetChildCount(); i++)
+        GD.Print(node.GetChildCount());
+        foreach (Node child in node.GetChildren())
         {
-            Node currentChild = node.GetChild(i);
-            RemoveAllChildren(currentChild);
-            currentChild.QueueFree();
+            GD.Print("IN Loop");
+            node.RemoveChild(child);
+            child.QueueFree();
         }
     }
 

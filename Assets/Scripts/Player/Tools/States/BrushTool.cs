@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-public abstract class BrushTool : State<ToolUser>
+public abstract class BrushTool : Tool
 {
     private const float TIMER_LENGTH = 0.2f;
 

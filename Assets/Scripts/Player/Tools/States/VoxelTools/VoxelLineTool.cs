@@ -6,7 +6,7 @@ public class VoxelLineTool : TwoPointsTool
 
     protected override Vector3I[] GetVoxelPositions()
     {
-        return GetLineVoxels(stepLength);
+        return VoxelHelper.GetLineVoxels(firstPosition, secondPosition, stepLength);
     }
 
     protected override void BreakAction(Vector3I[] voxels)

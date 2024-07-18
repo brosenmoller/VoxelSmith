@@ -40,16 +40,18 @@ public partial class ToolUser : RayCast3D
         WorldController.WentInFocusLastFrame += () => enabled = true;
         WorldController.WentOutOfFocus += () => enabled = false;
 
-        stateMachine = new StateMachine<ToolUser>(
-            this,
+        Tool[] tools = new Tool[]
+        {
             new VoxelBrushTool(),
             new VoxelSpeedBrushTool(),
             new VoxelCubeTool(),
             new VoxelLineTool(),
             new SelectionBrushTool(),
             new SelectionCubeTool()
-        );
-        stateMachine.ChangeState(typeof(VoxelBrushTool));
+        };
+
+        stateMachine = new StateMachine<ToolUser>(this, tools);
+        ChangeState(typeof(VoxelBrushTool));
     }
 
     public override void _Process(double delta)
@@ -74,6 +76,18 @@ public partial class ToolUser : RayCast3D
         if (stateMachine.stateDictionary.ContainsKey(stateType))
         {
             stateMachine.ChangeState(stateType);
+            
+            Tool tool = (Tool)stateMachine.CurrentState;
+            IToolOptions toolOptions = tool.GetToolOptions();
+
+            if (toolOptions != null)
+            {
+                GameManager.ToolOptionsUI.SetToolOptions(toolOptions);
+            }
+            else
+            {
+                GameManager.ToolOptionsUI.ClearToolOptions();
+            }
         }
     }
 
@@ -91,7 +105,7 @@ public partial class ToolUser : RayCast3D
                 meshHighlight.GlobalPosition = Point;
             }
 
-            VoxelPosition = GetGridPositionFromHitPoint(Point, Normal);
+            VoxelPosition = VoxelHelper.GetGridVoxelFromHitPoint(Point, Normal);
 
             if (!enabled) { return; }
 
@@ -103,7 +117,6 @@ public partial class ToolUser : RayCast3D
         else
         {
             HasHit = false;
-            //meshHighlight.Visible = false;
             voxelHiglight.Hide();
         }
     }
@@ -111,21 +124,6 @@ public partial class ToolUser : RayCast3D
     public void GenerateVoxelBasedMeshHighlight(Vector3I[] voxelPositions)
     {
         meshHighlightMeshInstance.Mesh = meshGenerator.CreateMesh(voxelPositions);
-    }
-
-    public Vector3I GetGridPositionFromHitPoint(Vector3 hitPoint, Vector3 normal)
-    {
-        Vector3 insetPoint = hitPoint - (normal * 0.1f);
-        return GetGridPosition(insetPoint);
-    }
-
-    public Vector3I GetGridPosition(Vector3 point)
-    {
-        return new(
-            Mathf.FloorToInt(point.X),
-            Mathf.FloorToInt(point.Y),
-            Mathf.FloorToInt(point.Z)
-        );
     }
 
     public bool IsVoxelInPlayer(Vector3I voxelPosition)
@@ -149,7 +147,7 @@ public partial class ToolUser : RayCast3D
 
         if (this.RayCast3D(GlobalPosition, checkEndPoint, out var hitInfo, CollisionMask, false, true))
         {
-            Vector3I voxelPostion = GetGridPositionFromHitPoint(hitInfo.position, hitInfo.normal);
+            Vector3I voxelPostion = VoxelHelper.GetGridVoxelFromHitPoint(hitInfo.position, hitInfo.normal);
             if (selectInside)
             {
                 return voxelPostion;
@@ -162,7 +160,7 @@ public partial class ToolUser : RayCast3D
         }
 
         Vector3 emptySpacePoint = normalizedGlobalDirection * emptyDistance + GlobalPosition;
-        return GetGridPositionFromHitPoint(emptySpacePoint, normalizedGlobalDirection);
+        return VoxelHelper.GetGridVoxelFromHitPoint(emptySpacePoint, normalizedGlobalDirection);
     }
 
     private void PickBlock(Vector3I voxelPosition)

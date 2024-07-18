@@ -2,9 +2,21 @@
 
 public class VoxelCubeTool : TwoPointsTool
 {
+    public class Options : IToolOptions
+    {
+        public bool walls = false;
+    }
+
+    private Options options = new();
+    public override IToolOptions GetToolOptions() => options;
+
     protected override Vector3I[] GetVoxelPositions()
     {
-        return GetCubeVoxels();
+        if (options.walls)
+        {
+            return VoxelHelper.GetHollowCubeVoxels(firstPosition, secondPosition, VoxelHelper.CubeFaces.XZ);
+        }
+        return VoxelHelper.GetCubeVoxels(firstPosition, secondPosition);
     }
 
     protected override void GenerateMeshHighlight(Vector3I[] voxelPositions)
