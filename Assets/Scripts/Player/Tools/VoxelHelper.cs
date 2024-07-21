@@ -75,7 +75,7 @@ public static class VoxelHelper
         All = Front | Back | Left | Right | Bottom | Top
     }
 
-    public static Vector3I[] GetHollowCubeVoxels(Vector3I firstPosition, Vector3I secondPosition, CubeFaces hollowFaces)
+    public static Vector3I[] GetHollowCubeVoxels(Vector3I firstPosition, Vector3I secondPosition, CubeFaces SolidFaces = CubeFaces.All)
     {
         int minX = Mathf.Min(firstPosition.X, secondPosition.X);
         int maxX = Mathf.Max(firstPosition.X, secondPosition.X);
@@ -99,14 +99,14 @@ public static class VoxelHelper
         {
             for (int y = minY; y <= maxY; y++)
             {
-                for (int z = minZ; z <= maxZ; z++)
+                for (int z = minZ; z <= maxZ;  z++)
                 {
-                    if (((hollowFaces & CubeFaces.Front) != 0 && x == minX) ||
-                        ((hollowFaces & CubeFaces.Back) != 0 && x == maxX) ||
-                        ((hollowFaces & CubeFaces.Left) != 0 && y == minY) ||
-                        ((hollowFaces & CubeFaces.Right) != 0 && y == maxY) ||
-                        ((hollowFaces & CubeFaces.Bottom) != 0 && z == minZ) ||
-                        ((hollowFaces & CubeFaces.Top) != 0 && z == maxZ))
+                    if (((SolidFaces & CubeFaces.Left) != 0 && x == minX) ||
+                        ((SolidFaces & CubeFaces.Right) != 0 && x == maxX) ||
+                        ((SolidFaces & CubeFaces.Top) != 0 && y == minY) ||
+                        ((SolidFaces & CubeFaces.Bottom) != 0 && y == maxY) ||
+                        ((SolidFaces & CubeFaces.Front) != 0 && z == minZ) ||
+                        ((SolidFaces & CubeFaces.Back) != 0 && z == maxZ))
                     {
                         voxelPositions.Add(new Vector3I(x, y, z));
                     }
@@ -115,6 +115,15 @@ public static class VoxelHelper
         }
 
         return voxelPositions.ToArray();
+    }
+
+    public static Vector3I[] GetShphereVoxels(Vector3I origin, float radius)
+    {
+        radius = Mathf.Max(radius, 1);
+
+        // Todo
+
+        return Array.Empty<Vector3I>();
     }
 
     public static Vector3I[] GetLineVoxels(Vector3I firstPosition, Vector3I secondPosition, float stepLength)

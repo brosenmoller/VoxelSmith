@@ -89,8 +89,11 @@ public partial class GameManager : Node
 
         SelectMenu.OnSelectAllPressed += SelectionManager.SelectAll;
         SelectMenu.OnDeselectPressed += SelectionManager.DeselectAll;
-        SelectMenu.OnReselectPressed += SelectionManager.Reselect;
         SelectMenu.OnInvertSelectionPressed += SelectionManager.InvertSelection;
+        SelectMenu.OnCopySelectionPressed += SelectionManager.CopySelection;
+        SelectMenu.OnCutSelectionPressed += SelectionManager.CutSelection;
+        SelectMenu.OnPastePressed += SelectionManager.PasteClipboardItem;
+        SelectMenu.OnDeleteSelectionPressed += SelectionManager.DeleteSelection;
     }
 
     public override void _Process(double delta)

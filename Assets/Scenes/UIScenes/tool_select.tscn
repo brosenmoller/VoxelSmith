@@ -187,7 +187,7 @@ theme_override_constants/margin_bottom = 5
 [node name="SelectionBrushTool" type="Button" parent="VBoxContainer/SelectionBrushToolContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-tooltip_text = "Brush Tool
+tooltip_text = "Selection Brush Tool
 "
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
@@ -211,7 +211,7 @@ theme_override_constants/margin_bottom = 5
 [node name="SelectionCubeTool" type="Button" parent="VBoxContainer/SelectionCubeToolContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-tooltip_text = "Brush Tool
+tooltip_text = "Selection Brush Tool
 "
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
@@ -224,3 +224,6 @@ icon = ExtResource("3_pg565")
 flat = true
 icon_alignment = 1
 expand_icon = true
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2

@@ -97,6 +97,8 @@ public abstract partial class WorldMesh : Node3D
 
         voxelData[position] = guid;
 
+        GameManager.SelectionManager.CurrentSelection.Remove(position);
+
         UpdateChunkVoxel(position, guid, voxelData);
         CheckAdjacentChunksForUpdate(position, voxelData);
     }

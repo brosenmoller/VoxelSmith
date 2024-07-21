@@ -6,13 +6,29 @@ public partial class SelectMenu : PopupMenu
     [ExportGroup("Shortcuts")]
     [Export] private Shortcut selectAllShortcut;
     [Export] private Shortcut deselectShortcut;
-    [Export] private Shortcut reselectShortcut;
     [Export] private Shortcut invertSelectionShortcut;
+
+    [Export] private Shortcut copyShortCut;
+    [Export] private Shortcut cutShortCut;
+    [Export] private Shortcut pasteShortCut;
+    [Export] private Shortcut deleteShortCut;
+
+    [Export] private Shortcut rotateClockWiseShortCut;
+    [Export] private Shortcut rotateAntiClockWiseShortCut;
+    [Export] private Shortcut flipShortCut;
 
     public static event Action OnSelectAllPressed;
     public static event Action OnDeselectPressed;
-    public static event Action OnReselectPressed;
     public static event Action OnInvertSelectionPressed;
+
+    public static event Action OnCopySelectionPressed;
+    public static event Action OnCutSelectionPressed;
+    public static event Action OnPastePressed;
+    public static event Action OnDeleteSelectionPressed;
+
+    public static event Action OnRotateClockWiseSelectionPressed;
+    public static event Action OnRotateAntiClockWiseSelectionPressed;
+    public static event Action OnFlipSelectionPressed;
 
     public override void _Ready()
     {
@@ -26,8 +42,16 @@ public partial class SelectMenu : PopupMenu
         {
             case (long)SelectOptions.SELECT_ALL: OnSelectAllPressed?.Invoke(); break;
             case (long)SelectOptions.DESELECT: OnDeselectPressed?.Invoke(); break;
-            case (long)SelectOptions.RESELECT: OnReselectPressed?.Invoke(); break;
             case (long)SelectOptions.INVERT_SELECTION: OnInvertSelectionPressed?.Invoke(); break;
+
+            case (long)SelectOptions.COPY_SELECTION: OnCopySelectionPressed?.Invoke(); break;
+            case (long)SelectOptions.CUT_SELECTION: OnCutSelectionPressed?.Invoke(); break;
+            case (long)SelectOptions.PASTE: OnPastePressed?.Invoke(); break;
+            case (long)SelectOptions.DELETE_SELECTION: OnDeleteSelectionPressed?.Invoke(); break;
+
+            case (long)SelectOptions.ROTATE_SELECTION_CLOCKWISE: OnRotateClockWiseSelectionPressed?.Invoke(); break;
+            case (long)SelectOptions.ROTATE_SELECTION_ANTI_CLOCKWISE: OnRotateAntiClockWiseSelectionPressed?.Invoke(); break;
+            case (long)SelectOptions.FLIP_SELECTION: OnFlipSelectionPressed?.Invoke(); break;
         }
     }
 
@@ -42,19 +66,51 @@ public partial class SelectMenu : PopupMenu
         SetItemShortcut(1, deselectShortcut, true);
 
         // 2
-        AddItem("Reselect", (int)SelectOptions.RESELECT);
-        SetItemShortcut(2, reselectShortcut, true);
-
-        // 3
         AddItem("Invert Selection", (int)SelectOptions.INVERT_SELECTION);
-        SetItemShortcut(3, invertSelectionShortcut, true);
+        SetItemShortcut(2, invertSelectionShortcut, true);
+
+        AddSeparator("Actions");
+
+        // 4
+        AddItem("Copy", (int)SelectOptions.COPY_SELECTION);
+        SetItemShortcut(4, copyShortCut, true);
+
+        // 5
+        AddItem("Cut", (int)SelectOptions.CUT_SELECTION);
+        SetItemShortcut(5, cutShortCut, true);
+
+        // 6
+        AddItem("Paste", (int)SelectOptions.PASTE);
+        SetItemShortcut(6, pasteShortCut, true);
+
+        // 7
+        AddItem("Delete", (int)SelectOptions.DELETE_SELECTION);
+        SetItemShortcut(7, deleteShortCut, true);
+
+        // 8
+        AddItem("Rotate Clockwise", (int)SelectOptions.ROTATE_SELECTION_CLOCKWISE);
+        SetItemShortcut(8, rotateClockWiseShortCut, true);
+
+        // 9
+        AddItem("Rotate Anti-Clockwise", (int)SelectOptions.ROTATE_SELECTION_ANTI_CLOCKWISE);
+        SetItemShortcut(9, rotateAntiClockWiseShortCut, true);
+
+        // 10
+        AddItem("Flip in facing direction", (int)SelectOptions.FLIP_SELECTION);
+        SetItemShortcut(10, flipShortCut, true);
     }
 
     private enum SelectOptions
     {
         SELECT_ALL,
         DESELECT,
-        RESELECT,
         INVERT_SELECTION,
+        COPY_SELECTION,
+        CUT_SELECTION,
+        PASTE,
+        DELETE_SELECTION,
+        ROTATE_SELECTION_CLOCKWISE,
+        ROTATE_SELECTION_ANTI_CLOCKWISE,
+        FLIP_SELECTION,
     }
 }

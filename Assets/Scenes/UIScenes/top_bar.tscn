@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=54 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/TopBarUI.cs" id="1_uo8va"]
@@ -24,15 +24,21 @@
 [ext_resource type="Shortcut" uid="uid://bv7s6ax0by3ob" path="res://Assets/Resources/MenuResources/SelectMenu/deselect_shortcut.tres" id="16_76tv4"]
 [ext_resource type="Texture2D" uid="uid://ca8q0tuu8h6ui" path="res://Assets/Art/Icons/jet-fighter-up-white.png" id="16_wywux"]
 [ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://Assets/Resources/MenuResources/PlayerMode/FlyModeShorcut.tres" id="17_844aw"]
-[ext_resource type="Shortcut" uid="uid://dwv5dthajry2u" path="res://Assets/Resources/MenuResources/SelectMenu/reselect_shortcut.tres" id="17_anf6r"]
+[ext_resource type="Shortcut" uid="uid://b72c8wapelvfu" path="res://Assets/Resources/MenuResources/SelectMenu/copy_shortcut.tres" id="18_a5mk0"]
 [ext_resource type="Texture2D" uid="uid://d1csa0n0egfeg" path="res://Assets/Art/Icons/satellite-accent.png" id="18_aay2d"]
 [ext_resource type="Shortcut" uid="uid://bsqq330bc3ka2" path="res://Assets/Resources/MenuResources/SelectMenu/invert_selection_shortcut.tres" id="18_dae8b"]
 [ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
+[ext_resource type="Shortcut" uid="uid://b8tv68u5rvele" path="res://Assets/Resources/MenuResources/SelectMenu/cut_shortcut.tres" id="19_ylrtv"]
+[ext_resource type="Shortcut" uid="uid://bh8alfh7xnscs" path="res://Assets/Resources/MenuResources/SelectMenu/paste_shortcut.tres" id="20_td3je"]
 [ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
+[ext_resource type="Shortcut" uid="uid://da5361yly5jcy" path="res://Assets/Resources/MenuResources/SelectMenu/delete_shortcut.tres" id="21_2a45y"]
 [ext_resource type="Texture2D" uid="uid://ci42dncng3gn8" path="res://Assets/Art/Icons/square-dashed.png" id="22_258pr"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
+[ext_resource type="Shortcut" uid="uid://cfhvw8f8mx274" path="res://Assets/Resources/MenuResources/SelectMenu/rotate_clockwise_shortcut.tres" id="22_mamxy"]
 [ext_resource type="Texture2D" uid="uid://b1mfh3fpeqesb" path="res://Assets/Art/Icons/infinity-solid.png" id="23_huegb"]
 [ext_resource type="Shortcut" uid="uid://b84pfcgc5wl4h" path="res://Assets/Resources/MenuResources/QuickOptions/quick_export_shortcut.tres" id="23_lhvlj"]
+[ext_resource type="Shortcut" uid="uid://l5jlep00tm85" path="res://Assets/Resources/MenuResources/SelectMenu/rotate_anti_clockwise_shortcut.tres" id="23_w6y3v"]
+[ext_resource type="Shortcut" uid="uid://vqjhdm7cn424" path="res://Assets/Resources/MenuResources/SelectMenu/flip_shortcut.tres" id="24_85row"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickImport.cs" id="24_j8l2r"]
 [ext_resource type="Texture2D" uid="uid://djnv8jivygy4n" path="res://Assets/Art/Icons/arrow-down-up-across-line-solid.png" id="27_862cf"]
 [ext_resource type="Texture2D" uid="uid://cr24jn5up0s4o" path="res://Assets/Art/Icons/gauge-high-solid.png" id="28_a64eb"]
@@ -147,8 +153,14 @@ redoShortcut = ExtResource("10_2k02o")
 script = ExtResource("14_xbde7")
 selectAllShortcut = ExtResource("15_jnjnf")
 deselectShortcut = ExtResource("16_76tv4")
-reselectShortcut = ExtResource("17_anf6r")
 invertSelectionShortcut = ExtResource("18_dae8b")
+copyShortCut = ExtResource("18_a5mk0")
+cutShortCut = ExtResource("19_ylrtv")
+pasteShortCut = ExtResource("20_td3je")
+deleteShortCut = ExtResource("21_2a45y")
+rotateClockWiseShortCut = ExtResource("22_mamxy")
+rotateAntiClockWiseShortCut = ExtResource("23_w6y3v")
+flipShortCut = ExtResource("24_85row")
 
 [node name="VSeparator" type="VSeparator" parent="TopBarContainer"]
 layout_mode = 2

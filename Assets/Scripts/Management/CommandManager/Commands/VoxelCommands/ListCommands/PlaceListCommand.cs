@@ -8,8 +8,8 @@ public class PlaceListCommand : VoxelListCommand, ICommand
 
     public PlaceListCommand(params Vector3I[] voxelPositions) : base(voxelPositions)
     {
-        paletteSwatchID = projectData.selectedPaletteSwatchId;
-        paletteType = projectData.selectedPaletteType;
+        paletteSwatchID = GameManager.DataManager.ProjectData.selectedPaletteSwatchId;
+        paletteType = GameManager.DataManager.ProjectData.selectedPaletteType;
     }
 
     public void Execute()
@@ -19,7 +19,7 @@ public class PlaceListCommand : VoxelListCommand, ICommand
 
     public void Undo()
     {
-        ReplaceFromMemory();
+        VoxelMemoryItem.ReplaceFromMemory(voxelMemory);
     }
 
     public void Place()

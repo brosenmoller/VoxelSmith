@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Linq;
 
 public partial class ToolUser : RayCast3D
 {
@@ -128,15 +127,19 @@ public partial class ToolUser : RayCast3D
 
     public bool IsVoxelInPlayer(Vector3I voxelPosition)
     {
-        Vector3I[] playerVoxels = new Vector3I[2];
-        playerVoxels[0] = new Vector3I(
+        Vector3I playerVoxel = new(
             Mathf.FloorToInt(GlobalPosition.X),
             Mathf.FloorToInt(GlobalPosition.Y),
             Mathf.FloorToInt(GlobalPosition.Z)
         );
-        playerVoxels[1] = playerVoxels[0] + Vector3I.Down;
 
-        return playerVoxels.Contains(voxelPosition);
+        if (playerVoxel == voxelPosition ||
+            playerVoxel + Vector3I.Down == voxelPosition) 
+        { 
+            return true; 
+        }
+
+        return false;
     }
 
     public Vector3I GetVoxelPositionFromLook(float checkLength, float emptyDistance, bool selectInside = false)

@@ -43,7 +43,8 @@ public class SelectionListCommand
 
     public void AddToSelection(Vector3I voxelPosition)
     {
-        if (!GameManager.SelectionManager.CurrentSelection.Contains(voxelPosition))
+        if (!GameManager.SelectionManager.CurrentSelection.Contains(voxelPosition) && 
+            (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition) || GameManager.DataManager.ProjectData.voxelPrefabs.ContainsKey(voxelPosition)))
         {
             GameManager.SelectionManager.CurrentSelection.Add(voxelPosition);
             UpdateIfContains(voxelPosition);

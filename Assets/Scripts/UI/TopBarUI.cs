@@ -37,11 +37,11 @@ public partial class TopBarUI : Control
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustReleased("increase_speed"))
+        if (Input.IsActionJustReleased("mouse_wheel_up"))
         {
             playerSpeedSlider.Value += playerSpeedSlider.Step;
         }
-        else if (Input.IsActionJustReleased("decrease_speed"))
+        else if (Input.IsActionJustReleased("mouse_wheel_down"))
         {
             playerSpeedSlider.Value -= playerSpeedSlider.Step;
         }
@@ -64,4 +64,3 @@ public partial class TopBarUI : Control
         GameManager.ToolUser.selectInsideEnabled = toggle;
     }
 }
-

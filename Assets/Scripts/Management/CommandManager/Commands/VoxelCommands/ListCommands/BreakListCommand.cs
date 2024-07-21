@@ -11,7 +11,7 @@ public class BreakListCommand : VoxelListCommand, ICommand
 
     public void Undo()
     {
-        ReplaceFromMemory();
+        VoxelMemoryItem.ReplaceFromMemory(voxelMemory);
     }
 
     public void Break()
