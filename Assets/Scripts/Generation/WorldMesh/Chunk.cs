@@ -51,6 +51,11 @@ public partial class Chunk : StaticBody3D
 
         ArrayMesh mesh = new();
 
+        if (((Godot.Collections.Array)surfaceArray[(int)Mesh.ArrayType.Vertex]).Count <= 1)
+        {
+            return mesh;
+        }
+
         mesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
         collisionMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
 
