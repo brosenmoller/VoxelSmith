@@ -14,10 +14,11 @@ public class PasteClipboardItemListCommand : VoxelListCommand, ICommand
     private static Vector3I[] GetAllPositions(ClipBoardItem clipBoardItem)
     {
         Vector3I[] positions = new Vector3I[clipBoardItem.voxelMemory.Length];
+        Vector3I currentPlayerPosition = VoxelHelper.GetGridVoxel(GameManager.Player.GlobalPosition);
 
         for (int i = 0; i < clipBoardItem.voxelMemory.Length; i++)
         {
-            positions[i] = clipBoardItem.voxelMemory[i].position;
+            positions[i] = clipBoardItem.voxelMemory[i].position + currentPlayerPosition;
         }
 
         return positions;

@@ -11,11 +11,11 @@ public class VoxelLineTool : TwoPointsTool
 
     protected override void BreakAction(Vector3I[] voxels)
     {
-        GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxels));
+        GameManager.CommandManager.ExecuteCommand(new BreakListCommand(voxels));
     }
 
     protected override void PlaceAction(Vector3I[] voxels)
     {
-        GameManager.CommandManager.ExecuteCommand(new BreakListCommand(voxels));
+        GameManager.CommandManager.ExecuteCommand(new PlaceListCommand(voxels));
     }
 }

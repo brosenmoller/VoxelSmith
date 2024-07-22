@@ -2,6 +2,8 @@
 
 public class CommandManager : Manager
 {
+    private const int MAX_BUFFER_SIZE = 100;
+
     private List<ICommand> commandBuffer;
     private int commandIndex;
 
@@ -20,6 +22,12 @@ public class CommandManager : Manager
         for (int i = commandBuffer.Count - 1; i >= commandIndex; i--)
         {
             commandBuffer.RemoveAt(i);
+        }
+
+        if (commandBuffer.Count >= MAX_BUFFER_SIZE)
+        {
+            commandBuffer.RemoveAt(0);
+            commandIndex--;
         }
 
         commandBuffer.Add(command);

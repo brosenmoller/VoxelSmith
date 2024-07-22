@@ -95,21 +95,24 @@ public class SelectionManager : Manager
         GameManager.CommandManager.ExecuteCommand(new PasteClipboardItemListCommand(currentClipBoardItem));
     }
 
-    public void RotateSelectionClockWise()
+    public void RotateClipboardClockWise()
     {
-        if (CurrentSelection.Count <= 0) { return; }
+        if (currentClipBoardItem == null) { return; }
 
+        currentClipBoardItem.Rotate(90);
     }
 
-    public void RotateSelectionAntiClockwise()
+    public void RotateClipboardAntiClockwise()
     {
-        if (CurrentSelection.Count <= 0) { return; }
+        if (currentClipBoardItem == null) { return; }
 
+        currentClipBoardItem.Rotate(-90);
     }
 
-    public void FlipSelection()
+    public void FlipClipboard()
     {
-        if (CurrentSelection.Count <= 0) { return; }
+        if (currentClipBoardItem == null) { return; }
 
+        currentClipBoardItem.Flip();
     }
 }

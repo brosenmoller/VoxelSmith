@@ -90,10 +90,8 @@ public static class NodeExtensions
 
     public static void RemoveAllChildren(this Node node)
     {
-        GD.Print(node.GetChildCount());
         foreach (Node child in node.GetChildren())
         {
-            GD.Print("IN Loop");
             node.RemoveChild(child);
             child.QueueFree();
         }

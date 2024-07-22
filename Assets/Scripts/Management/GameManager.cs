@@ -94,6 +94,9 @@ public partial class GameManager : Node
         SelectMenu.OnCutSelectionPressed += SelectionManager.CutSelection;
         SelectMenu.OnPastePressed += SelectionManager.PasteClipboardItem;
         SelectMenu.OnDeleteSelectionPressed += SelectionManager.DeleteSelection;
+        SelectMenu.OnRotateClockWisePressed += SelectionManager.RotateClipboardClockWise;
+        SelectMenu.OnRotateAntiClockWisePressed += SelectionManager.RotateClipboardAntiClockwise;
+        SelectMenu.OnFlipPressed += SelectionManager.FlipClipboard;
     }
 
     public override void _Process(double delta)

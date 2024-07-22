@@ -26,9 +26,9 @@ public partial class SelectMenu : PopupMenu
     public static event Action OnPastePressed;
     public static event Action OnDeleteSelectionPressed;
 
-    public static event Action OnRotateClockWiseSelectionPressed;
-    public static event Action OnRotateAntiClockWiseSelectionPressed;
-    public static event Action OnFlipSelectionPressed;
+    public static event Action OnRotateClockWisePressed;
+    public static event Action OnRotateAntiClockWisePressed;
+    public static event Action OnFlipPressed;
 
     public override void _Ready()
     {
@@ -49,9 +49,9 @@ public partial class SelectMenu : PopupMenu
             case (long)SelectOptions.PASTE: OnPastePressed?.Invoke(); break;
             case (long)SelectOptions.DELETE_SELECTION: OnDeleteSelectionPressed?.Invoke(); break;
 
-            case (long)SelectOptions.ROTATE_SELECTION_CLOCKWISE: OnRotateClockWiseSelectionPressed?.Invoke(); break;
-            case (long)SelectOptions.ROTATE_SELECTION_ANTI_CLOCKWISE: OnRotateAntiClockWiseSelectionPressed?.Invoke(); break;
-            case (long)SelectOptions.FLIP_SELECTION: OnFlipSelectionPressed?.Invoke(); break;
+            case (long)SelectOptions.ROTATE_CLOCKWISE: OnRotateClockWisePressed?.Invoke(); break;
+            case (long)SelectOptions.ROTATE_ANTI_CLOCKWISE: OnRotateAntiClockWisePressed?.Invoke(); break;
+            case (long)SelectOptions.FLIP: OnFlipPressed?.Invoke(); break;
         }
     }
 
@@ -69,6 +69,7 @@ public partial class SelectMenu : PopupMenu
         AddItem("Invert Selection", (int)SelectOptions.INVERT_SELECTION);
         SetItemShortcut(2, invertSelectionShortcut, true);
 
+        // 3
         AddSeparator("Actions");
 
         // 4
@@ -87,17 +88,17 @@ public partial class SelectMenu : PopupMenu
         AddItem("Delete", (int)SelectOptions.DELETE_SELECTION);
         SetItemShortcut(7, deleteShortCut, true);
 
-        // 8
-        AddItem("Rotate Clockwise", (int)SelectOptions.ROTATE_SELECTION_CLOCKWISE);
-        SetItemShortcut(8, rotateClockWiseShortCut, true);
+        //// 8
+        //AddItem("Rotate Clockwise", (int)SelectOptions.ROTATE_CLOCKWISE);
+        //SetItemShortcut(8, rotateClockWiseShortCut, true);
 
-        // 9
-        AddItem("Rotate Anti-Clockwise", (int)SelectOptions.ROTATE_SELECTION_ANTI_CLOCKWISE);
-        SetItemShortcut(9, rotateAntiClockWiseShortCut, true);
+        //// 9
+        //AddItem("Rotate Anti-Clockwise", (int)SelectOptions.ROTATE_ANTI_CLOCKWISE);
+        //SetItemShortcut(9, rotateAntiClockWiseShortCut, true);
 
-        // 10
-        AddItem("Flip in facing direction", (int)SelectOptions.FLIP_SELECTION);
-        SetItemShortcut(10, flipShortCut, true);
+        //// 10
+        //AddItem("Flip in facing direction", (int)SelectOptions.FLIP);
+        //SetItemShortcut(10, flipShortCut, true);
     }
 
     private enum SelectOptions
@@ -109,8 +110,8 @@ public partial class SelectMenu : PopupMenu
         CUT_SELECTION,
         PASTE,
         DELETE_SELECTION,
-        ROTATE_SELECTION_CLOCKWISE,
-        ROTATE_SELECTION_ANTI_CLOCKWISE,
-        FLIP_SELECTION,
+        ROTATE_CLOCKWISE,
+        ROTATE_ANTI_CLOCKWISE,
+        FLIP,
     }
 }

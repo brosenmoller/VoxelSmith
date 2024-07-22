@@ -50,7 +50,6 @@ public partial class PaletteUI : BoxContainer
         {
             if (GameManager.DataManager.PaletteData.palletePrefabs.Count > 0)
             {
-                GD.Print(lastPrefabSwatchIndex);
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.palletePrefabs.Keys.ElementAt(lastPrefabSwatchIndex);
                 GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Prefab;
                 Update();
@@ -60,7 +59,6 @@ public partial class PaletteUI : BoxContainer
         {
             if (GameManager.DataManager.PaletteData.paletteColors.Count > 0)
             {
-                GD.Print(lastColorSwatchIndex);
                 GameManager.DataManager.ProjectData.selectedPaletteSwatchId = GameManager.DataManager.PaletteData.paletteColors.Keys.ElementAt(lastColorSwatchIndex);
                 GameManager.DataManager.ProjectData.selectedPaletteType = PaletteType.Color;
                 Update();
