@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public static class MeshHelper
 {
-    public static void CreateVoxel(SurfaceTool surfaceTool, Vector3I position, HashSet<Vector3I> allPositions)
+    public static void CreateVoxel(SurfaceTool surfaceTool, Vector3I position, HashSet<Vector3I> allPositions, bool unityUVS = false)
     {
-        void AddFace(Vector3 normal, int[] vertexIndices, int[] uvIndices)
+        void AddFace(ref Vector3I normal, ref int[] vertexIndices, ref int[] uvIndices)
         {
             surfaceTool.SetNormal(normal);
             for (int i = 0; i < vertexIndices.Length; i++)
@@ -19,7 +19,14 @@ public static class MeshHelper
         {
             if (!allPositions.Contains(position + CubeValues.cubeOffsets[i]))
             {
-                AddFace(CubeValues.cubeOffsets[i], CubeValues.cubeVertexFaceIndices[i], CubeValues.cubeUVFaceIndices[i]);
+                if (unityUVS)
+                {
+                    AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices[i], ref CubeValues.cubeUVFaceIndicesUnity[i]);
+                }
+                else
+                {
+                    AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices[i], ref CubeValues.cubeUVFaceIndices[i]);
+                }
             }
         }
     }

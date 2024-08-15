@@ -31,7 +31,7 @@ public class BasicMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where T
         foreach (Vector3I voxel in voxels.Keys)
         {
             surfaceTool.SetColor(palette[voxels[voxel]].color);
-            MeshHelper.CreateVoxel(surfaceTool, voxel, voxelPositions);
+            MeshHelper.CreateVoxel(surfaceTool, voxel, voxelPositions, true);
         }
 
         surfaceTool.Index();
@@ -46,7 +46,7 @@ public class BasicMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where T
 
         foreach (Vector3I voxel in voxelPositions)
         {
-            MeshHelper.CreateVoxel(surfaceTool, voxel, voxelPositions);
+            MeshHelper.CreateVoxel(surfaceTool, voxel, voxelPositions, true);
         }
 
         surfaceTool.Index();
