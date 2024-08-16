@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://5cg332styq4g"]
+
+[ext_resource type="Material" uid="uid://qplcbcs4x4pi" path="res://Assets/Art/Materials/surface_mesh_material.tres" id="1_a4vi0"]
+[ext_resource type="Script" path="res://Assets/Scripts/Generation/TestMesh.cs" id="2_c7uic"]
+
+[node name="ComputeShaderTestMesh" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392708, 0.56531, -7.24734)
+material_override = ExtResource("1_a4vi0")
+script = ExtResource("2_c7uic")

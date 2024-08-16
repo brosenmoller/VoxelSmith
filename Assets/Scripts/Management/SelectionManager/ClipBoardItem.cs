@@ -9,44 +9,57 @@ public class ClipBoardItem
         this.voxelMemory = voxelMemory;
     }
 
-    public void Rotate(float degrees)
+    private Vector3I RotatePointClockWise(Vector3I point)
     {
-        float radians = Mathf.DegToRad(degrees);
+        return new Vector3I(-point.Z, point.Y, point.X);
+    }
 
-        Basis basis = Basis.Identity.Rotated(Vector3.Down, radians);
+    private Vector3I RotatePointAntiClockwise(Vector3I point)
+    {
+        return new Vector3I(point.Z, point.Y, -point.X);
+    }
 
+    public void RotateClockWise()
+    {
         for (int i = 0; i < voxelMemory.Length; i++)
         {
-            VoxelMemoryItem item = voxelMemory[i];
-            item.position = (Vector3I)(basis * (Vector3)item.position);
+            voxelMemory[i].position = RotatePointClockWise(voxelMemory[i].position);
+        }
+    }
+
+    public void RotateAntiClockWise()
+    {
+        for (int i = 0; i < voxelMemory.Length; i++)
+        {
+            voxelMemory[i].position = RotatePointAntiClockwise(voxelMemory[i].position);
         }
     }
 
     public void Flip()
     {
-        Vector3 axis = GameManager.Player.GlobalBasis.Z;
+        GD.Print("FLip");
+        Vector3 axis = GameManager.Player.pivot.GlobalBasis.Z;
         axis = axis.Normalized();
         axis = SnapToCardinalDirection(axis);
 
         for (int i = 0; i < voxelMemory.Length; i++)
         {
             VoxelMemoryItem item = voxelMemory[i];
-            Vector3I pos = item.position;
 
             if (axis.X != 0)
             {
-                pos.X = -pos.X;
+                item.position.X = -item.position.X;
             }
             if (axis.Y != 0)
             {
-                pos.Y = -pos.Y;
+                item.position.Y = -item.position.Y;
             }
             if (axis.Z != 0)
             {
-                pos.Z = -pos.Z;
+                item.position.Z = -item.position.Z;
             }
 
-            item.position = pos;
+            voxelMemory[i] = item;
         }
     }
 

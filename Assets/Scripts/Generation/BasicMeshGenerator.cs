@@ -53,4 +53,3 @@ public class BasicMeshGenerator<TVoxelData> : IMeshGenerator<TVoxelData> where T
         return surfaceTool.Commit();
     }
 }
-

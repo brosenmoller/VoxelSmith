@@ -2,8 +2,11 @@
 
 [sub_resource type="InputEventKey" id="InputEventKey_jafc4"]
 device = -1
+alt_pressed = true
+shift_pressed = true
 ctrl_pressed = true
-keycode = 82
+keycode = 73
+unicode = 205
 
 [resource]
 events = [SubResource("InputEventKey_jafc4")]

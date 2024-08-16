@@ -88,17 +88,17 @@ public partial class SelectMenu : PopupMenu
         AddItem("Delete", (int)SelectOptions.DELETE_SELECTION);
         SetItemShortcut(7, deleteShortCut, true);
 
-        //// 8
-        //AddItem("Rotate Clockwise", (int)SelectOptions.ROTATE_CLOCKWISE);
-        //SetItemShortcut(8, rotateClockWiseShortCut, true);
+        // 8
+        AddItem("Rotate Clockwise", (int)SelectOptions.ROTATE_CLOCKWISE);
+        SetItemShortcut(8, rotateClockWiseShortCut, true);
 
-        //// 9
-        //AddItem("Rotate Anti-Clockwise", (int)SelectOptions.ROTATE_ANTI_CLOCKWISE);
-        //SetItemShortcut(9, rotateAntiClockWiseShortCut, true);
+        // 9
+        AddItem("Rotate Anti-Clockwise", (int)SelectOptions.ROTATE_ANTI_CLOCKWISE);
+        SetItemShortcut(9, rotateAntiClockWiseShortCut, true);
 
-        //// 10
-        //AddItem("Flip in facing direction", (int)SelectOptions.FLIP);
-        //SetItemShortcut(10, flipShortCut, true);
+        // 10
+        AddItem("Flip in facing direction", (int)SelectOptions.FLIP);
+        SetItemShortcut(10, flipShortCut, true);
     }
 
     private enum SelectOptions

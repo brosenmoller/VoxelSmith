@@ -59,7 +59,7 @@ public static class CubeValues
         new[] { 1, 2, 0, 1, 3, 2 },
     };
 
-    public static readonly int[][] cubeUVFaceIndicesUnity = new int[][] // 1 => 3   3 => 1
+    public static readonly int[][] cubeUVFaceIndicesUnity = new int[][]
     {
         new[] { 0, 1, 2, 0, 3, 1 },
         new[] { 0, 1, 2, 0, 3, 1 },

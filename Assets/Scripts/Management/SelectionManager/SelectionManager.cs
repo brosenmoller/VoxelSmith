@@ -18,17 +18,17 @@ public class SelectionManager : Manager
 
     public override void Setup()
     {
-        CurrentSelection = new HashSet<Vector3I>
-        {
-            new(0, 0, 0),
-            new(0, 1, 0),
-            new(1, 1, 0),
-            new(0, 1, 1),
-            new(1, 1, 1),
-            new(2, 1, 1),
-            new(2, 1, 2),
-            new(2, 5, 2)
-        };
+        CurrentSelection = new HashSet<Vector3I>();
+        //{
+        //    new(0, 0, 0),
+        //    new(0, 1, 0),
+        //    new(1, 1, 0),
+        //    new(0, 1, 1),
+        //    new(1, 1, 1),
+        //    new(2, 1, 1),
+        //    new(2, 1, 2),
+        //    new(2, 5, 2)
+        //};
     }
 
     public void SelectAll()
@@ -99,14 +99,14 @@ public class SelectionManager : Manager
     {
         if (currentClipBoardItem == null) { return; }
 
-        currentClipBoardItem.Rotate(90);
+        currentClipBoardItem.RotateClockWise();
     }
 
     public void RotateClipboardAntiClockwise()
     {
         if (currentClipBoardItem == null) { return; }
 
-        currentClipBoardItem.Rotate(-90);
+        currentClipBoardItem.RotateAntiClockWise();
     }
 
     public void FlipClipboard()
