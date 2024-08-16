@@ -22,6 +22,7 @@ public class DataManager : Manager
     private Camera3D camera;
     private FirstPersonCamera cameraPivot;
 
+    public static event Action BeforeProjectLoad;
     public static event Action OnProjectLoad;
 
     public override void Setup()
@@ -77,6 +78,8 @@ public class DataManager : Manager
         if (fileName.Contains('.')) { name = fileName[..fileName.IndexOf('.')]; }
 
         string path = Path.Combine(directoryPath, name + PROJECT_FILE_EXTENSION);
+
+        BeforeProjectLoad?.Invoke();
 
         projectDataHolder.Data = new ProjectData(name);
 
@@ -141,6 +144,8 @@ public class DataManager : Manager
     public void LoadProject(string path)
     {
         // TODO: Warn User if there is unsaved data (Also in Palette)
+
+        BeforeProjectLoad?.Invoke();
 
         try
         {

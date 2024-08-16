@@ -16,19 +16,29 @@ public class SelectionManager : Manager
         }
     }
 
-    public override void Setup()
+    private PaletteData oldPaletteData = null;
+
+    public SelectionManager()
+    {
+        DataManager.BeforeProjectLoad += BeforeProjectLoad;
+        DataManager.OnProjectLoad += OnProjectLoad;
+    }
+
+    private void BeforeProjectLoad()
+    {
+        if (GameManager.DataManager.ProjectData != null) 
+        { 
+            oldPaletteData = GameManager.DataManager.PaletteData;
+        }
+    }
+
+    private void OnProjectLoad()
     {
         CurrentSelection = new HashSet<Vector3I>();
-        //{
-        //    new(0, 0, 0),
-        //    new(0, 1, 0),
-        //    new(1, 1, 0),
-        //    new(0, 1, 1),
-        //    new(1, 1, 1),
-        //    new(2, 1, 1),
-        //    new(2, 1, 2),
-        //    new(2, 5, 2)
-        //};
+        if (currentClipBoardItem != null && oldPaletteData != null) 
+        {
+            currentClipBoardItem.ChangeGUIDsToNewProject(oldPaletteData);
+        }
     }
 
     public void SelectAll()

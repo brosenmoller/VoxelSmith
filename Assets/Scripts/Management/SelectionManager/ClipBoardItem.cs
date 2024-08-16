@@ -1,4 +1,7 @@
 ﻿using Godot;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class ClipBoardItem
 {
@@ -88,5 +91,65 @@ public class ClipBoardItem
         }
 
         return closestDirection;
+    }
+
+    public void ChangeGUIDsToNewProject(PaletteData oldPaletteData)
+    {
+        Dictionary<Guid, Guid> knownConversions = new();
+
+        for (int i = 0; i < voxelMemory.Length; i++)
+        {
+            VoxelMemoryItem item = voxelMemory[i];
+
+            if (item.type == VoxelType.Air) { continue; }
+
+            if (knownConversions.TryGetValue(item.id, out Guid newId))
+            {
+                item.id = newId;
+            }
+            else
+            {
+                if (item.type == VoxelType.Color)
+                {
+                    item.id = GetMatchingId(item.id, oldPaletteData.paletteColors, GameManager.DataManager.PaletteData.paletteColors, knownConversions);
+                }
+                else if (item.type == VoxelType.Prefab)
+                {
+                    item.id = GetMatchingId(item.id, oldPaletteData.palletePrefabs, GameManager.DataManager.PaletteData.palletePrefabs, knownConversions);
+                }
+            }
+
+            voxelMemory[i] = item;
+        }
+    }
+
+    private Guid GetMatchingId<TVoxelData>(Guid oldId, Dictionary<Guid, TVoxelData> oldData, Dictionary<Guid, TVoxelData> newData, Dictionary<Guid, Guid> knownConversions) where TVoxelData : VoxelData
+    {
+        if (newData.ContainsKey(oldId))
+        {
+            return oldId;
+        }
+
+        foreach (var newItem in newData)
+        {
+            if (IsColorEqual(newItem.Value.color, oldData[oldId].color))
+            {
+                knownConversions[oldId] = newItem.Key;
+                return newItem.Key;
+            }
+        }
+
+        return newData.First().Key;
+    }
+
+    private bool IsColorEqual(Color color1, Color color2)
+    {
+        if (color1 == color2) { return true; }
+
+        float tolerance = 0.01f;
+        return Math.Abs(color1.R - color2.R) < tolerance &&
+               Math.Abs(color1.G - color2.G) < tolerance &&
+               Math.Abs(color1.B - color2.B) < tolerance &&
+               Math.Abs(color1.A - color2.A) < tolerance;
     }
 }
