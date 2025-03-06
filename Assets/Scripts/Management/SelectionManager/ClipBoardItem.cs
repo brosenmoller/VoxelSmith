@@ -40,7 +40,6 @@ public class ClipBoardItem
 
     public void Flip()
     {
-        GD.Print("FLip");
         Vector3 axis = GameManager.Player.pivot.GlobalBasis.Z;
         axis = axis.Normalized();
         axis = SnapToCardinalDirection(axis);
