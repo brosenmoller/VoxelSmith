@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Reflection;
 
+public interface IToolOptions { }
+
 public partial class ToolOptionsUI : Control
 {
     [Export] private Control toolOptionsParent;
@@ -48,7 +50,7 @@ public partial class ToolOptionsUI : Control
     }
 
 
-    private Control AddOption_Number(IToolOptions toolOptions, FieldInfo fieldInfo, float defaultStep = 1f, float defaultMin = 0f, float defaultMax = 100f)
+    private static Control AddOption_Number(IToolOptions toolOptions, FieldInfo fieldInfo, float defaultStep = 1f, float defaultMin = 0f, float defaultMax = 100f)
     {
         float step = defaultStep, min = defaultMin, max = defaultMax;
         bool hasSlider = false;
@@ -89,19 +91,17 @@ public partial class ToolOptionsUI : Control
         return range;
     }
 
-    private Control AddOption_Bool(IToolOptions toolOptions, FieldInfo fieldInfo)
+    private static Control AddOption_Bool(IToolOptions toolOptions, FieldInfo fieldInfo)
     {
         CheckBox checkBox = new() { ButtonPressed = (bool)fieldInfo.GetValue(toolOptions), ToggleMode = true };
         checkBox.Toggled += (bool value) => fieldInfo.SetValue(toolOptions, value);
         return checkBox;
     }
 
-    private Control AddOption_String(IToolOptions toolOptions, FieldInfo fieldInfo)
+    private static Control AddOption_String(IToolOptions toolOptions, FieldInfo fieldInfo)
     {
         LineEdit lineEdit = new() { Text = (string)fieldInfo.GetValue(toolOptions) };
         lineEdit.TextChanged += (string value) => fieldInfo.SetValue(toolOptions, value);
         return lineEdit;
     }
 }
-
-public interface IToolOptions { }

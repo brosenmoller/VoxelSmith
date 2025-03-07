@@ -18,6 +18,14 @@ public class PaletteDataFactory
         }
 
         AddNewVoxelColor(
+            Color.Color8(129, 42, 37),
+            new List<string>()
+            {
+                "minecraft:barrier"
+            }
+        );
+
+        AddNewVoxelColor(
             Color.Color8(95, 135, 87),
             new List<string>()
             {
@@ -50,14 +58,6 @@ public class PaletteDataFactory
         );
 
         AddNewVoxelColor(
-            Color.Color8(129, 42, 37),
-            new List<string>()
-            {
-                "minecraft:red_concrete"
-            }
-        );
-
-        AddNewVoxelColor(
             Color.Color8(43, 45, 137),
             new List<string>()
             {
@@ -76,4 +76,3 @@ public class PaletteDataFactory
         return data;
     }
 }
-

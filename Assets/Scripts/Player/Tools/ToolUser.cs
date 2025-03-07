@@ -45,8 +45,9 @@ public partial class ToolUser : RayCast3D
             new VoxelSpeedBrushTool(),
             new VoxelCubeTool(),
             new VoxelLineTool(),
+            new VoxelCoverTool(),
             new SelectionBrushTool(),
-            new SelectionCubeTool()
+            new SelectionCubeTool(),
         };
 
         stateMachine = new StateMachine<ToolUser>(this, tools);
@@ -140,6 +141,11 @@ public partial class ToolUser : RayCast3D
         }
 
         return false;
+    }
+
+    public Vector3I GetNextVoxel()
+    {
+        return VoxelPosition + (Vector3I)Normal.Normalized();
     }
 
     public Vector3I GetVoxelPositionFromLook(float checkLength, float emptyDistance, bool selectInside = false)

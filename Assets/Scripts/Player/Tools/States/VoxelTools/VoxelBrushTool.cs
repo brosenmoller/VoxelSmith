@@ -9,7 +9,7 @@ public class VoxelBrushTool : BrushTool
 
     protected override void PlaceAction()
     {
-        Vector3I nextVoxel = GetNextVoxel();
+        Vector3I nextVoxel = ctx.GetNextVoxel();
 
         if ((!ctx.IsVoxelInPlayer(nextVoxel) || ctx.ignorePlayerCheck) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
         {

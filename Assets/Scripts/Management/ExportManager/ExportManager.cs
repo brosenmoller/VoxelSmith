@@ -12,7 +12,7 @@ public class ExportManager : Manager
     public override void Setup()
     {
         random = new Random();
-        meshGenerator = new BasicMeshGenerator<VoxelColor>();
+        meshGenerator = new ExportMeshGenerator<VoxelColor>();
     }
 
     private void WriteToFile(string output, string filePath)
@@ -53,12 +53,6 @@ public class ExportManager : Manager
         {
             name = fileName[..fileName.IndexOf(".")];
         }
-
-        //StandardMaterial3D blankMaterial = new();
-        //blankMaterial.ResourceName = "BlankMaterial";
-
-        //StandardMaterial3D mat = (StandardMaterial3D)GameManager.SurfaceMesh.Mesh.SurfaceGetMaterial(0);
-        //mat ??= blankMaterial;
 
         ArrayMesh arrayMesh = (ArrayMesh)meshGenerator.CreateColorMesh(
             GameManager.DataManager.ProjectData.voxelColors, 
@@ -126,17 +120,19 @@ public class ExportManager : Manager
             string uv2 = "";
             string uv3 = "";
 
-            if (vertex1 < tool.GetVertexCount())
+            int vertexCount = tool.GetVertexCount();
+
+            if (vertex1 < vertexCount)
             {
                 uv1 = cubeUVs[tool.GetVertexUV(vertex1)].ToString();
             }
 
-            if (vertex2 < tool.GetVertexCount())
+            if (vertex2 < vertexCount)
             {
                 uv2 = cubeUVs[tool.GetVertexUV(vertex2)].ToString();
             }
 
-            if (vertex3 < tool.GetVertexCount())
+            if (vertex3 < vertexCount)
             {
                 uv3 = cubeUVs[tool.GetVertexUV(vertex3)].ToString();
             }

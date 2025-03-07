@@ -52,11 +52,6 @@ public abstract class BrushTool : Tool
         ctx.voxelHiglight.Hide();
     }
 
-    protected Vector3I GetNextVoxel()
-    {
-        return ctx.VoxelPosition + (Vector3I)ctx.Normal.Normalized();
-    }
-
     protected abstract void BreakAction();
     protected abstract void PlaceAction();
 }
