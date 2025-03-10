@@ -1,0 +1,95 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8ssb7qtei6ib"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/ExportWindow.cs" id="1_h6ouc"]
+
+[node name="NewProjectWindow" type="ConfirmationDialog" node_paths=PackedStringArray("exportFileName", "saveDirectoryPath", "openProjectDirectoryButton", "exportOptionButton", "barrierBlockCullingButton", "greedyMeshingButton", "chunkedMeshingButton", "seperateFloorAndCeilingButton", "vertexMergingButton")]
+title = "Export Project"
+initial_position = 2
+size = Vector2i(540, 350)
+visible = true
+ok_button_text = "Export"
+dialog_hide_on_ok = false
+dialog_close_on_escape = false
+script = ExtResource("1_h6ouc")
+exportFileName = NodePath("VBoxContainer/FileName")
+saveDirectoryPath = NodePath("VBoxContainer/SaveDirectoryGroup/SaveDirectoryPathEdit")
+openProjectDirectoryButton = NodePath("VBoxContainer/SaveDirectoryGroup/FileDialogButton")
+exportOptionButton = NodePath("VBoxContainer/ExportTypeContainer/OptionButton")
+barrierBlockCullingButton = NodePath("VBoxContainer/BarrierBlockCullingButton")
+greedyMeshingButton = NodePath("VBoxContainer/GreedyMeshingButton")
+chunkedMeshingButton = NodePath("VBoxContainer/ChunkedMeshingButton")
+seperateFloorAndCeilingButton = NodePath("VBoxContainer/SeperateFloorAndCeilingButton")
+vertexMergingButton = NodePath("VBoxContainer/VertexMergingButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 532.0
+offset_bottom = 301.0
+
+[node name="FileName" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+placeholder_text = "File Name ..."
+
+[node name="SaveDirectoryGroup" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/SaveDirectoryGroup"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_top = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/SaveDirectoryGroup/LabelAlign"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Save Folder
+"
+
+[node name="SaveDirectoryPathEdit" type="TextEdit" parent="VBoxContainer/SaveDirectoryGroup"]
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "/Path/To/Save"
+
+[node name="FileDialogButton" type="Button" parent="VBoxContainer/SaveDirectoryGroup"]
+clip_contents = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Open"
+
+[node name="ExportTypeContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ExportTypeContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Export option"
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/ExportTypeContainer"]
+layout_mode = 2
+
+[node name="BarrierBlockCullingButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Barrier block culling"
+
+[node name="GreedyMeshingButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Greedy Meshing"
+
+[node name="ChunkedMeshingButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Chunked Meshing"
+
+[node name="SeperateFloorAndCeilingButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Seperate Floor and Ceiling Meshes"
+
+[node name="VertexMergingButton" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Vertex Merging"

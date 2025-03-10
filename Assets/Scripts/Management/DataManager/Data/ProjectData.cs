@@ -20,6 +20,7 @@ public class ProjectData
     public PaletteData palette;
     public PaletteType selectedPaletteType;
     public Guid selectedPaletteSwatchId;
+    public ExportSettingsData exportSettings;
 
     [JsonIgnore]
     public VoxelData SelectedVoxelData

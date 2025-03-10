@@ -8,7 +8,7 @@ public class ImportManager : Manager
 {
     private void SaveImportSettings(string path)
     {
-        EditorData.ImportSettings importSettings = new()
+        EditorData.ImportPathData importSettings = new()
         {
             path = path,
             importType = 0

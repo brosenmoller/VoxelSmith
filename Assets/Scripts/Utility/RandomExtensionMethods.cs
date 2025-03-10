@@ -1,6 +1,14 @@
-﻿// Code by: BlueRaja - Danny Pflughoeft and Mark Amery: https://stackoverflow.com/questions/6651554/random-number-in-long-range-is-this-the-way
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-using System;
+public static class EnumUtil
+{
+    public static IEnumerable<T> GetValues<T>()
+    {
+        return Enum.GetValues(typeof(T)).Cast<T>();
+    }
+}
 
 public static class RandomExtensionMethods
 {
@@ -10,6 +18,7 @@ public static class RandomExtensionMethods
     /// <param name="random">The given random instance</param>
     /// <param name="min">The inclusive minimum bound</param>
     /// <param name="max">The exclusive maximum bound.  Must be greater than min</param>
+    /// Code by: BlueRaja - Danny Pflughoeft and Mark Amery: https://stackoverflow.com/questions/6651554/random-number-in-long-range-is-this-the-way
     public static long NextLong(this Random random, long min, long max)
     {
         if (max <= min)

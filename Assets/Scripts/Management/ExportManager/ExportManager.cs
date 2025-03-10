@@ -9,6 +9,11 @@ public class ExportManager : Manager
     private Random random;
     private IMeshGenerator<VoxelColor> meshGenerator;
 
+    public void PerformExport()
+    {
+
+    }
+
     public override void Setup()
     {
         random = new Random();
@@ -27,7 +32,7 @@ public class ExportManager : Manager
 
     private void SaveExportSettings(string directoryPath, string fileName, ProjectMenu.ExportOptions exportType)
     {
-        EditorData.ExportSettings exportSettings = new()
+        EditorData.ExportPathData exportSettings = new()
         {
             directoryPath = directoryPath,
             fileName = fileName,

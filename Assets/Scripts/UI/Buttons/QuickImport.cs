@@ -14,7 +14,7 @@ public partial class QuickImport : MarginContainer
     {
         if (GameManager.DataManager.EditorData.importPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
         {
-            EditorData.ImportSettings importSettings = GameManager.DataManager.EditorData.importPaths[GameManager.DataManager.ProjectData.id];
+            EditorData.ImportPathData importSettings = GameManager.DataManager.EditorData.importPaths[GameManager.DataManager.ProjectData.id];
             GameManager.UIController.ImportPath(importSettings.path);
         }
     }
