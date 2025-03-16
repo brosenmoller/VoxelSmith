@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://byepkejc3664l"]
+[gd_scene load_steps=11 format=3 uid="uid://byepkejc3664l"]
 
 [ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Assets/Scenes/World.tscn" id="1_3n8tb"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/UIController.cs" id="1_bu3rv"]
 [ext_resource type="Script" path="res://Assets/Scripts/Utility/NativeDialog.cs" id="4_18ky5"]
+[ext_resource type="PackedScene" uid="uid://c8ssb7qtei6ib" path="res://Assets/Scenes/UIScenes/Windows/ExportWindow.tscn" id="4_hcmcr"]
 [ext_resource type="PackedScene" uid="uid://clobdvq2u8iod" path="res://Assets/Scenes/UIScenes/Windows/StartWindow.tscn" id="4_k5wr7"]
 [ext_resource type="PackedScene" uid="uid://bbcks7dv8i8mv" path="res://Assets/Scenes/UIScenes/Windows/NewProjectWindow.tscn" id="5_tvmpl"]
 [ext_resource type="PackedScene" uid="uid://b4fgnx8gu2s5q" path="res://Assets/Scenes/UIScenes/top_bar.tscn" id="6_v81rl"]
@@ -10,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c7s6j05eta33g" path="res://Assets/Scenes/UIScenes/tool_select.tscn" id="8_56cfx"]
 [ext_resource type="PackedScene" uid="uid://bboqmejcdfufk" path="res://Assets/Scenes/UIScenes/pallete_options.tscn" id="8_rtdt0"]
 
-[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "importConfirmationDialog")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "importConfirmationDialog", "exportWindow")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +22,7 @@ script = ExtResource("1_bu3rv")
 startWindow = NodePath("SubWindowHolder/StartWindow")
 newProjectDialog = NodePath("SubWindowHolder/NewProjectWindow")
 importConfirmationDialog = NodePath("SubWindowHolder/ImportConfirmationDialog")
+exportWindow = NodePath("SubWindowHolder/ExportWindow")
 metadata/_edit_horizontal_guides_ = []
 
 [node name="SubWindowHolder" type="Control" parent="."]
@@ -32,6 +34,9 @@ offset_bottom = 40.0
 visible = false
 
 [node name="NewProjectWindow" parent="SubWindowHolder" instance=ExtResource("5_tvmpl")]
+visible = false
+
+[node name="ExportWindow" parent="SubWindowHolder" instance=ExtResource("4_hcmcr")]
 visible = false
 
 [node name="ImportConfirmationDialog" type="ConfirmationDialog" parent="SubWindowHolder"]

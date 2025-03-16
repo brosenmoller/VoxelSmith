@@ -8,6 +8,7 @@ public partial class UIController : Control
     [ExportGroup("Dialogs")]
     [Export] public ConfirmationDialog newProjectDialog;
     [Export] public ConfirmationDialog importConfirmationDialog;
+    [Export] public ExportWindow exportWindow;
 
     private string importPath;
 
@@ -75,22 +76,6 @@ public partial class UIController : Control
         GameManager.NativeDialog.ShowFileDialog("Import Palette From Project", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.ImportPaletteFromProject(info.path);
-        });
-    }
-
-    public void ShowExportUnityPrefabDialog()
-    {
-        GameManager.NativeDialog.ShowFileDialog("Export Unity Prefab", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.prefab" }, (NativeDialog.Info info) =>
-        {
-            GameManager.ExportManager.ExportUnityPrefab(info.directory, info.fileName);
-        });
-    }
-
-    public void ShowExportMeshDialog()
-    {
-        GameManager.NativeDialog.ShowFileDialog("Export Obj Mesh", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.obj" }, (NativeDialog.Info info) =>
-        {
-            GameManager.ExportManager.ExportMesh(info.directory, info.fileName);
         });
     }
 

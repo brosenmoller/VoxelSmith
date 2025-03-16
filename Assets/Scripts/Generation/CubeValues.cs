@@ -9,21 +9,21 @@ public static class CubeValues
     public const float FACE_BACK = 4;
     public const float FACE_FRONT = 5;
 
-    public static readonly Vector3[] cubeVertices =
+    public static readonly Vector3I[] cubeVertices =
     {
-        new(0, 0, 0), 
+        new(0, 0, 0),
         new(1, 0, 0),
-        new(1, 0, 1), 
+        new(1, 0, 1),
         new(0, 0, 1),
-        new(0, 1, 0), 
+        new(0, 1, 0),
         new(1, 1, 0),
-        new(1, 1, 1), 
+        new(1, 1, 1),
         new(0, 1, 1),
     };
 
     public static readonly Vector3I[] cubeOffsets =
     {
-        new(-1, 0, 0),
+        new(-1, 0, 0),  // Left face
         new(1, 0, 0),
         new(0, -1, 0),
         new(0, 1, 0),
@@ -37,6 +37,36 @@ public static class CubeValues
         new(1, 0),
         new(0, 1),
         new(1, 1),
+    };
+
+    //public static readonly int[][] cubeVertexSquareFaceIndices = new int[][]
+    //{
+    //    new[] { 3, 0, 4, 7 }, // Left face
+    //    new[] { 1, 2, 6, 5 }, // Right face
+    //    new[] { 0, 1, 2, 3 }, // Bottom face
+    //    new[] { 4, 5, 6, 7 }, // Top face
+    //    new[] { 2, 3, 7, 6 }, // Back face
+    //    new[] { 0, 1, 5, 4 }, // Front face
+    //};
+
+    //public static readonly int[][] cubeVertexSquareFaceIndices = new int[][]
+    //{
+    //    new[] { 0, 4, 7, 3 }, // Left face  (-X)
+    //    new[] { 1, 2, 6, 5 }, // Right face (+X)
+    //    new[] { 0, 1, 2, 3 }, // Bottom face (-Y)
+    //    new[] { 4, 5, 6, 7 }, // Top face (+Y)
+    //    new[] { 3, 7, 6, 2 }, // Back face  (-Z)
+    //    new[] { 0, 1, 5, 4 }, // Front face (+Z)
+    //};
+
+    public static readonly int[][] cubeVertexSquareFaceIndices = new int[][]
+    {
+            new[] { 0, 3, 7, 4 }, // Left face  (-X)
+            new[] { 1, 5, 6, 2 }, // Right face (+X)
+            new[] { 0, 1, 2, 3 }, // Bottom face (-Y)
+            new[] { 4, 7, 6, 5 }, // Top face (+Y)
+            new[] { 3, 2, 6, 7 }, // Back face  (-Z)
+            new[] { 0, 4, 5, 1 }, // Front face (+Z)
     };
 
     public static readonly int[][] cubeVertexFaceIndices = new int[][]

@@ -74,6 +74,16 @@ public partial class ExportWindow : ConfirmationDialog
             enableSeparateFloorAndCeiling = seperateFloorAndCeilingButton.ButtonPressed,
             enableVertexMerging = vertexMergingButton.ButtonPressed,
         };
+        GameManager.DataManager.SaveProject();
+
+        EditorData.ExportPathData exportSettings = new()
+        {
+            directoryPath = saveDirectoryPath.Text,
+            fileName = exportFileName.Text,
+        };
+
+        GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = exportSettings;
+        GameManager.DataManager.SaveEditorData();
 
         GameManager.ExportManager.PerformExport();
         Hide();

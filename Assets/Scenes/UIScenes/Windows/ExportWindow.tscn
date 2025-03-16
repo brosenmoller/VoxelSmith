@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/ExportWindow.cs" id="1_h6ouc"]
 
-[node name="NewProjectWindow" type="ConfirmationDialog" node_paths=PackedStringArray("exportFileName", "saveDirectoryPath", "openProjectDirectoryButton", "exportOptionButton", "barrierBlockCullingButton", "greedyMeshingButton", "chunkedMeshingButton", "seperateFloorAndCeilingButton", "vertexMergingButton")]
+[node name="ExportWindow" type="ConfirmationDialog" node_paths=PackedStringArray("exportFileName", "saveDirectoryPath", "openProjectDirectoryButton", "exportOptionButton", "barrierBlockCullingButton", "greedyMeshingButton", "chunkedMeshingButton", "seperateFloorAndCeilingButton", "vertexMergingButton")]
 title = "Export Project"
 initial_position = 2
 size = Vector2i(540, 350)
@@ -60,6 +60,7 @@ text = "Open"
 
 [node name="ExportTypeContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ExportTypeContainer"]
 custom_minimum_size = Vector2(120, 0)

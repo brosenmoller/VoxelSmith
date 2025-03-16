@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=55 format=3 uid="uid://b4fgnx8gu2s5q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/TopBarUI.cs" id="1_uo8va"]
@@ -8,6 +8,7 @@
 [ext_resource type="Shortcut" uid="uid://shd825lrd3we" path="res://Assets/Resources/MenuResources/ProjectMenu/OpenProjectShortcut.tres" id="5_lx1nm"]
 [ext_resource type="Shortcut" uid="uid://bqajjcmabxkcd" path="res://Assets/Resources/MenuResources/ProjectMenu/ImportSchematicShortcut.tres" id="6_g1vkc"]
 [ext_resource type="Shortcut" uid="uid://db4ls4pp6ps3j" path="res://Assets/Resources/MenuResources/ProjectMenu/RefreshSchematicShortcut.tres" id="7_rmvxb"]
+[ext_resource type="Shortcut" uid="uid://bk24aeicaor70" path="res://Assets/Resources/MenuResources/ProjectMenu/ExportShortcut.tres" id="7_uhken"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/EditMenu.cs" id="8_fxvqp"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/PaletteMenu.cs" id="8_kvnbl"]
 [ext_resource type="Shortcut" uid="uid://cat3smbjtttve" path="res://Assets/Resources/MenuResources/EditMenu/UndoShortcut.tres" id="9_3vpiw"]
@@ -136,6 +137,7 @@ newShortcut = ExtResource("2_q2gw8")
 saveShortcut = ExtResource("3_0wbqa")
 saveAsShortcut = ExtResource("4_7og8a")
 openShortcut = ExtResource("5_lx1nm")
+exportShortcut = ExtResource("7_uhken")
 importSchematicShortcut = ExtResource("6_g1vkc")
 refreshSchematicShortcut = ExtResource("7_rmvxb")
 

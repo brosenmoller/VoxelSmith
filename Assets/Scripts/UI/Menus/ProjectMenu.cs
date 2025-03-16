@@ -10,6 +10,7 @@ public partial class ProjectMenu : PopupMenu
     [Export] private Shortcut saveShortcut;
     [Export] private Shortcut saveAsShortcut;
     [Export] private Shortcut openShortcut;
+    [Export] private Shortcut exportShortcut;
     [Export] private Shortcut importSchematicShortcut;
     [Export] private Shortcut refreshSchematicShortcut;
 
@@ -17,10 +18,8 @@ public partial class ProjectMenu : PopupMenu
     public static event Action OnSavePressed;
     public static event Action OnSaveAsPressed;
     public static event Action OnOpenPressed;
+    public static event Action OnExportPressed;
     public static event Action OnImportSchematicPressed;
-
-    public static event Action OnExportUnityPrefabPressed;
-    public static event Action OnExportMeshPressed;
 
     private PopupMenu recentsNestedMenu;
     private List<string> recentPaths;
@@ -41,6 +40,7 @@ public partial class ProjectMenu : PopupMenu
             case (long)ProjectOptions.SAVE: OnSavePressed?.Invoke(); break;
             case (long)ProjectOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
             case (long)ProjectOptions.OPEN: OnOpenPressed?.Invoke(); break;
+            case (long)ProjectOptions.EXPORT: OnExportPressed?.Invoke(); break;
             case (long)ProjectOptions.IMPORT_SCHEMATIC: OnImportSchematicPressed?.Invoke(); break;
         }
     }
@@ -67,7 +67,8 @@ public partial class ProjectMenu : PopupMenu
         SetupRecentsSubMenu();
 
         // 5
-        SetupExportSubMenu();
+        AddItem("Export", (int)ProjectOptions.EXPORT);
+        SetItemShortcut(5, exportShortcut, true);
 
         // 6
         AddItem("Import Schematic", (int)ProjectOptions.IMPORT_SCHEMATIC);
@@ -98,31 +99,6 @@ public partial class ProjectMenu : PopupMenu
         GameManager.DataManager.LoadProject(recentPaths[(int)id]);
     }
 
-    private void SetupExportSubMenu()
-    {
-        exportNestedMenu = new();
-        exportNestedMenu.IdPressed += OnExportMenuItemSelected;
-        exportNestedMenu.Name = "ExportNestedMenu";
-
-        exportNestedMenu.AddItem("Unity", (int)ExportOptions.UNITY);
-        exportNestedMenu.AddItem("Mesh", (int)ExportOptions.MESH);
-        //exportNestedMenu.AddItem("Godot", (int)ExportOptions.GODOT);
-
-
-        AddChild(exportNestedMenu);
-        AddSubmenuItem("Export", exportNestedMenu.Name);
-    }
-
-    private void OnExportMenuItemSelected(long id)
-    {
-        switch (id)
-        {
-            case (long)ExportOptions.UNITY: OnExportUnityPrefabPressed?.Invoke(); break;
-            case (long)ExportOptions.MESH: OnExportMeshPressed?.Invoke(); break;
-            //case (long)ExportOptions.GODOT: OnSavePressed?.Invoke(); break;
-        }
-    }
-
     private enum ProjectOptions
     {
         NEW,
@@ -131,12 +107,5 @@ public partial class ProjectMenu : PopupMenu
         OPEN,
         EXPORT,
         IMPORT_SCHEMATIC,
-    }
-
-    public enum ExportOptions
-    {
-        UNITY,
-        MESH,
-        GODOT
     }
 }
