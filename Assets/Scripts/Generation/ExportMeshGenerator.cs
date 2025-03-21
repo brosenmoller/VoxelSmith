@@ -5,7 +5,7 @@ using System.Text;
 
 public class ExportMeshGenerator
 {
-    public static string CreateMesh(ExportSettingsData exportSettings, Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, VoxelColor> palette)
+    public static string CreateMesh(ExportSettingsData exportSettings, Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, VoxelColor> palette, string name)
     {
         Dictionary<Vector3I, MeshSurface> wallMeshes = new();
         Dictionary<Vector3I, MeshSurface> floorMeshes = new();
@@ -60,6 +60,7 @@ public class ExportMeshGenerator
         StringBuilder obj = new();
         obj.AppendLine("# Mesh Exported Using VoxelSmith");
         obj.AppendLine("# https://github.com/brosenmoller/VoxelSmith");
+        obj.AppendLine($"g {name}");
 
         for (int i = 0; i < CubeValues.cubeOffsets.Length; i++)
         {
