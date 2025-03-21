@@ -98,4 +98,14 @@ public static class CubeValues
         new[] { 0, 1, 3, 3, 2, 0 },
         new[] { 0, 1, 2, 0, 3, 1 },
     };
+
+    public static readonly int[][] cubeVertexFaceIndicesExporter = new int[][]
+    {
+        new[] { 0, 3, 7, 0, 7, 4 },
+        new[] { 2, 1, 5, 2, 5, 6 },
+        new[] { 2, 3, 0, 2, 0, 1 },
+        new[] { 5, 4, 7, 5, 7, 6 },
+        new[] { 3, 2, 6, 3, 6, 7 },
+        new[] { 1, 0, 4, 1, 4, 5 },
+    };
 }
