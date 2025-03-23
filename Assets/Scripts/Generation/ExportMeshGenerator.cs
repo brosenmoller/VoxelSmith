@@ -46,7 +46,7 @@ public class ExportMeshGenerator
 
                 MeshSurface meshSurface = GetMeshSurface(chunk, offset);
                 Face face = new(i);
-                int[] vertexIndices = CubeValues.cubeVertexFaceIndices[i];
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[i];
                 for (int j = 0; j < vertexIndices.Length; j++)
                 {
                     Vector3I vertexPosition = voxel + CubeValues.cubeVertices[vertexIndices[j]];
@@ -142,7 +142,7 @@ public class ExportMeshGenerator
         public string ConvertToObj(int startingIndex)
         {
             StringBuilder obj = new();
-            obj.AppendLine("o " + name);
+            obj.AppendLine("g " + name);
 
             for (int i = 0; i < vertices.Count; i++)
             {

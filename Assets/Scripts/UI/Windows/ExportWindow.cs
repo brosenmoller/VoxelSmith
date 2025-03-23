@@ -53,6 +53,9 @@ public partial class ExportWindow : ConfirmationDialog
     {
         foreach (ExportSettingsData.ExportType item in EnumUtil.GetValues<ExportSettingsData.ExportType>())
         {
+            // Godot TSCN Unsupported right now
+            if (item == ExportSettingsData.ExportType.GodotScene) { continue; }
+
             exportOptionButton.AddItem(ExportSettingsData.GetExportMessage(item), (int)item);
         }
     }
