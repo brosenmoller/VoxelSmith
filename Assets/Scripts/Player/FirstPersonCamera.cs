@@ -13,10 +13,12 @@ public partial class FirstPersonCamera : Node3D
     [Export] private float FOVChange = 1.5f;
     [Export] private float maxFOVMultiplier = 16.0f;
     [Export] private float minFOVMultiplier = 0.5f;
+    [Export] private bool fovChangeEnabled = false;
 
     [ExportGroup("View Bobbing")]
     [Export] private float bobFrequency = 2;
     [Export] private float bobAmplitude = 0.06f;
+    [Export] private bool viewBobbingEnabled = false;
 
     [ExportGroup("References")]
     [Export] private CharacterBody3D playerMovement;
@@ -42,13 +44,19 @@ public partial class FirstPersonCamera : Node3D
     public override void _PhysicsProcess(double delta)
     {
         // View Bobbing
-        bobTime += (float)delta * playerMovement.Velocity.Length() * Convert.ToSingle(playerMovement.IsOnFloor());
-        camera.Transform = camera.Transform with { Origin = Headbob(bobTime) };
+        if (viewBobbingEnabled)
+        {
+            bobTime += (float)delta * playerMovement.Velocity.Length() * Convert.ToSingle(playerMovement.IsOnFloor());
+            camera.Transform = camera.Transform with { Origin = Headbob(bobTime) };
+        }
 
         // FOV
-        float velocityClamped = Mathf.Clamp(playerMovement.Velocity.Length(), minFOVMultiplier, maxFOVMultiplier);
-        float targetFov = baseFOV + FOVChange * velocityClamped;
-        camera.Fov = (float)Mathf.Lerp(camera.Fov, targetFov, delta * 8.0f);
+        if (fovChangeEnabled)
+        {
+            float velocityClamped = Mathf.Clamp(playerMovement.Velocity.Length(), minFOVMultiplier, maxFOVMultiplier);
+            float targetFov = baseFOV + FOVChange * velocityClamped;
+            camera.Fov = (float)Mathf.Lerp(camera.Fov, targetFov, delta * 8.0f);
+        }
     }
 
     private Vector3 Headbob(float time)
