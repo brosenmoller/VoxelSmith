@@ -55,7 +55,7 @@ public class ExportObjMeshGenerator
                     face.vertexIndices[j] = meshSurface.GetVertexIndex(vertexPosition);
                 }
 
-                meshSurface.faces.Add(face);
+                meshSurface.AddFace(face, voxel, offset);
             }
         }
 

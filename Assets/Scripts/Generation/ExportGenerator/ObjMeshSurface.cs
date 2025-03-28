@@ -5,6 +5,8 @@ using System.Text;
 public class ObjMeshSurface
 {
     public readonly List<ObjFace> faces = new();
+    public readonly Dictionary<(Vector3I, Vector3I), ObjFace> faceMapVoxelKeyed = new();
+    public readonly Dictionary<ObjFace, (Vector3I, Vector3I)> faceMapFaceKeyed = new();
 
     private readonly List<Vector3I> vertices = new();
     private readonly Dictionary<Vector3I, int> vertexMap = new();
@@ -27,8 +29,17 @@ public class ObjMeshSurface
     {
         this.name = name;
         faces.Clear();
+        faceMapFaceKeyed.Clear();
+        faceMapVoxelKeyed.Clear();
         vertices.Clear();
         vertexMap.Clear();
+    }
+
+    public void AddFace(ObjFace face, Vector3I voxel, Vector3I normal)
+    {
+        faces.Add(face);
+        faceMapFaceKeyed.Add(face, (voxel, normal));
+        faceMapVoxelKeyed.Add((voxel, normal), face);
     }
 
     public int GetVertexIndex(Vector3I vertex)
