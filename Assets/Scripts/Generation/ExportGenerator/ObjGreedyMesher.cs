@@ -12,7 +12,7 @@ public class ObjGreedyMesher
 
     private ObjFace FindFaceAtOffset(ObjFace baseFace, List<ObjFace> faces, int uOffset, int vOffset, int u, int v)
     {
-        Vector3I offset = new Vector3I();
+        Vector3I offset = new();
         offset[u] = uOffset;
         offset[v] = vOffset;
 
