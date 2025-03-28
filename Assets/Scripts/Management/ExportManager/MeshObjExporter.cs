@@ -5,6 +5,8 @@ using Godot;
 
 public class MeshObjExporter : IExporter
 {
+    private readonly ExportObjMeshGenerator exportMeshGenerator = new();
+
     public void Export(ExportSettingsData exportSettings, EditorData.ExportPathData exportPath)
     {
         string name = exportPath.fileName;
@@ -23,14 +25,13 @@ public class MeshObjExporter : IExporter
         }
         else
         {
-            output = ExportMeshGenerator.CreateMesh(exportSettings, GameManager.DataManager.ProjectData.voxelColors, GameManager.DataManager.PaletteData.paletteColors, name);
+            output = exportMeshGenerator.CreateMesh(exportSettings, GameManager.DataManager.ProjectData.voxelColors, GameManager.DataManager.PaletteData.paletteColors, name);
         }
             
         File.WriteAllText(Path.Combine(exportPath.directoryPath, name + ".obj"), output);
     }
 
-
-    private string ConstructMeshObjForPrefab(string name)
+    private static string ConstructMeshObjForPrefab(string name)
     {
         IMeshGenerator<VoxelColor> meshGenerator = new BasicMeshGenerator<VoxelColor>();
 

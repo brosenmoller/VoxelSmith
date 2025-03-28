@@ -5,7 +5,7 @@
 [node name="ExportWindow" type="ConfirmationDialog" node_paths=PackedStringArray("exportFileName", "saveDirectoryPath", "openProjectDirectoryButton", "exportOptionButton", "barrierBlockCullingButton", "greedyMeshingButton", "chunkedMeshingButton", "seperateFloorAndCeilingButton", "vertexMergingButton")]
 title = "Export Project"
 initial_position = 2
-size = Vector2i(540, 219)
+size = Vector2i(540, 289)
 visible = true
 ok_button_text = "Export"
 dialog_hide_on_ok = false
@@ -25,7 +25,7 @@ vertexMergingButton = NodePath("VBoxContainer/VertexMergingButton")
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 532.0
-offset_bottom = 170.0
+offset_bottom = 240.0
 
 [node name="FileName" type="TextEdit" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
@@ -82,13 +82,11 @@ button_pressed = true
 text = "Greedy Meshing"
 
 [node name="ChunkedMeshingButton" type="CheckButton" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 button_pressed = true
 text = "Chunked Meshing"
 
 [node name="SeperateFloorAndCeilingButton" type="CheckButton" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 button_pressed = true
 text = "Seperate Floor and Ceiling Meshes"

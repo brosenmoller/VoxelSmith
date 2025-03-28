@@ -11,7 +11,8 @@ public partial class TestMesh : MeshInstance3D
         {
             new(0, 0, 0),
             new(1, 0, 0),
-            new(2, 0, 0), new(2, 1, 0),
+            new(2, 0, 0), 
+            new(2, 1, 0),
         });
     }
 }
