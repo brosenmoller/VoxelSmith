@@ -19,11 +19,15 @@ public class ExportObjMeshGenerator
 
     private string name;
     private ExportSettingsData exportSettings;
+    Dictionary<Vector3I, Guid> voxels;
+    Dictionary<Guid, VoxelColor> palette;
 
     public string CreateMesh(ExportSettingsData exportSettings, Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, VoxelColor> palette, string name)
     {
         this.name = name;
         this.exportSettings = exportSettings;
+        this.voxels = voxels;
+        this.palette = palette;
 
         defaultMeshes.Clear();
         floorMeshes.Clear();
@@ -33,24 +37,33 @@ public class ExportObjMeshGenerator
         floorMesh.Reset(FLOOR_MESH_NAME);
         ceilingMesh.Reset(CEILING_MESH_NAME);
 
+        if (exportSettings.enableGreedyMeshing) { GreedyMesher(); }
+        else { StandardMesher(); }
+
+        return ConstructObj();
+    }
+
+    private void StandardMesher()
+    {
         HashSet<Vector3I> allVoxels = new(voxels.Keys);
 
         foreach (Vector3I voxel in allVoxels)
         {
-            if (exportSettings.enableBarrierBlockCulling && 
+            if (exportSettings.enableBarrierBlockCulling &&
                 palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
-            ) {
-                continue; 
+            )
+            {
+                continue;
             }
 
             Vector3I chunk = GetChunk(voxel);
 
             for (int i = 0; i < 6; i++)
             {
-                Vector3I offset = CubeValues.cubeOffsets[i];
-                if (allVoxels.Contains(voxel + offset)) { continue; }
+                Vector3I normal = CubeValues.cubeOffsets[i];
+                if (allVoxels.Contains(voxel + normal)) { continue; }
 
-                ObjMeshSurface meshSurface = GetMeshSurface(chunk, offset);
+                ObjMeshSurface meshSurface = GetMeshSurface(chunk, normal);
                 ObjFace face = new(i);
                 int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[i];
                 for (int j = 0; j < vertexIndices.Length; j++)
@@ -59,38 +72,109 @@ public class ExportObjMeshGenerator
                     face.vertexIndices[j] = meshSurface.GetVertexIndex(vertexPosition);
                 }
 
-                meshSurface.AddFace(face, voxel, offset);
+                meshSurface.AddFace(face, voxel, normal);
             }
         }
-
-        GreedyMeshIfNeeded();
-
-        return ConstructObj();
     }
 
-    private void GreedyMeshIfNeeded()
+    private static (Vector3I primary, Vector3I secondary) GetDirections(Vector3I normal)
     {
-        if (exportSettings.enableGreedyMeshing)
+        return normal switch
         {
-            if (exportSettings.enableChunkedMeshing)
+            (1, 0, 0) => (new Vector3I(0, 1, 0), new Vector3I(0, 0, 1)),
+            (-1, 0, 0) => (new Vector3I(0, -1, 0), new Vector3I(0, 0, -1)),
+            (0, 1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, 1)),
+            (0, -1, 0) => (new Vector3I(-1, 0, 0), new Vector3I(0, 0, -1)),
+            (0, 0, 1) => (new Vector3I(1, 0, 0), new Vector3I(0, 1, 0)),
+            (0, 0, -1) => (new Vector3I(-1, 0, 0), new Vector3I(0, -1, 0)),
+            _ => throw new ArgumentException("Invalid normal vector")
+        };
+    }
+
+    private void GreedyMesher()
+    {
+        HashSet<Vector3I> allVoxels = new(voxels.Keys);
+        HashSet<(Vector3I, Vector3I)> allProcessedFaces = new();
+
+        foreach (Vector3I voxel in allVoxels)
+        {
+            if (exportSettings.enableBarrierBlockCulling &&
+                palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
+            )
+            { continue; }
+
+            Vector3I chunk = GetChunk(voxel);
+
+            for (int i = 0; i < 6; i++)
             {
-                if (exportSettings.enableSeparateFloorAndCeiling)
+                Vector3I normal = CubeValues.cubeOffsets[i];
+                if (allVoxels.Contains(voxel + normal)) { continue; }
+
+                (Vector3I, Vector3I) faceKey = (voxel, normal);
+                if (allProcessedFaces.Contains(faceKey)) { continue; }
+                allProcessedFaces.Add(faceKey);
+
+                (Vector3I primaryDirection, Vector3I secondaryDirection) = GetDirections(normal);
+
+                ObjMeshSurface meshSurface = GetMeshSurface(chunk, normal);
+
+                List<(Vector3I, Vector3I)> facesPrimaryDirection = new() { faceKey };
+                Vector3I currentPrimaryStep = Vector3I.Zero;
+
+                while (true)
                 {
-                    foreach (var meshSurface in ceilingMeshes) { ObjGreedyMesher.GreedyMesh(meshSurface.Value); }
-                    foreach (var meshSurface in floorMeshes) { ObjGreedyMesher.GreedyMesh(meshSurface.Value); }
+                    Vector3I newStep = currentPrimaryStep + primaryDirection;
+                    (Vector3I, Vector3I) faceToBeMerged = (voxel + newStep, normal);
+                    if (!allVoxels.Contains(faceToBeMerged.Item1)) { break; }
+                    if (GetChunk(faceToBeMerged.Item1) != chunk) { break; }
+                    if (allProcessedFaces.Contains(faceToBeMerged)) { break; }
+
+                    currentPrimaryStep = newStep;
+                    facesPrimaryDirection.Add(faceToBeMerged);
+                    allProcessedFaces.Add(faceKey);
                 }
 
-                foreach (var meshSurface in defaultMeshes) { ObjGreedyMesher.GreedyMesh(meshSurface.Value); }
-            }
-            else
-            {
-                if (exportSettings.enableSeparateFloorAndCeiling)
+                Vector3I currentSecondaryStep = Vector3I.zero;
+
+                bool IsSecondaryDirectionMergeable(Vector3I step)
                 {
-                    if (floorMesh != null) { ObjGreedyMesher.GreedyMesh(floorMesh); }
-                    if (ceilingMesh != null) { ObjGreedyMesher.GreedyMesh(ceilingMesh); }
+                    for (int i = 0; i < facesPrimaryDirection.Count; i++)
+                    {
+                        (Vector3I, Vector3I) faceToBeMerged = (voxel + step, normal);
+
+                        if (!allVoxels.Contains(faceToBeMerged.Item1)) { return false; }
+                        if (GetChunk(faceToBeMerged.Item1) != chunk) { return false; }
+                        if (allProcessedFaces.Contains(faceToBeMerged)) { return false; }
+                    }
+
+                    return true;
                 }
 
-                if (defaultMesh != null) { ObjGreedyMesher.GreedyMesh(defaultMesh); }
+                while (true)
+                {
+                    Vector3I nextStep = currentSecondaryStep + secondaryDirection;
+
+                    if (!IsSecondaryDirectionMergeable(nextStep)) { break; }
+
+                    currentSecondaryStep = nextStep;
+
+                    foreach ((Vector3I, Vector3I) stepFace in facesPrimaryDirection)
+                    {
+                        allProcessedFaces.Add(stepFace);
+                    }
+                }
+
+                // Continue here
+
+                ObjFace face = new(i);
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[i];
+                for (int j = 0; j < vertexIndices.Length; j++)
+                {
+                    Vector3I vertexPosition = voxel + CubeValues.cubeVertices[vertexIndices[j]];
+                    face.vertexIndices[j] = meshSurface.GetVertexIndex(vertexPosition);
+                }
+
+                meshSurface.AddFace(face, voxel, normal);
             }
         }
     }
@@ -177,7 +261,7 @@ public class ExportObjMeshGenerator
 
     private static Vector3I GetChunk(Vector3I voxel)
     {
-        const int CHUNK_SIZE = 16;
+        const int CHUNK_SIZE = 32;
         return new Vector3I(
             Mathf.FloorToInt(voxel.X / CHUNK_SIZE),
             Mathf.FloorToInt(voxel.Y / CHUNK_SIZE),
