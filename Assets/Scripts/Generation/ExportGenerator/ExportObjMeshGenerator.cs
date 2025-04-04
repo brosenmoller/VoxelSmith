@@ -59,7 +59,36 @@ public class ExportObjMeshGenerator
             }
         }
 
+        GreedyMeshIfNeeded();
+
         return ConstructObj();
+    }
+
+    private void GreedyMeshIfNeeded()
+    {
+        if (exportSettings.enableGreedyMeshing)
+        {
+            if (exportSettings.enableChunkedMeshing)
+            {
+                if (exportSettings.enableSeparateFloorAndCeiling)
+                {
+                    foreach (var meshSurface in ceilingMeshes) { ObjGreedyMesher.GreedyMesh(meshSurface.Value); }
+                    foreach (var meshSurface in floorMeshes) { ObjGreedyMesher.GreedyMesh(meshSurface.Value); }
+                }
+
+                foreach (var meshSurface in defaultMeshes) { ObjGreedyMesher.GreedyMesh(meshSurface.Value); }
+            }
+            else
+            {
+                if (exportSettings.enableSeparateFloorAndCeiling)
+                {
+                    if (floorMesh != null) { ObjGreedyMesher.GreedyMesh(floorMesh); }
+                    if (ceilingMesh != null) { ObjGreedyMesher.GreedyMesh(ceilingMesh); }
+                }
+
+                if (defaultMesh != null) { ObjGreedyMesher.GreedyMesh(defaultMesh); }
+            }
+        }
     }
 
     private string ConstructObj()

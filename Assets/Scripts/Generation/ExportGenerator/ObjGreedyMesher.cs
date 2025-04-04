@@ -1,7 +1,6 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public class ObjGreedyMesher
 {
@@ -19,7 +18,7 @@ public class ObjGreedyMesher
         };
     }
 
-    private void GreedyMesh(ObjMeshSurface meshSurface)
+    public static void GreedyMesh(ObjMeshSurface meshSurface)
     {
         HashSet<ObjFace> processed = new();
 
@@ -31,12 +30,35 @@ public class ObjGreedyMesher
             (Vector3I voxel, Vector3I normal) = meshSurface.faceMapFaceKeyed[face];
             (Vector3I primaryDirection, Vector3I secondaryDirection) = GetDirections(normal);
 
+            List<ObjFace> facesPrimaryDirection = new();
             (Vector3I, Vector3I) faceKey = (voxel + primaryDirection, normal);
+            ObjFace newMergingFace = null;
             while (meshSurface.faceMapVoxelKeyed.ContainsKey(faceKey))
             {
+                newMergingFace = meshSurface.faceMapVoxelKeyed[faceKey];
+                facesPrimaryDirection.Add(newMergingFace);
+                faceKey.Item1 += primaryDirection;
+            }
 
+            ObjFace primaryDirectionEndFace = newMergingFace;
+            Vector3I currentSecondaryStep = secondaryDirection;
+            while (CanListMerge(facesPrimaryDirection, currentSecondaryStep, meshSurface))
+            {
+                
             }
         }
+    }
+
+    private static bool CanListMerge(List<ObjFace> faceRow, Vector3I step, ObjMeshSurface meshSurface) 
+    {
+        for (int i = 0; i < faceRow.Count; i++)
+        {
+            (Vector3I, Vector3I) faceKey = meshSurface.faceMapFaceKeyed[faceRow[i]];
+            faceKey.Item1 += step;
+            if (!meshSurface.faceMapVoxelKeyed.ContainsKey(faceKey)) { return false; }
+        }
+
+        return true;
     }
 
     //private bool CanMerge(ObjFace baseFace, List<ObjFace> faces, int direction, int size, HashSet<ObjFace> processed)
