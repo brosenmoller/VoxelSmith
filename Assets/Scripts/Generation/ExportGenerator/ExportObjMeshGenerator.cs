@@ -37,7 +37,11 @@ public class ExportObjMeshGenerator
 
         foreach (Vector3I voxel in allVoxels)
         {
-            if (exportSettings.enableBarrierBlockCulling && palette[voxels[voxel]].minecraftIDlist.Contains("minecraft:barrier")) { continue; }
+            if (exportSettings.enableBarrierBlockCulling && 
+                palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
+            ) {
+                continue; 
+            }
 
             Vector3I chunk = GetChunk(voxel);
 

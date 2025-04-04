@@ -3,6 +3,8 @@ using Godot;
 
 public class PaletteDataFactory
 {
+    public const string MINECRAFT_BARRIER = "minecraft:barrier";
+
     public static PaletteData GetDefaultPalette()
     {
         PaletteData data = new();
@@ -21,7 +23,7 @@ public class PaletteDataFactory
             Color.Color8(129, 42, 37),
             new List<string>()
             {
-                "minecraft:barrier"
+                MINECRAFT_BARRIER
             }
         );
 
