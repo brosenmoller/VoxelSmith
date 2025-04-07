@@ -51,10 +51,7 @@ public class ExportObjMeshGenerator
         {
             if (exportSettings.enableBarrierBlockCulling &&
                 palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
-            )
-            {
-                continue;
-            }
+            ) { continue; }
 
             Vector3I chunk = GetChunk(voxel);
 
@@ -72,7 +69,7 @@ public class ExportObjMeshGenerator
                     face.vertexIndices[j] = meshSurface.GetVertexIndex(vertexPosition);
                 }
 
-                meshSurface.AddFace(face, voxel, normal);
+                meshSurface.AddFace(face);
             }
         }
     }
@@ -94,14 +91,13 @@ public class ExportObjMeshGenerator
     private void GreedyMesher()
     {
         HashSet<Vector3I> allVoxels = new(voxels.Keys);
-        HashSet<(Vector3I, Vector3I)> allProcessedFaces = new();
+        HashSet<FaceData> allProcessedFaces = new();
 
         foreach (Vector3I voxel in allVoxels)
         {
             if (exportSettings.enableBarrierBlockCulling &&
                 palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
-            )
-            { continue; }
+            ) { continue; }
 
             Vector3I chunk = GetChunk(voxel);
 
@@ -110,41 +106,41 @@ public class ExportObjMeshGenerator
                 Vector3I normal = CubeValues.cubeOffsets[i];
                 if (allVoxels.Contains(voxel + normal)) { continue; }
 
-                (Vector3I, Vector3I) faceKey = (voxel, normal);
-                if (allProcessedFaces.Contains(faceKey)) { continue; }
-                allProcessedFaces.Add(faceKey);
+                FaceData faceData = new(voxel, normal);
+                if (allProcessedFaces.Contains(faceData)) { continue; }
+                allProcessedFaces.Add(faceData);
 
                 (Vector3I primaryDirection, Vector3I secondaryDirection) = GetDirections(normal);
 
                 ObjMeshSurface meshSurface = GetMeshSurface(chunk, normal);
 
-                List<(Vector3I, Vector3I)> facesPrimaryDirection = new() { faceKey };
+                List<FaceData> facesPrimaryDirection = new() { faceData };
                 Vector3I currentPrimaryStep = Vector3I.Zero;
 
                 while (true)
                 {
                     Vector3I newStep = currentPrimaryStep + primaryDirection;
-                    (Vector3I, Vector3I) faceToBeMerged = (voxel + newStep, normal);
-                    if (!allVoxels.Contains(faceToBeMerged.Item1)) { break; }
-                    if (GetChunk(faceToBeMerged.Item1) != chunk) { break; }
+                    FaceData faceToBeMerged = new(voxel + newStep, normal);
+                    if (!allVoxels.Contains(faceToBeMerged.position)) { break; }
+                    if (GetChunk(faceToBeMerged.position) != chunk) { break; }
                     if (allProcessedFaces.Contains(faceToBeMerged)) { break; }
 
                     currentPrimaryStep = newStep;
                     facesPrimaryDirection.Add(faceToBeMerged);
-                    allProcessedFaces.Add(faceKey);
+                    allProcessedFaces.Add(faceToBeMerged);
                 }
 
-                Vector3I currentSecondaryStep = Vector3I.zero;
+                Vector3I currentSecondaryStep = Vector3I.Zero;
 
                 bool IsSecondaryDirectionMergeable(Vector3I step)
                 {
                     for (int i = 0; i < facesPrimaryDirection.Count; i++)
                     {
-                        (Vector3I, Vector3I) faceToBeMerged = (voxel + step, normal);
+                        FaceData faceToBeMerged = new(facesPrimaryDirection[i].position + step, normal);
 
-                        if (!allVoxels.Contains(faceToBeMerged.Item1)) { return false; }
-                        if (GetChunk(faceToBeMerged.Item1) != chunk) { return false; }
+                        if (!allVoxels.Contains(faceToBeMerged.position)) { return false; }
                         if (allProcessedFaces.Contains(faceToBeMerged)) { return false; }
+                        if (GetChunk(faceToBeMerged.position) != chunk) { return false; }
                     }
 
                     return true;
@@ -158,13 +154,13 @@ public class ExportObjMeshGenerator
 
                     currentSecondaryStep = nextStep;
 
-                    foreach ((Vector3I, Vector3I) stepFace in facesPrimaryDirection)
+                    for (int faceIndex = 0; faceIndex < facesPrimaryDirection.Count; faceIndex++)
                     {
-                        allProcessedFaces.Add(stepFace);
+                        FaceData newFace = facesPrimaryDirection[i];
+                        newFace.position += currentSecondaryStep;
+                        allProcessedFaces.Add(newFace);
                     }
                 }
-
-                // Continue here
 
                 ObjFace face = new(i);
                 int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[i];
@@ -174,7 +170,7 @@ public class ExportObjMeshGenerator
                     face.vertexIndices[j] = meshSurface.GetVertexIndex(vertexPosition);
                 }
 
-                meshSurface.AddFace(face, voxel, normal);
+                meshSurface.AddFace(face);
             }
         }
     }
@@ -267,5 +263,17 @@ public class ExportObjMeshGenerator
             Mathf.FloorToInt(voxel.Y / CHUNK_SIZE),
             Mathf.FloorToInt(voxel.Z / CHUNK_SIZE)
         );
+    }
+
+    private struct FaceData
+    {
+        public Vector3I position;
+        public Vector3I normal;
+
+        public FaceData(Vector3I position, Vector3I normal)
+        {
+            this.position = position;
+            this.normal = normal;
+        }
     }
 }

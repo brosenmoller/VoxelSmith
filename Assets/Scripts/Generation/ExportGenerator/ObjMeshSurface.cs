@@ -5,41 +5,35 @@ using System.Text;
 public class ObjMeshSurface
 {
     public readonly List<ObjFace> faces = new();
-    public readonly Dictionary<(Vector3I, Vector3I), ObjFace> faceMapVoxelKeyed = new();
-    public readonly Dictionary<ObjFace, (Vector3I, Vector3I)> faceMapFaceKeyed = new();
 
     private readonly List<Vector3I> vertices = new();
     private readonly Dictionary<Vector3I, int> vertexMap = new();
 
-    public string name { get; private set; }
+    public string Name { get; private set; }
 
     public int VertexCount => vertices.Count;
 
     public ObjMeshSurface() 
     { 
-        name = "";
+        Name = "";
     }
 
     public ObjMeshSurface(string name)
     {
-        this.name = name;
+        Name = name;
     }
 
     public void Reset(string name)
     {
-        this.name = name;
+        Name = name;
         faces.Clear();
-        faceMapFaceKeyed.Clear();
-        faceMapVoxelKeyed.Clear();
         vertices.Clear();
         vertexMap.Clear();
     }
 
-    public void AddFace(ObjFace face, Vector3I voxel, Vector3I normal)
+    public void AddFace(ObjFace face)
     {
         faces.Add(face);
-        faceMapFaceKeyed.Add(face, (voxel, normal));
-        faceMapVoxelKeyed.Add((voxel, normal), face);
     }
 
     public int GetVertexIndex(Vector3I vertex)
@@ -58,7 +52,7 @@ public class ObjMeshSurface
         if (faces.Count <= 0 || vertices.Count <= 0) { return string.Empty; }
 
         StringBuilder obj = new();
-        obj.AppendLine("g " + name);
+        obj.AppendLine("g " + Name);
 
         for (int i = 0; i < vertices.Count; i++)
         {
