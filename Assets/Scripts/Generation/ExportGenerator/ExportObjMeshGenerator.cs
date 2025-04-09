@@ -22,6 +22,8 @@ public class ExportObjMeshGenerator
     Dictionary<Vector3I, Guid> voxels;
     Dictionary<Guid, VoxelColor> palette;
 
+    private readonly int[] triangleToQuadCorner = { 0, 1, 2, 0, 2, 3 };
+
     public string CreateMesh(ExportSettingsData exportSettings, Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, VoxelColor> palette, string name)
     {
         this.name = name;
@@ -74,17 +76,17 @@ public class ExportObjMeshGenerator
         }
     }
 
-    private static (Vector3I primary, Vector3I secondary) GetDirections(Vector3I normal)
+    private static (Vector3I primary, Vector3I secondary) GetFaceAxes(Vector3I normal)
     {
         return normal switch
         {
-            (1, 0, 0) => (new Vector3I(0, 1, 0), new Vector3I(0, 0, 1)),
-            (-1, 0, 0) => (new Vector3I(0, -1, 0), new Vector3I(0, 0, -1)),
-            (0, 1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, 1)),
-            (0, -1, 0) => (new Vector3I(-1, 0, 0), new Vector3I(0, 0, -1)),
-            (0, 0, 1) => (new Vector3I(1, 0, 0), new Vector3I(0, 1, 0)),
-            (0, 0, -1) => (new Vector3I(-1, 0, 0), new Vector3I(0, -1, 0)),
-            _ => throw new ArgumentException("Invalid normal vector")
+            (1, 0, 0) => (new Vector3I(0, 0, 1), new Vector3I(0, -1, 0)), // Right face
+            (-1, 0, 0) => (new Vector3I(0, 0, -1), new Vector3I(0, -1, 0)), // Left face
+            (0, 1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, -1)), // Top face
+            (0, -1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, 1)),  // Bottom face
+            (0, 0, 1) => (new Vector3I(1, 0, 0), new Vector3I(0, -1, 0)), // Front face
+            (0, 0, -1) => (new Vector3I(-1, 0, 0), new Vector3I(0, -1, 0)), // Back face
+            _ => throw new ArgumentException($"Invalid normal vector {normal}")
         };
     }
 
@@ -101,16 +103,16 @@ public class ExportObjMeshGenerator
 
             Vector3I chunk = GetChunk(voxel);
 
-            for (int i = 0; i < 6; i++)
+            for (int offsetIndex = 0; offsetIndex < 6; offsetIndex++)
             {
-                Vector3I normal = CubeValues.cubeOffsets[i];
+                Vector3I normal = CubeValues.cubeOffsets[offsetIndex];
                 if (allVoxels.Contains(voxel + normal)) { continue; }
 
                 FaceData faceData = new(voxel, normal);
                 if (allProcessedFaces.Contains(faceData)) { continue; }
                 allProcessedFaces.Add(faceData);
 
-                (Vector3I primaryDirection, Vector3I secondaryDirection) = GetDirections(normal);
+                (Vector3I primaryDirection, Vector3I secondaryDirection) = GetFaceAxes(normal);
 
                 ObjMeshSurface meshSurface = GetMeshSurface(chunk, normal);
 
@@ -131,12 +133,14 @@ public class ExportObjMeshGenerator
                 }
 
                 Vector3I currentSecondaryStep = Vector3I.Zero;
+                HashSet<FaceData> facesToBeMerged = new(facesPrimaryDirection.Count);
 
                 bool IsSecondaryDirectionMergeable(Vector3I step)
                 {
-                    for (int i = 0; i < facesPrimaryDirection.Count; i++)
+                    for (int faceIndex = 0; faceIndex < facesPrimaryDirection.Count; faceIndex++)
                     {
-                        FaceData faceToBeMerged = new(facesPrimaryDirection[i].position + step, normal);
+                        FaceData faceToBeMerged = new(facesPrimaryDirection[faceIndex].position + step, normal);
+                        facesToBeMerged.Add(faceToBeMerged);
 
                         if (!allVoxels.Contains(faceToBeMerged.position)) { return false; }
                         if (allProcessedFaces.Contains(faceToBeMerged)) { return false; }
@@ -149,25 +153,33 @@ public class ExportObjMeshGenerator
                 while (true)
                 {
                     Vector3I nextStep = currentSecondaryStep + secondaryDirection;
+                    facesToBeMerged.Clear();
 
                     if (!IsSecondaryDirectionMergeable(nextStep)) { break; }
 
+                    allProcessedFaces.UnionWith(facesToBeMerged);
                     currentSecondaryStep = nextStep;
-
-                    for (int faceIndex = 0; faceIndex < facesPrimaryDirection.Count; faceIndex++)
-                    {
-                        FaceData newFace = facesPrimaryDirection[i];
-                        newFace.position += currentSecondaryStep;
-                        allProcessedFaces.Add(newFace);
-                    }
                 }
 
-                ObjFace face = new(i);
-                int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[i];
-                for (int j = 0; j < vertexIndices.Length; j++)
+                Vector3I primaryExtent = currentPrimaryStep + primaryDirection;
+                Vector3I secondaryExtent = currentSecondaryStep + secondaryDirection;
+
+                Vector3I[] faceCornerOffsets = new Vector3I[] {
+                    Vector3I.Zero,
+                    primaryExtent,
+                    primaryExtent + secondaryExtent,
+                    secondaryExtent
+                };
+
+                ObjFace face = new(offsetIndex);
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[offsetIndex];
+                for (int vertexIndexIndex = 0; vertexIndexIndex < vertexIndices.Length; vertexIndexIndex++)
                 {
-                    Vector3I vertexPosition = voxel + CubeValues.cubeVertices[vertexIndices[j]];
-                    face.vertexIndices[j] = meshSurface.GetVertexIndex(vertexPosition);
+                    Vector3I vertexPosition = voxel;
+                    vertexPosition += CubeValues.cubeVertices[vertexIndices[vertexIndexIndex]];
+                    vertexPosition += faceCornerOffsets[triangleToQuadCorner[vertexIndexIndex]];
+
+                    face.vertexIndices[vertexIndexIndex] = meshSurface.GetVertexIndex(vertexPosition);
                 }
 
                 meshSurface.AddFace(face);
@@ -265,15 +277,40 @@ public class ExportObjMeshGenerator
         );
     }
 
-    private struct FaceData
+    private readonly struct FaceData : IEquatable<FaceData>
     {
-        public Vector3I position;
-        public Vector3I normal;
+        public readonly Vector3I position;
+        public readonly Vector3I normal;
 
         public FaceData(Vector3I position, Vector3I normal)
         {
             this.position = position;
             this.normal = normal;
+        }
+
+        public readonly bool Equals(FaceData other)
+        {
+            return position.Equals(other.position) && normal.Equals(other.normal);
+        }
+
+        public override readonly bool Equals(object obj)
+        {
+            return obj is FaceData other && Equals(other);
+        }
+
+        public override readonly int GetHashCode()
+        {
+            return HashCode.Combine(position, normal);
+        }
+
+        public static bool operator ==(FaceData left, FaceData right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(FaceData left, FaceData right)
+        {
+            return !(left == right);
         }
     }
 }

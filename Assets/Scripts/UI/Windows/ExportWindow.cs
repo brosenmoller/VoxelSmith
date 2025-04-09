@@ -18,7 +18,6 @@ public partial class ExportWindow : ConfirmationDialog
     public override void _Ready()
     {
         Confirmed += OnExportConfirmed;
-
         openProjectDirectoryButton.Pressed += OnOpenSaveFolderPressed;
         VisibilityChanged += HandleVisibilityChanged;
 
