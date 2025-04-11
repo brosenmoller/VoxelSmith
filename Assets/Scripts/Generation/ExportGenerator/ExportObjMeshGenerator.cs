@@ -22,7 +22,17 @@ public class ExportObjMeshGenerator
     Dictionary<Vector3I, Guid> voxels;
     Dictionary<Guid, VoxelColor> palette;
 
-    private readonly int[] triangleToQuadCorner = { 0, 1, 2, 0, 2, 3 };
+    private readonly int[] triangleToQuadCorner = { 0, 2, 3, 0, 3, 1 };
+
+    public static readonly int[][] cubeVertexFaceIndicesExporter = new int[][]
+    {
+        new[] { 3, 7, 4, 3, 4, 0 },
+        new[] { 1, 5, 6, 1, 6, 2 },
+        new[] { 3, 0, 1, 3, 1, 2 },
+        new[] { 4, 7, 6, 4, 6, 5 },
+        new[] { 2, 6, 7, 2, 7, 3 },
+        new[] { 0, 4, 5, 0, 5, 1 },
+    };
 
     public string CreateMesh(ExportSettingsData exportSettings, Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, VoxelColor> palette, string name)
     {
@@ -80,12 +90,12 @@ public class ExportObjMeshGenerator
     {
         return normal switch
         {
-            (1, 0, 0) => (new Vector3I(0, 0, 1), new Vector3I(0, -1, 0)), // Right face
-            (-1, 0, 0) => (new Vector3I(0, 0, -1), new Vector3I(0, -1, 0)), // Left face
-            (0, 1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, -1)), // Top face
+            (-1, 0, 0) => (new Vector3I(0, 0, 1), new Vector3I(0, 1, 0)), // Left face
+            (1, 0, 0) => (new Vector3I(0, 0, -1), new Vector3I(0, 1, 0)), // Right face
             (0, -1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, 1)),  // Bottom face
-            (0, 0, 1) => (new Vector3I(1, 0, 0), new Vector3I(0, -1, 0)), // Front face
-            (0, 0, -1) => (new Vector3I(-1, 0, 0), new Vector3I(0, -1, 0)), // Back face
+            (0, 1, 0) => (new Vector3I(1, 0, 0), new Vector3I(0, 0, -1)), // Top face
+            (0, 0, -1) => (new Vector3I(1, 0, 0), new Vector3I(0, -1, 0)), // Back face
+            (0, 0, 1) => (new Vector3I(1, 0, 0), new Vector3I(0, 1, 0)), // Front face
             _ => throw new ArgumentException($"Invalid normal vector {normal}")
         };
     }
@@ -167,12 +177,12 @@ public class ExportObjMeshGenerator
                 Vector3I[] faceCornerOffsets = new Vector3I[] {
                     Vector3I.Zero,
                     primaryExtent,
+                    secondaryExtent,
                     primaryExtent + secondaryExtent,
-                    secondaryExtent
                 };
 
                 ObjFace face = new(offsetIndex);
-                int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[offsetIndex];
+                int[] vertexIndices = cubeVertexFaceIndicesExporter[offsetIndex];
                 for (int vertexIndexIndex = 0; vertexIndexIndex < vertexIndices.Length; vertexIndexIndex++)
                 {
                     Vector3I vertexPosition = voxel;
