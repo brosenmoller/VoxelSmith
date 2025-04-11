@@ -41,10 +41,6 @@ public partial class WorldController : Node3D
             case (int)NotificationApplicationFocusOut:
                 WorldInFocus = false;
                 break;
-            
-            case (int)NotificationApplicationFocusIn:
-                
-                break;
         }
     }
 

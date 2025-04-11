@@ -22,18 +22,6 @@ public class ExportObjMeshGenerator
     Dictionary<Vector3I, Guid> voxels;
     Dictionary<Guid, VoxelColor> palette;
 
-    private readonly int[] triangleToQuadCorner = { 0, 2, 3, 0, 3, 1 };
-
-    public static readonly int[][] cubeVertexFaceIndicesExporter = new int[][]
-    {
-        new[] { 3, 7, 4, 3, 4, 0 },
-        new[] { 1, 5, 6, 1, 6, 2 },
-        new[] { 3, 0, 1, 3, 1, 2 },
-        new[] { 4, 7, 6, 4, 6, 5 },
-        new[] { 2, 6, 7, 2, 7, 3 },
-        new[] { 0, 4, 5, 0, 5, 1 },
-    };
-
     public string CreateMesh(ExportSettingsData exportSettings, Dictionary<Vector3I, Guid> voxels, Dictionary<Guid, VoxelColor> palette, string name)
     {
         this.name = name;
@@ -61,9 +49,7 @@ public class ExportObjMeshGenerator
 
         foreach (Vector3I voxel in allVoxels)
         {
-            if (exportSettings.enableBarrierBlockCulling &&
-                palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
-            ) { continue; }
+            if (BarrierSkipCheck(voxel)) { continue; }
 
             Vector3I chunk = GetChunk(voxel);
 
@@ -74,7 +60,7 @@ public class ExportObjMeshGenerator
 
                 ObjMeshSurface meshSurface = GetMeshSurface(chunk, normal);
                 ObjFace face = new(i);
-                int[] vertexIndices = CubeValues.cubeVertexFaceIndicesExporter[i];
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndices[i];
                 for (int j = 0; j < vertexIndices.Length; j++)
                 {
                     Vector3I vertexPosition = voxel + CubeValues.cubeVertices[vertexIndices[j]];
@@ -105,11 +91,20 @@ public class ExportObjMeshGenerator
         HashSet<Vector3I> allVoxels = new(voxels.Keys);
         HashSet<FaceData> allProcessedFaces = new();
 
+        bool IsFaceMergable(FaceData face, Vector3I chunk)
+        {
+            if (!allVoxels.Contains(face.position)) { return false; }
+            if (allVoxels.Contains(face.position + face.normal)) { return false; }
+            if (allProcessedFaces.Contains(face)) { return false; }
+            if (GetChunk(face.position) != chunk) { return false; }
+            if (BarrierSkipCheck(face.position)) { return false; }
+
+            return true;
+        }
+
         foreach (Vector3I voxel in allVoxels)
         {
-            if (exportSettings.enableBarrierBlockCulling &&
-                palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER)
-            ) { continue; }
+            if (BarrierSkipCheck(voxel)) { continue; }
 
             Vector3I chunk = GetChunk(voxel);
 
@@ -133,9 +128,8 @@ public class ExportObjMeshGenerator
                 {
                     Vector3I newStep = currentPrimaryStep + primaryDirection;
                     FaceData faceToBeMerged = new(voxel + newStep, normal);
-                    if (!allVoxels.Contains(faceToBeMerged.position)) { break; }
-                    if (GetChunk(faceToBeMerged.position) != chunk) { break; }
-                    if (allProcessedFaces.Contains(faceToBeMerged)) { break; }
+
+                    if (!IsFaceMergable(faceToBeMerged, chunk)) { break; }
 
                     currentPrimaryStep = newStep;
                     facesPrimaryDirection.Add(faceToBeMerged);
@@ -152,9 +146,7 @@ public class ExportObjMeshGenerator
                         FaceData faceToBeMerged = new(facesPrimaryDirection[faceIndex].position + step, normal);
                         facesToBeMerged.Add(faceToBeMerged);
 
-                        if (!allVoxels.Contains(faceToBeMerged.position)) { return false; }
-                        if (allProcessedFaces.Contains(faceToBeMerged)) { return false; }
-                        if (GetChunk(faceToBeMerged.position) != chunk) { return false; }
+                        if (!IsFaceMergable(faceToBeMerged, chunk)) { return false; }
                     }
 
                     return true;
@@ -171,23 +163,20 @@ public class ExportObjMeshGenerator
                     currentSecondaryStep = nextStep;
                 }
 
-                Vector3I primaryExtent = currentPrimaryStep + primaryDirection;
-                Vector3I secondaryExtent = currentSecondaryStep + secondaryDirection;
-
                 Vector3I[] faceCornerOffsets = new Vector3I[] {
                     Vector3I.Zero,
-                    primaryExtent,
-                    secondaryExtent,
-                    primaryExtent + secondaryExtent,
+                    currentPrimaryStep,
+                    currentSecondaryStep,
+                    currentPrimaryStep + currentSecondaryStep,
                 };
 
                 ObjFace face = new(offsetIndex);
-                int[] vertexIndices = cubeVertexFaceIndicesExporter[offsetIndex];
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndices[offsetIndex];
                 for (int vertexIndexIndex = 0; vertexIndexIndex < vertexIndices.Length; vertexIndexIndex++)
                 {
                     Vector3I vertexPosition = voxel;
                     vertexPosition += CubeValues.cubeVertices[vertexIndices[vertexIndexIndex]];
-                    vertexPosition += faceCornerOffsets[triangleToQuadCorner[vertexIndexIndex]];
+                    vertexPosition += faceCornerOffsets[CubeValues.cubeUVFaceIndices[vertexIndexIndex]];
 
                     face.vertexIndices[vertexIndexIndex] = meshSurface.GetVertexIndex(vertexPosition);
                 }
@@ -267,6 +256,11 @@ public class ExportObjMeshGenerator
         return defaultMesh;
     }
 
+    private bool BarrierSkipCheck(Vector3I voxel)
+    {
+        return exportSettings.enableBarrierBlockCulling && palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER);
+    }
+
     private static ObjMeshSurface GetMeshSurfaceFromDictionary(Vector3I chunk, Dictionary<Vector3I, ObjMeshSurface> meshDictionary, string baseName)
     {
         if (!meshDictionary.TryGetValue(chunk, out ObjMeshSurface surface))
@@ -285,42 +279,5 @@ public class ExportObjMeshGenerator
             Mathf.FloorToInt(voxel.Y / CHUNK_SIZE),
             Mathf.FloorToInt(voxel.Z / CHUNK_SIZE)
         );
-    }
-
-    private readonly struct FaceData : IEquatable<FaceData>
-    {
-        public readonly Vector3I position;
-        public readonly Vector3I normal;
-
-        public FaceData(Vector3I position, Vector3I normal)
-        {
-            this.position = position;
-            this.normal = normal;
-        }
-
-        public readonly bool Equals(FaceData other)
-        {
-            return position.Equals(other.position) && normal.Equals(other.normal);
-        }
-
-        public override readonly bool Equals(object obj)
-        {
-            return obj is FaceData other && Equals(other);
-        }
-
-        public override readonly int GetHashCode()
-        {
-            return HashCode.Combine(position, normal);
-        }
-
-        public static bool operator ==(FaceData left, FaceData right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(FaceData left, FaceData right)
-        {
-            return !(left == right);
-        }
     }
 }

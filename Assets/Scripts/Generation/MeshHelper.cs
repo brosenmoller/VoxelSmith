@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 public static class MeshHelper
 {
-    public static void CreateVoxel(SurfaceTool surfaceTool, Vector3I position, HashSet<Vector3I> allPositions, bool unityUVS = false)
+    public static void CreateVoxel(SurfaceTool surfaceTool, Vector3I position, HashSet<Vector3I> allPositions)
     {
-        void AddFace(ref Vector3I normal, ref int[] vertexIndices, ref int[] uvIndices)
+        void AddFace(ref Vector3I normal, ref int[] vertexIndices)
         {
             surfaceTool.SetNormal(normal);
             for (int i = 0; i < vertexIndices.Length; i++)
             {
-                surfaceTool.SetUV(CubeValues.cubeUVs[uvIndices[i]]);
+                surfaceTool.SetUV(CubeValues.cubeUVs[CubeValues.cubeUVFaceIndices[i]]);
                 surfaceTool.AddVertex(CubeValues.cubeVertices[vertexIndices[i]] + position);
             }
         }
@@ -19,14 +19,7 @@ public static class MeshHelper
         {
             if (!allPositions.Contains(position + CubeValues.cubeOffsets[i]))
             {
-                if (unityUVS)
-                {
-                    AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices[i], ref CubeValues.cubeUVFaceIndicesUnity[i]);
-                }
-                else
-                {
-                    AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices[i], ref CubeValues.cubeUVFaceIndices[i]);
-                }
+                AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices[i]);
             }
         }
     }
@@ -54,19 +47,19 @@ public static class MeshHelper
         SurfaceTool surfaceTool = new();
         surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
 
-        void AddFace(Vector3 normal, int[] vertexIndices, int[] uvIndices)
+        void AddFace(Vector3 normal, int[] vertexIndices)
         {
             surfaceTool.SetNormal(normal);
             for (int i = 0; i < vertexIndices.Length; i++)
             {
-                surfaceTool.SetUV(CubeValues.cubeUVs[uvIndices[i]]);
+                surfaceTool.SetUV(CubeValues.cubeUVs[CubeValues.cubeUVFaceIndices[i]]);
                 surfaceTool.AddVertex(CubeValues.cubeVertices[vertexIndices[i]] * size + point1);
             }
         }
 
         for (int i = 0; i < 6; i++)
         {
-            AddFace(CubeValues.cubeOffsets[i], CubeValues.cubeVertexFaceIndices[i], CubeValues.cubeUVFaceIndices[i]);
+            AddFace(CubeValues.cubeOffsets[i], CubeValues.cubeVertexFaceIndices[i]);
         }
 
         surfaceTool.Index();

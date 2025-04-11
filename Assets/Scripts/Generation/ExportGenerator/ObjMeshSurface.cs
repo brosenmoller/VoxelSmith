@@ -64,8 +64,7 @@ public class ObjMeshSurface
             ObjFace face = faces[i];
             int normal = face.GetNormal();
 
-            int[] uvIndices = CubeValues.cubeUVFaceIndicesUnity[face.normalIndex];
-
+            int[] uvIndices = CubeValues.cubeUVFaceIndices;
             obj.AppendLine($"f {face.vertexIndices[0] + startingIndex}/{uvIndices[0] + 1}/{normal} {face.vertexIndices[1] + startingIndex}/{uvIndices[1] + 1}/{normal} {face.vertexIndices[2] + startingIndex}/{uvIndices[2] + 1}/{normal}");
             obj.AppendLine($"f {face.vertexIndices[3] + startingIndex}/{uvIndices[3] + 1}/{normal} {face.vertexIndices[4] + startingIndex}/{uvIndices[4] + 1}/{normal} {face.vertexIndices[5] + startingIndex}/{uvIndices[5] + 1}/{normal}");
         }
