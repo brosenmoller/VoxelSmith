@@ -46,6 +46,7 @@ public partial class ToolUser : RayCast3D
             new VoxelCubeTool(),
             new VoxelLineTool(),
             new VoxelCoverTool(),
+            new VoxelSphereTool(),
             new SelectionBrushTool(),
             new SelectionCubeTool(),
         };
@@ -89,6 +90,12 @@ public partial class ToolUser : RayCast3D
                 GameManager.ToolOptionsUI.ClearToolOptions();
             }
         }
+#if DEBUG
+        else
+        {
+            GD.PrintErr($"{stateType} not found in stateDictionary");
+        }
+#endif
     }
 
     private void DefaultBehaiviour()

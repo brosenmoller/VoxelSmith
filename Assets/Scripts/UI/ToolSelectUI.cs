@@ -7,6 +7,7 @@ public partial class ToolSelectUI : Control
     [Export] private Button cubeButton;
     [Export] private Button lineButton;
     [Export] private Button coverButton;
+    [Export] private Button sphereButton;
     [Export] private Button selectionBrushButton;
     [Export] private Button selectionCubeButton;
 
@@ -17,6 +18,7 @@ public partial class ToolSelectUI : Control
         cubeButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(VoxelCubeTool));
         lineButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(VoxelLineTool));
         coverButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(VoxelCoverTool));
+        sphereButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(VoxelSphereTool));
         selectionBrushButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(SelectionBrushTool));
         selectionCubeButton.Pressed += () => GameManager.ToolUser.ChangeState(typeof(SelectionCubeTool));
     }

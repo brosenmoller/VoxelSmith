@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 public static class VoxelHelper
 {
@@ -22,31 +23,17 @@ public static class VoxelHelper
 
     public static Vector3I[] GetCubeVoxels(Vector3I firstPosition, Vector3I secondPosition)
     {
-        int minX = Mathf.Min(firstPosition.X, secondPosition.X);
-        int maxX = Mathf.Max(firstPosition.X, secondPosition.X);
-        int minY = Mathf.Min(firstPosition.Y, secondPosition.Y);
-        int maxY = Mathf.Max(firstPosition.Y, secondPosition.Y);
-        int minZ = Mathf.Min(firstPosition.Z, secondPosition.Z);
-        int maxZ = Mathf.Max(firstPosition.Z, secondPosition.Z);
+        CubeInfo cubeInfo = new(firstPosition, secondPosition);
+        if (cubeInfo.Invalid) { return Array.Empty<Vector3I>(); }
 
-        int sizeX = maxX - minX + 1;
-        int sizeY = maxY - minY + 1;
-        int sizeZ = maxZ - minZ + 1;
-
-        if (sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
-        {
-            return System.Array.Empty<Vector3I>();
-        }
-
-        Vector3I[] voxelPositions = new Vector3I[sizeX * sizeY * sizeZ];
+        Vector3I[] voxelPositions = new Vector3I[cubeInfo.volume];
 
         int i = 0;
-
-        for (int x = minX; x <= maxX; x++)
+        for (int x = cubeInfo.minX; x <= cubeInfo.maxX; x++)
         {
-            for (int y = minY; y <= maxY; y++)
+            for (int y = cubeInfo.minY; y <= cubeInfo.maxY; y++)
             {
-                for (int z = minZ; z <= maxZ; z++)
+                for (int z = cubeInfo.minZ; z <= cubeInfo.maxZ; z++)
                 {
                     voxelPositions[i++] = new Vector3I(x, y, z);
                 }
@@ -77,36 +64,23 @@ public static class VoxelHelper
 
     public static Vector3I[] GetHollowCubeVoxels(Vector3I firstPosition, Vector3I secondPosition, CubeFaces SolidFaces = CubeFaces.All)
     {
-        int minX = Mathf.Min(firstPosition.X, secondPosition.X);
-        int maxX = Mathf.Max(firstPosition.X, secondPosition.X);
-        int minY = Mathf.Min(firstPosition.Y, secondPosition.Y);
-        int maxY = Mathf.Max(firstPosition.Y, secondPosition.Y);
-        int minZ = Mathf.Min(firstPosition.Z, secondPosition.Z);
-        int maxZ = Mathf.Max(firstPosition.Z, secondPosition.Z);
-
-        int sizeX = maxX - minX + 1;
-        int sizeY = maxY - minY + 1;
-        int sizeZ = maxZ - minZ + 1;
-
-        if (sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
-        {
-            return Array.Empty<Vector3I>();
-        }
+        CubeInfo cubeInfo = new(firstPosition, secondPosition);
+        if (cubeInfo.Invalid) { return Array.Empty<Vector3I>(); }
 
         List<Vector3I> voxelPositions = new();
 
-        for (int x = minX; x <= maxX; x++)
+        for (int x = cubeInfo.minX; x <= cubeInfo.maxX; x++)
         {
-            for (int y = minY; y <= maxY; y++)
+            for (int y = cubeInfo.minY; y <= cubeInfo.maxY; y++)
             {
-                for (int z = minZ; z <= maxZ;  z++)
+                for (int z = cubeInfo.minZ; z <= cubeInfo.maxZ;  z++)
                 {
-                    if (((SolidFaces & CubeFaces.Left) != 0 && x == minX) ||
-                        ((SolidFaces & CubeFaces.Right) != 0 && x == maxX) ||
-                        ((SolidFaces & CubeFaces.Top) != 0 && y == minY) ||
-                        ((SolidFaces & CubeFaces.Bottom) != 0 && y == maxY) ||
-                        ((SolidFaces & CubeFaces.Front) != 0 && z == minZ) ||
-                        ((SolidFaces & CubeFaces.Back) != 0 && z == maxZ))
+                    if (((SolidFaces & CubeFaces.Left) != 0 && x == cubeInfo.minX) ||
+                        ((SolidFaces & CubeFaces.Right) != 0 && x == cubeInfo.maxX) ||
+                        ((SolidFaces & CubeFaces.Top) != 0 && y == cubeInfo.minY) ||
+                        ((SolidFaces & CubeFaces.Bottom) != 0 && y == cubeInfo.maxY) ||
+                        ((SolidFaces & CubeFaces.Front) != 0 && z == cubeInfo.minZ) ||
+                        ((SolidFaces & CubeFaces.Back) != 0 && z == cubeInfo.maxZ))
                     {
                         voxelPositions.Add(new Vector3I(x, y, z));
                     }
@@ -117,13 +91,42 @@ public static class VoxelHelper
         return voxelPositions.ToArray();
     }
 
-    public static Vector3I[] GetShphereVoxels(Vector3I origin, float radius)
+    public static Vector3I[] GetSphereVoxels(Vector3I origin, Vector3I secondPosition, bool isHollow)
     {
-        radius = Mathf.Max(radius, 1);
+        Vector3 originFloat = origin;
+        float radius = originFloat.DistanceTo(secondPosition);
+        int intRadius = Mathf.RoundToInt(radius);
 
-        // Todo
+        return GetShphereVoxels(origin, intRadius, isHollow);
+    }
 
-        return Array.Empty<Vector3I>();
+    public static Vector3I[] GetShphereVoxels(Vector3I origin, int radius, bool isHollow)
+    {
+        Vector3I cornerVector = new(radius, radius, radius);
+        Vector3I corner1 = origin + cornerVector;
+        Vector3I corner2 = origin - cornerVector;
+
+        CubeInfo cubeInfo = new(corner1, corner2);
+        List<Vector3I> voxelPositions = new();
+
+        for (int x = cubeInfo.minX; x <= cubeInfo.maxX; x++)
+        {
+            for (int y = cubeInfo.minY; y <= cubeInfo.maxY; y++)
+            {
+                for (int z = cubeInfo.minZ; z <= cubeInfo.maxZ; z++)
+                {
+                    Vector3I currentVoxel = new(x, y, z);
+                    float distance = ((Vector3)currentVoxel).DistanceTo(origin);
+                    
+                    if (isHollow && (distance > radius + 0.49f || distance < radius - 0.49f)) { continue; }
+                    else if (!isHollow && distance > radius) { continue; }
+
+                    voxelPositions.Add(currentVoxel);
+                }
+            }
+        }
+
+        return voxelPositions.ToArray();
     }
 
     public static Vector3I[] GetLineVoxels(Vector3I firstPosition, Vector3I secondPosition, float stepLength)
@@ -150,5 +153,29 @@ public static class VoxelHelper
         }
 
         return voxelPostions.ToArray();
+    }
+
+    public class CubeInfo
+    {
+        public readonly int minX, maxX, minY, maxY, minZ, maxZ;
+        public readonly int sizeX, sizeY, sizeZ;
+        public readonly int volume;
+        public bool Invalid => sizeX <= 0 || sizeY <= 0 || sizeZ <= 0;
+
+        public CubeInfo(Vector3I firstPosition, Vector3I secondPosition)
+        {
+            minX = Mathf.Min(firstPosition.X, secondPosition.X);
+            maxX = Mathf.Max(firstPosition.X, secondPosition.X);
+            minY = Mathf.Min(firstPosition.Y, secondPosition.Y);
+            maxY = Mathf.Max(firstPosition.Y, secondPosition.Y);
+            minZ = Mathf.Min(firstPosition.Z, secondPosition.Z);
+            maxZ = Mathf.Max(firstPosition.Z, secondPosition.Z);
+
+            sizeX = maxX - minX + 1;
+            sizeY = maxY - minY + 1;
+            sizeZ = maxZ - minZ + 1;
+
+            volume = sizeX * sizeY * sizeZ;
+        }
     }
 }
