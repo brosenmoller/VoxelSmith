@@ -9,11 +9,11 @@ public class VoxelBrushTool : BrushTool
 
     protected override void PlaceAction()
     {
-        Vector3I nextVoxel = ctx.GetNextVoxel();
+        Vector3I chosenVoxel = ctx.selectInsideEnabled ? ctx.VoxelPosition : ctx.GetNextVoxel();
 
-        if ((!ctx.IsVoxelInPlayer(nextVoxel) || ctx.ignorePlayerCheck) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
+        if ((!ctx.IsVoxelInPlayer(chosenVoxel) || ctx.ignorePlayerCheck) && GameManager.DataManager.ProjectData.SelectedVoxelData != null)
         {
-            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(nextVoxel));
+            GameManager.CommandManager.ExecuteCommand(new PlaceVoxelCommand(chosenVoxel));
         }
     }
 }
