@@ -86,8 +86,8 @@ button_pressed = true
 text = "Seperate Floor and Ceiling Meshes"
 
 [node name="GreedyMeshingButton" type="CheckButton" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
-button_pressed = true
 text = "Greedy Meshing"
 
 [node name="VertexMergingButton" type="CheckButton" parent="VBoxContainer"]

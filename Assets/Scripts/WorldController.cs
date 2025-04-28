@@ -3,7 +3,8 @@ using System;
 
 public partial class WorldController : Node3D
 {
-    public static WorldController Instance { get; private set; }
+    [Export] public Node3D groundNode;
+
     public static event Action WentInFocusLastFrame;
     public static event Action WentOutOfFocus;
 
@@ -27,7 +28,6 @@ public partial class WorldController : Node3D
 
     public override void _Ready()
     {
-        Instance = this;
         wentInFocusEventTimer = new(0.01f, SendWentInFocusEvent, false);
         
         player = this.GetChildByType<PlayerMovement>();

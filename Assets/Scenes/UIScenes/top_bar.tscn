@@ -26,12 +26,9 @@
 [ext_resource type="Texture2D" uid="uid://ca8q0tuu8h6ui" path="res://Assets/Art/Icons/jet-fighter-up-white.png" id="16_wywux"]
 [ext_resource type="Shortcut" uid="uid://ddyhm7lxvok88" path="res://Assets/Resources/MenuResources/PlayerMode/FlyModeShorcut.tres" id="17_844aw"]
 [ext_resource type="Shortcut" uid="uid://b72c8wapelvfu" path="res://Assets/Resources/MenuResources/SelectMenu/copy_shortcut.tres" id="18_a5mk0"]
-[ext_resource type="Texture2D" uid="uid://d1csa0n0egfeg" path="res://Assets/Art/Icons/satellite-accent.png" id="18_aay2d"]
 [ext_resource type="Shortcut" uid="uid://bsqq330bc3ka2" path="res://Assets/Resources/MenuResources/SelectMenu/invert_selection_shortcut.tres" id="18_dae8b"]
-[ext_resource type="Texture2D" uid="uid://c6mlk4kaih8ak" path="res://Assets/Art/Icons/satellite-white.png" id="19_mwe5v"]
 [ext_resource type="Shortcut" uid="uid://b8tv68u5rvele" path="res://Assets/Resources/MenuResources/SelectMenu/cut_shortcut.tres" id="19_ylrtv"]
 [ext_resource type="Shortcut" uid="uid://bh8alfh7xnscs" path="res://Assets/Resources/MenuResources/SelectMenu/paste_shortcut.tres" id="20_td3je"]
-[ext_resource type="Shortcut" uid="uid://g41q163nkcjw" path="res://Assets/Resources/MenuResources/PlayerMode/OrbitModeShorcut.tres" id="20_xf0qk"]
 [ext_resource type="Shortcut" uid="uid://da5361yly5jcy" path="res://Assets/Resources/MenuResources/SelectMenu/delete_shortcut.tres" id="21_2a45y"]
 [ext_resource type="Texture2D" uid="uid://ci42dncng3gn8" path="res://Assets/Art/Icons/square-dashed.png" id="22_258pr"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
@@ -44,9 +41,18 @@
 [ext_resource type="Texture2D" uid="uid://djnv8jivygy4n" path="res://Assets/Art/Icons/arrow-down-up-across-line-solid.png" id="27_862cf"]
 [ext_resource type="Texture2D" uid="uid://cr24jn5up0s4o" path="res://Assets/Art/Icons/gauge-high-solid.png" id="28_a64eb"]
 [ext_resource type="Shortcut" uid="uid://bomvggd0bocga" path="res://Assets/Resources/MenuResources/QuickOptions/quick_import_shortcut.tres" id="33_mbbfi"]
+[ext_resource type="Texture2D" uid="uid://b7wv8x5jinw6g" path="res://Assets/Art/Icons/table-cells-solid.png" id="34_stl5p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45gcr"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="InputEventKey" id="InputEventKey_e8et0"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_i2qm7"]
+events = [SubResource("InputEventKey_e8et0")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ri2q0"]
 device = -1
@@ -97,7 +103,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="TopBar" type="ColorRect" node_paths=PackedStringArray("playerMode", "hasDisabledCollisionsToggle", "hasInfiniteReachToggle", "isSelectingInsideToggle", "playerSpeedSlider", "playerSpeedPercentageText")]
+[node name="TopBar" type="ColorRect" node_paths=PackedStringArray("playerMode", "floorToggle", "disableCollisionsToggle", "infiniteReachToggle", "selectInsideToggle", "playerSpeedSlider", "playerSpeedPercentageText")]
 custom_minimum_size = Vector2(0, 50)
 anchors_preset = -1
 anchor_right = 1.0
@@ -107,9 +113,10 @@ size_flags_vertical = 0
 color = Color(0.133333, 0.141176, 0.152941, 1)
 script = ExtResource("1_uo8va")
 playerMode = NodePath("TopBarContainer/PlayerMode")
-hasDisabledCollisionsToggle = NodePath("TopBarContainer/NoCollisionToggle")
-hasInfiniteReachToggle = NodePath("TopBarContainer/InfiniteReachToggle")
-isSelectingInsideToggle = NodePath("TopBarContainer/SelectInsideToggle")
+floorToggle = NodePath("TopBarContainer/FloorToggle")
+disableCollisionsToggle = NodePath("TopBarContainer/NoCollisionToggle")
+infiniteReachToggle = NodePath("TopBarContainer/InfiniteReachToggle")
+selectInsideToggle = NodePath("TopBarContainer/SelectInsideToggle")
 playerSpeedSlider = NodePath("TopBarContainer/PlayerSpeedContainer/PlayerSpeedSlider")
 playerSpeedPercentageText = NodePath("TopBarContainer/SpeedPercentage/RichTextLabel")
 infiniteReach = 1000.0
@@ -168,13 +175,12 @@ flipShortCut = ExtResource("24_85row")
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="PlayerMode" type="HBoxContainer" parent="TopBarContainer" node_paths=PackedStringArray("walkModeButton", "flyModeButton", "editModeButton")]
+[node name="PlayerMode" type="HBoxContainer" parent="TopBarContainer" node_paths=PackedStringArray("walkModeButton", "flyModeButton")]
 layout_mode = 2
 theme_override_constants/separation = 10
 script = ExtResource("11_44v8d")
 walkModeButton = NodePath("WalkMode")
 flyModeButton = NodePath("FlyMode")
-editModeButton = NodePath("EditMode")
 
 [node name="WalkMode" type="CheckButton" parent="TopBarContainer/PlayerMode"]
 layout_mode = 2
@@ -196,19 +202,25 @@ button_pressed = true
 button_group = ExtResource("13_wjne3")
 shortcut = ExtResource("17_844aw")
 
-[node name="EditMode" type="CheckButton" parent="TopBarContainer/PlayerMode"]
-visible = false
-layout_mode = 2
-tooltip_text = "Edit Mode"
-focus_mode = 0
-theme_override_icons/checked = ExtResource("18_aay2d")
-theme_override_icons/unchecked = ExtResource("19_mwe5v")
-button_group = ExtResource("13_wjne3")
-shortcut = ExtResource("20_xf0qk")
-
 [node name="VSeparator3" type="VSeparator" parent="TopBarContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
+
+[node name="FloorToggle" type="Button" parent="TopBarContainer"]
+custom_minimum_size = Vector2(55.63, 0)
+layout_mode = 2
+tooltip_text = "Toggle the floor"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.243137, 0.686275, 0.898039, 1)
+theme_override_colors/icon_hover_color = Color(0.384314, 0.384314, 0.384314, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_45gcr")
+toggle_mode = true
+button_pressed = true
+shortcut = SubResource("Shortcut_i2qm7")
+icon = ExtResource("34_stl5p")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="NoCollisionToggle" type="Button" parent="TopBarContainer"]
 custom_minimum_size = Vector2(55.63, 0)

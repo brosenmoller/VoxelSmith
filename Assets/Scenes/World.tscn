@@ -62,8 +62,9 @@ size = Vector3(1.05, 1.05, 1.05)
 uv2_padding = 0.0
 size = Vector3(1.05, 1.05, 1.05)
 
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" node_paths=PackedStringArray("groundNode")]
 script = ExtResource("1_6ekco")
+groundNode = NodePath("Ground")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_td26l")

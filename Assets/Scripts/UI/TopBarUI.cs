@@ -3,9 +3,10 @@
 public partial class TopBarUI : Control
 {
     [Export] private PlayerMode playerMode;
-    [Export] private Button hasDisabledCollisionsToggle;
-    [Export] private Button hasInfiniteReachToggle;
-    [Export] private Button isSelectingInsideToggle;
+    [Export] private Button floorToggle;
+    [Export] private Button disableCollisionsToggle;
+    [Export] private Button infiniteReachToggle;
+    [Export] private Button selectInsideToggle;
     [Export] private Slider playerSpeedSlider;
     [Export] private RichTextLabel playerSpeedPercentageText;
 
@@ -14,14 +15,15 @@ public partial class TopBarUI : Control
 
     public override void _Ready()
     {
-        ToggleInfiniteReach(hasInfiniteReachToggle.ButtonPressed);
-        ToggleNoColissions(hasDisabledCollisionsToggle.ButtonPressed);
+        ToggleInfiniteReach(infiniteReachToggle.ButtonPressed);
+        ToggleNoColissions(disableCollisionsToggle.ButtonPressed);
 
         playerMode.OnPlayerMovementModeSelected += GameManager.Player.ChangeState;
 
-        hasInfiniteReachToggle.Toggled += ToggleInfiniteReach;
-        hasDisabledCollisionsToggle.Toggled += ToggleNoColissions;
-        isSelectingInsideToggle.Toggled += ToggleSelectingInside;
+        floorToggle.Toggled += ToggleFloor;
+        disableCollisionsToggle.Toggled += ToggleNoColissions;
+        infiniteReachToggle.Toggled += ToggleInfiniteReach;
+        selectInsideToggle.Toggled += ToggleSelectingInside;
 
         playerSpeedSlider.ValueChanged += SpeedSliderOnValueChange;
         SpeedSliderOnValueChange(playerSpeedSlider.Value);
@@ -45,6 +47,12 @@ public partial class TopBarUI : Control
         {
             playerSpeedSlider.Value -= playerSpeedSlider.Step;
         }
+    }
+
+    public void ToggleFloor(bool toggle)
+    {
+        GameManager.WorldController.groundNode.Visible = toggle;
+        GameManager.WorldController.groundNode.ProcessMode = toggle ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
     }
 
     public void ToggleInfiniteReach(bool toggle)

@@ -1,3 +1,4 @@
+using System.Net.NetworkInformation;
 using Godot;
 
 public partial class GameManager : Node
@@ -18,6 +19,7 @@ public partial class GameManager : Node
     public static TopBarUI TopBarUI { get; private set; }
     public static ToolOptionsUI ToolOptionsUI { get; private set; }
     public static NativeDialog NativeDialog { get; private set; }
+    public static WorldController WorldController { get; private set; }
 
 
     private Manager[] activeManagers;
@@ -31,6 +33,7 @@ public partial class GameManager : Node
         TopBarUI = this.GetNodeByType<TopBarUI>();
         ToolOptionsUI = this.GetNodeByType<ToolOptionsUI>();
         NativeDialog = this.GetNodeByType<NativeDialog>();
+        WorldController = this.GetNodeByType<WorldController>();
         
         SurfaceMesh = this.GetNodeByType<SurfaceMesh>();
         PrefabMesh = this.GetNodeByType<PrefabMesh>();
