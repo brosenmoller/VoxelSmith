@@ -19,7 +19,7 @@ public static class MeshHelper
         {
             if (!allPositions.Contains(position + CubeValues.cubeOffsets[i]))
             {
-                AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices[i]);
+                AddFace(ref CubeValues.cubeOffsets[i], ref CubeValues.cubeVertexFaceIndices_Godot[i]);
             }
         }
     }
@@ -59,7 +59,7 @@ public static class MeshHelper
 
         for (int i = 0; i < 6; i++)
         {
-            AddFace(CubeValues.cubeOffsets[i], CubeValues.cubeVertexFaceIndices[i]);
+            AddFace(CubeValues.cubeOffsets[i], CubeValues.cubeVertexFaceIndices_Godot[i]);
         }
 
         surfaceTool.Index();

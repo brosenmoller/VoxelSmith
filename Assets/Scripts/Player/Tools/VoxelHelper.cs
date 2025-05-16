@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-
 public static class VoxelHelper
 {
     public static Vector3I GetGridVoxelFromHitPoint(Vector3 hitPoint, Vector3 normal)

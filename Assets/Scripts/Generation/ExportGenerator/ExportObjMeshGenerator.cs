@@ -60,7 +60,7 @@ public class ExportObjMeshGenerator
 
                 ObjMeshSurface meshSurface = GetMeshSurface(chunk, normal);
                 ObjFace face = new(i);
-                int[] vertexIndices = CubeValues.cubeVertexFaceIndices[i];
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndices_Export[i];
                 for (int j = 0; j < vertexIndices.Length; j++)
                 {
                     Vector3I vertexPosition = voxel + CubeValues.cubeVertices[vertexIndices[j]];
@@ -171,7 +171,7 @@ public class ExportObjMeshGenerator
                 };
 
                 ObjFace face = new(offsetIndex);
-                int[] vertexIndices = CubeValues.cubeVertexFaceIndices[offsetIndex];
+                int[] vertexIndices = CubeValues.cubeVertexFaceIndices_Export[offsetIndex];
                 for (int vertexIndexIndex = 0; vertexIndexIndex < vertexIndices.Length; vertexIndexIndex++)
                 {
                     Vector3I vertexPosition = voxel;
