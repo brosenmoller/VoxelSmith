@@ -158,14 +158,7 @@ public class DataManager : Manager
             GameManager.SurfaceMesh.UpdateAll();
             GameManager.PrefabMesh.UpdateAll();
 
-            if (!editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
-            {
-                editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.id, path);
-            }
-            else
-            {
-                editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
-            }
+            editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
 
             editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
             editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
