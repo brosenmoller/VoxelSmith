@@ -15,6 +15,7 @@ config/description="Voxel Smith is a Game Development tool created in Godot. It 
 config/version="0.6.2"
 run/main_scene="res://Assets/Scenes/main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
+run/max_fps=160
 config/icon="res://Assets/Art/Logo/logo.png"
 
 [autoload]
