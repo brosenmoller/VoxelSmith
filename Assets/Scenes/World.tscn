@@ -14,12 +14,15 @@
 [ext_resource type="Material" uid="uid://cj8722h0aif67" path="res://Assets/Art/Materials/BlueHighlight.tres" id="10_s0rvl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
-sky_top_color = Color(0.2, 0.482353, 0.611765, 1)
+sky_top_color = Color(0.2345, 0.532092, 0.67, 1)
 sky_horizon_color = Color(0.588235, 0.682353, 0.639216, 1)
+sky_energy_multiplier = 0.1
 sky_cover_modulate = Color(1, 0.490196, 0.490196, 1)
 ground_bottom_color = Color(0.588235, 0.682353, 0.639216, 1)
 ground_horizon_color = Color(0.588235, 0.682353, 0.639216, 1)
+ground_energy_multiplier = 0.1
 sun_angle_max = 38.18
+sun_curve = 0.02
 
 [sub_resource type="Sky" id="Sky_ei7t6"]
 sky_material = SubResource("ProceduralSkyMaterial_lr1w3")
@@ -28,6 +31,8 @@ sky_material = SubResource("ProceduralSkyMaterial_lr1w3")
 background_mode = 2
 sky = SubResource("Sky_ei7t6")
 sky_custom_fov = 70.0
+ambient_light_color = Color(0.870588, 0.870588, 0.870588, 1)
+ambient_light_energy = 4.0
 tonemap_mode = 2
 ssao_intensity = 12.44
 ssao_power = 7.64736
