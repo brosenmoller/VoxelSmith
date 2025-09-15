@@ -12,12 +12,15 @@ public class DataManager : Manager
     private DataHolder<ProjectData> projectDataHolder;
     private DataHolder<EditorData> editorDataHolder;
     private DataHolder<PaletteData> paletteDataHolder;
+    private DataHolder<ProjectData> projectDataBackupHolder;
 
     private const string PROJECT_FILE_EXTENSION = ".vxsProject";
     private const string PALETTE_FILE_EXTENSION = ".vxsPalette";
     private const string CONFIG_FILE_EXTENSION = ".vxsConfig";
     private const string LOCAL_EDITOR_SAVE_PATH = "user://editor" + CONFIG_FILE_EXTENSION;
+    private const string LOCAL_BACKUP_PROJECT_SAVE_PATH = "user://backup" + PROJECT_FILE_EXTENSION;
     private string GLOBAL_EDITOR_SAVE_PATH;
+    private string GLOBAL_BACKUP_PROJECT_SAVE_PATH;
 
     private Camera3D camera;
     private FirstPersonCamera cameraPivot;
@@ -25,18 +28,32 @@ public class DataManager : Manager
     public static event Action BeforeProjectLoad;
     public static event Action OnProjectLoad;
 
+    private VoxelSmith.Timer autoSaveTimer;
+
     public override void Setup()
     {
         camera = GameManager.Player.GetChildByType<Camera3D>();
         cameraPivot = GameManager.Player.GetChildByType<FirstPersonCamera>();
 
         GLOBAL_EDITOR_SAVE_PATH = ProjectSettings.GlobalizePath(LOCAL_EDITOR_SAVE_PATH);
+        GLOBAL_BACKUP_PROJECT_SAVE_PATH = ProjectSettings.GlobalizePath(LOCAL_BACKUP_PROJECT_SAVE_PATH);
 
         projectDataHolder = new DataHolder<ProjectData>();
         editorDataHolder = new DataHolder<EditorData>();
         paletteDataHolder = new DataHolder<PaletteData>();
+        projectDataBackupHolder = new DataHolder<ProjectData>();
+
+        autoSaveTimer = new(45f, HandleAutoSave, true, true);
 
         LoadUpApplication();
+    }
+
+    private void HandleAutoSave()
+    {
+        if (projectDataHolder == null || projectDataHolder.Data == null) { return; }
+
+        projectDataBackupHolder.Data = projectDataHolder.Data;
+        projectDataBackupHolder.Save(GLOBAL_BACKUP_PROJECT_SAVE_PATH);
     }
     
     private void LoadUpApplication()
