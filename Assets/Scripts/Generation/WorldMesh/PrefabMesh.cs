@@ -32,4 +32,3 @@ public partial class PrefabMesh : WorldMesh
         UpdateAllOfGUID(guid, GameManager.DataManager.ProjectData.voxelPrefabs);
     }
 }
-

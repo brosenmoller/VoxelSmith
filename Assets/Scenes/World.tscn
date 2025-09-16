@@ -32,7 +32,7 @@ background_mode = 2
 sky = SubResource("Sky_ei7t6")
 sky_custom_fov = 70.0
 ambient_light_color = Color(0.870588, 0.870588, 0.870588, 1)
-ambient_light_energy = 4.0
+ambient_light_energy = 5.0
 tonemap_mode = 2
 ssao_intensity = 12.44
 ssao_power = 7.64736
@@ -88,6 +88,13 @@ redMaterial = ExtResource("4_b1jf1")
 meshHighlight = NodePath("../../../../MeshHighlight")
 cornerHighlight1 = NodePath("../../../../CornerHighlight1")
 cornerHighlight2 = NodePath("../../../../CornerHighlight2")
+
+[node name="SpotLight3D" parent="Player" index="3"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 1.13233, 0)
+distance_fade_enabled = true
+spot_range = 952.374
+spot_attenuation = 1.80248
+spot_angle_attenuation = 9.51365
 
 [node name="Ground" type="StaticBody3D" parent="."]
 collision_layer = 12

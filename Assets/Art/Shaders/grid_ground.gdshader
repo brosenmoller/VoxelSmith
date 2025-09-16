@@ -19,8 +19,8 @@ void fragment() {
     float borderCondition = step(gridPos.x, borderWidth) + step(gridPos.y, borderWidth) + 
                             step(1.0 - borderWidth, gridPos.x) + step(1.0 - borderWidth, gridPos.y);
     
-    vec3 colorBorder = vec3(0.1, 0.1, 0.1);
-    vec3 colorInside = vec3(0.05, 0.05, 0.05);
+    vec3 colorBorder = vec3(0.08, 0.08, 0.08);
+    vec3 colorInside = vec3(0.03, 0.03, 0.03);
 
     ALBEDO = mix(colorInside, colorBorder, step(0.5, borderCondition));
 }
