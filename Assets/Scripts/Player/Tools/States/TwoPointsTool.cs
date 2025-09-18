@@ -19,12 +19,15 @@ public abstract class TwoPointsTool : Tool
         ctx.cornerHighlight1.Show();
         placeSequence = false;
         breakSequence = false;
+
+        GameManager.TopBarUI.ToggleShowToolSizeText(true);
     }
 
     public override void OnUpdate(double delta)
     {
         if (!placeSequence && !breakSequence)
         {
+            GameManager.TopBarUI.SetToolSizeText(Vector3.Zero);
             lockX = lockY = lockZ = false;
 
             firstPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
@@ -52,6 +55,13 @@ public abstract class TwoPointsTool : Tool
             secondPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
 
             AxisLocking();
+
+            Vector3 size = new(
+                Mathf.Abs(firstPosition.X - secondPosition.X),
+                Mathf.Abs(firstPosition.Y - secondPosition.Y),
+                Mathf.Abs(firstPosition.Z - secondPosition.Z)
+            );
+            GameManager.TopBarUI.SetToolSizeText(size);
 
             Vector3I[] voxelPositions = GetVoxelPositions();
             GenerateMeshHighlight(voxelPositions);
@@ -152,6 +162,8 @@ public abstract class TwoPointsTool : Tool
 
     public override void OnExit()
     {
+        GameManager.TopBarUI.ToggleShowToolSizeText(false);
+
         ctx.cornerHighlight1.Hide();
         ctx.cornerHighlight2.Hide();
         ctx.meshHighlight.Hide();

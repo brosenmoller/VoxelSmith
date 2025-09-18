@@ -103,7 +103,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="TopBar" type="ColorRect" node_paths=PackedStringArray("playerMode", "floorToggle", "disableCollisionsToggle", "infiniteReachToggle", "selectInsideToggle", "playerSpeedSlider", "playerSpeedPercentageText")]
+[node name="TopBar" type="ColorRect" node_paths=PackedStringArray("playerMode", "floorToggle", "disableCollisionsToggle", "infiniteReachToggle", "selectInsideToggle", "playerSpeedSlider", "playerSpeedPercentageText", "toolSizeText")]
 custom_minimum_size = Vector2(0, 50)
 anchors_preset = -1
 anchor_right = 1.0
@@ -119,6 +119,7 @@ infiniteReachToggle = NodePath("TopBarContainer/InfiniteReachToggle")
 selectInsideToggle = NodePath("TopBarContainer/SelectInsideToggle")
 playerSpeedSlider = NodePath("TopBarContainer/PlayerSpeedContainer/PlayerSpeedSlider")
 playerSpeedPercentageText = NodePath("TopBarContainer/SpeedPercentage/RichTextLabel")
+toolSizeText = NodePath("TopBarContainer/CenterContainer/RichTextLabel")
 infiniteReach = 1000.0
 
 [node name="TopBarContainer" type="HBoxContainer" parent="."]
@@ -315,9 +316,20 @@ text = "[center]100 %"
 scroll_active = false
 
 [node name="VSeparator5" type="VSeparator" parent="TopBarContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 20
+
+[node name="CenterContainer" type="CenterContainer" parent="TopBarContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TopBarContainer/CenterContainer"]
+visible = false
+clip_contents = false
+custom_minimum_size = Vector2(500, 45)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/normal_font_size = 30
+text = "Size x: 5 y: 3 z: 10"
 
 [node name="Control" type="Control" parent="TopBarContainer"]
 layout_mode = 2

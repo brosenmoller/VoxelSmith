@@ -9,6 +9,7 @@ public partial class TopBarUI : Control
     [Export] private Button selectInsideToggle;
     [Export] private Slider playerSpeedSlider;
     [Export] private RichTextLabel playerSpeedPercentageText;
+    [Export] private RichTextLabel toolSizeText;
 
     [Export] private float defaultReach = 7;
     [Export] private float infiniteReach = 100;
@@ -70,5 +71,15 @@ public partial class TopBarUI : Control
     public void ToggleSelectingInside(bool toggle)
     {
         GameManager.ToolUser.selectInsideEnabled = toggle;
+    }
+
+    public void ToggleShowToolSizeText(bool toggle)
+    {
+        toolSizeText.Visible = toggle;
+    }
+
+    public void SetToolSizeText(Vector3 size)
+    {
+        toolSizeText.Text = $"x {size.X}, y {size.Y}, z {size.Z}";
     }
 }
