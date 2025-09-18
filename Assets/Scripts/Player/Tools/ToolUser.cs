@@ -179,6 +179,22 @@ public partial class ToolUser : RayCast3D
         return VoxelHelper.GetGridVoxelFromHitPoint(emptySpacePoint, normalizedGlobalDirection);
     }
 
+    public bool GetVoxelPositionFromPlane(Vector3 planeNormal, Vector3 planePoint, out Vector3I voxelPosition)
+    {
+        Vector3 normalizedGlobalDirection = (-1 * GlobalTransform.Basis.Z).Normalized();
+        voxelPosition = Vector3I.Zero;
+
+        float denominator = planeNormal.Dot(normalizedGlobalDirection);
+        if (Mathf.Abs(denominator) < Mathf.Epsilon) { return false; }
+
+        float distanceAlongRay = planeNormal.Dot(planePoint - GlobalPosition) / denominator;
+        if (distanceAlongRay < 0) { return false; }
+
+        Vector3 intersectionPoint = GlobalPosition + distanceAlongRay * normalizedGlobalDirection;
+        voxelPosition = VoxelHelper.GetGridVoxelFromHitPoint(intersectionPoint, normalizedGlobalDirection);
+        return true;
+    }
+
     private void PickBlock(Vector3I voxelPosition)
     {
         if (GameManager.DataManager.ProjectData.voxelColors.ContainsKey(voxelPosition))

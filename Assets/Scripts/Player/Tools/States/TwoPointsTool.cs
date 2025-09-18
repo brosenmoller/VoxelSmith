@@ -10,6 +10,10 @@ public abstract class TwoPointsTool : Tool
     private bool placeSequence;
     private bool breakSequence;
 
+    private bool lockX;
+    private bool lockY;
+    private bool lockZ;
+
     public override void OnEnter()
     {
         ctx.cornerHighlight1.Show();
@@ -21,6 +25,8 @@ public abstract class TwoPointsTool : Tool
     {
         if (!placeSequence && !breakSequence)
         {
+            lockX = lockY = lockZ = false;
+
             firstPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
             ctx.cornerHighlight1.GlobalPosition = firstPosition;
 
@@ -44,6 +50,8 @@ public abstract class TwoPointsTool : Tool
         else if (placeSequence || breakSequence)
         {
             secondPosition = ctx.GetVoxelPositionFromLook(Mathf.Abs(ctx.TargetPosition.Z), emptyDistance, ctx.selectInsideEnabled);
+
+            AxisLocking();
 
             Vector3I[] voxelPositions = GetVoxelPositions();
             GenerateMeshHighlight(voxelPositions);
@@ -75,6 +83,71 @@ public abstract class TwoPointsTool : Tool
                 ctx.meshHighlight.Hide();
             }
         }
+    }
+
+    private void AxisLocking()
+    {
+        if (Input.IsActionJustPressed("lock_x"))
+        {
+            lockY = false;
+
+            if (lockX || lockZ)
+            {
+                lockX = lockZ = false;
+                return;
+            }
+
+            float xDiff = Mathf.Abs(firstPosition.X - secondPosition.X);
+            float zDiff = Mathf.Abs(firstPosition.Z - secondPosition.Z);
+
+            if (xDiff < zDiff)
+            {
+                lockX = true;
+            }
+            else
+            {
+                lockZ = true;
+            }
+        }
+
+        if (Input.IsActionJustPressed("lock_y"))
+        {
+            lockX = lockZ = false;
+
+            lockY = !lockY;
+        }
+
+        Vector3 planeNormal;
+        if (lockX)
+        {
+            planeNormal = new Vector3(Mathf.Clamp(ctx.GlobalPosition.X - firstPosition.X , - 1, 1), 0, 0);
+        }
+        else if (lockY)
+        {
+            planeNormal = new Vector3(0, Mathf.Clamp(ctx.GlobalPosition.Y - firstPosition.Y, - 1, 1), 0);
+        }
+        else if (lockZ)
+        {
+            planeNormal = new Vector3(0, 0, Mathf.Clamp(ctx.GlobalPosition.Z - firstPosition.Z, - 1, 1));
+        }
+        else
+        { 
+            return; 
+        }
+
+        if (ctx.GetVoxelPositionFromPlane(planeNormal, firstPosition, out Vector3I voxelPosition))
+        {
+            const int MAX_DISTANCE = 500;
+            secondPosition = voxelPosition;
+            secondPosition.X = Mathf.Clamp(secondPosition.X, firstPosition.X - MAX_DISTANCE, firstPosition.X + MAX_DISTANCE);
+            secondPosition.Y = Mathf.Clamp(secondPosition.Y, firstPosition.Y - MAX_DISTANCE, firstPosition.Y + MAX_DISTANCE);
+            secondPosition.Z = Mathf.Clamp(secondPosition.Z, firstPosition.Z - MAX_DISTANCE, firstPosition.Z + MAX_DISTANCE);
+            return;
+        }
+
+        if (lockX) { secondPosition.X = firstPosition.X; }
+        if (lockY) { secondPosition.Y = firstPosition.Y; }
+        if (lockZ) { secondPosition.Z = firstPosition.Z; }
     }
 
     public override void OnExit()

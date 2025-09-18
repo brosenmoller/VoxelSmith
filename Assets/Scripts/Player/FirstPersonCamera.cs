@@ -87,4 +87,3 @@ public partial class FirstPersonCamera : Node3D
         return pos;
     }
 }
-
