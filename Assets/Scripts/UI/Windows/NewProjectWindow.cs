@@ -16,11 +16,19 @@ public partial class NewProjectWindow : ConfirmationDialog
         Confirmed += OnNewProjectConfirmed;
 
         openProjectDirectoryButton.Pressed += OnButtonPress;
+        VisibilityChanged += HandleVisibilityChanged;
 
         openPaletteButton.Pressed += GameManager.UIController.ShowLoadPaletteDialog;
         newPaletteButton.Pressed += GameManager.UIController.ShowCreateNewPaletteDialog;
 
         SetupPaletteOptionButton();
+    }
+
+    private void HandleVisibilityChanged()
+    {
+        if (!Visible) { return; }
+
+        projectName.Text = string.Empty;
     }
 
     private void OnButtonPress()

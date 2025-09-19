@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Xml.Linq;
 using Godot;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class ExportWindow : ConfirmationDialog
 {
@@ -39,13 +41,30 @@ public partial class ExportWindow : ConfirmationDialog
             exportOptionButton.Selected = (int)exportSettings.exportType;
         }
 
-        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
+        if (!GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
         {
-            EditorData.ExportPathData pathData = GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id];
+            string path = GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id];
 
-            exportFileName.Text = pathData.fileName;
-            saveDirectoryPath.Text = pathData.directoryPath;
+            if (path.Contains('/'))
+            {
+                path = path[..path.LastIndexOf('/')];
+            }
+            else if (path.Contains('\\')) 
+            {
+                path = path[..path.LastIndexOf('\\')];
+            }
+
+            GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = new()
+            {
+                fileName = GameManager.DataManager.ProjectData.name,
+                directoryPath = path
+            };
+            GameManager.DataManager.SaveEditorData();
         }
+
+        EditorData.ExportPathData exportPathData = GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id];
+        exportFileName.Text = exportPathData.fileName;
+        saveDirectoryPath.Text = exportPathData.directoryPath;
     }
 
     private void SetupExportTypeOptionButton()
@@ -78,13 +97,13 @@ public partial class ExportWindow : ConfirmationDialog
         };
         GameManager.DataManager.SaveProject();
 
-        EditorData.ExportPathData exportSettings = new()
+        EditorData.ExportPathData exportPathData = new()
         {
             directoryPath = saveDirectoryPath.Text,
             fileName = exportFileName.Text,
         };
 
-        GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = exportSettings;
+        GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = exportPathData;
         GameManager.DataManager.SaveEditorData();
 
         GameManager.ExportManager.PerformExport();
