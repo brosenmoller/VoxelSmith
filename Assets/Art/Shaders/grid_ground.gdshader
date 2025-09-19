@@ -5,8 +5,7 @@ const float borderWidth = 0.01;
 varying vec2 size;
 
 void vertex(){
-	size.x = abs(VERTEX.x) * 2.0;
-	size.y = abs(VERTEX.z) * 2.0;
+	size = vec2(abs(VERTEX.x) * 2.0, abs(VERTEX.z) * 2.0);
 }
 
 vec2 grid(vec2 uv, float columns, float rows){
@@ -16,9 +15,9 @@ vec2 grid(vec2 uv, float columns, float rows){
 void fragment() {
 	vec2 gridPos = grid(UV, size.x, size.y);
 
-    float borderCondition = step(gridPos.x, borderWidth) + step(gridPos.y, borderWidth) + 
+    float borderCondition = step(gridPos.x, borderWidth) + step(gridPos.y, borderWidth) +
                             step(1.0 - borderWidth, gridPos.x) + step(1.0 - borderWidth, gridPos.y);
-    
+
     vec3 colorBorder = vec3(0.08, 0.08, 0.08);
     vec3 colorInside = vec3(0.03, 0.03, 0.03);
 
