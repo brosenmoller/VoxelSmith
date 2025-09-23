@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Linq;
-using static Godot.TextServer;
 
 public partial class PaletteUI : BoxContainer
 {
@@ -28,12 +27,12 @@ public partial class PaletteUI : BoxContainer
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("cycle_swatch_forward"))
+        if (Input.IsActionJustPressed("cycle_swatch_forward") && !Input.IsKeyPressed(Key.Ctrl))
         {
             CycleSwatch(true);
         }
 
-        if (Input.IsActionJustPressed("cycle_swatch_back"))
+        if (Input.IsActionJustPressed("cycle_swatch_back") && !Input.IsKeyPressed(Key.Ctrl))
         {
             CycleSwatch(false);
         }

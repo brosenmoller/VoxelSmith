@@ -61,4 +61,3 @@ public partial class NativeDialog : Control
         public int filterIndex;
     }
 }
-

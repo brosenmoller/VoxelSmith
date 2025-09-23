@@ -97,7 +97,7 @@ public abstract class TwoPointsTool : Tool
 
     private void AxisLocking()
     {
-        if (Input.IsActionJustPressed("lock_x"))
+        if (Input.IsActionJustPressed("lock_x") && !Input.IsKeyPressed(Key.Ctrl))
         {
             lockY = false;
 
@@ -120,7 +120,7 @@ public abstract class TwoPointsTool : Tool
             }
         }
 
-        if (Input.IsActionJustPressed("lock_y"))
+        if (Input.IsActionJustPressed("lock_y") && !Input.IsKeyPressed(Key.Ctrl))
         {
             lockX = lockZ = false;
 
