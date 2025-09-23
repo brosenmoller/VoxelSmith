@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cy136utjjwqdu"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Player/Movement/PlayerMovement.cs" id="1_xuqap"]
-[ext_resource type="Script" path="res://Assets/Scripts/Player/FirstPersonCamera.cs" id="2_t6388"]
-[ext_resource type="Script" path="res://Assets/Scripts/Player/Tools/ToolUser.cs" id="3_7vkoi"]
+[ext_resource type="Script" uid="uid://d0n210xbc3avd" path="res://Assets/Scripts/Player/Movement/PlayerMovement.cs" id="1_xuqap"]
+[ext_resource type="Script" uid="uid://c5nnpqci47sic" path="res://Assets/Scripts/Player/FirstPersonCamera.cs" id="2_t6388"]
+[ext_resource type="Script" uid="uid://dc56til2kad8t" path="res://Assets/Scripts/Player/Tools/ToolUser.cs" id="3_7vkoi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uefvg"]
 

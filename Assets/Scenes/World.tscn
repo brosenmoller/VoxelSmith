@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=24 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" uid="uid://l402taog4vxe" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
+[ext_resource type="Script" uid="uid://dc4xbw62o5gej" path="res://Assets/Scripts/GammaToggle.cs" id="2_cg2gm"]
 [ext_resource type="Shader" uid="uid://cxnbloj1ignim" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
 [ext_resource type="Script" uid="uid://c3w0w77ur4g5m" path="res://Assets/Scripts/Generation/WorldMesh/SurfaceMesh.cs" id="4_48p0j"]
 [ext_resource type="Material" uid="uid://cx46gfmlwbfpy" path="res://Assets/Art/Materials/RedHighlight.tres" id="4_b1jf1"]
@@ -29,6 +30,7 @@ sky_material = SubResource("ProceduralSkyMaterial_lr1w3")
 
 [sub_resource type="Environment" id="Environment_td26l"]
 background_mode = 2
+background_energy_multiplier = 2.0
 sky = SubResource("Sky_ei7t6")
 sky_custom_fov = 70.0
 ambient_light_color = Color(0.870588, 0.870588, 0.870588, 1)
@@ -71,12 +73,16 @@ size = Vector3(1.05, 1.05, 1.05)
 script = ExtResource("1_6ekco")
 groundNode = NodePath("Ground")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." node_paths=PackedStringArray("light")]
 environment = SubResource("Environment_td26l")
+script = ExtResource("2_cg2gm")
+highGamma = 10
+light = NodePath("../DirectionalLight3D")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.958323, 0.261993, -0.113918, 0, 0.398749, 0.91706, 0.285688, 0.878839, -0.38213, 0, 0, 0)
 shadow_enabled = true
+shadow_blur = 5.0
 
 [node name="Player" parent="." instance=ExtResource("1_4yetj")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.501172, 0.899977, 0.260335)
