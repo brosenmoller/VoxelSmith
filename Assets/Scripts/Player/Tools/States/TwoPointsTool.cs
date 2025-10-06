@@ -57,9 +57,9 @@ public abstract class TwoPointsTool : Tool
             AxisLocking();
 
             Vector3 size = new(
-                Mathf.Abs(firstPosition.X - secondPosition.X),
-                Mathf.Abs(firstPosition.Y - secondPosition.Y),
-                Mathf.Abs(firstPosition.Z - secondPosition.Z)
+                Mathf.Abs(firstPosition.X - secondPosition.X) + 1,
+                Mathf.Abs(firstPosition.Y - secondPosition.Y) + 1,
+                Mathf.Abs(firstPosition.Z - secondPosition.Z) + 1
             );
             GameManager.TopBarUI.SetToolSizeText(size);
 
