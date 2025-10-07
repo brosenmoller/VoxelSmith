@@ -29,6 +29,8 @@ public class DataManager : Manager
     public static event Action OnProjectLoad;
 
     private VoxelSmith.Timer autoSaveTimer;
+    private bool queuedAutoSave = false;
+    public Blocker AutoSaveBlocker = new();
 
     public override void Setup()
     {
@@ -43,23 +45,54 @@ public class DataManager : Manager
         paletteDataHolder = new DataHolder<PaletteData>();
         projectDataBackupHolder = new DataHolder<ProjectData>();
 
-        autoSaveTimer = new(45f, HandleAutoSave, true, true);
+        autoSaveTimer = new(45f, HandleAutoSaveTimerFinish, true);
+
+        ProjectMenu.OnLoadAutoSavePressed += LoadAutoSave;
 
         LoadUpApplication();
     }
 
-    private void HandleAutoSave()
+    public override void OnUpdate(double delta)
     {
-        if (projectDataHolder == null || projectDataHolder.Data == null) { return; }
+        if (queuedAutoSave && AutoSaveBlocker.IsFree)
+        {
+            AutoSave();
+            return;
+        }
+    }
+
+    private void HandleAutoSaveTimerFinish()
+    {
+        queuedAutoSave = true;
+    }
+
+    private void AutoSave()
+    {
+        if (projectDataHolder == null || projectDataBackupHolder == null) { return; }
 
         projectDataBackupHolder.Data = projectDataHolder.Data;
         projectDataBackupHolder.Save(GLOBAL_BACKUP_PROJECT_SAVE_PATH);
+
+        queuedAutoSave = false;
+        autoSaveTimer.Restart();
+
+#if DEBUG
+        GD.Print($"AutoSave: \n{GLOBAL_BACKUP_PROJECT_SAVE_PATH}");
+#endif
+    }
+
+    private void LoadAutoSave()
+    {
+        if (File.Exists(GLOBAL_BACKUP_PROJECT_SAVE_PATH))
+        {
+            LoadProject(GLOBAL_BACKUP_PROJECT_SAVE_PATH, false);
+        }
     }
     
     private void LoadUpApplication()
     {
         try { editorDataHolder.Load(GLOBAL_EDITOR_SAVE_PATH); }
-        catch 
+        catch
         { 
             GD.PushWarning("Couldn't load editor data");
             editorDataHolder.Data = new EditorData(); 
@@ -131,9 +164,9 @@ public class DataManager : Manager
 
     public void SaveProject()
     {
-        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
+        if (editorDataHolder.Data.savePaths.TryGetValue(projectDataHolder.Data.id, out string value))
         {
-            SaveProjectAs(editorDataHolder.Data.savePaths[projectDataHolder.Data.id]);
+            SaveProjectAs(value);
         }
     }
 
@@ -143,14 +176,7 @@ public class DataManager : Manager
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
 
-        if (editorDataHolder.Data.savePaths.ContainsKey(projectDataHolder.Data.id))
-        {
-            editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
-        }
-        else
-        {
-            editorDataHolder.Data.savePaths.Add(projectDataHolder.Data.id, path);
-        }
+        editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
 
         editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
         editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
@@ -158,7 +184,7 @@ public class DataManager : Manager
         projectDataHolder.Save(path);
     }
 
-    public void LoadProject(string path)
+    public void LoadProject(string path, bool storePath = true)
     {
         // TODO: Warn User if there is unsaved data (Also in Palette)
 
@@ -175,10 +201,12 @@ public class DataManager : Manager
             GameManager.SurfaceMesh.UpdateAll();
             GameManager.PrefabMesh.UpdateAll();
 
-            editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
-
-            editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
-            editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+            if (storePath)
+            {
+                editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
+                editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
+                editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+            }
 
             if (projectDataHolder.Data.palette == null) 
             {

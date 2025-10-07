@@ -11,6 +11,7 @@ public partial class ProjectMenu : PopupMenu
     [Export] private Shortcut saveAsShortcut;
     [Export] private Shortcut openShortcut;
     [Export] private Shortcut exportShortcut;
+    [Export] private Shortcut loadAutoSaveShortcut;
     [Export] private Shortcut importSchematicShortcut;
     [Export] private Shortcut refreshSchematicShortcut;
 
@@ -19,6 +20,7 @@ public partial class ProjectMenu : PopupMenu
     public static event Action OnSaveAsPressed;
     public static event Action OnOpenPressed;
     public static event Action OnExportPressed;
+    public static event Action OnLoadAutoSavePressed;
     public static event Action OnImportSchematicPressed;
 
     private PopupMenu recentsNestedMenu;
@@ -41,6 +43,7 @@ public partial class ProjectMenu : PopupMenu
             case (long)ProjectOptions.SAVE_AS: OnSaveAsPressed?.Invoke(); break;
             case (long)ProjectOptions.OPEN: OnOpenPressed?.Invoke(); break;
             case (long)ProjectOptions.EXPORT: OnExportPressed?.Invoke(); break;
+            case (long)ProjectOptions.LOAD_AUTOSAVE: OnLoadAutoSavePressed?.Invoke(); break;
             case (long)ProjectOptions.IMPORT_SCHEMATIC: OnImportSchematicPressed?.Invoke(); break;
         }
     }
@@ -71,8 +74,12 @@ public partial class ProjectMenu : PopupMenu
         SetItemShortcut(5, exportShortcut, true);
 
         // 6
+        AddItem("Load Autosave", (int)ProjectOptions.LOAD_AUTOSAVE);
+        SetItemShortcut(6, loadAutoSaveShortcut, true);
+
+        // 7
         AddItem("Import Schematic", (int)ProjectOptions.IMPORT_SCHEMATIC);
-        SetItemShortcut(6, importSchematicShortcut, true);
+        SetItemShortcut(7, importSchematicShortcut, true);
     }
 
     private void SetupRecentsSubMenu()
@@ -91,7 +98,7 @@ public partial class ProjectMenu : PopupMenu
         }
 
         AddChild(recentsNestedMenu);
-        AddSubmenuItem("Open Recent", recentsNestedMenu.Name);
+        AddSubmenuNodeItem("Open Recent", recentsNestedMenu);
     }
 
     private void OnRecentsMenuItemSelected(long id)
@@ -106,6 +113,7 @@ public partial class ProjectMenu : PopupMenu
         SAVE_AS,
         OPEN,
         EXPORT,
+        LOAD_AUTOSAVE,
         IMPORT_SCHEMATIC,
     }
 }

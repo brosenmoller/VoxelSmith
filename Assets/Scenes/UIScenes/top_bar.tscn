@@ -1,7 +1,7 @@
-[gd_scene load_steps=55 format=3 uid="uid://b4fgnx8gu2s5q"]
+[gd_scene load_steps=56 format=3 uid="uid://b4fgnx8gu2s5q"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/TopBarUI.cs" id="1_uo8va"]
+[ext_resource type="Script" uid="uid://wf26m5c8aqfc" path="res://Assets/Scripts/UI/Menus/ProjectMenu.cs" id="1_r6n55"]
+[ext_resource type="Script" uid="uid://7eg7clb5ewdv" path="res://Assets/Scripts/UI/TopBarUI.cs" id="1_uo8va"]
 [ext_resource type="Shortcut" uid="uid://bb13dtsrma15s" path="res://Assets/Resources/MenuResources/ProjectMenu/NewProjectShortcut.tres" id="2_q2gw8"]
 [ext_resource type="Shortcut" uid="uid://c1ora4olvy0r4" path="res://Assets/Resources/MenuResources/ProjectMenu/SaveProjectShortcut.tres" id="3_0wbqa"]
 [ext_resource type="Shortcut" uid="uid://bq41hvwupxt7j" path="res://Assets/Resources/MenuResources/ProjectMenu/SaveAsProjectShortcut.tres" id="4_7og8a"]
@@ -9,17 +9,18 @@
 [ext_resource type="Shortcut" uid="uid://bqajjcmabxkcd" path="res://Assets/Resources/MenuResources/ProjectMenu/ImportSchematicShortcut.tres" id="6_g1vkc"]
 [ext_resource type="Shortcut" uid="uid://db4ls4pp6ps3j" path="res://Assets/Resources/MenuResources/ProjectMenu/RefreshSchematicShortcut.tres" id="7_rmvxb"]
 [ext_resource type="Shortcut" uid="uid://bk24aeicaor70" path="res://Assets/Resources/MenuResources/ProjectMenu/ExportShortcut.tres" id="7_uhken"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/EditMenu.cs" id="8_fxvqp"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/PaletteMenu.cs" id="8_kvnbl"]
+[ext_resource type="Shortcut" uid="uid://dchj6erd3uee5" path="res://Assets/Resources/MenuResources/ProjectMenu/LoadAutosaveShortcut.tres" id="8_au77k"]
+[ext_resource type="Script" uid="uid://dsyajw3ec1ibb" path="res://Assets/Scripts/UI/Menus/EditMenu.cs" id="8_fxvqp"]
+[ext_resource type="Script" uid="uid://dhq0aeyj3m8ob" path="res://Assets/Scripts/UI/Menus/PaletteMenu.cs" id="8_kvnbl"]
 [ext_resource type="Shortcut" uid="uid://cat3smbjtttve" path="res://Assets/Resources/MenuResources/EditMenu/UndoShortcut.tres" id="9_3vpiw"]
 [ext_resource type="Shortcut" uid="uid://mi2vprto6kca" path="res://Assets/Resources/MenuResources/PaletteMenu/import_palette_from_project_shortcut.tres" id="9_ls3xn"]
 [ext_resource type="Shortcut" uid="uid://bbh5x04edn2rr" path="res://Assets/Resources/MenuResources/EditMenu/RedoShortcut.tres" id="10_2k02o"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/PlayerMode.cs" id="11_44v8d"]
+[ext_resource type="Script" uid="uid://cp26cwklly2v1" path="res://Assets/Scripts/UI/Buttons/PlayerMode.cs" id="11_44v8d"]
 [ext_resource type="Texture2D" uid="uid://bf27fb15ywbpu" path="res://Assets/Art/Icons/person-walking-solid-accent.png" id="11_okt8g"]
 [ext_resource type="Texture2D" uid="uid://cg6yqkrgrojso" path="res://Assets/Art/Icons/person-walking-solid-white.png" id="12_4lqd0"]
 [ext_resource type="ButtonGroup" uid="uid://bhxyko6wf343y" path="res://Assets/Resources/MenuResources/PlayerMode/PlayerModeButtonGroup.tres" id="13_wjne3"]
 [ext_resource type="Shortcut" uid="uid://bcvlfg5g041ka" path="res://Assets/Resources/MenuResources/PlayerMode/WalkModeShorcut.tres" id="14_8x3hs"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Menus/SelectMenu.cs" id="14_xbde7"]
+[ext_resource type="Script" uid="uid://br0ubumcokiin" path="res://Assets/Scripts/UI/Menus/SelectMenu.cs" id="14_xbde7"]
 [ext_resource type="Texture2D" uid="uid://dms8tyyps2bsy" path="res://Assets/Art/Icons/jet-fighter-up-accent.png" id="15_araxc"]
 [ext_resource type="Shortcut" uid="uid://b4nehcxq62i6x" path="res://Assets/Resources/MenuResources/SelectMenu/select_all_shortcut.tres" id="15_jnjnf"]
 [ext_resource type="Shortcut" uid="uid://bv7s6ax0by3ob" path="res://Assets/Resources/MenuResources/SelectMenu/deselect_shortcut.tres" id="16_76tv4"]
@@ -31,13 +32,13 @@
 [ext_resource type="Shortcut" uid="uid://bh8alfh7xnscs" path="res://Assets/Resources/MenuResources/SelectMenu/paste_shortcut.tres" id="20_td3je"]
 [ext_resource type="Shortcut" uid="uid://da5361yly5jcy" path="res://Assets/Resources/MenuResources/SelectMenu/delete_shortcut.tres" id="21_2a45y"]
 [ext_resource type="Texture2D" uid="uid://ci42dncng3gn8" path="res://Assets/Art/Icons/square-dashed.png" id="22_258pr"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
+[ext_resource type="Script" uid="uid://bow5lb65ax5pu" path="res://Assets/Scripts/UI/Buttons/QuickExport.cs" id="22_e5q42"]
 [ext_resource type="Shortcut" uid="uid://cfhvw8f8mx274" path="res://Assets/Resources/MenuResources/SelectMenu/rotate_clockwise_shortcut.tres" id="22_mamxy"]
 [ext_resource type="Texture2D" uid="uid://b1mfh3fpeqesb" path="res://Assets/Art/Icons/infinity-solid.png" id="23_huegb"]
 [ext_resource type="Shortcut" uid="uid://b84pfcgc5wl4h" path="res://Assets/Resources/MenuResources/QuickOptions/quick_export_shortcut.tres" id="23_lhvlj"]
 [ext_resource type="Shortcut" uid="uid://l5jlep00tm85" path="res://Assets/Resources/MenuResources/SelectMenu/rotate_anti_clockwise_shortcut.tres" id="23_w6y3v"]
 [ext_resource type="Shortcut" uid="uid://vqjhdm7cn424" path="res://Assets/Resources/MenuResources/SelectMenu/flip_shortcut.tres" id="24_85row"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Buttons/QuickImport.cs" id="24_j8l2r"]
+[ext_resource type="Script" uid="uid://cidr3dqwh58mg" path="res://Assets/Scripts/UI/Buttons/QuickImport.cs" id="24_j8l2r"]
 [ext_resource type="Texture2D" uid="uid://djnv8jivygy4n" path="res://Assets/Art/Icons/arrow-down-up-across-line-solid.png" id="27_862cf"]
 [ext_resource type="Texture2D" uid="uid://cr24jn5up0s4o" path="res://Assets/Art/Icons/gauge-high-solid.png" id="28_a64eb"]
 [ext_resource type="Shortcut" uid="uid://bomvggd0bocga" path="res://Assets/Resources/MenuResources/QuickOptions/quick_import_shortcut.tres" id="33_mbbfi"]
@@ -146,6 +147,7 @@ saveShortcut = ExtResource("3_0wbqa")
 saveAsShortcut = ExtResource("4_7og8a")
 openShortcut = ExtResource("5_lx1nm")
 exportShortcut = ExtResource("7_uhken")
+loadAutoSaveShortcut = ExtResource("8_au77k")
 importSchematicShortcut = ExtResource("6_g1vkc")
 refreshSchematicShortcut = ExtResource("7_rmvxb")
 

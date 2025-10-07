@@ -14,11 +14,14 @@ public abstract class TwoPointsTool : Tool
     private bool lockY;
     private bool lockZ;
 
+    private bool wasInASequence = false;
+
     public override void OnEnter()
     {
         ctx.cornerHighlight1.Show();
         placeSequence = false;
         breakSequence = false;
+        wasInASequence = false;
 
         GameManager.TopBarUI.ToggleShowToolSizeText(true);
     }
@@ -93,6 +96,27 @@ public abstract class TwoPointsTool : Tool
                 ctx.meshHighlight.Hide();
             }
         }
+
+        bool isInASequence = placeSequence || breakSequence;
+        if (isInASequence && !wasInASequence)
+        {
+            GameManager.DataManager.AutoSaveBlocker.AddBlocker(nameof(TwoPointsTool));
+        }
+        else if (wasInASequence && !isInASequence)
+        {
+            GameManager.DataManager.AutoSaveBlocker.RemoveBlocker(nameof(TwoPointsTool));
+        }
+        wasInASequence = isInASequence;
+    }
+
+    public override void OnExit()
+    {
+        GameManager.TopBarUI.ToggleShowToolSizeText(false);
+        GameManager.DataManager.AutoSaveBlocker.RemoveBlocker(nameof(TwoPointsTool));
+
+        ctx.cornerHighlight1.Hide();
+        ctx.cornerHighlight2.Hide();
+        ctx.meshHighlight.Hide();
     }
 
     private void AxisLocking()
@@ -160,14 +184,7 @@ public abstract class TwoPointsTool : Tool
         if (lockZ) { secondPosition.Z = firstPosition.Z; }
     }
 
-    public override void OnExit()
-    {
-        GameManager.TopBarUI.ToggleShowToolSizeText(false);
 
-        ctx.cornerHighlight1.Hide();
-        ctx.cornerHighlight2.Hide();
-        ctx.meshHighlight.Hide();
-    }
 
     protected abstract Vector3I[] GetVoxelPositions();
     protected abstract void PlaceAction(Vector3I[] voxels);
