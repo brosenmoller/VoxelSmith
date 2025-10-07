@@ -10,6 +10,7 @@ public partial class TopBarUI : Control
     [Export] private Slider playerSpeedSlider;
     [Export] private RichTextLabel playerSpeedPercentageText;
     [Export] private RichTextLabel toolSizeText;
+    [Export] public ProjectMenu ProjectMenu;
 
     [Export] private float defaultReach = 7;
     [Export] private float infiniteReach = 100;

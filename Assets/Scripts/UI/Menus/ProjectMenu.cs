@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 public partial class ProjectMenu : PopupMenu
@@ -24,14 +25,14 @@ public partial class ProjectMenu : PopupMenu
     public static event Action OnImportSchematicPressed;
 
     private PopupMenu recentsNestedMenu;
-    private List<string> recentPaths;
-
     private PopupMenu exportNestedMenu;
 
     public override void _Ready()
     {
         SetupMenu();
         IdPressed += OnMenuItemSelected;
+
+        DataManager.OnProjectLoad += SetupMenu;
     }
 
     private void OnMenuItemSelected(long id)
@@ -48,72 +49,77 @@ public partial class ProjectMenu : PopupMenu
         }
     }
 
-    private void SetupMenu()
+    public void SetupMenu()
     {
-        // 0
+        Clear();
+
         AddItem("New", (int)ProjectOptions.NEW);
         SetItemShortcut(0, newShortcut, true);
         
-        // 1
         AddItem("Save", (int)ProjectOptions.SAVE);
         SetItemShortcut(1, saveShortcut, true);
 
-        // 2
         AddItem("Save As", (int)ProjectOptions.SAVE_AS);
         SetItemShortcut(2, saveAsShortcut, true);
 
-        // 3
         AddItem("Open", (int)ProjectOptions.OPEN);
         SetItemShortcut(3, openShortcut, true);
 
-        // 4
-        SetupRecentsSubMenu();
+        SetupRecentsSubMenu("Open Recent", (int)ProjectOptions.RECENTS);
 
-        // 5
         AddItem("Export", (int)ProjectOptions.EXPORT);
         SetItemShortcut(5, exportShortcut, true);
 
-        // 6
         AddItem("Load Autosave", (int)ProjectOptions.LOAD_AUTOSAVE);
         SetItemShortcut(6, loadAutoSaveShortcut, true);
 
-        // 7
         AddItem("Import Schematic", (int)ProjectOptions.IMPORT_SCHEMATIC);
         SetItemShortcut(7, importSchematicShortcut, true);
     }
 
-    private void SetupRecentsSubMenu()
+    private void SetupRecentsSubMenu(string name, int id)
     {
-        recentsNestedMenu?.QueueFree();
-
-        recentsNestedMenu = new();
-        recentsNestedMenu.IdPressed += OnRecentsMenuItemSelected;
-        recentsNestedMenu.Name = "RecentsNestedMenu";
-
-        recentPaths = GameManager.DataManager.EditorData.savePaths.Values.ToList();
-
-        for (int i = 0; i < recentPaths.Count; i++)
+        if (recentsNestedMenu == null)
         {
-            recentsNestedMenu.AddItem(recentPaths[i], i);
+            recentsNestedMenu = new();
+            recentsNestedMenu.IdPressed += OnRecentsMenuItemSelected;
+            recentsNestedMenu.Name = "RecentsNestedMenu";
+
+            AddChild(recentsNestedMenu);
+        }
+        else
+        {
+            recentsNestedMenu.Clear();
         }
 
-        AddChild(recentsNestedMenu);
-        AddSubmenuNodeItem("Open Recent", recentsNestedMenu);
+        AddSubmenuNodeItem(name, recentsNestedMenu, id);
+
+        for (int i = 1; i < GameManager.DataManager.EditorData.recentProjects.Count; i++)
+        {
+            if (GameManager.DataManager.EditorData.savePaths.TryGetValue(GameManager.DataManager.EditorData.recentProjects[i], out string savePath))
+            {
+                recentsNestedMenu.AddItem($"{Path.GetFileNameWithoutExtension(savePath)} - {savePath}", i);
+            }
+        }
     }
 
     private void OnRecentsMenuItemSelected(long id)
     {
-        GameManager.DataManager.LoadProject(recentPaths[(int)id]);
+        if (GameManager.DataManager.EditorData.savePaths.TryGetValue(GameManager.DataManager.EditorData.recentProjects[(int)id], out string savePath))
+        {
+            GameManager.DataManager.LoadProject(savePath);
+        }
     }
 
     private enum ProjectOptions
     {
-        NEW,
-        SAVE,
-        SAVE_AS,
-        OPEN,
-        EXPORT,
-        LOAD_AUTOSAVE,
-        IMPORT_SCHEMATIC,
+        NEW = 0,
+        SAVE = 1,
+        SAVE_AS = 2,
+        OPEN = 3,
+        RECENTS = 4,
+        EXPORT = 5,
+        LOAD_AUTOSAVE = 6,
+        IMPORT_SCHEMATIC = 7,
     }
 }

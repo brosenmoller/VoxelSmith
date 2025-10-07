@@ -91,7 +91,7 @@ public partial class PaletteUI : BoxContainer
         }
         else
         {
-            if (index == 0) { index = guidArray.Length; }
+            if (index == 0) { index = guidArray.Length - 1; }
             else { index--; }
         }
 

@@ -32,8 +32,11 @@ public class DataManager : Manager
     private bool queuedAutoSave = false;
     public Blocker AutoSaveBlocker = new();
 
+    private Window mainWindow;
+
     public override void Setup()
     {
+        mainWindow = GameManager.Player.GetTree().GetRoot().GetWindow();
         camera = GameManager.Player.GetChildByType<Camera3D>();
         cameraPivot = GameManager.Player.GetChildByType<FirstPersonCamera>();
 
@@ -154,6 +157,7 @@ public class DataManager : Manager
         }
 
         OnProjectLoad?.Invoke();
+        SetProjectTitle();
 
         SaveProjectAs(path);
 
@@ -177,11 +181,24 @@ public class DataManager : Manager
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
 
         editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
+        AddProjectToTopOfRecents(projectDataHolder.Data.id);
 
         editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
         editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
 
         projectDataHolder.Save(path);
+    }
+
+    private void AddProjectToTopOfRecents(Guid id)
+    {
+        editorDataHolder.Data.recentProjects.Remove(id);
+        editorDataHolder.Data.recentProjects.Insert(0, id);
+
+        const int MAX_RECENTS = 10;
+        if (editorDataHolder.Data.recentProjects.Count > MAX_RECENTS)
+        {
+            editorDataHolder.Data.recentProjects.RemoveRange(MAX_RECENTS, editorDataHolder.Data.recentProjects.Count - MAX_RECENTS);
+        }
     }
 
     public void LoadProject(string path, bool storePath = true)
@@ -204,6 +221,7 @@ public class DataManager : Manager
             if (storePath)
             {
                 editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
+                AddProjectToTopOfRecents(projectDataHolder.Data.id);
                 editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
                 editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
             }
@@ -214,6 +232,7 @@ public class DataManager : Manager
             }
 
             OnProjectLoad?.Invoke();
+            SetProjectTitle();
 
             GameManager.PaletteUI.Update();
             GameManager.UIController.startWindow.Hide();
@@ -278,8 +297,14 @@ public class DataManager : Manager
         catch
         {
             GD.PrintErr("Couldn't load projecﭏ");
-            // TODO : SHow Error
+            // TODO : Show Error
         }
+    }
+
+    private void SetProjectTitle()
+    {
+        string projectName = ProjectData != null ? ProjectData.name : "Untitled";
+        mainWindow.Title = $"Voxel Smith - {projectName}";
     }
 
     // -------------------------------------

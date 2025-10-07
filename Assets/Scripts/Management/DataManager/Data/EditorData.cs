@@ -10,6 +10,7 @@ public class EditorData
     public Dictionary<Guid, string> savePaths;
     public Dictionary<Guid, ExportPathData> exportPaths;
     public Dictionary<Guid, ImportPathData> importPaths;
+    public List<Guid> recentProjects;
 
     public EditorData() 
     {
@@ -19,6 +20,7 @@ public class EditorData
         savePaths = new Dictionary<Guid, string>();
         exportPaths = new Dictionary<Guid, ExportPathData>();
         importPaths = new Dictionary<Guid, ImportPathData>();
+        recentProjects = new List<Guid>();
     }
 
     [Serializable]
@@ -35,4 +37,3 @@ public class EditorData
         public int importType;
     }
 }
-
