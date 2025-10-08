@@ -9,6 +9,8 @@ public class DataManager : Manager
     public EditorData EditorData => editorDataHolder.Data;
     public PaletteData PaletteData => projectDataHolder.Data.palette;
 
+    public bool HasProject => ProjectData != null;
+
     private DataHolder<ProjectData> projectDataHolder;
     private DataHolder<EditorData> editorDataHolder;
     private DataHolder<PaletteData> paletteDataHolder;

@@ -14,12 +14,16 @@ public partial class StartWindow : Window
     private void LoadProject()
     {
         GameManager.UIController.ShowLoadProjectDialog();
+        GameManager.UIController.ClickBlockerLayer.Visible = false;
+        GameManager.WorldController.WorldInFocus = true;
         Hide();
     }
 
     private void NewProject()
     {
         GameManager.UIController.newProjectDialog.Show();
+        GameManager.UIController.ClickBlockerLayer.Visible = false;
+        GameManager.WorldController.WorldInFocus = true;
         Hide();
     }
 }

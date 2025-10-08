@@ -12,9 +12,10 @@ public partial class QuickImport : MarginContainer
 
     private void OnButtonPress()
     {
-        if (GameManager.DataManager.EditorData.importPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
+        if (!GameManager.IsInitialized) { return; }
+
+        if (GameManager.DataManager.EditorData.importPaths.TryGetValue(GameManager.DataManager.ProjectData.id, out EditorData.ImportPathData importSettings))
         {
-            EditorData.ImportPathData importSettings = GameManager.DataManager.EditorData.importPaths[GameManager.DataManager.ProjectData.id];
             GameManager.UIController.ImportPath(importSettings.path);
         }
     }

@@ -44,7 +44,19 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
 
         minecraftIDEdit.RemoveChild(minecraftIDEdit.GetVScrollBar());
 
+        VisibilityChanged += HandleVisibilityChanged;
+
         OnReady();
+    }
+
+    private void HandleVisibilityChanged()
+    {
+        if (!Visible)
+        {
+            GameManager.UIController.ClickBlockerLayer.Visible = false;
+            return;
+        }
+        GameManager.UIController.ClickBlockerLayer.Visible = true;
     }
 
     private void OnCustomAction(StringName action)

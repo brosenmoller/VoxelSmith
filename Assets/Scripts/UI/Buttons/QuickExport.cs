@@ -18,11 +18,19 @@ public partial class QuickExport : MarginContainer
 
     private void OnButtonPress()
     {
+        if (!GameManager.IsInitialized) { return; }
+        if (!GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id)) { return; }
+        if (GameManager.DataManager.ProjectData.exportSettings == null) { return; }
+
         confirmationDialog.Show();
     }
 
     private void OnConfirmed()
     {
+        if (!GameManager.IsInitialized) { return; }
+        if (!GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id)) { return; }
+        if (GameManager.DataManager.ProjectData.exportSettings == null) { return; }
+
         GameManager.ExportManager.PerformExport();
     }
 }

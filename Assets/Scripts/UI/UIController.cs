@@ -2,6 +2,8 @@ using Godot;
 
 public partial class UIController : Control
 {
+    [Export] public Control ClickBlockerLayer;
+
     [ExportGroup("Window References")]
     [Export] public StartWindow startWindow;
 
@@ -122,7 +124,6 @@ public partial class UIController : Control
                 }
             }
         }
-
 
         if (!aWindowIsVisible && GameManager.DataManager.ProjectData == null)
         {

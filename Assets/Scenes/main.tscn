@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://byepkejc3664l"]
 
 [ext_resource type="PackedScene" uid="uid://cat4pi5xpdjow" path="res://Assets/Scenes/World.tscn" id="1_3n8tb"]
-[ext_resource type="Script" path="res://Assets/Scripts/UI/UIController.cs" id="1_bu3rv"]
-[ext_resource type="Script" path="res://Assets/Scripts/Utility/NativeDialog.cs" id="4_18ky5"]
+[ext_resource type="Script" uid="uid://c4b5qf7uc4di3" path="res://Assets/Scripts/UI/UIController.cs" id="1_bu3rv"]
+[ext_resource type="Script" uid="uid://dbrmv3sldrj4h" path="res://Assets/Scripts/Utility/NativeDialog.cs" id="4_18ky5"]
 [ext_resource type="PackedScene" uid="uid://c8ssb7qtei6ib" path="res://Assets/Scenes/UIScenes/Windows/ExportWindow.tscn" id="4_hcmcr"]
 [ext_resource type="PackedScene" uid="uid://clobdvq2u8iod" path="res://Assets/Scenes/UIScenes/Windows/StartWindow.tscn" id="4_k5wr7"]
 [ext_resource type="PackedScene" uid="uid://bbcks7dv8i8mv" path="res://Assets/Scenes/UIScenes/Windows/NewProjectWindow.tscn" id="5_tvmpl"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c7s6j05eta33g" path="res://Assets/Scenes/UIScenes/tool_select.tscn" id="8_56cfx"]
 [ext_resource type="PackedScene" uid="uid://bboqmejcdfufk" path="res://Assets/Scenes/UIScenes/pallete_options.tscn" id="8_rtdt0"]
 
-[node name="UIController" type="Control" node_paths=PackedStringArray("startWindow", "newProjectDialog", "importConfirmationDialog", "exportWindow")]
+[node name="UIController" type="Control" node_paths=PackedStringArray("ClickBlockerLayer", "startWindow", "newProjectDialog", "importConfirmationDialog", "exportWindow")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,40 +19,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bu3rv")
+ClickBlockerLayer = NodePath("ClickBlockerLayer")
 startWindow = NodePath("SubWindowHolder/StartWindow")
 newProjectDialog = NodePath("SubWindowHolder/NewProjectWindow")
 importConfirmationDialog = NodePath("SubWindowHolder/ImportConfirmationDialog")
 exportWindow = NodePath("SubWindowHolder/ExportWindow")
 metadata/_edit_horizontal_guides_ = []
-
-[node name="SubWindowHolder" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="StartWindow" parent="SubWindowHolder" instance=ExtResource("4_k5wr7")]
-visible = false
-
-[node name="NewProjectWindow" parent="SubWindowHolder" instance=ExtResource("5_tvmpl")]
-visible = false
-
-[node name="ExportWindow" parent="SubWindowHolder" instance=ExtResource("4_hcmcr")]
-visible = false
-
-[node name="ImportConfirmationDialog" type="ConfirmationDialog" parent="SubWindowHolder"]
-title = "Are you sure?"
-initial_position = 2
-size = Vector2i(612, 110)
-always_on_top = true
-dialog_text = "Importing a Minecraft Scheamtic will override ALL existing voxels
-and it can NOT be undone"
-dialog_close_on_escape = false
-
-[node name="NativeDialog" type="Control" parent="SubWindowHolder"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("4_18ky5")
 
 [node name="MainView" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -95,7 +67,7 @@ mouse_filter = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MainView/HBoxContainer/MainWindow/ViewPortHolder"]
 custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
@@ -104,7 +76,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MainView/HBoxContainer/MainWindow/ViewPortHolder/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(600, 200)
+size = Vector2i(1610, 1003)
 size_2d_override = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
@@ -131,3 +103,43 @@ mouse_filter = 2
 
 [node name="ToolSelect" parent="MainView/HBoxContainer" instance=ExtResource("8_56cfx")]
 layout_mode = 2
+
+[node name="ClickBlockerLayer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.35686275)
+
+[node name="SubWindowHolder" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartWindow" parent="SubWindowHolder" instance=ExtResource("4_k5wr7")]
+oversampling_override = 1.0
+visible = false
+
+[node name="NewProjectWindow" parent="SubWindowHolder" instance=ExtResource("5_tvmpl")]
+oversampling_override = 1.0
+visible = false
+
+[node name="ExportWindow" parent="SubWindowHolder" instance=ExtResource("4_hcmcr")]
+visible = false
+
+[node name="ImportConfirmationDialog" type="ConfirmationDialog" parent="SubWindowHolder"]
+title = "Are you sure?"
+initial_position = 2
+size = Vector2i(612, 110)
+always_on_top = true
+dialog_text = "Importing a Minecraft Scheamtic will override ALL existing voxels
+and it can NOT be undone"
+dialog_close_on_escape = false
+
+[node name="NativeDialog" type="Control" parent="SubWindowHolder"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_18ky5")

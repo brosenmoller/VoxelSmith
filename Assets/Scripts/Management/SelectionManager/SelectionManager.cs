@@ -6,7 +6,7 @@ public class SelectionManager : Manager
 {
     public ClipBoardItem currentClipBoardItem;
 
-    private HashSet<Vector3I> _currentSelection;
+    private HashSet<Vector3I> _currentSelection = new();
     public HashSet<Vector3I> CurrentSelection 
     {  
         get { return _currentSelection; }

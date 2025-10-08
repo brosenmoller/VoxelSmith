@@ -6,6 +6,8 @@ public partial class PrefabMesh : WorldMesh
 {
     public override void _Process(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         UpdateMesh(
             new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelPrefabs.Keys),
             GameManager.DataManager.PaletteData.palletePrefabs

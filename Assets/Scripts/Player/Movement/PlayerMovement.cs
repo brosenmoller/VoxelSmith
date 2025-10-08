@@ -50,6 +50,8 @@ public partial class PlayerMovement : CharacterBody3D
 
     public override void _Process(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         if (Input.IsKeyPressed(Key.Ctrl)) { active = false; }
         else 
         {
@@ -60,6 +62,8 @@ public partial class PlayerMovement : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         if (active)
         {
             stateMachine.OnPhysicsUpdate(delta);

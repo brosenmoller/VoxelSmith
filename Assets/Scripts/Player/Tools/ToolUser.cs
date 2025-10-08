@@ -39,8 +39,8 @@ public partial class ToolUser : RayCast3D
         WorldController.WentInFocusLastFrame += () => enabled = true;
         WorldController.WentOutOfFocus += () => enabled = false;
 
-        Tool[] tools = new Tool[]
-        {
+        Tool[] tools =
+        [
             new VoxelBrushTool(),
             new VoxelSpeedBrushTool(),
             new VoxelCubeTool(),
@@ -49,7 +49,7 @@ public partial class ToolUser : RayCast3D
             new VoxelSphereTool(),
             new SelectionBrushTool(),
             new SelectionCubeTool(),
-        };
+        ];
 
         stateMachine = new StateMachine<ToolUser>(this, tools);
         ChangeState(typeof(VoxelBrushTool));
@@ -57,6 +57,8 @@ public partial class ToolUser : RayCast3D
 
     public override void _Process(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         DefaultBehaiviour();
         if (enabled)
         {
@@ -66,6 +68,8 @@ public partial class ToolUser : RayCast3D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         if (enabled)
         {
             stateMachine.OnPhysicsUpdate(delta);

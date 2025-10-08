@@ -1,4 +1,3 @@
-using System.Net.NetworkInformation;
 using Godot;
 
 public partial class GameManager : Node
@@ -21,11 +20,13 @@ public partial class GameManager : Node
     public static NativeDialog NativeDialog { get; private set; }
     public static WorldController WorldController { get; private set; }
 
+    public static bool IsInitialized = false;
 
     private Manager[] activeManagers;
 
     public override void _Ready()
     {
+        IsInitialized = false;
         Player = this.GetNodeByType<PlayerMovement>();
         ToolUser = this.GetNodeByType<ToolUser>();
         UIController = this.GetNodeByType<UIController>();
@@ -42,11 +43,12 @@ public partial class GameManager : Node
         PrefabMesh.Setup();
 
         SetupManagers();
-        SetupInputContext();
     }
 
     private void SetupManagers()
     {
+        DataManager.OnProjectLoad += HandleProjectLoad;
+
         TimerManager = new TimerManager();
         SelectionManager = new SelectionManager();
         CommandManager = new CommandManager();
@@ -54,14 +56,15 @@ public partial class GameManager : Node
         ImportManager = new ImportManager();
         DataManager = new DataManager();
 
-        activeManagers = new Manager[] {
+        activeManagers = [
             TimerManager,
             SelectionManager,
             CommandManager,
             ExportManager,
             ImportManager,
             DataManager,
-        };
+        ];
+
 
         foreach (Manager manager in activeManagers)
         {
@@ -69,7 +72,16 @@ public partial class GameManager : Node
         }
     }
 
-    private void SetupInputContext()
+    private void HandleProjectLoad()
+    {
+        if (IsInitialized) { return; }
+        IsInitialized = true;
+
+        SetupInputContext();
+        UIController.ClickBlockerLayer.Visible = false;
+    }
+
+    private static void SetupInputContext()
     {
         EditMenu.OnUndoPressed += CommandManager.StepBack;
         EditMenu.OnRedoPressed += CommandManager.StepForward;

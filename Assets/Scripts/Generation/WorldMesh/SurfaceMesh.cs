@@ -6,6 +6,8 @@ public partial class SurfaceMesh : WorldMesh
 {
     public override void _Process(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         UpdateMesh(
             new HashSet<Vector3I>(GameManager.DataManager.ProjectData.voxelColors.Keys),
             GameManager.DataManager.PaletteData.paletteColors

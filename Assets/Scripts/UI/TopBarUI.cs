@@ -41,6 +41,8 @@ public partial class TopBarUI : Control
 
     public override void _Process(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         if (Input.IsActionJustReleased("mouse_wheel_up"))
         {
             playerSpeedSlider.Value += playerSpeedSlider.Step;

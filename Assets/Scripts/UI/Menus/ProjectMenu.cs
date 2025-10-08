@@ -37,6 +37,8 @@ public partial class ProjectMenu : PopupMenu
 
     private void OnMenuItemSelected(long id)
     {
+        if (GameManager.DataManager.ProjectData == null) { return; }
+
         switch (id)
         {
             case (long)ProjectOptions.NEW: OnNewPressed?.Invoke(); break;

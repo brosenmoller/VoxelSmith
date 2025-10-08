@@ -27,6 +27,8 @@ public partial class PaletteUI : BoxContainer
 
     public override void _Process(double delta)
     {
+        if (!GameManager.IsInitialized) { return; }
+
         if (Input.IsActionJustPressed("cycle_swatch_forward") && !Input.IsKeyPressed(Key.Ctrl))
         {
             CycleSwatch(true);

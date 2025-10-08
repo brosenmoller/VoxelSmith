@@ -26,7 +26,12 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     private void HandleVisibilityChanged()
     {
-        if (!Visible) { return; }
+        if (!Visible) 
+        {
+            GameManager.UIController.ClickBlockerLayer.Visible = false;
+            return; 
+        }
+        GameManager.UIController.ClickBlockerLayer.Visible = true;
 
         projectName.Text = string.Empty;
     }

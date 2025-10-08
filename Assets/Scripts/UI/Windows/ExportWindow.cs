@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Godot;
 
 public partial class ExportWindow : ConfirmationDialog
@@ -26,7 +27,12 @@ public partial class ExportWindow : ConfirmationDialog
 
     private void HandleVisibilityChanged()
     {
-        if (!Visible) { return; }
+        if (!Visible)
+        {
+            GameManager.UIController.ClickBlockerLayer.Visible = false;
+            return;
+        }
+        GameManager.UIController.ClickBlockerLayer.Visible = true;
 
         ExportSettingsData exportSettings = GameManager.DataManager.ProjectData.exportSettings;
         if (exportSettings != null)
@@ -42,20 +48,12 @@ public partial class ExportWindow : ConfirmationDialog
         if (!GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
         {
             string path = GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id];
-
-            if (path.Contains('/'))
-            {
-                path = path[..path.LastIndexOf('/')];
-            }
-            else if (path.Contains('\\')) 
-            {
-                path = path[..path.LastIndexOf('\\')];
-            }
+            string directoryPath = Path.GetDirectoryName(path);
 
             GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = new()
             {
                 fileName = GameManager.DataManager.ProjectData.name,
-                directoryPath = path
+                directoryPath = directoryPath
             };
             GameManager.DataManager.SaveEditorData();
         }
