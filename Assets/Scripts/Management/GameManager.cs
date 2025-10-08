@@ -65,7 +65,6 @@ public partial class GameManager : Node
             DataManager,
         ];
 
-
         foreach (Manager manager in activeManagers)
         {
             manager.Setup();

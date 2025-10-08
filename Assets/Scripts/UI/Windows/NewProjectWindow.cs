@@ -1,3 +1,4 @@
+using System.IO;
 using Godot;
 
 public partial class NewProjectWindow : ConfirmationDialog
@@ -38,10 +39,10 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     private void OnButtonPress()
     {
-        GameManager.NativeDialog.ShowFileDialog("Select Project Directory", DisplayServer.FileDialogMode.OpenDir, System.Array.Empty<string>(), (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Select Project Directory", DisplayServer.FileDialogMode.OpenDir, [], (NativeDialog.Info info) =>
         {
             OnDirectorySelected(info.path);
-        });
+        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
     }
 
     private void SetupPaletteOptionButton()
@@ -55,7 +56,6 @@ public partial class NewProjectWindow : ConfirmationDialog
         if (projectName.Text.Length <= 0 || saveDirectoryPath.Text.Length <= 0)
         {
             // TODO: Show Error
-
             return;
         }
 

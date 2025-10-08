@@ -1,3 +1,4 @@
+using System.IO;
 using Godot;
 
 public partial class UIController : Control
@@ -39,7 +40,7 @@ public partial class UIController : Control
         GameManager.NativeDialog.ShowFileDialog("Open a Project File", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.LoadProject(info.path);
-        });
+        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
     }
 
     public void ShowSaveProjectAsDialog()
@@ -47,7 +48,7 @@ public partial class UIController : Control
         GameManager.NativeDialog.ShowFileDialog("Save Project As", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.SaveProjectAs(info.path);
-        });
+        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
     }
 
     public void ShowCreateNewPaletteDialog()
@@ -78,7 +79,7 @@ public partial class UIController : Control
         GameManager.NativeDialog.ShowFileDialog("Import Palette From Project", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.ImportPaletteFromProject(info.path);
-        });
+        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
     }
 
     public void ShowImportSchematicDialog()
