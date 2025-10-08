@@ -24,8 +24,8 @@ GameManager="*res://Assets/Scripts/Management/GameManager.cs"
 
 [display]
 
-window/size/viewport_width=1872
-window/size/viewport_height=1053
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/aspect="keep_height"
 window/vsync/vsync_mode=0
 
