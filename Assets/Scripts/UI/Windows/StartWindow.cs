@@ -9,21 +9,23 @@ public partial class StartWindow : Window
     {
         loadProjectButton.Pressed += LoadProject;
         newProjectButton.Pressed += NewProject;
+        DataManager.OnProjectLoad += HandleProjectLoad;
+    }
+
+    private void HandleProjectLoad()
+    {
+        Hide();
+        GameManager.WorldController.WorldInFocus = true;
+        GameManager.UIController.ClickBlockerLayer.Visible = false;
     }
 
     private void LoadProject()
     {
         GameManager.UIController.ShowLoadProjectDialog();
-        GameManager.UIController.ClickBlockerLayer.Visible = false;
-        GameManager.WorldController.WorldInFocus = true;
-        Hide();
     }
 
     private void NewProject()
     {
         GameManager.UIController.newProjectDialog.Show();
-        GameManager.UIController.ClickBlockerLayer.Visible = false;
-        GameManager.WorldController.WorldInFocus = true;
-        Hide();
     }
 }

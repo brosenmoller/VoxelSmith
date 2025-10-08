@@ -39,10 +39,11 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     private void OnButtonPress()
     {
+        string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Select Project Directory", DisplayServer.FileDialogMode.OpenDir, [], (NativeDialog.Info info) =>
         {
             OnDirectorySelected(info.path);
-        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
+        }, directory);
     }
 
     private void SetupPaletteOptionButton()

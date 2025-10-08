@@ -37,18 +37,20 @@ public partial class UIController : Control
 
     public void ShowLoadProjectDialog()
     {
+        string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Open a Project File", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.LoadProject(info.path);
-        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
+        }, directory);
     }
 
     public void ShowSaveProjectAsDialog()
     {
+        string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Save Project As", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.SaveProjectAs(info.path);
-        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
+        }, directory);
     }
 
     public void ShowCreateNewPaletteDialog()
@@ -76,10 +78,11 @@ public partial class UIController : Control
 
     public void ShowImportPaletteFromProjectDialog()
     {
+        string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Import Palette From Project", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.ImportPaletteFromProject(info.path);
-        }, Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]));
+        }, directory);
     }
 
     public void ShowImportSchematicDialog()
