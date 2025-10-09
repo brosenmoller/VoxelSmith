@@ -14,9 +14,9 @@ public partial class NewProjectWindow : ConfirmationDialog
 
     public override void _Ready()
     {
-        Confirmed += OnNewProjectConfirmed;
+        Confirmed += HandleNewProjectConfirmed;
 
-        openProjectDirectoryButton.Pressed += OnButtonPress;
+        openProjectDirectoryButton.Pressed += HandleOpenDirectoryPressed;
         VisibilityChanged += HandleVisibilityChanged;
 
         openPaletteButton.Pressed += GameManager.UIController.ShowLoadPaletteDialog;
@@ -29,20 +29,33 @@ public partial class NewProjectWindow : ConfirmationDialog
     {
         if (!Visible) 
         {
-            GameManager.UIController.ClickBlockerLayer.Visible = false;
-            return; 
+            if (GameManager.IsInitialized)
+            {
+                GameManager.UIController.ClickBlockerLayer.Visible = false;
+            }
+            return;
         }
-        GameManager.UIController.ClickBlockerLayer.Visible = true;
 
+        //if (!GameManager.IsInitialized)
+        //{
+        //    AlwaysOnTop = true;
+        //}
+
+        GameManager.UIController.ClickBlockerLayer.Visible = true;
         projectName.Text = string.Empty;
     }
 
-    private void OnButtonPress()
+    private void HandleOpenDirectoryPressed()
     {
+        //if (!GameManager.IsInitialized)
+        //{
+        //    AlwaysOnTop = false;
+        //}
+        
         string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Select Project Directory", DisplayServer.FileDialogMode.OpenDir, [], (NativeDialog.Info info) =>
         {
-            OnDirectorySelected(info.path);
+            HandleDirectorySelected(info.path);
         }, directory);
     }
 
@@ -52,7 +65,7 @@ public partial class NewProjectWindow : ConfirmationDialog
         paletteOptionButton.AddItem("Blank", (int)PaletteOption.Blank);
     }
 
-    private void OnNewProjectConfirmed()
+    private void HandleNewProjectConfirmed()
     {
         if (projectName.Text.Length <= 0 || saveDirectoryPath.Text.Length <= 0)
         {
@@ -64,7 +77,7 @@ public partial class NewProjectWindow : ConfirmationDialog
         Hide();
     }
 
-    private void OnDirectorySelected(string path)
+    private void HandleDirectorySelected(string path)
     {
         saveDirectoryPath.Text = path;
     }

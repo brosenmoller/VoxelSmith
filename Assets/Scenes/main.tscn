@@ -121,12 +121,13 @@ offset_bottom = 40.0
 [node name="StartWindow" parent="SubWindowHolder" instance=ExtResource("4_k5wr7")]
 oversampling_override = 1.0
 visible = false
+always_on_top = false
+
+[node name="ExportWindow" parent="SubWindowHolder" instance=ExtResource("4_hcmcr")]
+visible = false
 
 [node name="NewProjectWindow" parent="SubWindowHolder" instance=ExtResource("5_tvmpl")]
 oversampling_override = 1.0
-visible = false
-
-[node name="ExportWindow" parent="SubWindowHolder" instance=ExtResource("4_hcmcr")]
 visible = false
 
 [node name="ImportConfirmationDialog" type="ConfirmationDialog" parent="SubWindowHolder"]
