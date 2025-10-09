@@ -36,22 +36,12 @@ public partial class NewProjectWindow : ConfirmationDialog
             return;
         }
 
-        //if (!GameManager.IsInitialized)
-        //{
-        //    AlwaysOnTop = true;
-        //}
-
         GameManager.UIController.ClickBlockerLayer.Visible = true;
         projectName.Text = string.Empty;
     }
 
     private void HandleOpenDirectoryPressed()
     {
-        //if (!GameManager.IsInitialized)
-        //{
-        //    AlwaysOnTop = false;
-        //}
-        
         string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Select Project Directory", DisplayServer.FileDialogMode.OpenDir, [], (NativeDialog.Info info) =>
         {
