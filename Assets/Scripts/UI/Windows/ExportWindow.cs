@@ -45,22 +45,26 @@ public partial class ExportWindow : ConfirmationDialog
             exportOptionButton.Selected = (int)exportSettings.exportType;
         }
 
-        if (!GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id))
-        {
-            string path = GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id];
-            string directoryPath = Path.GetDirectoryName(path);
-
-            GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = new()
-            {
-                fileName = GameManager.DataManager.ProjectData.name,
-                directoryPath = directoryPath
-            };
-            GameManager.DataManager.SaveEditorData();
-        }
+        SetExportPathIfNeeded();
 
         EditorData.ExportPathData exportPathData = GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id];
         exportFileName.Text = exportPathData.fileName;
         saveDirectoryPath.Text = exportPathData.directoryPath;
+    }
+
+    private void SetExportPathIfNeeded()
+    {
+        if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id)) { return; }
+
+        string path = GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id];
+        string directoryPath = Path.GetDirectoryName(path);
+
+        GameManager.DataManager.EditorData.exportPaths[GameManager.DataManager.ProjectData.id] = new()
+        {
+            fileName = GameManager.DataManager.ProjectData.name,
+            directoryPath = directoryPath
+        };
+        GameManager.DataManager.SaveEditorData();
     }
 
     private void SetupExportTypeOptionButton()
@@ -108,10 +112,14 @@ public partial class ExportWindow : ConfirmationDialog
 
     private void OnOpenSaveFolderPressed()
     {
+        SetExportPathIfNeeded();
+        string path = GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id];
+        string directoryPath = Path.GetDirectoryName(path);
+
         GameManager.NativeDialog.ShowFileDialog("Select Export Directory", DisplayServer.FileDialogMode.OpenDir, Array.Empty<string>(), (NativeDialog.Info info) =>
         {
             OnDirectorySelected(info.path);
-        });
+        }, directoryPath);
     }
 
     private void OnDirectorySelected(string path)

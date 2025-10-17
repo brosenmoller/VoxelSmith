@@ -19,6 +19,10 @@ public partial class UIController : Control
 
     private Window[] windows;
 
+    private static readonly string[] vxsProjectFilter = ["*.vxsProject"];
+    private static readonly string[] vxsPaletteFilter = ["*.vxsPalette"];
+    private static readonly string[] schematicFilter = ["*.schem", "*.schematic"];
+
     public override void _Ready()
     {
         importConfirmationDialog.Confirmed += () => GameManager.ImportManager.ImportMinecraftSchematic(importPath);
@@ -38,7 +42,7 @@ public partial class UIController : Control
     public void ShowLoadProjectDialog()
     {
         string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
-        GameManager.NativeDialog.ShowFileDialog("Open a Project File", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Open a Project File", DisplayServer.FileDialogMode.OpenFile, vxsProjectFilter, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.LoadProject(info.path);
         }, directory);
@@ -47,7 +51,7 @@ public partial class UIController : Control
     public void ShowSaveProjectAsDialog()
     {
         string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
-        GameManager.NativeDialog.ShowFileDialog("Save Project As", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Save Project As", DisplayServer.FileDialogMode.SaveFile, vxsProjectFilter, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.SaveProjectAs(info.path);
         }, directory);
@@ -55,14 +59,14 @@ public partial class UIController : Control
 
     public void ShowCreateNewPaletteDialog()
     {
-        GameManager.NativeDialog.ShowFileDialog("Create New Palette", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsPalette" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Create New Palette", DisplayServer.FileDialogMode.SaveFile, vxsPaletteFilter, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.CreateNewPalette(info.path);
         });
     }
     public void ShowLoadPaletteDialog()
     {
-        GameManager.NativeDialog.ShowFileDialog("Load Palette", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsPalette" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Load Palette", DisplayServer.FileDialogMode.OpenFile, vxsPaletteFilter, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.LoadPalette(info.path);
         });
@@ -70,7 +74,7 @@ public partial class UIController : Control
 
     public void ShowSavePaletteAsDialog()
     {
-        GameManager.NativeDialog.ShowFileDialog("Save Palette As", DisplayServer.FileDialogMode.SaveFile, new string[] { "*.vxsPalette" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Save Palette As", DisplayServer.FileDialogMode.SaveFile, vxsPaletteFilter, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.SavePaletteAs(info.path);
         });
@@ -79,7 +83,7 @@ public partial class UIController : Control
     public void ShowImportPaletteFromProjectDialog()
     {
         string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
-        GameManager.NativeDialog.ShowFileDialog("Import Palette From Project", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.vxsProject" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Import Palette From Project", DisplayServer.FileDialogMode.OpenFile, vxsProjectFilter, (NativeDialog.Info info) =>
         {
             GameManager.DataManager.ImportPaletteFromProject(info.path);
         }, directory);
@@ -87,7 +91,7 @@ public partial class UIController : Control
 
     public void ShowImportSchematicDialog()
     {
-        GameManager.NativeDialog.ShowFileDialog("Import Minecraft Schematic", DisplayServer.FileDialogMode.OpenFile, new string[] { "*.schem", "*.schematic" }, (NativeDialog.Info info) =>
+        GameManager.NativeDialog.ShowFileDialog("Import Minecraft Schematic", DisplayServer.FileDialogMode.OpenFile, schematicFilter, (NativeDialog.Info info) =>
         {
             ImportPath(info.path);
         });
