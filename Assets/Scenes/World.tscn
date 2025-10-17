@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=28 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" uid="uid://l402taog4vxe" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
@@ -13,6 +13,9 @@
 [ext_resource type="Material" uid="uid://bysvj84e30qnx" path="res://Assets/Art/Materials/prefab_mesh_material.tres" id="7_bqnqk"]
 [ext_resource type="Material" uid="uid://b071teac28h04" path="res://Assets/Art/Materials/WhiteHighlight.tres" id="9_qvph6"]
 [ext_resource type="Material" uid="uid://cj8722h0aif67" path="res://Assets/Art/Materials/BlueHighlight.tres" id="10_s0rvl"]
+[ext_resource type="Script" uid="uid://dobfc524hfrxe" path="res://Assets/Scripts/UI/CompassController.cs" id="14_mgpwa"]
+[ext_resource type="World3D" uid="uid://cqodjcp4qs281" path="res://Assets/Scenes/CompassWorld.tres" id="14_wj32e"]
+[ext_resource type="PackedScene" uid="uid://bq05v85cj24cg" path="res://Assets/Scenes/compass_view.tscn" id="15_mgpwa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lr1w3"]
 sky_top_color = Color(0.2345, 0.532092, 0.67, 1)
@@ -49,7 +52,7 @@ render_priority = 0
 shader = ExtResource("2_mrtu5")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_s1d43"]
-size = Vector2(500, 500)
+size = Vector2(1000, 1000)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ciqo6"]
 points = PackedVector3Array(-250, 0, -250, -250, 0, 250, 250, 0, -250, 250, 0, 250)
@@ -68,6 +71,9 @@ size = Vector3(1.05, 1.05, 1.05)
 [sub_resource type="BoxMesh" id="BoxMesh_akqf8"]
 uv2_padding = 0.0
 size = Vector3(1.05, 1.05, 1.05)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wj32e"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("groundNode")]
 script = ExtResource("1_6ekco")
@@ -99,6 +105,7 @@ cornerHighlight2 = NodePath("../../../../CornerHighlight2")
 collision_layer = 12
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005918503, 0.025309563, 0.013710022)
 material_override = SubResource("ShaderMaterial_bpmsq")
 mesh = SubResource("PlaneMesh_s1d43")
 skeleton = NodePath("../..")
@@ -161,5 +168,50 @@ material_override = ExtResource("10_s0rvl")
 transparency = 0.5
 cast_shadow = 0
 mesh = SubResource("BoxMesh_akqf8")
+
+[node name="CompassContainer" type="Control" parent="." node_paths=PackedStringArray("text", "playerCamera")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("14_mgpwa")
+text = NodePath("RichTextLabel")
+playerCamera = NodePath("../Player/HeadPivot/Camera3D")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CompassContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/normal_font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_wj32e")
+bbcode_enabled = true
+text = "[center]Z[/center]"
+scroll_active = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+world_3d = ExtResource("14_wj32e")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(100, 100)
+render_target_update_mode = 0
+
+[node name="CompassView" parent="SubViewportContainer/SubViewport" instance=ExtResource("15_mgpwa")]
 
 [editable path="Player"]
