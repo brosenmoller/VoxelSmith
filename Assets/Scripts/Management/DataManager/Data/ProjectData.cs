@@ -22,6 +22,8 @@ public class ProjectData
     public Guid selectedPaletteSwatchId;
     public ExportSettingsData exportSettings;
 
+    public List<Vector3> snappingPoints;
+
     [JsonIgnore]
     public VoxelData SelectedVoxelData
     {
@@ -58,7 +60,8 @@ public class ProjectData
     {
         this.name = name;
         id = Guid.NewGuid();
-        voxelColors = new Dictionary<Vector3I, Guid>();
-        voxelPrefabs = new Dictionary<Vector3I, Guid>();
+        voxelColors = [];
+        voxelPrefabs = [];
+        snappingPoints = [];
     }
 }

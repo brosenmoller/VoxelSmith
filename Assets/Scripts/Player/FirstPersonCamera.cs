@@ -45,18 +45,15 @@ public partial class FirstPersonCamera : Node3D
     {
         if (Input.IsKeyPressed(Key.Bracketleft))
         {
-            GD.Print("Decrease");
             sensitivity -= 0.00005f;
             if (sensitivity < 0) { sensitivity = 0.00001f; }
         }
         else if (Input.IsKeyPressed(Key.Bracketright))
         {
-            GD.Print("Increase");
             sensitivity += 0.00005f;
         }
         else if (Input.IsKeyPressed(Key.Backslash))
         {
-            GD.Print("Reset");
             sensitivity = 0.004f;
         }
     }

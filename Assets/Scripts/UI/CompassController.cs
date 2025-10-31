@@ -5,7 +5,6 @@ public partial class CompassController : Control
     [Export] private RichTextLabel text;
     [Export] private Camera3D playerCamera;
 
-
     public override void _Process(double delta)
     {
         if (playerCamera == null || text == null) { return; }
@@ -20,7 +19,7 @@ public partial class CompassController : Control
     {
         if (Mathf.Abs(forward.X) > Mathf.Abs(forward.Z))
         {
-            return forward.X > 0 ? "+X" : "-X";
+            return forward.X > 0 ? "-X" : "+X"; // Reversed for unity compatibility
         }
         else
         {
