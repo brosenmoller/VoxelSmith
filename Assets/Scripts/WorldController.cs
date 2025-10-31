@@ -61,7 +61,7 @@ public partial class WorldController : Node3D
         if (lineMeshInstance == null) 
         {
             lineMeshInstance = new LineMeshInstance();
-            snappingPointParent.AddChild(lineMeshInstance);
+            AddChild(lineMeshInstance);
         }
 
         foreach (Vector3 position in GameManager.DataManager.ProjectData.snappingPoints)
