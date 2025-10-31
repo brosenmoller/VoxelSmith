@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bda3ucbeo3v3q"]
+
+[ext_resource type="Material" uid="uid://b41j3o8r2s1wn" path="res://Assets/Scenes/SnappingPoint.tres" id="1_ukfke"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ukfke"]
+radius = 0.2
+height = 0.4
+
+[node name="SnappingPoint" type="Node3D"]
+
+[node name="WorldCenterHighlight" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_ukfke")
+mesh = SubResource("SphereMesh_ukfke")

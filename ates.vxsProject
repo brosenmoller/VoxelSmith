@@ -1,1 +1,708 @@
-{"name":"ates","id":"bade21f3-9de6-45d5-915d-bf5c3e535b6b","palette":{"id":"098c1fdb-960a-4655-8819-14e2c430e87f","paletteColors":{"eb47ce9e-8fa3-4287-bc14-388025accb84":{"id":"eb47ce9e-8fa3-4287-bc14-388025accb84","color":{"r":129,"g":42,"b":37,"a":255},"minecraftIDlist":["minecraft:barrier"]},"59b6fa23-6b74-4a13-a537-b777eb0463e8":{"id":"59b6fa23-6b74-4a13-a537-b777eb0463e8","color":{"r":95,"g":135,"b":87,"a":255},"minecraftIDlist":["minecraft:grass_block"]},"a1823008-684a-4490-9d0b-b83a2c33609b":{"id":"a1823008-684a-4490-9d0b-b83a2c33609b","color":{"r":165,"g":125,"b":92,"a":255},"minecraftIDlist":["minecraft:dirt"]},"995c8983-e7aa-4819-baaf-fe006ec2463a":{"id":"995c8983-e7aa-4819-baaf-fe006ec2463a","color":{"r":120,"g":120,"b":120,"a":255},"minecraftIDlist":["minecraft:stone"]},"39e88f7a-f4c4-4bd0-8d55-dfbbb53eb3e4":{"id":"39e88f7a-f4c4-4bd0-8d55-dfbbb53eb3e4","color":{"r":110,"g":110,"b":110,"a":255},"minecraftIDlist":["minecraft:cobblestone"]},"b6924cee-948a-4e33-8d8d-5e0873293430":{"id":"b6924cee-948a-4e33-8d8d-5e0873293430","color":{"r":43,"g":45,"b":137,"a":255},"minecraftIDlist":["minecraft:blue_concrete"]},"25ad9037-dc09-4de8-9861-28795bcddf71":{"id":"25ad9037-dc09-4de8-9861-28795bcddf71","color":{"r":239,"g":237,"b":231,"a":255},"minecraftIDlist":["minecraft:smooth_quartz"]}},"palletePrefabs":{}},"player_position":{"x":-34.352352,"y":7.4040203,"z":8.808582},"camera_rotation":{"x":-0.85201776,"y":0.0,"z":0.0},"camera_pivot_rotation":{"x":-0.0,"y":0.19044651,"z":0.0},"selected_palette_type":1,"selected_palette_swatch_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8","voxelColors":[{"position":{"x":-37,"y":0,"z":2},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-39,"y":0,"z":5},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-36,"y":0,"z":9},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-32,"y":0,"z":6},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-32,"y":0,"z":3},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-33,"y":0,"z":1},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-29,"y":0,"z":6},"palette_id":"995c8983-e7aa-4819-baaf-fe006ec2463a"},{"position":{"x":-29,"y":0,"z":8},"palette_id":"995c8983-e7aa-4819-baaf-fe006ec2463a"},{"position":{"x":-29,"y":0,"z":11},"palette_id":"995c8983-e7aa-4819-baaf-fe006ec2463a"},{"position":{"x":-25,"y":0,"z":8},"palette_id":"995c8983-e7aa-4819-baaf-fe006ec2463a"},{"position":{"x":-23,"y":0,"z":4},"palette_id":"995c8983-e7aa-4819-baaf-fe006ec2463a"},{"position":{"x":-23,"y":0,"z":1},"palette_id":"a1823008-684a-4490-9d0b-b83a2c33609b"},{"position":{"x":-26,"y":0,"z":-2},"palette_id":"a1823008-684a-4490-9d0b-b83a2c33609b"},{"position":{"x":-29,"y":0,"z":-4},"palette_id":"a1823008-684a-4490-9d0b-b83a2c33609b"},{"position":{"x":-33,"y":0,"z":-3},"palette_id":"a1823008-684a-4490-9d0b-b83a2c33609b"},{"position":{"x":-36,"y":0,"z":-3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-39,"y":0,"z":0},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-40,"y":0,"z":0},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-39,"y":0,"z":6},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-34,"y":0,"z":8},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-32,"y":0,"z":7},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-31,"y":0,"z":10},"palette_id":"eb47ce9e-8fa3-4287-bc14-388025accb84"},{"position":{"x":-32,"y":0,"z":13},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-37,"y":0,"z":13},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-41,"y":0,"z":11},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-41,"y":0,"z":5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-43,"y":0,"z":4},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-47,"y":0,"z":8},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-43,"y":0,"z":13},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-38,"y":0,"z":15},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-35,"y":0,"z":14},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-35,"y":0,"z":10},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-35,"y":0,"z":8},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-37,"y":0,"z":5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-36,"y":0,"z":3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-33,"y":0,"z":2},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-28,"y":0,"z":3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-27,"y":0,"z":2},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-30,"y":0,"z":-2},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-33,"y":1,"z":-3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-35,"y":0,"z":-1},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-36,"y":0,"z":2},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-34,"y":0,"z":7},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-39,"y":1,"z":5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-41,"y":1,"z":5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-40,"y":0,"z":1},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-39,"y":0,"z":-1},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-37,"y":0,"z":-4},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-38,"y":0,"z":-7},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-37,"y":0,"z":-9},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-32,"y":0,"z":-8},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-31,"y":0,"z":-5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-36,"y":0,"z":-6},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-39,"y":0,"z":-5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-41,"y":0,"z":-3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-44,"y":0,"z":-1},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-45,"y":0,"z":0},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-43,"y":0,"z":3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-45,"y":0,"z":6},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-44,"y":0,"z":9},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-38,"y":0,"z":9},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-35,"y":0,"z":7},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-34,"y":0,"z":3},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-31,"y":0,"z":0},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-27,"y":1,"z":-2},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-25,"y":0,"z":-5},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-27,"y":0,"z":-7},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-30,"y":0,"z":-9},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-33,"y":0,"z":-10},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-34,"y":0,"z":-6},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"},{"position":{"x":-38,"y":0,"z":-1},"palette_id":"59b6fa23-6b74-4a13-a537-b777eb0463e8"}],"voxelPrefabs":[]}
+{
+  "name": "ates",
+  "id": "bade21f3-9de6-45d5-915d-bf5c3e535b6b",
+  "palette": {
+    "id": "098c1fdb-960a-4655-8819-14e2c430e87f",
+    "paletteColors": {
+      "eb47ce9e-8fa3-4287-bc14-388025accb84": {
+        "id": "eb47ce9e-8fa3-4287-bc14-388025accb84",
+        "color": {
+          "r": 129,
+          "g": 42,
+          "b": 37,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:barrier"
+        ]
+      },
+      "59b6fa23-6b74-4a13-a537-b777eb0463e8": {
+        "id": "59b6fa23-6b74-4a13-a537-b777eb0463e8",
+        "color": {
+          "r": 95,
+          "g": 135,
+          "b": 87,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:grass_block"
+        ]
+      },
+      "a1823008-684a-4490-9d0b-b83a2c33609b": {
+        "id": "a1823008-684a-4490-9d0b-b83a2c33609b",
+        "color": {
+          "r": 165,
+          "g": 125,
+          "b": 92,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:dirt"
+        ]
+      },
+      "995c8983-e7aa-4819-baaf-fe006ec2463a": {
+        "id": "995c8983-e7aa-4819-baaf-fe006ec2463a",
+        "color": {
+          "r": 120,
+          "g": 120,
+          "b": 120,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:stone"
+        ]
+      },
+      "39e88f7a-f4c4-4bd0-8d55-dfbbb53eb3e4": {
+        "id": "39e88f7a-f4c4-4bd0-8d55-dfbbb53eb3e4",
+        "color": {
+          "r": 110,
+          "g": 110,
+          "b": 110,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:cobblestone"
+        ]
+      },
+      "b6924cee-948a-4e33-8d8d-5e0873293430": {
+        "id": "b6924cee-948a-4e33-8d8d-5e0873293430",
+        "color": {
+          "r": 43,
+          "g": 45,
+          "b": 137,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:blue_concrete"
+        ]
+      },
+      "25ad9037-dc09-4de8-9861-28795bcddf71": {
+        "id": "25ad9037-dc09-4de8-9861-28795bcddf71",
+        "color": {
+          "r": 239,
+          "g": 237,
+          "b": 231,
+          "a": 255
+        },
+        "minecraftIDlist": [
+          "minecraft:smooth_quartz"
+        ]
+      }
+    },
+    "palletePrefabs": {}
+  },
+  "player_position": {
+    "x": -34.28692,
+    "y": 7.4040203,
+    "z": 13.501326
+  },
+  "camera_rotation": {
+    "x": -0.55601776,
+    "y": 0,
+    "z": 0
+  },
+  "camera_pivot_rotation": {
+    "x": 0,
+    "y": 0.014446538,
+    "z": 0
+  },
+  "selected_palette_type": 1,
+  "selected_palette_swatch_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8",
+  "voxelColors": [
+    {
+      "position": {
+        "x": -37,
+        "y": 0,
+        "z": 2
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -39,
+        "y": 0,
+        "z": 5
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -36,
+        "y": 0,
+        "z": 9
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -32,
+        "y": 0,
+        "z": 6
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -32,
+        "y": 0,
+        "z": 3
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -33,
+        "y": 0,
+        "z": 1
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -29,
+        "y": 0,
+        "z": 6
+      },
+      "palette_id": "995c8983-e7aa-4819-baaf-fe006ec2463a"
+    },
+    {
+      "position": {
+        "x": -29,
+        "y": 0,
+        "z": 8
+      },
+      "palette_id": "995c8983-e7aa-4819-baaf-fe006ec2463a"
+    },
+    {
+      "position": {
+        "x": -29,
+        "y": 0,
+        "z": 11
+      },
+      "palette_id": "995c8983-e7aa-4819-baaf-fe006ec2463a"
+    },
+    {
+      "position": {
+        "x": -25,
+        "y": 0,
+        "z": 8
+      },
+      "palette_id": "995c8983-e7aa-4819-baaf-fe006ec2463a"
+    },
+    {
+      "position": {
+        "x": -23,
+        "y": 0,
+        "z": 4
+      },
+      "palette_id": "995c8983-e7aa-4819-baaf-fe006ec2463a"
+    },
+    {
+      "position": {
+        "x": -23,
+        "y": 0,
+        "z": 1
+      },
+      "palette_id": "a1823008-684a-4490-9d0b-b83a2c33609b"
+    },
+    {
+      "position": {
+        "x": -26,
+        "y": 0,
+        "z": -2
+      },
+      "palette_id": "a1823008-684a-4490-9d0b-b83a2c33609b"
+    },
+    {
+      "position": {
+        "x": -29,
+        "y": 0,
+        "z": -4
+      },
+      "palette_id": "a1823008-684a-4490-9d0b-b83a2c33609b"
+    },
+    {
+      "position": {
+        "x": -33,
+        "y": 0,
+        "z": -3
+      },
+      "palette_id": "a1823008-684a-4490-9d0b-b83a2c33609b"
+    },
+    {
+      "position": {
+        "x": -36,
+        "y": 0,
+        "z": -3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -39,
+        "y": 0,
+        "z": 0
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -40,
+        "y": 0,
+        "z": 0
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -39,
+        "y": 0,
+        "z": 6
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -34,
+        "y": 0,
+        "z": 8
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -32,
+        "y": 0,
+        "z": 7
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -31,
+        "y": 0,
+        "z": 10
+      },
+      "palette_id": "eb47ce9e-8fa3-4287-bc14-388025accb84"
+    },
+    {
+      "position": {
+        "x": -32,
+        "y": 0,
+        "z": 13
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -37,
+        "y": 0,
+        "z": 13
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -41,
+        "y": 0,
+        "z": 11
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -41,
+        "y": 0,
+        "z": 5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -43,
+        "y": 0,
+        "z": 4
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -47,
+        "y": 0,
+        "z": 8
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -43,
+        "y": 0,
+        "z": 13
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -38,
+        "y": 0,
+        "z": 15
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -35,
+        "y": 0,
+        "z": 14
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -35,
+        "y": 0,
+        "z": 10
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -35,
+        "y": 0,
+        "z": 8
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -37,
+        "y": 0,
+        "z": 5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -36,
+        "y": 0,
+        "z": 3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -33,
+        "y": 0,
+        "z": 2
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -28,
+        "y": 0,
+        "z": 3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -27,
+        "y": 0,
+        "z": 2
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -30,
+        "y": 0,
+        "z": -2
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -33,
+        "y": 1,
+        "z": -3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -35,
+        "y": 0,
+        "z": -1
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -36,
+        "y": 0,
+        "z": 2
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -34,
+        "y": 0,
+        "z": 7
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -39,
+        "y": 1,
+        "z": 5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -41,
+        "y": 1,
+        "z": 5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -40,
+        "y": 0,
+        "z": 1
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -39,
+        "y": 0,
+        "z": -1
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -37,
+        "y": 0,
+        "z": -4
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -38,
+        "y": 0,
+        "z": -7
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -37,
+        "y": 0,
+        "z": -9
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -32,
+        "y": 0,
+        "z": -8
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -31,
+        "y": 0,
+        "z": -5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -36,
+        "y": 0,
+        "z": -6
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -39,
+        "y": 0,
+        "z": -5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -41,
+        "y": 0,
+        "z": -3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -44,
+        "y": 0,
+        "z": -1
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -45,
+        "y": 0,
+        "z": 0
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -43,
+        "y": 0,
+        "z": 3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -45,
+        "y": 0,
+        "z": 6
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -44,
+        "y": 0,
+        "z": 9
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -38,
+        "y": 0,
+        "z": 9
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -35,
+        "y": 0,
+        "z": 7
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -34,
+        "y": 0,
+        "z": 3
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -31,
+        "y": 0,
+        "z": 0
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -27,
+        "y": 1,
+        "z": -2
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -25,
+        "y": 0,
+        "z": -5
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -27,
+        "y": 0,
+        "z": -7
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -30,
+        "y": 0,
+        "z": -9
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -33,
+        "y": 0,
+        "z": -10
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -34,
+        "y": 0,
+        "z": -6
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    },
+    {
+      "position": {
+        "x": -38,
+        "y": 0,
+        "z": -1
+      },
+      "palette_id": "59b6fa23-6b74-4a13-a537-b777eb0463e8"
+    }
+  ],
+  "voxelPrefabs": [],
+  "export_settings": {
+    "exportType": 1,
+    "enableBarrierBlockCulling": true,
+    "enableGreedyMeshing": true,
+    "enableChunkedMeshing": true,
+    "enableSeparateFloorAndCeiling": true,
+    "enableVertexMerging": true,
+    "ExportMessage": "Unity Prefab (.prefab)"
+  },
+  "snapping_points": [
+    {
+      "x": 10,
+      "y": 0.19044651,
+      "z": 0
+    },
+    {
+      "x": 0,
+      "y": 10.190447,
+      "z": 0
+    },
+    {
+      "x": 10,
+      "y": 10.190447,
+      "z": 30
+    }
+  ]
+}

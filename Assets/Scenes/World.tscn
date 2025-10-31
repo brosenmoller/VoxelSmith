@@ -1,9 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://cat4pi5xpdjow"]
+[gd_scene load_steps=30 format=3 uid="uid://cat4pi5xpdjow"]
 
 [ext_resource type="PackedScene" uid="uid://cy136utjjwqdu" path="res://Assets/Scenes/player.tscn" id="1_4yetj"]
 [ext_resource type="Script" uid="uid://l402taog4vxe" path="res://Assets/Scripts/WorldController.cs" id="1_6ekco"]
+[ext_resource type="PackedScene" uid="uid://bda3ucbeo3v3q" path="res://Assets/Scenes/SnappingPoint.tscn" id="2_52kks"]
 [ext_resource type="Script" uid="uid://dc4xbw62o5gej" path="res://Assets/Scripts/GammaToggle.cs" id="2_cg2gm"]
 [ext_resource type="Shader" uid="uid://cxnbloj1ignim" path="res://Assets/Art/Shaders/grid_ground.gdshader" id="2_mrtu5"]
+[ext_resource type="Material" uid="uid://b41j3o8r2s1wn" path="res://Assets/Scenes/SnappingPoint.tres" id="3_xv5rl"]
 [ext_resource type="Script" uid="uid://c3w0w77ur4g5m" path="res://Assets/Scripts/Generation/WorldMesh/SurfaceMesh.cs" id="4_48p0j"]
 [ext_resource type="Material" uid="uid://cx46gfmlwbfpy" path="res://Assets/Art/Materials/RedHighlight.tres" id="4_b1jf1"]
 [ext_resource type="Script" uid="uid://dnrbcdqc2ywjt" path="res://Assets/Scripts/Generation/WorldMesh/PrefabMesh.cs" id="5_8q8hp"]
@@ -75,9 +77,13 @@ size = Vector3(1.05, 1.05, 1.05)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wj32e"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("groundNode")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("groundNode", "snappingPointParent")]
 script = ExtResource("1_6ekco")
 groundNode = NodePath("Ground")
+snappingPointParent = NodePath("SnappingPointParent")
+snappingPointScene = ExtResource("2_52kks")
+lineMaterial = ExtResource("3_xv5rl")
+lineColor = Color(0.63529414, 0.45490196, 0.972549, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." node_paths=PackedStringArray("light")]
 environment = SubResource("Environment_td26l")
@@ -132,7 +138,6 @@ material_override = SubResource("StandardMaterial3D_85b2v")
 mesh = SubResource("SphereMesh_g7we1")
 
 [node name="WorldCenterHighlight" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_85b2v")
 mesh = SubResource("SphereMesh_g7we1")
 
@@ -214,5 +219,7 @@ size = Vector2i(100, 100)
 render_target_update_mode = 0
 
 [node name="CompassView" parent="SubViewportContainer/SubViewport" instance=ExtResource("15_mgpwa")]
+
+[node name="SnappingPointParent" type="Node3D" parent="."]
 
 [editable path="Player"]

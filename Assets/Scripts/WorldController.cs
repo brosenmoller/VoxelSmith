@@ -1,15 +1,25 @@
-using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Godot;
 
 public partial class WorldController : Node3D
 {
     [Export] public Node3D groundNode;
+
+    [ExportGroup("Snapping Points")]
+    [Export] public Node3D snappingPointParent;
+    [Export] public PackedScene snappingPointScene;
+    [Export] public Material lineMaterial;
+    [Export] public Color lineColor;
 
     public static event Action WentInFocusLastFrame;
     public static event Action WentOutOfFocus;
 
     private PlayerMovement player;
     private VoxelSmith.Timer wentInFocusEventTimer;
+
+    private LineMeshInstance lineMeshInstance;
 
     private bool worldInFocus;
     public bool WorldInFocus { 
@@ -26,12 +36,40 @@ public partial class WorldController : Node3D
 
     public bool canGoInFocus = true;
 
+    public override void _EnterTree()
+    {
+        DataManager.OnProjectLoad += HandleProjectLoad;
+    }
+
     public override void _Ready()
     {
         wentInFocusEventTimer = new(0.01f, SendWentInFocusEvent, false);
         
         player = this.GetChildByType<PlayerMovement>();
         WorldInFocus = false;
+    }
+
+    private void HandleProjectLoad()
+    {
+        foreach (Node child in snappingPointParent.GetChildren())
+        {
+            child.QueueFree();
+        }
+
+        if (GameManager.DataManager.ProjectData.snappingPoints == null) { return; }
+
+        if (lineMeshInstance == null) 
+        {
+            lineMeshInstance = new LineMeshInstance();
+            snappingPointParent.AddChild(lineMeshInstance);
+        }
+
+        foreach (Vector3 position in GameManager.DataManager.ProjectData.snappingPoints)
+        {
+            Node3D instance = snappingPointScene.Instantiate() as Node3D;
+            instance.Position = position;
+            snappingPointParent.AddChild(instance);
+        }
     }
 
     public override void _Notification(int notificationID)
@@ -63,6 +101,23 @@ public partial class WorldController : Node3D
                 WorldInFocus = true;
             }
         }
+
+        if (lineMeshInstance == null) { return; }
+        if (!Input.IsMouseButtonPressed(MouseButton.Middle)) 
+        {
+            lineMeshInstance.Visible = false;
+            return; 
+        }
+
+        lineMeshInstance.Visible = true;
+
+        List<(Vector3, Vector3)> segements = [];
+        foreach (Node3D child in snappingPointParent.GetChildren().Cast<Node3D>())
+        {
+            segements.Add((child.Position, GameManager.Player.Position));
+        }
+
+        lineMeshInstance.DrawLines(segements, lineColor);
     }
 
     private void SendWentInFocusEvent()
