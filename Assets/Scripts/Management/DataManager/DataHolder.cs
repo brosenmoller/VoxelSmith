@@ -6,12 +6,26 @@ public class DataHolder<T>
 {
     public T Data { get; set; }
 
+    private readonly JsonConverter[] jsonConverters;
+
+    public DataHolder()
+    {
+        jsonConverters =
+        [
+            new Vector3IConverter(),
+            new Vector3Converter(), 
+            new ColorConverter(), 
+            new ProjectDataConverter(), 
+            new VoxelDataConverter()
+        ];
+    }
+
     public void Load(string path)
     {
         try
         {
             string jsonString = File.ReadAllText(path);
-            Data = JsonConvert.DeserializeObject<T>(jsonString, new Vector3IConverter(), new Vector3Converter(), new ProjectDataConverter(), new ColorConverter());
+            Data = JsonConvert.DeserializeObject<T>(jsonString, jsonConverters);
         }
         catch
         {
@@ -21,7 +35,7 @@ public class DataHolder<T>
 
     public void Save(string path)
     {
-        string jsonString = JsonConvert.SerializeObject(Data, new Vector3IConverter(), new Vector3Converter(), new ProjectDataConverter(), new ColorConverter());
+        string jsonString = JsonConvert.SerializeObject(Data, jsonConverters);
 
         File.WriteAllText(path, string.Empty);
 

@@ -7,7 +7,7 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
     [Export] private string name;
     [Export] protected ConfirmationDialog deleteConfirmationDialog;
     [Export] protected ColorPickerButton voxelColorPicker;
-    [Export] protected TextEdit minecraftIDEdit;
+    [Export] protected TextEdit referenceIdEdit;
 
     private Button deleteButton;
     protected Guid paletteGuid;
@@ -17,7 +17,13 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
     private bool createSubscribed = false;
     private bool editSubscribed = false;
 
-    protected List<string> GetCompeletedMinecraftID() => new() { "minecraft:" + minecraftIDEdit.Text };
+    protected List<string> GetReferenceIDList(VoxelData voxelData = null)
+    {
+        if (voxelData == null || voxelData.referenceIds == null) { return [referenceIdEdit.Text]; }
+
+        voxelData.referenceIds[0] = referenceIdEdit.Text;
+        return voxelData.referenceIds;
+    }
 
     private void UnSubcribeConfirmed()
     {
@@ -42,7 +48,7 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         deleteConfirmationDialog.Confirmed += OnDelete;
         deleteConfirmationDialog.GetLabel().HorizontalAlignment = HorizontalAlignment.Center;
 
-        minecraftIDEdit.RemoveChild(minecraftIDEdit.GetVScrollBar());
+        referenceIdEdit.RemoveChild(referenceIdEdit.GetVScrollBar());
 
         VisibilityChanged += HandleVisibilityChanged;
 
@@ -98,15 +104,7 @@ public abstract partial class PaletteEditWindow : ConfirmationDialog
         }
 
         voxelColorPicker.Color = voxelData.color;
-        if (voxelData.minecraftIDlist[0].Length > 10)
-        {
-            minecraftIDEdit.Text = voxelData.minecraftIDlist[0][10..];
-        }
-        else
-        {
-            minecraftIDEdit.Text = "";
-        }
-        
+        referenceIdEdit.Text = voxelData.referenceIds[0];
 
         OnLoad();
 

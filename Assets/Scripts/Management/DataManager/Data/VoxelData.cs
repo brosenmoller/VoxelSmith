@@ -1,37 +1,27 @@
 ﻿using System.Collections.Generic;
 using System;
 using Godot;
-using System.Linq;
+using Newtonsoft.Json;
 
-public class VoxelData
+public abstract class VoxelData
 {
     public Guid id;
     public Color color;
-    public List<string> minecraftIDlist;
+    public List<string> referenceIds;
 }
 
-[Serializable]
-public class VoxelColor : VoxelData, IEquatable<VoxelColor>
+[Serializable, JsonConverter(typeof(VoxelDataConverter))]
+public class VoxelColor : VoxelData
 {
     public VoxelColor()
     {
         id = Guid.NewGuid();
-        minecraftIDlist = new List<string>();
-    }
-
-    public bool Equals(VoxelColor other)
-    {
-        return other is not null &&
-               Mathf.IsEqualApprox(other.color.R, color.R) &&
-               Mathf.IsEqualApprox(other.color.G, color.G) &&
-               Mathf.IsEqualApprox(other.color.B, color.B) &&
-               Mathf.IsEqualApprox(other.color.A, color.A) &&
-               other.minecraftIDlist.SequenceEqual(minecraftIDlist);
+        referenceIds = [];
     }
 }
 
-[Serializable]
-public class VoxelPrefab : VoxelData, IEquatable<VoxelPrefab>
+[Serializable, JsonConverter(typeof(VoxelDataConverter))]
+public class VoxelPrefab : VoxelData
 {
     public string prefabName;
     public string unityPrefabGuid;
@@ -41,21 +31,6 @@ public class VoxelPrefab : VoxelData, IEquatable<VoxelPrefab>
     public VoxelPrefab()
     {
         id = Guid.NewGuid();
-        minecraftIDlist = new List<string>();
-    }
-
-    public bool Equals(VoxelPrefab other)
-    {
-        return other is not null &&
-               Mathf.IsEqualApprox(other.color.R, color.R) &&
-               Mathf.IsEqualApprox(other.color.G, color.G) &&
-               Mathf.IsEqualApprox(other.color.B, color.B) &&
-               Mathf.IsEqualApprox(other.color.A, color.A) &&
-               other.minecraftIDlist.SequenceEqual(minecraftIDlist) &&
-
-               other.prefabName == prefabName &&
-               other.unityPrefabGuid == unityPrefabGuid &&
-               other.unityPrefabTransformFileId == unityPrefabTransformFileId &&
-               other.godotSceneID == godotSceneID;
+        referenceIds = [];
     }
 }

@@ -258,7 +258,7 @@ public class ExportObjMeshGenerator
 
     private bool BarrierSkipCheck(Vector3I voxel)
     {
-        return exportSettings.enableBarrierBlockCulling && palette[voxels[voxel]].minecraftIDlist.Contains(PaletteDataFactory.MINECRAFT_BARRIER);
+        return exportSettings.enableBarrierBlockCulling && palette[voxels[voxel]].referenceIds.Contains(PaletteDataFactory.BARRIER);
     }
 
     private static ObjMeshSurface GetMeshSurfaceFromDictionary(Vector3I chunk, Dictionary<Vector3I, ObjMeshSurface> meshDictionary, string baseName)

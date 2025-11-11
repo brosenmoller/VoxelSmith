@@ -1,10 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://bsis6v0sco7es"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/UI/Windows/PaletteWindows/NewPalettePrefabWindow.cs" id="1_rfhmd"]
+[ext_resource type="Script" uid="uid://ca7singwo021f" path="res://Assets/Scripts/UI/Windows/PaletteWindows/NewPalettePrefabWindow.cs" id="1_rfhmd"]
 [ext_resource type="Texture2D" uid="uid://bx0ocyu68yd8g" path="res://Assets/Art/Icons/plus-solid-white.svg" id="2_fe2lv"]
 [ext_resource type="Texture2D" uid="uid://de28wltf8x3l6" path="res://Assets/Art/Icons/trash-solid.svg" id="3_b8nwe"]
 
-[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker", "minecraftIDEdit")]
+[node name="NewPalettePrefabWindow" type="ConfirmationDialog" node_paths=PackedStringArray("loadPrefabButton", "prefabNameTextEdit", "godotSceneIdTextEdit", "unityPrefabGuidTextEdit", "unityPrefabTranformFileIdTextEdit", "deleteConfirmationDialog", "voxelColorPicker", "referenceIdEdit")]
+oversampling_override = 1.0
 title = "Create new Palette Prefab"
 initial_position = 2
 size = Vector2i(400, 341)
@@ -19,7 +20,7 @@ unityPrefabTranformFileIdTextEdit = NodePath("VBoxContainer/prefabTransformFileI
 name = "Prefab"
 deleteConfirmationDialog = NodePath("DeleteConfirmationDialog")
 voxelColorPicker = NodePath("VBoxContainer/SelectColorGroup/VoxelColor")
-minecraftIDEdit = NodePath("VBoxContainer/MinceraftIDList/MinecraftIdGroup/MinecraftIDEdit")
+referenceIdEdit = NodePath("VBoxContainer/ReferenceIdList/ReferenceIdGroup/ReferenceIdEdit")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 8.0
@@ -55,46 +56,45 @@ color_mode = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="MinecraftIDListHeader" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ReferenceIdListHeader" type="HBoxContainer" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="MinecraftIdListTitle" type="RichTextLabel" parent="VBoxContainer/MinecraftIDListHeader"]
+[node name="ReferenceIdListTitle" type="RichTextLabel" parent="VBoxContainer/ReferenceIdListHeader"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Minecraft ID list"
 
-[node name="AddMinecraftIdButton" type="Button" parent="VBoxContainer/MinecraftIDListHeader"]
+[node name="AddReferenceIdButton" type="Button" parent="VBoxContainer/ReferenceIdListHeader"]
 custom_minimum_size = Vector2(22.335, 0)
 layout_mode = 2
 icon = ExtResource("2_fe2lv")
 flat = true
 expand_icon = true
 
-[node name="MinceraftIDList" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ReferenceIdList" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="MinecraftIdGroup" type="HBoxContainer" parent="VBoxContainer/MinceraftIDList"]
+[node name="ReferenceIdGroup" type="HBoxContainer" parent="VBoxContainer/ReferenceIdList"]
 layout_mode = 2
 
-[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+[node name="LabelAlign" type="MarginContainer" parent="VBoxContainer/ReferenceIdList/ReferenceIdGroup"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_constants/margin_top = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup/LabelAlign"]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ReferenceIdList/ReferenceIdGroup/LabelAlign"]
 layout_mode = 2
 size_flags_vertical = 3
-bbcode_enabled = true
-text = "[p align=right]minecraft:"
+text = "Reference ID"
 
-[node name="MinecraftIDEdit" type="TextEdit" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+[node name="ReferenceIdEdit" type="TextEdit" parent="VBoxContainer/ReferenceIdList/ReferenceIdGroup"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DeleteMinecraftIDButton" type="Button" parent="VBoxContainer/MinceraftIDList/MinecraftIdGroup"]
+[node name="DeleteReferenceIdButton" type="Button" parent="VBoxContainer/ReferenceIdList/ReferenceIdGroup"]
 visible = false
 custom_minimum_size = Vector2(42.09, 0)
 layout_mode = 2

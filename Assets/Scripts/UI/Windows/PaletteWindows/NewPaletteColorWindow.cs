@@ -27,7 +27,7 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
         }
 
         voxelColor.color = voxelColorPicker.Color;
-        voxelColor.minecraftIDlist = GetCompeletedMinecraftID();
+        voxelColor.referenceIds = GetReferenceIDList(voxelColor);
 
         GameManager.PaletteUI.Update();
     }
@@ -39,7 +39,7 @@ public partial class NewPaletteColorWindow : PaletteEditWindow
         {
             id = newID,
             color = voxelColorPicker.Color,
-            minecraftIDlist = GetCompeletedMinecraftID(),
+            referenceIds = GetReferenceIDList(),
         };
 
         GameManager.DataManager.PaletteData.paletteColors.Add(newID, voxelColor);

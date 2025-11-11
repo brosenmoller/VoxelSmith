@@ -3,77 +3,26 @@ using Godot;
 
 public class PaletteDataFactory
 {
-    public const string MINECRAFT_BARRIER = "minecraft:barrier";
+    public const string BARRIER = "barrier";
 
     public static PaletteData GetDefaultPalette()
     {
         PaletteData data = new();
 
-        void AddNewVoxelColor(Color color, List<string> minecraftIDlist)
+        void AddNewVoxelColor(Color color, List<string> referenceIDs)
         {
             VoxelColor voxelColor = new()
             {
                 color = color,
-                minecraftIDlist = minecraftIDlist,
+                referenceIds = referenceIDs,
             };
             data.paletteColors.Add(voxelColor.id, voxelColor);
         }
 
-        AddNewVoxelColor(
-            Color.Color8(129, 42, 37),
-            new List<string>()
-            {
-                MINECRAFT_BARRIER
-            }
-        );
-
-        AddNewVoxelColor(
-            Color.Color8(95, 135, 87),
-            new List<string>()
-            {
-                "minecraft:grass_block"
-            }
-        );
-
-        AddNewVoxelColor(
-            Color.Color8(165, 125, 92),
-            new List<string>()
-            {
-                "minecraft:dirt"
-            }
-        );
-
-        AddNewVoxelColor(
-            Color.Color8(120, 120, 120),
-            new List<string>()
-            {
-                "minecraft:stone"
-            }
-        );
-
-        AddNewVoxelColor(
-            Color.Color8(110, 110, 110),
-            new List<string>()
-            {
-                "minecraft:cobblestone"
-            }
-        );
-
-        AddNewVoxelColor(
-            Color.Color8(43, 45, 137),
-            new List<string>()
-            {
-                "minecraft:blue_concrete"
-            }
-        );
-
-        AddNewVoxelColor(
-            Color.Color8(239, 237, 231),
-            new List<string>()
-            {
-                "minecraft:smooth_quartz"
-            }
-        );
+        AddNewVoxelColor(Color.Color8(66, 57, 42), ["cave"]);
+        AddNewVoxelColor(Color.Color8(31, 33, 31), ["temple"]);
+        AddNewVoxelColor(Color.Color8(120, 120, 120), ["cracked_temple"]);
+        AddNewVoxelColor(Color.Color8(129, 42, 37), [BARRIER]);
 
         return data;
     }

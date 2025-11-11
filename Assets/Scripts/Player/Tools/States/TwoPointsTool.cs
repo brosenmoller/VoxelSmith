@@ -121,7 +121,7 @@ public abstract class TwoPointsTool : Tool
 
     private void AxisLocking()
     {
-        if (Input.IsActionJustPressed("lock_x") && !Input.IsKeyPressed(Key.Ctrl))
+        if (Input.IsActionJustPressed("lock_xz") && !Input.IsKeyPressed(Key.Ctrl))
         {
             lockY = false;
 
@@ -154,15 +154,15 @@ public abstract class TwoPointsTool : Tool
         Vector3 planeNormal;
         if (lockX)
         {
-            planeNormal = new Vector3(Mathf.Clamp(ctx.GlobalPosition.X - firstPosition.X , - 1, 1), 0, 0);
+            planeNormal = new Vector3(Mathf.Clamp(ctx.GlobalPosition.X - firstPosition.X, -1, 1), 0, 0);
         }
         else if (lockY)
         {
-            planeNormal = new Vector3(0, Mathf.Clamp(ctx.GlobalPosition.Y - firstPosition.Y, - 1, 1), 0);
+            planeNormal = new Vector3(0, Mathf.Clamp(ctx.GlobalPosition.Y - firstPosition.Y, -1, 1), 0);
         }
         else if (lockZ)
         {
-            planeNormal = new Vector3(0, 0, Mathf.Clamp(ctx.GlobalPosition.Z - firstPosition.Z, - 1, 1));
+            planeNormal = new Vector3(0, 0, Mathf.Clamp(ctx.GlobalPosition.Z - firstPosition.Z, -1, 1));
         }
         else
         { 

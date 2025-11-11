@@ -111,14 +111,13 @@ cornerHighlight2 = NodePath("../../../../CornerHighlight2")
 collision_layer = 12
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7501278, 0.17311764, -0.56422234)
 material_override = SubResource("ShaderMaterial_bpmsq")
 mesh = SubResource("PlaneMesh_s1d43")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7501278, 0.17311764, -0.56422234)
 shape = SubResource("ConvexPolygonShape3D_xv5rl")
+debug_fill = false
 
 [node name="SurfaceMesh" type="Node3D" parent="."]
 script = ExtResource("4_48p0j")

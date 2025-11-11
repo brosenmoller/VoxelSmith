@@ -18,7 +18,7 @@ public class PaletteData
     public PaletteData()
     {
         id = Guid.NewGuid();
-        paletteColors = new Dictionary<Guid, VoxelColor>();
-        palletePrefabs = new Dictionary<Guid, VoxelPrefab>();
+        paletteColors = [];
+        palletePrefabs = [];
     }
 }

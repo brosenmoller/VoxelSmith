@@ -6,6 +6,8 @@ using System;
 
 public class ImportManager : Manager
 {
+    public static string MINECRAFT_AIR = "minecraft:air";
+
     private void SaveImportSettings(string path)
     {
         EditorData.ImportPathData importSettings = new()
@@ -34,25 +36,27 @@ public class ImportManager : Manager
         GameManager.DataManager.ProjectData.voxelPrefabs.Clear();
 
         int airValue = int.MaxValue;
-        if (schematic.palette.ContainsValue("minecraft:air"))
+        if (schematic.palette.ContainsValue(MINECRAFT_AIR))
         {
-            airValue = schematic.palette.FirstOrDefault(x => x.Value == "minecraft:air").Key;
+            airValue = schematic.palette.FirstOrDefault(x => x.Value == MINECRAFT_AIR).Key;
         }
 
-        Dictionary<string, Guid> minecraftIDsToVoxelData = new();
+        Dictionary<string, Guid> minecraftIDsToVoxelData = [];
 
-        foreach (var paletteItem in GameManager.DataManager.PaletteData.paletteColors)
+        foreach (KeyValuePair<Guid, VoxelColor> paletteItem in GameManager.DataManager.PaletteData.paletteColors)
         {
-            foreach (string minecraftID in paletteItem.Value.minecraftIDlist)
+            foreach (string referenceId in paletteItem.Value.referenceIds)
             {
+                string minecraftID = "minecraft:" + referenceId;
                 minecraftIDsToVoxelData.Add(minecraftID, paletteItem.Key);
             }
         }
 
-        foreach (var paletteItem in GameManager.DataManager.PaletteData.palletePrefabs)
+        foreach (KeyValuePair<Guid, VoxelPrefab> paletteItem in GameManager.DataManager.PaletteData.palletePrefabs)
         {
-            foreach (string minecraftID in paletteItem.Value.minecraftIDlist)
+            foreach (string referenceId in paletteItem.Value.referenceIds)
             {
+                string minecraftID = "minecraft:" + referenceId;
                 minecraftIDsToVoxelData.Add(minecraftID, paletteItem.Key);
             }
         }
@@ -150,6 +154,8 @@ public class ImportManager : Manager
             foreach (NbtTag tag in compoundTag.Get<NbtCompound>("Palette"))
             {
                 string minecraftID = tag.Name;
+
+                // strip extra block information
                 if (minecraftID.Contains('['))
                 {
                     minecraftID = minecraftID[..minecraftID.IndexOf('[')];

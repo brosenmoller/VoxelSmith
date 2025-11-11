@@ -81,7 +81,6 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
         }
     }
 
-
     protected override void OnDeleteButtonPressed()
     {
         if (GameManager.DataManager.ProjectData.voxelPrefabs.ContainsValue(paletteGuid))
@@ -105,7 +104,7 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
 
         voxelPrefab.color = voxelColorPicker.Color;
 
-        voxelPrefab.minecraftIDlist = GetCompeletedMinecraftID();
+        voxelPrefab.referenceIds = GetReferenceIDList(voxelPrefab);
 
         voxelPrefab.prefabName = prefabNameTextEdit.Text;
         voxelPrefab.unityPrefabGuid = unityPrefabGuidTextEdit.Text;
@@ -122,7 +121,7 @@ public partial class NewPalettePrefabWindow : PaletteEditWindow
         {
             id = newID,
             color = voxelColorPicker.Color,
-            minecraftIDlist = GetCompeletedMinecraftID(),
+            referenceIds = GetReferenceIDList(),
             prefabName = prefabNameTextEdit.Text,
             unityPrefabTransformFileId = unityPrefabTranformFileIdTextEdit.Text,
             godotSceneID = godotSceneIdTextEdit.Text,
