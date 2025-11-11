@@ -195,7 +195,8 @@ public partial class ToolUser : RayCast3D
         if (distanceAlongRay < 0) { return false; }
 
         Vector3 intersectionPoint = GlobalPosition + distanceAlongRay * normalizedGlobalDirection;
-        voxelPosition = VoxelHelper.GetGridVoxelFromHitPoint(intersectionPoint, normalizedGlobalDirection);
+        voxelPosition = VoxelHelper.GetGridVoxel(intersectionPoint);
+
         return true;
     }
 
