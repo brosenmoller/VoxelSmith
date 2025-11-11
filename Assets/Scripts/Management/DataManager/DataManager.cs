@@ -194,7 +194,11 @@ public class DataManager : Manager
         editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
 
         AddProjectToTopOfRecents(projectDataHolder.Data.id);
-        OnProjectLoad?.Invoke();
+
+        if (duplicateProject)
+        {
+            OnProjectLoad?.Invoke();
+        }
 
         projectDataHolder.Save(path);
     }
