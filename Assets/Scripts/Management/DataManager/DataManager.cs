@@ -16,8 +16,8 @@ public class DataManager : Manager
     private DataHolder<PaletteData> paletteDataHolder;
     private DataHolder<ProjectData> projectDataBackupHolder;
 
-    private const string PROJECT_FILE_EXTENSION = ".vxsProject";
-    private const string PALETTE_FILE_EXTENSION = ".vxsPalette";
+    public const string PROJECT_FILE_EXTENSION = ".vxsProject";
+    public const string PALETTE_FILE_EXTENSION = ".vxsPalette";
     private const string CONFIG_FILE_EXTENSION = ".vxsConfig";
     private const string LOCAL_EDITOR_SAVE_PATH = "user://editor" + CONFIG_FILE_EXTENSION;
     private const string LOCAL_BACKUP_PROJECT_SAVE_PATH = "user://backup" + PROJECT_FILE_EXTENSION;
@@ -170,23 +170,31 @@ public class DataManager : Manager
 
     public void SaveProject()
     {
-        if (editorDataHolder.Data.savePaths.TryGetValue(projectDataHolder.Data.id, out string value))
+        if (editorDataHolder.Data.savePaths.TryGetValue(projectDataHolder.Data.id, out string savePath))
         {
-            SaveProjectAs(value);
+            SaveProjectAs(savePath);
         }
     }
 
-    public void SaveProjectAs(string path)
+    public void SaveProjectAs(string path, bool duplicateProject = false)
     {
         projectDataHolder.Data.playerPosition = GameManager.Player.GlobalPosition;
         projectDataHolder.Data.cameraRotation = camera.Rotation;
         projectDataHolder.Data.cameraPivotRotation = cameraPivot.Rotation;
+        
+        if (duplicateProject)
+        {
+            projectDataHolder.Data.id = Guid.NewGuid();
+            projectDataHolder.Data.name = Path.GetFileNameWithoutExtension(path);
+            SetProjectTitle();
+        }
 
         editorDataHolder.Data.savePaths[projectDataHolder.Data.id] = path;
-        AddProjectToTopOfRecents(projectDataHolder.Data.id);
-
         editorDataHolder.Data.lastProject = projectDataHolder.Data.id;
         editorDataHolder.Save(GLOBAL_EDITOR_SAVE_PATH);
+
+        AddProjectToTopOfRecents(projectDataHolder.Data.id);
+        OnProjectLoad?.Invoke();
 
         projectDataHolder.Save(path);
     }

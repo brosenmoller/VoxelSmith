@@ -53,7 +53,9 @@ public partial class UIController : Control
         string directory = GameManager.IsInitialized ? Path.GetDirectoryName(GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id]) : string.Empty;
         GameManager.NativeDialog.ShowFileDialog("Save Project As", DisplayServer.FileDialogMode.SaveFile, vxsProjectFilter, (NativeDialog.Info info) =>
         {
-            GameManager.DataManager.SaveProjectAs(info.path);
+            string filePath = info.path;
+            filePath = Path.ChangeExtension(filePath, DataManager.PROJECT_FILE_EXTENSION);
+            GameManager.DataManager.SaveProjectAs(filePath, true);
         }, directory);
     }
 
@@ -76,7 +78,9 @@ public partial class UIController : Control
     {
         GameManager.NativeDialog.ShowFileDialog("Save Palette As", DisplayServer.FileDialogMode.SaveFile, vxsPaletteFilter, (NativeDialog.Info info) =>
         {
-            GameManager.DataManager.SavePaletteAs(info.path);
+            string filePath = info.path;
+            filePath = Path.ChangeExtension(filePath, DataManager.PALETTE_FILE_EXTENSION);
+            GameManager.DataManager.SavePaletteAs(filePath);
         });
     }
 
