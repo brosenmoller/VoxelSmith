@@ -56,8 +56,8 @@ shader = ExtResource("2_mrtu5")
 [sub_resource type="PlaneMesh" id="PlaneMesh_s1d43"]
 size = Vector2(1000, 1000)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ciqo6"]
-points = PackedVector3Array(-250, 0, -250, -250, 0, 250, 250, 0, -250, 250, 0, 250)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xv5rl"]
+points = PackedVector3Array(-500, 0, -500, -500, 0, 500, 500, 0, -500, 500, 0, 500)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85b2v"]
 albedo_color = Color(1, 0.270588, 0.270588, 1)
@@ -111,13 +111,14 @@ cornerHighlight2 = NodePath("../../../../CornerHighlight2")
 collision_layer = 12
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005918503, 0.025309563, 0.013710022)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7501278, 0.17311764, -0.56422234)
 material_override = SubResource("ShaderMaterial_bpmsq")
 mesh = SubResource("PlaneMesh_s1d43")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("ConvexPolygonShape3D_ciqo6")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7501278, 0.17311764, -0.56422234)
+shape = SubResource("ConvexPolygonShape3D_xv5rl")
 
 [node name="SurfaceMesh" type="Node3D" parent="."]
 script = ExtResource("4_48p0j")
