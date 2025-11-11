@@ -47,6 +47,7 @@ public partial class ToolUser : RayCast3D
             new VoxelLineTool(),
             new VoxelCoverTool(),
             new VoxelSphereTool(),
+            new VoxelBucketTool(),
             new SelectionBrushTool(),
             new SelectionCubeTool(),
         ];

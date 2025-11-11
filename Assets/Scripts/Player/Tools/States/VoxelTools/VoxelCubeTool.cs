@@ -7,7 +7,7 @@ public class VoxelCubeTool : TwoPointsTool
         public bool walls = false;
     }
 
-    private Options options = new();
+    private readonly Options options = new();
     public override IToolOptions GetToolOptions() => options;
 
     protected override Vector3I[] GetVoxelPositions()

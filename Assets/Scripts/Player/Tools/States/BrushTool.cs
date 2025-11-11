@@ -45,6 +45,7 @@ public abstract class BrushTool : Tool
             breakTimer.Pause();
         }
     }
+
     public override void OnExit()
     {
         placeTimer.Pause();
