@@ -31,6 +31,24 @@ public static class CubeValues
         new(0, 0, 1),
     };
 
+    public static readonly Vector3I[] cubeDiagonals =
+{
+        new(1, -1, 1),
+        new(1, -1, -1),
+        new(-1, -1, 1),
+        new(-1, -1, -1),
+
+        new(1, 0, 1),
+        new(1, 0, -1),
+        new(-1, 0, 1),
+        new(-1, 0, -1),
+
+        new(1, 1, 1),
+        new(1, 1, -1),
+        new(-1, 1, 1),
+        new(-1, 1, -1),
+    };
+
     public static readonly Vector2I[] cubeUVs =
     {
         new(0, 0),
