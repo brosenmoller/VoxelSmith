@@ -52,7 +52,7 @@ public partial class ExportWindow : ConfirmationDialog
         saveDirectoryPath.Text = exportPathData.directoryPath;
     }
 
-    private void SetExportPathIfNeeded()
+    private static void SetExportPathIfNeeded()
     {
         if (GameManager.DataManager.EditorData.exportPaths.ContainsKey(GameManager.DataManager.ProjectData.id)) { return; }
 
@@ -116,10 +116,13 @@ public partial class ExportWindow : ConfirmationDialog
         string path = GameManager.DataManager.EditorData.savePaths[GameManager.DataManager.ProjectData.id];
         string directoryPath = Path.GetDirectoryName(path);
 
-        GameManager.NativeDialog.ShowFileDialog("Select Export Directory", DisplayServer.FileDialogMode.OpenDir, Array.Empty<string>(), (NativeDialog.Info info) =>
-        {
-            OnDirectorySelected(info.path);
-        }, directoryPath);
+        GameManager.NativeDialog.ShowFileDialog(
+            "Select Export Directory",
+            DisplayServer.FileDialogMode.OpenDir,
+            [],
+            info => OnDirectorySelected(info.path),
+            directoryPath
+        );
     }
 
     private void OnDirectorySelected(string path)

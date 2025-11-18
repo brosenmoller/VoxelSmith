@@ -37,8 +37,11 @@ public class ExportObjMeshGenerator
         floorMesh.Reset(FLOOR_MESH_NAME);
         ceilingMesh.Reset(CEILING_MESH_NAME);
 
-        if (exportSettings.enableGreedyMeshing) { GreedyMesher(); }
-        else { StandardMesher(); }
+        //if (exportSettings.enableGreedyMeshing) { GreedyMesher(); }
+        //else 
+        //{ 
+            StandardMesher(); 
+        //}
 
         return ConstructObj();
     }

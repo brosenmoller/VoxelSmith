@@ -17,7 +17,7 @@ public class ExportSettingsData
         { ExportType.GodotScene, ".tscn" },
     };
 
-    public ExportType exportType = ExportType.UnityPrefab;
+    public ExportType exportType = ExportType.Mesh;
 
     public bool enableBarrierBlockCulling = true;
     public bool enableGreedyMeshing = true;
